@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.ParametroInterpolacion" table="parametro_interpolacion" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idParametroInterpolacion" type="java.lang.Integer">
+            <column name="id_parametro_interpolacion" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreParametro" type="string">
+            <column name="nombre_parametro" length="100" not-null="true" />
+        </property>
+        <property name="valorParametro" type="big_decimal">
+            <column name="valor_parametro" precision="9" scale="5" not-null="true" />
+        </property>
+        <property name="unidadParametro" type="string">
+            <column name="unidad_parametro" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

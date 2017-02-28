@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.Empresa" table="empresa" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idEmpresa" type="java.lang.Integer">
+            <column name="id_empresa" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cajaCompensacion" class="entities.CajaCompensacion" fetch="select">
+            <column name="id_caja_compensacion" not-null="true" />
+        </many-to-one>
+        <many-to-one name="mutual" class="entities.Mutual" fetch="select">
+            <column name="id_mutual" not-null="true" />
+        </many-to-one>
+        <property name="rutEmpresa" type="string">
+            <column name="rut_empresa" not-null="true" />
+        </property>
+        <property name="nombreEmpresa" type="string">
+            <column name="nombre_empresa" not-null="true" />
+        </property>
+        <property name="giro" type="string">
+            <column name="giro" not-null="true" />
+        </property>
+        <property name="direccionEmpresa" type="string">
+            <column name="direccion_empresa" />
+        </property>
+        <property name="telefonoEmpresa" type="string">
+            <column name="telefono_empresa" />
+        </property>
+        <property name="celularEmpresa" type="string">
+            <column name="celular_empresa" />
+        </property>
+        <property name="emailEmpresa" type="string">
+            <column name="email_empresa" />
+        </property>
+        <property name="porcentajeMutual" type="big_decimal">
+            <column name="porcentaje_mutual" precision="9" not-null="true" />
+        </property>
+        <set name="cuentaBancariaEmpresas" table="cuenta_bancaria_empresa" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="entities.CuentaBancariaEmpresa" />
+        </set>
+        <set name="liquidacionEmpresas" table="liquidacion_empresa" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="entities.LiquidacionEmpresa" />
+        </set>
+        <set name="relacionLaborals" table="relacion_laboral" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="entities.RelacionLaboral" />
+        </set>
+        <set name="buses" table="bus" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="entities.Bus" />
+        </set>
+        <set name="representanteEmpresas" table="representante_empresa" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="entities.RepresentanteEmpresa" />
+        </set>
+    </class>
+</hibernate-mapping>

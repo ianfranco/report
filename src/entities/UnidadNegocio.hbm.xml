@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.UnidadNegocio" table="unidad_negocio" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idUnidadNegocio" type="java.lang.Integer">
+            <column name="id_unidad_negocio" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="operadorTransporte" class="entities.OperadorTransporte" fetch="select">
+            <column name="id_operador_transporte" not-null="true" />
+        </many-to-one>
+        <many-to-one name="region" class="entities.Region" fetch="select">
+            <column name="id_region" not-null="true" />
+        </many-to-one>
+        <property name="numeroUnidadNegocio" type="int">
+            <column name="numero_unidad_negocio" not-null="true" />
+        </property>
+        <property name="nombreUnidadNegocio" type="string">
+            <column name="nombre_unidad_negocio" length="45" not-null="true" />
+        </property>
+        <property name="folioUnidadNegocio" type="string">
+            <column name="folio_unidad_negocio" length="45" />
+        </property>
+        <set name="contratoUnidads" table="contrato_unidad" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_unidad_negocio" not-null="true" />
+            </key>
+            <one-to-many class="entities.ContratoUnidad" />
+        </set>
+        <set name="servicios" table="servicio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_unidad" not-null="true" />
+            </key>
+            <one-to-many class="entities.Servicio" />
+        </set>
+        <set name="valorRolloUnidads" table="valor_rollo_unidad" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_unidad" not-null="true" />
+            </key>
+            <one-to-many class="entities.ValorRolloUnidad" />
+        </set>
+        <set name="buses" table="bus" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_unidad_negocio" not-null="true" />
+            </key>
+            <one-to-many class="entities.Bus" />
+        </set>
+    </class>
+</hibernate-mapping>

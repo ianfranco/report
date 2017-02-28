@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-02-16T12:39:03 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-DIASBUSTNE" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="079d19e3-64b3-462f-98c3-8bc1f5145bcc">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="288"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="700"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS - VIÑA BUS S.A."/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+    bus.numero_bus,
+    unidad_negocio.numero_unidad_negocio,
+    bus.patente,
+    bus.anio,
+    empresa.nombre_empresa, 
+    flota.nombre_flota, 
+    COUNT(DISTINCT guia.fecha_guia) AS DT,
+    167000 / COUNT(DISTINCT guia.fecha_guia) AS 'Valor Día'
+FROM
+    guia
+        LEFT JOIN
+    bus ON guia.id_bus = bus.id_bus
+        LEFT JOIN
+    unidad_negocio ON bus.id_unidad_negocio = unidad_negocio.id_unidad_negocio     
+		LEFT JOIN
+	empresa ON bus.id_empresa = empresa.id_empresa
+		LEFT JOIN 
+	flota ON bus.id_flota = flota.id_flota
+WHERE
+    guia.fecha_guia BETWEEN '2017-01-01' AND '2017-01-31'
+        AND bus.id_unidad_negocio <> 3
+GROUP BY bus.id_bus
+ORDER BY flota.nombre_flota,  bus.id_unidad_negocio , bus.numero_bus]]>
+	</queryString>
+	<field name="numero_bus" class="java.lang.Long"/>
+	<field name="numero_unidad_negocio" class="java.lang.Long"/>
+	<field name="patente" class="java.lang.String"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="nombre_empresa" class="java.lang.String"/>
+	<field name="nombre_flota" class="java.lang.String"/>
+	<field name="DT" class="java.lang.Long"/>
+	<field name="Valor Día" class="java.math.BigDecimal"/>
+	<group name="nombre_flota" isStartNewPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{nombre_flota}]]></groupExpression>
+		<groupHeader>
+			<band height="129">
+				<textField>
+					<reportElement x="30" y="75" width="210" height="20" uuid="78b7a2f7-02ee-4c29-bc97-a1b924dabbd5"/>
+					<textFieldExpression><![CDATA[$F{nombre_flota}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="75" width="30" height="20" uuid="bbd1f47e-a9dd-4542-91ea-2aa0613d4bf7"/>
+					<text><![CDATA[Flota:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="10" y="106" width="50" height="23" uuid="3a58bc49-4a15-43a6-9169-229917604aae"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[N° Bus]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="60" y="106" width="50" height="23" uuid="95c2e9d7-bfb3-4a7c-9321-e75e58d228e5"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Unidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="106" width="80" height="23" uuid="8d51e1d9-6274-4ba9-8fa2-5c389beff864"/>
+					<box leftPadding="15"/>
+					<text><![CDATA[Patente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="190" y="106" width="60" height="23" uuid="280391fa-41e9-40e0-9614-a2783128983a"/>
+					<box leftPadding="15"/>
+					<text><![CDATA[Año]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="250" y="106" width="80" height="23" uuid="06c9b839-de98-4e87-a04e-0b07af3e7aec"/>
+					<box leftPadding="5"/>
+					<text><![CDATA[Días Trabajados]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="330" y="106" width="100" height="23" uuid="2660abde-4187-40e1-a8a8-86e91df9ad42"/>
+					<box leftPadding="12"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Monto x Día]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="14" width="250" height="20" uuid="ea9570fd-d1e0-4b58-9ba2-62b44827a5a7"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[INFORME DÍAS TRABAJADOS X BUS ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="34" width="160" height="20" uuid="f4785353-20be-413b-b56b-19a27d1ecc12"/>
+					<text><![CDATA[BONO TNE - ENERO 2017
+]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="50" height="20" uuid="3c396d28-6ef9-4e67-b6d5-5c7f59a1839e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numero_bus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="0" width="50" height="20" uuid="8ecc41f6-6a2a-43bb-8007-49ad1b5dda1a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numero_unidad_negocio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="80" height="20" uuid="660268fa-5054-446b-8937-7e14883acf00"/>
+				<box leftPadding="15"/>
+				<textFieldExpression><![CDATA[$F{patente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="0" width="60" height="20" uuid="eb1918a0-8d1b-4d9b-93b0-ec6aeb19ab92"/>
+				<box leftPadding="15"/>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="80" height="20" uuid="b9746410-13c2-483d-8832-18c279d09be1"/>
+				<box leftPadding="5"/>
+				<textFieldExpression><![CDATA[$F{DT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="330" y="0" width="100" height="20" uuid="ccf3538d-aad9-4f2c-96ed-3ab7761cebc6"/>
+				<box leftPadding="20"/>
+				<textFieldExpression><![CDATA[$F{Valor Día}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

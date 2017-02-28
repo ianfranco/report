@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.ProcesoRecaudacion" table="proceso_recaudacion" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idProcesoRecaudacion" type="java.lang.Integer">
+            <column name="id_proceso_recaudacion" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreProceso" type="string">
+            <column name="nombre_proceso" length="45" not-null="true" />
+        </property>
+        <property name="idUsuario" type="int">
+            <column name="id_usuario" not-null="true" />
+        </property>
+        <property name="fechaCreacionProceso" type="timestamp">
+            <column name="fecha_creacion_proceso" length="19" not-null="true" />
+        </property>
+        <property name="activo" type="java.lang.Boolean">
+            <column name="activo" />
+        </property>
+        <property name="nombreGeneral" type="string">
+            <column name="nombre_general" length="45" />
+        </property>
+        <property name="idGeneral" type="java.lang.Integer">
+            <column name="id_general" />
+        </property>
+        <set name="servicioProcesoRecaudacions" table="servicio_proceso_recaudacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proceso_recaudacion" not-null="true" />
+            </key>
+            <one-to-many class="entities.ServicioProcesoRecaudacion" />
+        </set>
+        <set name="egresoRecaudacions" table="egreso_recaudacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proceso_recaudacion" not-null="true" />
+            </key>
+            <one-to-many class="entities.EgresoRecaudacion" />
+        </set>
+        <set name="guias" table="guia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proceso_recuadacion" not-null="true" />
+            </key>
+            <one-to-many class="entities.Guia" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.DescuentoTrabajador" table="descuento_trabajador" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idDescuentoTrabajador" type="java.lang.Integer">
+            <column name="id_descuento_trabajador" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreTipoDescuento" type="string">
+            <column name="nombre_tipo_descuento" not-null="true" />
+        </property>
+        <property name="fechaIngreso" type="timestamp">
+            <column name="fecha_ingreso" length="19" not-null="true" />
+        </property>
+        <property name="montoDefecto" type="java.lang.Integer">
+            <column name="monto_defecto" />
+        </property>
+        <set name="descuentoTrabajadorLiquidacions" table="descuento_trabajador_liquidacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_descuento_trabajador" not-null="true" />
+            </key>
+            <one-to-many class="entities.DescuentoTrabajadorLiquidacion" />
+        </set>
+    </class>
+</hibernate-mapping>

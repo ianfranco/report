@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.RelacionLaboral" table="relacion_laboral" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idRelacionLaboral" type="java.lang.Integer">
+            <column name="id_relacion_laboral" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="empresa" class="entities.Empresa" fetch="select">
+            <column name="id_empresa" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoContrato" class="entities.TipoContrato" fetch="select">
+            <column name="id_tipo_contrato" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoTrabajador" class="entities.TipoTrabajador" fetch="select">
+            <column name="id_tipo_trabajador" not-null="true" />
+        </many-to-one>
+        <many-to-one name="trabajador" class="entities.Trabajador" fetch="select">
+            <column name="id_trabajador" not-null="true" />
+        </many-to-one>
+        <property name="fechaInicio" type="date">
+            <column name="fecha_inicio" length="10" />
+        </property>
+        <property name="fechaFin" type="date">
+            <column name="fecha_fin" length="10" />
+        </property>
+        <property name="tipoContrato_1" type="string">
+            <column name="tipo_contrato" />
+        </property>
+        <property name="sueldoBase" type="java.lang.Integer">
+            <column name="sueldo_base" />
+        </property>
+        <property name="rutaArchivoRespaldo" type="string">
+            <column name="ruta_archivo_respaldo" />
+        </property>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="estado" />
+        </property>
+        <set name="finiquitoRelacionLaborals" table="finiquito_relacion_laboral" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_relacion_laboral" not-null="true" />
+            </key>
+            <one-to-many class="entities.FiniquitoRelacionLaboral" />
+        </set>
+        <set name="liquidacionSueldos" table="liquidacion_sueldo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_relacion_laboral" not-null="true" />
+            </key>
+            <one-to-many class="entities.LiquidacionSueldo" />
+        </set>
+    </class>
+</hibernate-mapping>

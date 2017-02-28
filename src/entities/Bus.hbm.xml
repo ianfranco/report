@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.Bus" table="bus" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idBus" type="java.lang.Integer">
+            <column name="id_bus" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="empresa" class="entities.Empresa" fetch="select">
+            <column name="id_empresa" not-null="true" />
+        </many-to-one>
+        <many-to-one name="estadoBus" class="entities.EstadoBus" fetch="select">
+            <column name="id_estado_bus" not-null="true" />
+        </many-to-one>
+        <many-to-one name="flota" class="entities.Flota" fetch="select">
+            <column name="id_flota" not-null="true" />
+        </many-to-one>
+        <many-to-one name="modeloMarcaBus" class="entities.ModeloMarcaBus" fetch="select">
+            <column name="id_modelo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="terminal" class="entities.Terminal" fetch="select">
+            <column name="id_terminal" not-null="true" />
+        </many-to-one>
+        <many-to-one name="unidadNegocio" class="entities.UnidadNegocio" fetch="select">
+            <column name="id_unidad_negocio" not-null="true" />
+        </many-to-one>
+        <property name="numeroBus" type="int">
+            <column name="numero_bus" not-null="true" />
+        </property>
+        <property name="patente" type="string">
+            <column name="patente" length="45" not-null="true" />
+        </property>
+        <property name="administrador" type="string">
+            <column name="administrador" length="100" />
+        </property>
+        <property name="anio" type="int">
+            <column name="anio" not-null="true" />
+        </property>
+        <property name="fechaRevisionTecnica" type="date">
+            <column name="fecha_revision_tecnica" length="10" />
+        </property>
+        <property name="numeroMotor" type="string">
+            <column name="numero_motor" length="45" />
+        </property>
+        <property name="numeroChasis" type="string">
+            <column name="numero_chasis" length="45" />
+        </property>
+        <property name="carroceria" type="string">
+            <column name="carroceria" length="45" />
+        </property>
+        <property name="activo" type="java.lang.Boolean">
+            <column name="activo" />
+        </property>
+        <property name="fechaIngresoBus" type="timestamp">
+            <column name="fecha_ingreso_bus" length="19" />
+        </property>
+        <set name="busDevices" table="bus_device" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_bus" not-null="true" />
+            </key>
+            <one-to-many class="entities.BusDevice" />
+        </set>
+        <set name="cargoBuses" table="cargo_bus" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_bus" not-null="true" />
+            </key>
+            <one-to-many class="entities.CargoBus" />
+        </set>
+        <set name="busServicios" table="bus_servicio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_bus" not-null="true" />
+            </key>
+            <one-to-many class="entities.BusServicio" />
+        </set>
+        <set name="guias" table="guia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_bus" not-null="true" />
+            </key>
+            <one-to-many class="entities.Guia" />
+        </set>
+        <set name="abonoBuses" table="abono_bus" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_bus" not-null="true" />
+            </key>
+            <one-to-many class="entities.AbonoBus" />
+        </set>
+        <set name="despachos" table="despacho" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_bus" not-null="true" />
+            </key>
+            <one-to-many class="entities.Despacho" />
+        </set>
+    </class>
+</hibernate-mapping>

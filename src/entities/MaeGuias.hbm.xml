@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.MaeGuias" table="mae_guias" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idMaeGuias" type="java.lang.Integer">
+            <column name="id_mae_guias" />
+            <generator class="identity" />
+        </id>
+        <property name="folio" type="string">
+            <column name="folio" length="7" />
+        </property>
+        <property name="fechaGuia" type="date">
+            <column name="fecha_guia" length="10" />
+        </property>
+        <property name="fechaRecaudacion" type="date">
+            <column name="fecha_recaudacion" length="10" />
+        </property>
+        <property name="bus" type="string">
+            <column name="bus" length="11" />
+        </property>
+        <property name="unidad" type="string">
+            <column name="unidad" length="1" />
+        </property>
+        <property name="codigoConductor" type="string">
+            <column name="codigo_conductor" length="4" />
+        </property>
+        <property name="codigoGarita" type="string">
+            <column name="codigo_garita" length="2" />
+        </property>
+        <property name="codigoLinea" type="string">
+            <column name="codigo_linea" length="4" />
+        </property>
+        <property name="idEstado" type="int">
+            <column name="id_estado" not-null="true" />
+        </property>
+        <property name="idProcesoRecaudacion" type="java.lang.Integer">
+            <column name="id_proceso_recaudacion" />
+        </property>
+        <property name="totalIngresos" type="java.lang.Integer">
+            <column name="total_ingresos" />
+        </property>
+        <property name="totalEgresos" type="java.lang.Integer">
+            <column name="total_egresos" />
+        </property>
+        <property name="viajeEspecial" type="int">
+            <column name="viaje_especial" not-null="true" />
+        </property>
+        <property name="otrosIngresos" type="int">
+            <column name="otros_ingresos" not-null="true" />
+        </property>
+        <property name="saldo" type="java.lang.Integer">
+            <column name="saldo" />
+        </property>
+        <property name="numeroVueltas" type="int">
+            <column name="numero_vueltas" not-null="true" />
+        </property>
+        <property name="turno" type="string">
+            <column name="turno" length="1" />
+        </property>
+        <property name="observacion" type="char">
+            <column name="observacion" length="1" not-null="true" />
+        </property>
+        <property name="recaudada" type="int">
+            <column name="recaudada" not-null="true" />
+        </property>
+        <property name="administracion" type="java.lang.Integer">
+            <column name="administracion" />
+        </property>
+        <property name="combustible" type="java.lang.Integer">
+            <column name="combustible" />
+        </property>
+        <property name="boletos" type="java.lang.Integer">
+            <column name="boletos" />
+        </property>
+        <property name="nochero" type="int">
+            <column name="nochero" not-null="true" />
+        </property>
+        <property name="licitacion" type="java.lang.Integer">
+            <column name="licitacion" />
+        </property>
+        <property name="aseo" type="java.lang.Integer">
+            <column name="aseo" />
+        </property>
+        <property name="taller" type="java.lang.Integer">
+            <column name="taller" />
+        </property>
+        <property name="varios1" type="java.lang.Integer">
+            <column name="varios1" />
+        </property>
+        <property name="varios2" type="java.lang.Integer">
+            <column name="varios2" />
+        </property>
+        <property name="deficit" type="java.lang.Integer">
+            <column name="deficit" />
+        </property>
+        <property name="ahorro" type="java.lang.Integer">
+            <column name="ahorro" />
+        </property>
+        <property name="imposicion" type="java.lang.Integer">
+            <column name="imposicion" />
+        </property>
+        <property name="anticipo" type="java.lang.Integer">
+            <column name="anticipo" />
+        </property>
+    </class>
+</hibernate-mapping>

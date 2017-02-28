@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.FiniquitoRelacionLaboral" table="finiquito_relacion_laboral" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idFiniquitoRelacionLaboral" type="int">
+            <column name="id_finiquito_relacion_laboral" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="causalFiniquito" class="entities.CausalFiniquito" fetch="select">
+            <column name="id_causal_finiquito" not-null="true" />
+        </many-to-one>
+        <many-to-one name="relacionLaboral" class="entities.RelacionLaboral" fetch="select">
+            <column name="id_relacion_laboral" not-null="true" />
+        </many-to-one>
+        <property name="fechaFiniquito" type="date">
+            <column name="fecha_finiquito" length="10" not-null="true" />
+        </property>
+        <property name="fechaRegistroFiniquito" type="timestamp">
+            <column name="fecha_registro_finiquito" length="19" />
+        </property>
+        <property name="montoFiniquito" type="int">
+            <column name="monto_finiquito" not-null="true" />
+        </property>
+        <property name="aniosServicio" type="java.lang.Integer">
+            <column name="anios_servicio" />
+        </property>
+        <property name="aniosAdicionales" type="java.lang.Integer">
+            <column name="anios_adicionales" />
+        </property>
+    </class>
+</hibernate-mapping>

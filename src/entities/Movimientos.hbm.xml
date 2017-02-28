@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.Movimientos" table="movimientos" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idBus" type="java.lang.Integer">
+            <column name="id_bus" />
+            <generator class="identity" />
+        </id>
+        <property name="bus" type="java.lang.Integer">
+            <column name="Bus" />
+        </property>
+        <property name="unidad" type="string">
+            <column name="Unidad" length="1" />
+        </property>
+        <property name="cargo" type="string">
+            <column name="Cargo" length="50" />
+        </property>
+        <property name="monto" type="java.lang.Double">
+            <column name="Monto" precision="22" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

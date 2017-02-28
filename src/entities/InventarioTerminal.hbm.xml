@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.InventarioTerminal" table="inventario_terminal" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idInventarioTerminal" type="java.lang.Integer">
+            <column name="id_inventario_terminal" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="boleto" class="entities.Boleto" fetch="select">
+            <column name="id_boleto" not-null="true" />
+        </many-to-one>
+        <many-to-one name="terminal" class="entities.Terminal" fetch="select">
+            <column name="id_terminal" not-null="true" />
+        </many-to-one>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="estado" />
+        </property>
+        <property name="serie" type="int">
+            <column name="serie" not-null="true" />
+        </property>
+        <property name="identificador" type="string">
+            <column name="identificador" length="10" not-null="true" />
+        </property>
+        <set name="ventaBoletoGuias" table="venta_boleto_guia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_inventario_terminal" not-null="true" />
+            </key>
+            <one-to-many class="entities.VentaBoletoGuia" />
+        </set>
+    </class>
+</hibernate-mapping>

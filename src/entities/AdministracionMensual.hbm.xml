@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.AdministracionMensual" table="administracion_mensual" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idAdministracionMensual" type="java.lang.Integer">
+            <column name="id_administracion_mensual" />
+            <generator class="identity" />
+        </id>
+        <property name="mes" type="int">
+            <column name="mes" not-null="true" />
+        </property>
+        <property name="anio" type="int">
+            <column name="anio" not-null="true" />
+        </property>
+        <property name="valor" type="int">
+            <column name="valor" not-null="true" />
+        </property>
+        <set name="detalleIntervalosMensuals" table="detalle_intervalos_mensual" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_administracion_mensual" not-null="true" />
+            </key>
+            <one-to-many class="entities.DetalleIntervalosMensual" />
+        </set>
+    </class>
+</hibernate-mapping>

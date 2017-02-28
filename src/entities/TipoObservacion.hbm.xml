@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.TipoObservacion" table="tipo_observacion" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idTipoObservacion" type="java.lang.Integer">
+            <column name="id_tipo_observacion" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreTipoObservacion" type="string">
+            <column name="nombre_tipo_observacion" length="100" not-null="true" />
+        </property>
+        <set name="observacionTrabajadors" table="observacion_trabajador" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_tipo_observacion" not-null="true" />
+            </key>
+            <one-to-many class="entities.ObservacionTrabajador" />
+        </set>
+    </class>
+</hibernate-mapping>

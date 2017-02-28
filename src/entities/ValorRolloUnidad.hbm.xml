@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-09-2016 11:01:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.ValorRolloUnidad" table="valor_rollo_unidad" catalog="sigf_v1" optimistic-lock="version">
+        <id name="idValorRolloUnidad" type="java.lang.Integer">
+            <column name="id_valor_rollo_unidad" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="unidadNegocio" class="entities.UnidadNegocio" fetch="select">
+            <column name="id_unidad" not-null="true" />
+        </many-to-one>
+        <property name="compra" type="int">
+            <column name="compra" not-null="true" />
+        </property>
+        <property name="venta" type="int">
+            <column name="venta" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
