@@ -4,34 +4,92 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[CALL procedimiento_bono_tne_detalle_grupal()]]>
+		<![CDATA[(SELECT 
+    *
+FROM
+    BONO_TNE_ENERO17 ORDER BY flota ASC, terminal ASC, numeroBus ASC)]]>
 	</queryString>
-	<field name="id_tabla_monto" class="java.lang.Integer"/>
-	<field name="id_bus" class="java.lang.Integer"/>
-	<field name="numeroBus" class="java.lang.Integer"/>
-	<field name="numeroUnidad" class="java.lang.Integer"/>
-	<field name="flota" class="java.lang.String"/>
-	<field name="empresa" class="java.lang.String"/>
-	<field name="id_conductor" class="java.lang.Integer"/>
-	<field name="codigoConductor" class="java.lang.Integer"/>
-	<field name="nombreConductor" class="java.lang.String"/>
-	<field name="rutConductor" class="java.lang.String"/>
-	<field name="terminal" class="java.lang.String"/>
-	<field name="fecha" class="java.sql.Date"/>
-	<field name="numero" class="java.lang.Integer"/>
-	<field name="diasConductor" class="java.lang.Integer"/>
-	<field name="montoDia" class="java.lang.Integer"/>
-	<field name="nombreAfp" class="java.lang.String"/>
-	<field name="porcentajeAfp" class="java.lang.String"/>
-	<field name="montoAfp" class="java.lang.Integer"/>
-	<field name="cesantiaTrabajador" class="java.lang.Integer"/>
-	<field name="nombreIsapre" class="java.lang.String"/>
-	<field name="montoIsapre" class="java.lang.Integer"/>
-	<field name="porcentajeCaja" class="java.lang.String"/>
-	<field name="montoCaja" class="java.lang.Integer"/>
-	<field name="porcentajeInp" class="java.lang.String"/>
-	<field name="montoInp" class="java.lang.Integer"/>
-	<field name="totalPagar" class="java.lang.Integer"/>
+	<field name="BONO_TNE_ENERO17col" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_tabla_monto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_bus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroBus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroUnidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="flota" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empresa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_conductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoConductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreConductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rutConductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="terminal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasConductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoDia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreAfp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeAfp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoAfp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cesantiaTrabajador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreIsapre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoIsapre" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeCaja" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoCaja" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeInp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoInp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalPagar" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<variable name="descuentos" class="java.lang.Integer">
 		<variableExpression><![CDATA[$F{montoAfp}+$F{cesantiaTrabajador}+$F{montoIsapre}+$F{montoCaja}+$F{montoInp}]]></variableExpression>
 	</variable>
@@ -41,61 +99,33 @@
 	<variable name="totalTerminal" class="java.lang.Integer" resetType="Group" resetGroup="terminal" incrementType="Group" incrementGroup="terminal" calculation="Sum">
 		<variableExpression><![CDATA[$V{total}]]></variableExpression>
 	</variable>
-	<variable name="totalPagar_1" class="java.lang.Integer" resetType="Group" resetGroup="terminal" calculation="Sum">
-		<variableExpression><![CDATA[$F{totalPagar}]]></variableExpression>
-	</variable>
-	<variable name="totalPagar_2" class="java.lang.Integer" resetType="Group" resetGroup="flota" calculation="Sum">
-		<variableExpression><![CDATA[$F{totalPagar}]]></variableExpression>
-	</variable>
 	<group name="flota" isStartNewPage="true" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{flota}]]></groupExpression>
 		<groupHeader>
 			<band height="21">
 				<textField>
-					<reportElement x="43" y="1" width="141" height="20" uuid="21ea1649-9190-4074-8272-7e7eba1f48a9"/>
-					<textElement>
-						<font isBold="true"/>
-					</textElement>
+					<reportElement x="56" y="1" width="141" height="20" uuid="21ea1649-9190-4074-8272-7e7eba1f48a9"/>
 					<textFieldExpression><![CDATA[$F{flota}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="1" width="43" height="20" uuid="de62cc37-e5dc-44eb-b6aa-2be929db0cef"/>
+					<reportElement x="0" y="1" width="56" height="20" uuid="de62cc37-e5dc-44eb-b6aa-2be929db0cef"/>
 					<textElement textAlignment="Right"/>
 					<text><![CDATA[Flota:]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
-		<groupFooter>
-			<band height="26">
-				<textField pattern="$ #,##0">
-					<reportElement x="407" y="0" width="82" height="20" uuid="ed79a051-7299-4f4c-bab5-7aab7ccaf73d"/>
-					<textElement textAlignment="Right">
-						<font isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{totalPagar_2}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="318" y="0" width="89" height="20" uuid="5f655c1b-c42e-43b1-abd9-f2c050abb537"/>
-					<textElement textAlignment="Right"/>
-					<text><![CDATA[Total Flota:]]></text>
-				</staticText>
-			</band>
-		</groupFooter>
 	</group>
 	<group name="terminal">
 		<groupExpression><![CDATA[$F{terminal}]]></groupExpression>
 		<groupHeader>
 			<band height="46">
 				<staticText>
-					<reportElement x="0" y="0" width="43" height="20" uuid="ab25f242-5b3c-4624-af45-0018128e2847"/>
+					<reportElement x="0" y="0" width="56" height="20" uuid="ab25f242-5b3c-4624-af45-0018128e2847"/>
 					<textElement textAlignment="Right"/>
 					<text><![CDATA[Terminal:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="43" y="0" width="212" height="20" uuid="7fc21222-eeca-4f54-b470-844a15b35b9b"/>
-					<textElement>
-						<font isBold="true"/>
-					</textElement>
+					<reportElement x="56" y="0" width="212" height="20" uuid="7fc21222-eeca-4f54-b470-844a15b35b9b"/>
 					<textFieldExpression><![CDATA[$F{terminal}]]></textFieldExpression>
 				</textField>
 				<staticText>
@@ -137,20 +167,7 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="20">
-				<textField pattern="$ #,##0">
-					<reportElement x="407" y="0" width="82" height="20" uuid="9d9d9831-b26f-4245-ae07-514a4ed6a0c0"/>
-					<textElement textAlignment="Right">
-						<font isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{totalPagar_1}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="318" y="0" width="89" height="20" uuid="ac87153f-05c3-439c-b1a6-4814e378647e"/>
-					<textElement textAlignment="Right"/>
-					<text><![CDATA[Total Terminal:]]></text>
-				</staticText>
-			</band>
+			<band height="25"/>
 		</groupFooter>
 	</group>
 	<background>
@@ -222,7 +239,7 @@
 			<textField pattern="$ #,##0">
 				<reportElement x="407" y="0" width="82" height="20" uuid="5bac77a3-2bda-4457-9750-6ff0514d1254"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{totalPagar}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
