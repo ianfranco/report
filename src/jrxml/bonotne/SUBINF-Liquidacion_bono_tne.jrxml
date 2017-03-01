@@ -106,7 +106,7 @@
 			<textField pattern="$ #,###">
 				<reportElement x="142" y="97" width="78" height="15" uuid="f8f4afe2-dba1-4849-a688-25619db35b43"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{montoAfp}+$F{cesantiaTrabajador}+$F{montoIsapre}+$F{montoCaja}+$F{montoInp}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{montoAfp}+$F{cesantiaTrabajador}+$F{montoCaja}+$F{montoInp}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="2" y="37" width="140" height="15" uuid="f25c828a-9eb5-4346-a2bb-1e6f27c290c7"/>
