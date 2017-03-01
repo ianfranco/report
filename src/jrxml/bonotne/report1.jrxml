@@ -48,7 +48,10 @@
 2576,
 3367,
 236,
-2755) ORDER BY terminal, nombreConductor ASC, id_bus ASC]]>
+2755,
+1113,
+3299,
+325) ORDER BY terminal, nombreConductor ASC, id_bus ASC]]>
 	</queryString>
 	<field name="BONO_TNE_ENERO17col" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>

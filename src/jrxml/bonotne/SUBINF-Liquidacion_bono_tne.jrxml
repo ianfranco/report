@@ -9,8 +9,8 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="idTrabajador" class="java.lang.Integer"/>
 	<parameter name="montoImponible" class="java.lang.Integer"/>
-	<queryString language="SQL">
-		<![CDATA[CALL liquidacion_bono_tne( $P{idTrabajador}, $P{montoImponible}  , '2017-02-01')]]>
+	<queryString>
+		<![CDATA[CALL liquidacion_bono_tne( $P{idTrabajador}, $P{montoImponible}  , '2017-02-01') ]]>
 	</queryString>
 	<field name="nombreAfp" class="java.lang.String"/>
 	<field name="porcentajeAfp" class="java.math.BigDecimal"/>
