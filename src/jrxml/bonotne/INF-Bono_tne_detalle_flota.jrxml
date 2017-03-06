@@ -33,7 +33,7 @@
 	<field name="montoInp" class="java.lang.Integer"/>
 	<field name="totalPagar" class="java.lang.Integer"/>
 	<variable name="descuentos" class="java.lang.Integer">
-		<variableExpression><![CDATA[$F{montoAfp}+$F{cesantiaTrabajador}+$F{montoIsapre}+$F{montoCaja}+$F{montoInp}]]></variableExpression>
+		<variableExpression><![CDATA[$F{montoAfp}+$F{cesantiaTrabajador}+$F{montoCaja}+$F{montoInp}]]></variableExpression>
 	</variable>
 	<variable name="total" class="java.lang.Integer">
 		<variableExpression><![CDATA[$F{montoDia}-$V{descuentos}]]></variableExpression>

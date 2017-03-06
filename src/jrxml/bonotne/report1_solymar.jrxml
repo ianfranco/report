@@ -7,11 +7,8 @@
 		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\Documents\\NetBeansProjects\\Report\\src\\jrxml\\bonotne\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM sigf_v1.BONO_TNE_ENERO17 WHERE codigoConductor IN (1248) ORDER BY terminal, nombreConductor ASC, id_bus ASC]]>
+		<![CDATA[SELECT * FROM sigf_v1.BONOTNEENERO17SOLYMAR  ORDER BY terminal, nombreConductor ASC, id_bus ASC]]>
 	</queryString>
-	<field name="BONO_TNE_ENERO17col" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="id_tabla_monto" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>

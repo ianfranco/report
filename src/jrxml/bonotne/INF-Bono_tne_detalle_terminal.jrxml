@@ -7,11 +7,8 @@
 		<![CDATA[(SELECT 
     *
 FROM
-    BONO_TNE_ENERO17 ORDER BY terminal ASC, nombreConductor ASC)]]>
+    BONOTNEENERO17SOLYMAR ORDER BY terminal ASC, nombreConductor ASC)]]>
 	</queryString>
-	<field name="BONO_TNE_ENERO17col" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="id_tabla_monto" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
