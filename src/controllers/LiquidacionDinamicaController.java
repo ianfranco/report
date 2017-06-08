@@ -20,7 +20,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.swing.JRViewer;
-import views.MesSelectorView;
 import views.MesSelectorlLiquidacionView;
 import views.ProcesoRecaudacionComboBoxModel;
 import views.ReporterVBView;
@@ -39,9 +38,9 @@ public class LiquidacionDinamicaController {
     public LiquidacionDinamicaController(MesSelectorlLiquidacionView view, ReporterVBView frame) {
         this.view = view;
         this.frame = frame;
- 
+
         this.view.getYearField().setText("2016");
-        
+
         this.view.getViewButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,31 +65,34 @@ public class LiquidacionDinamicaController {
     private void view() {
         int mes = this.view.getMonthComboBox().getSelectedIndex();
         int operador = this.view.getEmpresa().getSelectedIndex();
-        
-        
+
         switch (mes) {
             case 0:
-                System.err.println("INDICE:" + mes + " ENERO 2017");                
-                enero2017(true, operador);            
+                System.err.println("INDICE:" + mes + " ENERO 2017");
+                enero2017(true, operador);
                 break;
-            case 8:                
-                System.err.println("INDICE:" + mes + " SEPTIEMBRE");                
-                if(operador == 0){
+            case 4:
+                System.err.println("INDICE:" + mes + "MAYO 2017");
+                mayo2017(true, operador);
+                break;
+            case 8:
+                System.err.println("INDICE:" + mes + " SEPTIEMBRE");
+                if (operador == 0) {
                     septiembreViñaBus(true);
-                }else{
+                } else {
                     septiembreSolyMar(true);
-                }                
+                }
                 break;
-            case 9:                
+            case 9:
                 System.err.println("INDICE:" + mes + " OCTUBRE");
-                if(operador == 0){
+                if (operador == 0) {
                     octubreViñabus(true);
-                }else{
+                } else {
                     octubreSolyMar(true);
                 }
                 break;
             case 10:
-                System.err.println("INDICE:" + mes + " NOVIEMBRE"+" OPERADOR:"+operador);
+                System.err.println("INDICE:" + mes + " NOVIEMBRE" + " OPERADOR:" + operador);
                 noviembre(true, operador);
                 break;
             case 11:
@@ -138,7 +140,7 @@ public class LiquidacionDinamicaController {
             System.err.println(jre.getMessage());
         }
     }
-    
+
     //SEPTIEMBRE 2016 SOL Y MAR 
     private void septiembreSolyMar(boolean flag) {
 
@@ -174,7 +176,7 @@ public class LiquidacionDinamicaController {
             System.err.println(jre.getMessage());
         }
     }
-    
+
     //OCTUBRE 2016 VIÑA BUS
     private void octubreViñabus(boolean flag) {
 
@@ -227,12 +229,11 @@ public class LiquidacionDinamicaController {
 
             String codigo = this.view.getCodigo();
 
-            
             TrabajadorDaoImpl dao = new TrabajadorDaoImpl();
             Trabajador trabajador = dao.findByCodigo(Integer.valueOf(codigo));
-            
+
             int idTrabajador = trabajador.getIdTrabajador();
-            
+
             Map params = new HashMap();
 
             params.put("fecha", this.view.getFecha());
@@ -243,7 +244,7 @@ public class LiquidacionDinamicaController {
             params.put("idTrabajador", idTrabajador);
 
             Conexion con = new Conexion();
-            
+
             jasperReport = JasperCompileManager.compileReport("jrxml/INF-LiquidacionSueldoDinamica_sm.jrxml");
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, con.getConnection());
@@ -261,7 +262,7 @@ public class LiquidacionDinamicaController {
             System.err.println(jre.getMessage());
         }
     }
-        
+
     //NOVIEMBRE 2016 
     private void noviembre(boolean flag, int idOperador) {
 
@@ -305,7 +306,7 @@ public class LiquidacionDinamicaController {
             System.err.println(jre.getMessage());
         }
     }
-    
+
     //DICIEMBRE 2016
     private void diciembre(boolean flag, int idOperador) {
 
@@ -349,7 +350,7 @@ public class LiquidacionDinamicaController {
             System.err.println(jre.getMessage());
         }
     }
-    
+
     //DICIEMBRE 2016
     private void enero2017(boolean flag, int idOperador) {
 
@@ -393,5 +394,49 @@ public class LiquidacionDinamicaController {
             System.err.println(jre.getMessage());
         }
     }
-    
+
+    //DICIEMBRE 2016
+    private void mayo2017(boolean flag, int idOperador) {
+
+        JasperReport jasperReport;
+
+        try {
+
+            String codigo = this.view.getCodigo();
+
+            TrabajadorDaoImpl dao = new TrabajadorDaoImpl();
+            Trabajador trabajador = dao.findByCodigo(Integer.valueOf(codigo));
+
+            int idTrabajador = trabajador.getIdTrabajador();
+
+            Map params = new HashMap();
+
+            params.put("desde", this.view.getFecha());
+
+            params.put("año", this.view.getAnio());
+            params.put("mes", this.view.getMes());
+            params.put("conductor", this.view.getCodigo());
+            params.put("idTrabajador", idTrabajador);
+            params.put("idOperador", idOperador);
+
+            Conexion con = new Conexion();
+
+            jasperReport = JasperCompileManager.compileReport("jrxml/INF-LiquidacionSueldoDinamicaMayo.jrxml");
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, con.getConnection());
+
+            if (flag) {
+                this.frame.setNewReport(new JRViewer(jasperPrint), "Liquidación de Sueldo");
+                System.err.println("conductor:" + codigo);
+                System.err.println("VIEW");
+            } else {
+                JasperPrintManager.printReport(jasperPrint, true);
+                System.err.println("PRINT");
+            }
+
+        } catch (JRException jre) {
+            System.err.println(jre.getMessage());
+        }
+    }
+
 }

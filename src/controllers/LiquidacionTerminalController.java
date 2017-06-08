@@ -92,13 +92,12 @@ public class LiquidacionTerminalController {
             params.put("idTerminal", this.terminal.getIdTerminal());
             params.put("idOperador", idOperador);
             
-            InputStream in = getClass().getResourceAsStream("/jrxml/INF-LiquidacionSueldoDinamica_terminal_1.jrxml");
-
-            jasperReport = JasperCompileManager.compileReport(in);
-
             Conexion con = new Conexion();
 
+            jasperReport = JasperCompileManager.compileReport("jrxml/INF-LiquidacionSueldoDinamicaMayo.jrxml");
+
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, con.getConnection());
+                        
 
             if (flag) {
                 this.frame.setNewReport(new JRViewer(jasperPrint), "Liquidación x Terminal");
