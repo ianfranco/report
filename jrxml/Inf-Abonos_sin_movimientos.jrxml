@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe2ff371-55ca-4038-8610-3e7570537024">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT 
     codigo_trabajador,
@@ -15,12 +18,12 @@
                 LEFT JOIN
             empresa ON relacion_laboral.id_empresa = empresa.id_empresa
         WHERE
-            fecha_inicio <= LAST_DAY('2016-12-01')
+            fecha_inicio <= LAST_DAY('2017-05-01')
                 AND fecha_fin BETWEEN IF(fecha_inicio = fecha_fin,
                 fecha_fin,
-                '2016-12-01') AND IF(fecha_fin > LAST_DAY('2016-12-01'),
+                '2017-05-01') AND IF(fecha_fin > LAST_DAY('2017-05-01'),
                 fecha_fin,
-                LAST_DAY('2016-12-01'))
+                LAST_DAY('2017-05-01'))
                 AND relacion_laboral.id_trabajador = trabajador.id_trabajador
         GROUP BY id_trabajador
         ORDER BY fecha_fin DESC) AS empleador,
@@ -30,7 +33,7 @@
             guia
         WHERE
             guia.id_trabajador = trabajador.id_trabajador
-                AND guia.fecha_recaudacion BETWEEN '2016-12-01' AND '2016-12-31' ) AS Guias, 
+                AND guia.fecha_recaudacion BETWEEN '2017-05-01' AND '2017-05-31' ) AS Guias, 
                 0 AS montoCinco, 
                 0 AS montoAhorro, 
                 haber_trabajador_liquidacion.monto AS montoAbono, 
@@ -43,7 +46,7 @@ FROM
         LEFT JOIN
     trabajador ON haber_trabajador_liquidacion.id_trabajador = trabajador.id_trabajador
 WHERE
-    haber_trabajador_liquidacion.fecha_inicio_haber BETWEEN '2016-12-01' AND '2016-12-31'
+    haber_trabajador_liquidacion.fecha_inicio_haber BETWEEN '2017-05-01' AND '2017-05-31'
         AND haber_trabajador_liquidacion.id_haber_trabajador <> 8
 HAVING empleador IS NULL AND Guias = 0]]>
 	</queryString>
@@ -84,7 +87,7 @@ HAVING empleador IS NULL AND Guias = 0]]>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DICIEMBRE 2016]]></text>
+				<text><![CDATA[MAYO 2017]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="15" uuid="2ba0f61d-4d20-4f4e-b9d8-3d4423e64a25">
