@@ -21,14 +21,14 @@
     terminal.nombre_terminal,
     unidad_negocio.numero_unidad_negocio,
     flota.nombre_flota,
-    @administracion:=SUM_EGRESO(bus.id_bus, '2017-01-01', 1) AS administracion,
-    @licitacion:=SUM_EGRESO(bus.id_bus, '2017-01-01', 7) AS licitacion,
-    @total:=SUM_SALDOS(bus.id_bus, '2017-01-01') AS ingresos,
-    @cargos:=CARGOS_BUS(bus.id_bus, '2017-01-01') AS cargos,
-    @abonos:=ABONOS_BUS(bus.id_bus, '2017-01-01') AS abonos,
-    @taller:=SUM_EGRESO(bus.id_bus, '2017-01-01', 4) AS taller,
+    @administracion:=SUM_EGRESO(bus.id_bus, '2017-05-01', 1) AS administracion,
+    @licitacion:=SUM_EGRESO(bus.id_bus, '2017-05-01', 7) AS licitacion,
+    @total:=SUM_SALDOS(bus.id_bus, '2017-05-01') AS ingresos,
+    @cargos:=CARGOS_BUS(bus.id_bus, '2017-05-01') AS cargos,
+    @abonos:=ABONOS_BUS(bus.id_bus, '2017-05-01') AS abonos,
+    @taller:=SUM_EGRESO(bus.id_bus, '2017-05-01', 4) AS taller,
     @saldo:=(@administracion + @licitacion + @taller) AS saldo,
-    @aseo:=SUM_EGRESO(bus.id_bus, '2017-01-01', 8) AS aseo, 
+    @aseo:=SUM_EGRESO(bus.id_bus, '2017-05-01', 8) AS aseo, 
     (SELECT 
     CONCAT(trabajador.apellido_paterno_trabajador,
             ' ',
@@ -41,7 +41,7 @@ FROM
     trabajador ON guia.id_trabajador = trabajador.id_trabajador
 WHERE
     guia.id_bus = bus.id_bus
-        AND guia.fecha_recaudacion BETWEEN  '2017-01-01' AND  LAST_DAY('2017-01-01') GROUP BY guia.id_trabajador ORDER BY COUNT(guia.folio) DESC LIMIT 0,1) AS nombreConductor, 
+        AND guia.fecha_recaudacion BETWEEN  '2017-05-01' AND  LAST_DAY('2017-05-01') GROUP BY guia.id_trabajador ORDER BY COUNT(guia.folio) DESC LIMIT 0,1) AS nombreConductor, 
         IF(@saldo>2000000, 200000,IF(@saldo>1800000, 180000, IF(@saldo>1600000, 150000, IF(@saldo>1500000, 120000, IF(@saldo>1400000, 100000, 0 ))))) as premio
 FROM
     bus
