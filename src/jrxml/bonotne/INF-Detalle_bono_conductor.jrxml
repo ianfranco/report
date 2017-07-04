@@ -13,16 +13,13 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="98"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\Documents\\NetBeansProjects\\Report\\src\\jrxml\\bonotne\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM sigf_v1.BONO_TNE_ENERO17 ORDER BY terminal, nombreConductor ASC, id_bus ASC,  fecha ASC ]]>
+		<![CDATA[SELECT * FROM sigf_v1.BONOTNEFEBRERO17 ORDER BY terminal, nombreConductor ASC, id_bus ASC,  fecha ASC]]>
 	</queryString>
-	<field name="BONO_TNE_ENERO17col" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="id_tabla_monto" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -229,7 +226,7 @@
 					<textElement textAlignment="Center">
 						<font size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[1 ERA CUOTA 2017]]></text>
+					<text><![CDATA[2DA CUOTA 2017]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="360" y="0" width="210" height="30" uuid="e77c2a57-ac5c-4a7e-96c2-aa7a91b3f8b2"/>
