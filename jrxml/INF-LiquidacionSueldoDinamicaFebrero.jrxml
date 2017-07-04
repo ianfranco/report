@@ -10,106 +10,274 @@
 	<parameter name="conductor" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="desde" class="java.util.Date" isForPrompting="false"/>
+	<parameter name="desde" class="java.util.Date"/>
 	<parameter name="hasta" class="java.util.Date" isForPrompting="false"/>
-	<parameter name="idTrabajador" class="java.lang.Integer" isForPrompting="false"/>
-	<parameter name="idTerminal" class="java.lang.Integer">
+	<parameter name="idTrabajador" class="java.lang.Integer"/>
+	<parameter name="idTerminal" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="idOperador" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/ianfranco/NetBeansProjects/report/jrxml/"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM liquidaciones_mayo_2017_solymar WHERE codigoTrabajador = 2791]]>
+		<![CDATA[call final_planillon_liquidacion_febrero_individual($P{idOperador}, $P{idTrabajador},  '2017-02-01')]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer"/>
-	<field name="id_relacion_laboral" class="java.lang.Integer"/>
-	<field name="fecha" class="java.sql.Date"/>
-	<field name="rutTrabajador" class="java.lang.String"/>
-	<field name="id_trabajador" class="java.lang.Integer"/>
-	<field name="codigoTrabajador" class="java.lang.Integer"/>
-	<field name="nombreTrabajador" class="java.lang.String"/>
-	<field name="rutEmpleador" class="java.lang.String"/>
-	<field name="codigoEmpleador" class="java.lang.Integer"/>
-	<field name="NombreEmpresario" class="java.lang.String"/>
-	<field name="codigoTerminal" class="java.lang.Integer"/>
-	<field name="nombreTerminal" class="java.lang.String"/>
-	<field name="nombreSindicato" class="java.lang.String"/>
-	<field name="tipoContrato" class="java.lang.Integer"/>
-	<field name="tipoContratoChar" class="java.lang.String"/>
-	<field name="baseLiquidacion" class="java.lang.Integer"/>
-	<field name="bruto" class="java.lang.Integer"/>
-	<field name="bonotne" class="java.lang.Integer"/>
-	<field name="pagotne" class="java.lang.Integer"/>
-	<field name="imposicionestne" class="java.lang.Integer"/>
-	<field name="imponible" class="java.lang.Integer"/>
-	<field name="cincoPorcientoTotal" class="java.lang.Integer"/>
-	<field name="cincoPorciento" class="java.lang.Integer"/>
-	<field name="anexoCinco" class="java.lang.Integer"/>
-	<field name="ahorroGuia" class="java.lang.Integer"/>
-	<field name="abonos" class="java.lang.Integer"/>
-	<field name="totalHaberes" class="java.lang.Integer"/>
-	<field name="base" class="java.lang.Integer"/>
-	<field name="cuatroPorciento" class="java.lang.Integer"/>
-	<field name="unoPorciento" class="java.lang.Integer"/>
-	<field name="unoComaDosPorciento" class="java.lang.Integer"/>
-	<field name="ceroComaOchoPorciento" class="java.lang.Integer"/>
-	<field name="dosPorciento" class="java.lang.Integer"/>
-	<field name="totalPorcentajes" class="java.lang.Integer"/>
-	<field name="ajusteComisionAuxiliar" class="java.lang.Integer"/>
-	<field name="ajusteComision" class="java.lang.Integer"/>
-	<field name="numeroCargas" class="java.lang.Integer"/>
-	<field name="montoCargas" class="java.lang.Integer"/>
-	<field name="montoRetroactivo" class="java.lang.Integer"/>
-	<field name="montoFeriado" class="java.lang.Integer"/>
-	<field name="nombreAfp" class="java.lang.String"/>
-	<field name="porcentajeAfp" class="java.lang.String"/>
-	<field name="montoAfp" class="java.lang.Integer"/>
-	<field name="cesantiaTrabajador" class="java.lang.Integer"/>
-	<field name="cesantiaEmpleador" class="java.lang.Integer"/>
-	<field name="cesantiaTotal" class="java.lang.Integer"/>
-	<field name="ahorroVoluntario" class="java.lang.Integer"/>
-	<field name="montoSIS" class="java.lang.Integer"/>
-	<field name="nombreIsapre" class="java.lang.String"/>
-	<field name="montoIsapre" class="java.lang.Integer"/>
-	<field name="porcentajeCaja" class="java.lang.String"/>
-	<field name="montoCaja" class="java.lang.Integer"/>
-	<field name="porcentajeInp" class="java.lang.String"/>
-	<field name="montoInp" class="java.lang.Integer"/>
-	<field name="observacion" class="java.lang.String"/>
-	<field name="diasTrabajados" class="java.lang.Integer"/>
-	<field name="diasVacaciones" class="java.lang.Integer"/>
-	<field name="diasLicencias" class="java.lang.Integer"/>
-	<field name="diasDescanso" class="java.lang.Integer"/>
-	<field name="diasGuias" class="java.lang.Integer"/>
-	<field name="diasLimpios" class="java.lang.Integer"/>
-	<field name="totalDias" class="java.lang.Integer"/>
-	<field name="fechaDesdeContrato" class="java.sql.Date"/>
-	<field name="fechaHastaContrato" class="java.sql.Date"/>
-	<field name="fechaDesdeFeriado" class="java.sql.Date"/>
-	<field name="fechaHastaFeriado" class="java.sql.Date"/>
-	<field name="fechaDesdeLicencias" class="java.sql.Date"/>
-	<field name="fechaHastaLicencias" class="java.sql.Date"/>
-	<field name="codigoEMP" class="java.lang.Integer"/>
-	<field name="totalFila" class="java.lang.Integer"/>
-	<field name="montoSaldoAnterior" class="java.lang.Integer"/>
-	<field name="montoRetencionJudicial" class="java.lang.Integer"/>
-	<field name="montoCreditoCaja" class="java.lang.Integer"/>
-	<field name="montoReconocimientoDeuda" class="java.lang.Integer"/>
-	<field name="montoCreditoSalud" class="java.lang.Integer"/>
-	<field name="montoSeguro" class="java.lang.Integer"/>
-	<field name="montoDentista" class="java.lang.Integer"/>
-	<field name="montoOtrosDcto" class="java.lang.Integer"/>
-	<field name="montoSindicato" class="java.lang.Integer"/>
-	<field name="totalDescuentosLegales" class="java.lang.Integer"/>
-	<field name="totalDescuentos" class="java.lang.Integer"/>
-	<field name="totalFinalDescuentos" class="java.lang.Integer"/>
-	<field name="saldoFinal" class="java.lang.Integer"/>
-	<field name="saldoReal" class="java.lang.Integer"/>
-	<field name="errorSaldo" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_relacion_laboral" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rutTrabajador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_trabajador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoTrabajador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreTrabajador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rutEmpleador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoEmpleador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreEmpresario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoTerminal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreTerminal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreSindicato" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoContrato" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoContratoChar" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="baseLiquidacion" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bruto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bonotne" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pagotne" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="imposicionestne" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="imponible" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cincoPorcientoTotal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cincoPorciento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="anexoCinco" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ahorroGuia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="abonos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalHaberes" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="base" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cuatroPorciento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unoPorciento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unoComaDosPorciento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ceroComaOchoPorciento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dosPorciento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalPorcentajes" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ajusteComisionAuxiliar" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ajusteComision" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroCargas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoCargas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoRetroactivo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoFeriado" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreAfp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeAfp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoAfp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cesantiaTrabajador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cesantiaEmpleador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cesantiaTotal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ahorroVoluntario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoSIS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreIsapre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoIsapre" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeCaja" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoCaja" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeInp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoInp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasTrabajados" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasVacaciones" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasLicencias" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasDescanso" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasGuias" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasLimpios" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalDias" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaDesdeContrato" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaHastaContrato" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaDesdeFeriado" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaHastaFeriado" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaDesdeLicencias" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaHastaLicencias" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoEMP" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalFila" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoSaldoAnterior" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoRetencionJudicial" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoCreditoCaja" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoReconocimientoDeuda" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoCreditoSalud" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoSeguro" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoDentista" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoOtrosDcto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoSindicato" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalDescuentosLegales" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalDescuentos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalFinalDescuentos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="saldoFinal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="saldoReal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="errorSaldo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<variable name="totalDescuentos" class="java.lang.Integer">
 		<variableExpression><![CDATA[$F{montoSaldoAnterior}+$F{montoSindicato}+$F{montoRetencionJudicial}+$F{montoCaja}+$F{montoAfp}+$F{montoInp}+$F{cesantiaTrabajador}+$F{montoCreditoCaja}+$F{montoIsapre}+$F{ahorroVoluntario}+$F{montoCreditoSalud}+$F{montoDentista}+$F{montoSeguro}]]></variableExpression>
 	</variable>
@@ -123,7 +291,7 @@
 		<variableExpression><![CDATA[$V{totalHaberes}-$V{totalDescuentos}]]></variableExpression>
 	</variable>
 	<variable name="anticipoReal" class="java.lang.Integer">
-		<variableExpression><![CDATA[$V{alcanceLiquido}-($F{cincoPorciento}.intValue()-$V{totalDescuentos})]]></variableExpression>
+		<variableExpression><![CDATA[$V{alcanceLiquido}-(($F{cincoPorciento}.intValue()+$F{imposicionestne}.intValue())-$V{totalDescuentos})]]></variableExpression>
 	</variable>
 	<variable name="saldoLiquido" class="java.lang.Integer"/>
 	<group name="CON_GAR" isStartNewPage="true" keepTogether="true">
@@ -149,7 +317,7 @@
 		<groupFooter>
 			<band height="78">
 				<subreport>
-					<reportElement x="0" y="0" width="572" height="78" uuid="d36106e8-5f12-4488-88c6-6f9f2301cf76"/>
+					<reportElement x="0" y="0" width="572" height="78" isRemoveLineWhenBlank="true" uuid="1da2391d-49ff-47d0-9428-49a8289456c4"/>
 					<subreportParameter name="NombreConductor">
 						<subreportParameterExpression><![CDATA[$F{nombreTrabajador}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -168,11 +336,17 @@
 					<subreportParameter name="abono">
 						<subreportParameterExpression><![CDATA[$F{abonos}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="tne">
+						<subreportParameterExpression><![CDATA[$F{imposicionestne}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter name="NombreEmpresario">
 						<subreportParameterExpression><![CDATA[$F{NombreEmpresario}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="desdeMes">
 						<subreportParameterExpression><![CDATA[$F{fechaDesdeContrato}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="FECHACOMPLETA">
+						<subreportParameterExpression><![CDATA[$P{fechaCompleta}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="dv">
 						<subreportParameterExpression><![CDATA[$F{diasVacaciones}]]></subreportParameterExpression>
@@ -187,13 +361,13 @@
 						<subreportParameterExpression><![CDATA[$F{id_trabajador}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="desdeFeriado">
-						<subreportParameterExpression><![CDATA[$F{fechaHastaFeriado}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$F{fechaDesdeFeriado}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="hastaMes">
 						<subreportParameterExpression><![CDATA[$F{fechaHastaContrato}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["AnexoLiquidacion_mayo.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["AnexoLiquidacion_febrero.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupFooter>
@@ -415,7 +589,7 @@
 				<textElement>
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Caja de Compensación]]></text>
+				<text><![CDATA[Caja 18 Septiembre ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText" x="302" y="216" width="152" height="15" uuid="1dcc5d66-2ce4-427e-906a-fc1c80bb8453"/>
@@ -516,7 +690,7 @@
 				<text><![CDATA[Séptimo Día]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="10" y="242" width="152" height="15" uuid="110cb4d8-5e12-4993-a9c5-d4db6e450213"/>
+				<reportElement key="staticText" x="10" y="250" width="152" height="15" uuid="110cb4d8-5e12-4993-a9c5-d4db6e450213"/>
 				<textElement>
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
@@ -579,7 +753,7 @@
 				<text><![CDATA[Detalle Días ]]></text>
 			</staticText>
 			<textField pattern="$ #,##0" isBlankWhenNull="false">
-				<reportElement key="textField" x="162" y="242" width="100" height="15" uuid="16e54fd0-5552-455d-b561-04345c479dbb"/>
+				<reportElement key="textField" x="162" y="250" width="100" height="15" uuid="16e54fd0-5552-455d-b561-04345c479dbb"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
@@ -605,7 +779,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{diasDescanso}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{totalDias}-($F{diasLimpios}+$F{diasVacaciones}+$F{diasLicencias}))]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="225" y="471" width="37" height="15" uuid="0de37d5a-5fd1-4e10-b8b1-661797a65b3b"/>
@@ -628,7 +802,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{diasGuias}+$F{diasVacaciones}+$F{diasDescanso}+$F{diasLicencias})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{totalDias})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="225" y="456" width="37" height="15" uuid="3bcd0c52-779e-496e-ab67-a10a74eadcbf"/>
@@ -644,7 +818,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{diasGuias}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{diasLimpios}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText" x="10" y="426" width="115" height="15" uuid="c6e6eb96-ae0d-43b3-8bd3-f69690eea1ed"/>
@@ -777,7 +951,7 @@
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{cincoPorciento}.intValue()-$V{totalDescuentos}.intValue())]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(($F{cincoPorciento}.intValue()+$F{imposicionestne}.intValue())-$V{totalDescuentos}.intValue())]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement key="staticText" x="10" y="620" width="532" height="49" uuid="158185dc-87f0-4832-9e85-106793014dad"/>
@@ -805,7 +979,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[MAYO 2017]]></text>
+				<text><![CDATA[FEBRERO 2017]]></text>
 			</staticText>
 			<line>
 				<reportElement x="366" y="683" width="154" height="1" uuid="83fd4145-e27a-4f3a-af12-a76fa1de7e77"/>
@@ -831,13 +1005,13 @@
 				</textElement>
 				<text><![CDATA[Sueldo Base]]></text>
 			</staticText>
-			<staticText>
-				<reportElement key="staticText" x="162" y="98" width="100" height="24" uuid="bfe2fc00-1f5d-46d8-8505-313ad662375c"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+			<textField pattern="$ #,##0">
+				<reportElement key="staticText" x="162" y="98" width="100" height="24" uuid="c9903a1e-adb5-4a5a-8769-c1200819c601"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[$ 264.000]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{baseLiquidacion}]]></textFieldExpression>
+			</textField>
 			<line>
 				<reportElement x="9" y="123" width="268" height="1" uuid="04bf5c81-36b3-42c9-a3f6-842c40a23aab"/>
 			</line>
@@ -898,6 +1072,20 @@
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{montoSeguro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="10" y="231" width="136" height="15" uuid="8aa6287b-8c49-4951-9510-9da338cd1424"/>
+				<textElement>
+					<font fontName="Monospaced" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bono TNE 1era Cuota]]></text>
+			</staticText>
+			<textField pattern="$ #,##0">
+				<reportElement x="162" y="231" width="100" height="15" uuid="24a7c916-afd6-4e24-be48-3a5ddc928ce2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Monospaced" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonotne}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -23,7 +23,7 @@
 		<defaultValueExpression><![CDATA["/home/ianfranco/NetBeansProjects/report/jrxml/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM liquidaciones_mayo_2017_solymar WHERE codigoTrabajador = 2791]]>
+		<![CDATA[SELECT * FROM liquidaciones_mayo_2017 WHERE codigoTrabajador IN (2710, 1437)]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -186,11 +186,11 @@
 					<subreportParameter name="idConductor">
 						<subreportParameterExpression><![CDATA[$F{id_trabajador}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="desdeFeriado">
-						<subreportParameterExpression><![CDATA[$F{fechaHastaFeriado}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="hastaMes">
 						<subreportParameterExpression><![CDATA[$F{fechaHastaContrato}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="desdeFeriado">
+						<subreportParameterExpression><![CDATA[$F{fechaDesdeFeriado}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["AnexoLiquidacion_mayo.jasper"]]></subreportExpression>
