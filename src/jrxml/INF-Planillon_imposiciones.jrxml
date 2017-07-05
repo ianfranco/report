@@ -20,7 +20,7 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_mayo($P{idOperador},$P{fecha})]]>
+		<![CDATA[CALL final_planillon_liquidacion_junio($P{idOperador},$P{fecha})]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -34,11 +34,32 @@
 	<field name="NombreEmpresario" class="java.lang.String"/>
 	<field name="codigoTerminal" class="java.lang.Integer"/>
 	<field name="nombreTerminal" class="java.lang.String"/>
+	<field name="nombreSindicato" class="java.lang.String"/>
 	<field name="tipoContrato" class="java.lang.Integer"/>
 	<field name="tipoContratoChar" class="java.lang.String"/>
+	<field name="baseLiquidacion" class="java.lang.Integer"/>
 	<field name="bruto" class="java.lang.Integer"/>
-	<field name="bonotne" class="java.lang.Integer"/>
 	<field name="imponible" class="java.lang.Integer"/>
+	<field name="montoFeriado" class="java.lang.Integer"/>
+	<field name="v19" class="java.lang.Integer"/>
+	<field name="vCatorce" class="java.lang.Integer"/>
+	<field name="vSubsidio" class="java.lang.Integer"/>
+	<field name="vAjusteBase" class="java.lang.Integer"/>
+	<field name="vSueldoBase" class="java.lang.Integer"/>
+	<field name="vDiferenciaComision" class="java.lang.Integer"/>
+	<field name="vSeptimoDia" class="java.lang.Integer"/>
+	<field name="vHorasExtras" class="java.lang.Integer"/>
+	<field name="diasContrato" class="java.lang.Integer"/>
+	<field name="diasTrabajados" class="java.lang.Integer"/>
+	<field name="diasVacaciones" class="java.lang.Integer"/>
+	<field name="diasLicencias" class="java.lang.Integer"/>
+	<field name="diasDescanso" class="java.lang.Integer"/>
+	<field name="diasGuias" class="java.lang.Integer"/>
+	<field name="diasLimpios" class="java.lang.Integer"/>
+	<field name="totalDias" class="java.lang.Integer"/>
+	<field name="bonotne" class="java.lang.Integer"/>
+	<field name="pagotne" class="java.lang.Integer"/>
+	<field name="imposicionestne" class="java.lang.Integer"/>
 	<field name="cincoPorcientoTotal" class="java.lang.Integer"/>
 	<field name="cincoPorciento" class="java.lang.Integer"/>
 	<field name="anexoCinco" class="java.lang.Integer"/>
@@ -56,7 +77,7 @@
 	<field name="ajusteComision" class="java.lang.Integer"/>
 	<field name="numeroCargas" class="java.lang.Integer"/>
 	<field name="montoCargas" class="java.lang.Integer"/>
-	<field name="montoFeriado" class="java.lang.Integer"/>
+	<field name="montoRetroactivo" class="java.lang.Integer"/>
 	<field name="nombreAfp" class="java.lang.String"/>
 	<field name="porcentajeAfp" class="java.lang.String"/>
 	<field name="montoAfp" class="java.lang.Integer"/>
@@ -72,13 +93,6 @@
 	<field name="porcentajeInp" class="java.lang.String"/>
 	<field name="montoInp" class="java.lang.Integer"/>
 	<field name="observacion" class="java.lang.String"/>
-	<field name="diasTrabajados" class="java.lang.Integer"/>
-	<field name="diasVacaciones" class="java.lang.Integer"/>
-	<field name="diasLicencias" class="java.lang.Integer"/>
-	<field name="diasDescanso" class="java.lang.Integer"/>
-	<field name="diasGuias" class="java.lang.Integer"/>
-	<field name="diasLimpios" class="java.lang.Integer"/>
-	<field name="totalDias" class="java.lang.Integer"/>
 	<field name="fechaDesdeContrato" class="java.sql.Date"/>
 	<field name="fechaHastaContrato" class="java.sql.Date"/>
 	<field name="fechaDesdeFeriado" class="java.sql.Date"/>
@@ -101,6 +115,7 @@
 	<field name="totalFinalDescuentos" class="java.lang.Integer"/>
 	<field name="saldoFinal" class="java.lang.Integer"/>
 	<field name="saldoReal" class="java.lang.Integer"/>
+	<field name="errorSaldo" class="java.lang.String"/>
 	<variable name="imponible1" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
 		<variableExpression><![CDATA[$F{imponible}]]></variableExpression>
 	</variable>
@@ -317,7 +332,7 @@
 				<textElement>
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD  - MAYO 2017]]></text>
+				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD  - JUNIO 2017]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="705" y="53" width="92" height="16" uuid="90f00557-6599-4842-9645-157c0500717b"/>
@@ -497,19 +512,19 @@
 				<reportElement x="494" y="3" width="30" height="14" uuid="4dfb9cda-0282-4daa-b764-7140feee4f53">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[S.I.S]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="523" y="3" width="38" height="14" uuid="455b6deb-cb70-4d6b-bb44-e43bc315cae0">
+				<reportElement x="523" y="3" width="47" height="14" uuid="455b6deb-cb70-4d6b-bb44-e43bc315cae0">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[BONO]]></text>
+				<text><![CDATA[Ajuste S.B]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="583" y="3" width="39" height="14" uuid="08adc2d5-c5de-4ded-85f6-f027eb656fe5">
@@ -637,7 +652,7 @@
 				<textFieldExpression><![CDATA[$F{imponible}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="260" y="0" width="60" height="14" uuid="b96a6a2f-20d0-45e2-b5fe-7f521c65522f">
+				<reportElement x="260" y="0" width="50" height="14" uuid="b96a6a2f-20d0-45e2-b5fe-7f521c65522f">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<box leftPadding="5"/>
@@ -647,11 +662,11 @@
 				<textFieldExpression><![CDATA[$F{nombreAfp}]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH.mm">
-				<reportElement x="320" y="0" width="14" height="14" uuid="2444089c-a219-4559-a877-7da219df27fc">
+				<reportElement x="310" y="0" width="24" height="14" uuid="2444089c-a219-4559-a877-7da219df27fc">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{porcentajeAfp}]]></textFieldExpression>
 			</textField>
@@ -670,7 +685,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cesantiaTrabajador}]]></textFieldExpression>
 			</textField>
@@ -717,7 +732,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bonotne}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vAjusteBase}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="593" y="0" width="30" height="14" uuid="8add5e78-1646-4b9e-8994-fd9fbb4f36ae">
