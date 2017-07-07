@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="f32450cc-b903-4557-8eef-f041ba7b9f09">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="806"/>
+	<property name="ireport.y" value="96"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="294"/>
@@ -23,7 +23,7 @@
 		<defaultValueExpression><![CDATA["/home/ianfranco/NetBeansProjects/report/jrxml/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM liquidaciones_mayo_2017 WHERE codigoTrabajador IN (5000)]]>
+		<![CDATA[call final_planillon_liquidacion_junio(1, '2017-06-01')]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -42,10 +42,29 @@
 	<field name="tipoContratoChar" class="java.lang.String"/>
 	<field name="baseLiquidacion" class="java.lang.Integer"/>
 	<field name="bruto" class="java.lang.Integer"/>
+	<field name="imponible" class="java.lang.Integer"/>
+	<field name="montoFeriado" class="java.lang.Integer"/>
+	<field name="v19" class="java.lang.Integer"/>
+	<field name="v15" class="java.lang.Integer"/>
+	<field name="v17" class="java.lang.Integer"/>
+	<field name="vCatorce" class="java.lang.Integer"/>
+	<field name="vSubsidio" class="java.lang.Integer"/>
+	<field name="vAjusteBase" class="java.lang.Integer"/>
+	<field name="vSueldoBase" class="java.lang.Integer"/>
+	<field name="vDiferenciaComision" class="java.lang.Integer"/>
+	<field name="vSeptimoDia" class="java.lang.Integer"/>
+	<field name="vHorasExtras" class="java.lang.Integer"/>
+	<field name="diasContrato" class="java.lang.Integer"/>
+	<field name="diasTrabajados" class="java.lang.Integer"/>
+	<field name="diasVacaciones" class="java.lang.Integer"/>
+	<field name="diasLicencias" class="java.lang.Integer"/>
+	<field name="diasDescanso" class="java.lang.Integer"/>
+	<field name="diasGuias" class="java.lang.Integer"/>
+	<field name="diasLimpios" class="java.lang.Integer"/>
+	<field name="totalDias" class="java.lang.Integer"/>
 	<field name="bonotne" class="java.lang.Integer"/>
 	<field name="pagotne" class="java.lang.Integer"/>
 	<field name="imposicionestne" class="java.lang.Integer"/>
-	<field name="imponible" class="java.lang.Integer"/>
 	<field name="cincoPorcientoTotal" class="java.lang.Integer"/>
 	<field name="cincoPorciento" class="java.lang.Integer"/>
 	<field name="anexoCinco" class="java.lang.Integer"/>
@@ -64,7 +83,6 @@
 	<field name="numeroCargas" class="java.lang.Integer"/>
 	<field name="montoCargas" class="java.lang.Integer"/>
 	<field name="montoRetroactivo" class="java.lang.Integer"/>
-	<field name="montoFeriado" class="java.lang.Integer"/>
 	<field name="nombreAfp" class="java.lang.String"/>
 	<field name="porcentajeAfp" class="java.lang.String"/>
 	<field name="montoAfp" class="java.lang.Integer"/>
@@ -80,13 +98,6 @@
 	<field name="porcentajeInp" class="java.lang.String"/>
 	<field name="montoInp" class="java.lang.Integer"/>
 	<field name="observacion" class="java.lang.String"/>
-	<field name="diasTrabajados" class="java.lang.Integer"/>
-	<field name="diasVacaciones" class="java.lang.Integer"/>
-	<field name="diasLicencias" class="java.lang.Integer"/>
-	<field name="diasDescanso" class="java.lang.Integer"/>
-	<field name="diasGuias" class="java.lang.Integer"/>
-	<field name="diasLimpios" class="java.lang.Integer"/>
-	<field name="totalDias" class="java.lang.Integer"/>
 	<field name="fechaDesdeContrato" class="java.sql.Date"/>
 	<field name="fechaHastaContrato" class="java.sql.Date"/>
 	<field name="fechaDesdeFeriado" class="java.sql.Date"/>
@@ -178,18 +189,18 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement key="staticText" x="10" y="141" width="105" height="15" uuid="dadb6080-7e21-42fc-91ac-00188136ec63"/>
+				<reportElement key="staticText" x="10" y="124" width="105" height="15" uuid="dadb6080-7e21-42fc-91ac-00188136ec63"/>
 				<textElement>
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Días Trabajados]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
-				<reportElement key="textField" x="162" y="141" width="100" height="15" uuid="7ed797f9-b29e-4598-a67f-9d4695a4e31a"/>
+				<reportElement key="textField" x="162" y="124" width="100" height="15" uuid="7ed797f9-b29e-4598-a67f-9d4695a4e31a"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{base}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{v15}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText" x="10" y="63" width="59" height="15" uuid="1e910809-b155-4cd3-9b38-300c3786786c"/>
@@ -199,7 +210,7 @@
 				<text><![CDATA[Rut :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="9" y="126" width="253" height="15" uuid="b2c2949a-5bbf-4c09-b403-f61bd43f5e71"/>
+				<reportElement key="staticText" x="9" y="173" width="253" height="15" uuid="b2c2949a-5bbf-4c09-b403-f61bd43f5e71"/>
 				<textElement textAlignment="Center">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
@@ -423,7 +434,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ajusteComision}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vDiferenciaComision}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText" x="10" y="486" width="115" height="15" uuid="92d29fa1-f268-4653-93be-2843896d907b"/>
@@ -542,14 +553,14 @@
 				<textElement>
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Diferencia Comisión]]></text>
+				<text><![CDATA[Comisión]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
 				<reportElement x="162" y="217" width="100" height="15" uuid="03df0fb5-078b-43a9-9612-435d52cb3a25"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{unoComaDosPorciento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vSeptimoDia}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.###" isBlankWhenNull="false">
 				<reportElement key="textField" x="225" y="441" width="37" height="15" uuid="ab0c5df1-6ec0-482d-9fc6-da4e4bbd73e2"/>
@@ -568,7 +579,7 @@
 				<textFieldExpression><![CDATA[$F{diasVacaciones}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText" x="10" y="156" width="152" height="15" uuid="3f9f1ded-a0bd-4382-ad75-c4694d9a2e8e"/>
+				<reportElement key="staticText" x="10" y="139" width="152" height="15" uuid="3f9f1ded-a0bd-4382-ad75-c4694d9a2e8e"/>
 				<textElement>
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
@@ -613,11 +624,11 @@
 				<text><![CDATA[Sub-Total No Imponible]]></text>
 			</staticText>
 			<textField pattern="$ #,##0" isBlankWhenNull="false">
-				<reportElement key="textField" x="162" y="156" width="100" height="15" uuid="520c7c4f-beaa-4133-9ddb-8db62315b344"/>
+				<reportElement key="textField" x="162" y="139" width="100" height="15" uuid="520c7c4f-beaa-4133-9ddb-8db62315b344"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{dosPorciento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vSubsidio}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="66" y="683" width="271" height="15" uuid="8dc04f00-b7fc-4102-94f9-c36fd22a95ed"/>
@@ -750,7 +761,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ceroComaOchoPorciento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vHorasExtras}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText" x="391" y="0" width="152" height="20" uuid="cd6d5637-a80a-46fc-93e8-02dc1c795e95"/>
@@ -777,24 +788,17 @@
 				<textFieldExpression><![CDATA[$F{nombreIsapre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText" x="10" y="98" width="152" height="24" uuid="30e02cd5-3b20-476a-995e-14faa157fda8"/>
+				<reportElement key="staticText" x="10" y="78" width="152" height="24" uuid="30e02cd5-3b20-476a-995e-14faa157fda8"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Sueldo Base]]></text>
+				<text><![CDATA[Informacion Mensual]]></text>
 			</staticText>
-			<textField pattern="$ #,##0">
-				<reportElement key="staticText" x="162" y="98" width="100" height="24" uuid="42ea9c6e-56fd-4ebb-897b-041b1c0e13b3"/>
-				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
-					<font fontName="Monospaced" size="11" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{baseLiquidacion}]]></textFieldExpression>
-			</textField>
 			<line>
-				<reportElement x="9" y="123" width="268" height="1" uuid="04bf5c81-36b3-42c9-a3f6-842c40a23aab"/>
+				<reportElement x="9" y="193" width="268" height="1" uuid="04bf5c81-36b3-42c9-a3f6-842c40a23aab"/>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="115" y="141" width="47" height="15" uuid="9cdd6a01-ee11-4d40-8c8e-41f3f9a94c99"/>
+				<reportElement key="textField" x="115" y="124" width="47" height="15" uuid="9cdd6a01-ee11-4d40-8c8e-41f3f9a94c99"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="Monospaced" size="11" isBold="false"/>
@@ -852,33 +856,47 @@
 				<textFieldExpression><![CDATA[$F{montoSeguro}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText" x="10" y="171" width="152" height="15" uuid="1a56efe7-197b-4755-bae2-bac7140ceee1"/>
+				<reportElement key="staticText" x="10" y="154" width="152" height="15" uuid="1a56efe7-197b-4755-bae2-bac7140ceee1"/>
 				<textElement>
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Ajuste Sueldo Base]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
-				<reportElement key="textField" x="162" y="171" width="100" height="15" uuid="d8b610da-e29c-44ae-8007-aacf99d06f81"/>
+				<reportElement key="textField" x="162" y="154" width="100" height="15" uuid="d8b610da-e29c-44ae-8007-aacf99d06f81"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Monospaced" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{baseLiquidacion}.intValue()-($F{base}.intValue()+$F{dosPorciento})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vAjusteBase}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText" x="10" y="194" width="152" height="15" uuid="5c82f92f-2ed0-4818-9ec7-999067a560aa"/>
+				<reportElement key="staticText" x="10" y="202" width="152" height="15" uuid="5c82f92f-2ed0-4818-9ec7-999067a560aa"/>
 				<textElement>
 					<font fontName="Monospaced" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Sub-Total Sueldo Base]]></text>
+				<text><![CDATA[Sueldo Base]]></text>
 			</staticText>
-			<staticText>
-				<reportElement key="textField" x="162" y="194" width="100" height="15" uuid="91ac1e82-b956-4dcd-aa60-ac53eeee9c5e"/>
+			<textField pattern="$ #,##0">
+				<reportElement key="textField" x="162" y="202" width="100" height="15" uuid="48dfa529-d009-44b1-a225-184e9cea699f"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Monospaced" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[$ 264.000]]></text>
+				<textFieldExpression><![CDATA[$F{vSueldoBase}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="10" y="110" width="105" height="15" uuid="fdcab396-19e4-4a93-8630-e21c227e337c"/>
+				<textElement>
+					<font fontName="Monospaced" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bruto]]></text>
 			</staticText>
+			<textField pattern="$ #,##0">
+				<reportElement key="textField" x="162" y="109" width="100" height="15" uuid="484a4dc0-bef0-432c-906a-682f463b3b6d"/>
+				<textElement textAlignment="Right" markup="none">
+					<font fontName="Monospaced" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bruto}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
