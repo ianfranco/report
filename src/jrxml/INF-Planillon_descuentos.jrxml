@@ -16,13 +16,13 @@
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="533"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="453"/>
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="14"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="924"/>
+	<property name="ireport.y" value="21"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_mayo($P{idOperador},$P{fecha})]]>
+		<![CDATA[CALL final_planillon_liquidacion_junio($P{idOperador},$P{fecha})]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -36,9 +36,34 @@
 	<field name="NombreEmpresario" class="java.lang.String"/>
 	<field name="codigoTerminal" class="java.lang.Integer"/>
 	<field name="nombreTerminal" class="java.lang.String"/>
+	<field name="nombreSindicato" class="java.lang.String"/>
 	<field name="tipoContrato" class="java.lang.Integer"/>
+	<field name="tipoContratoChar" class="java.lang.String"/>
+	<field name="baseLiquidacion" class="java.lang.Integer"/>
 	<field name="bruto" class="java.lang.Integer"/>
 	<field name="imponible" class="java.lang.Integer"/>
+	<field name="montoFeriado" class="java.lang.Integer"/>
+	<field name="v19" class="java.lang.Integer"/>
+	<field name="v15" class="java.lang.Integer"/>
+	<field name="v17" class="java.lang.Integer"/>
+	<field name="vCatorce" class="java.lang.Integer"/>
+	<field name="vSubsidio" class="java.lang.Integer"/>
+	<field name="vAjusteBase" class="java.lang.Integer"/>
+	<field name="vSueldoBase" class="java.lang.Integer"/>
+	<field name="vDiferenciaComision" class="java.lang.Integer"/>
+	<field name="vSeptimoDia" class="java.lang.Integer"/>
+	<field name="vHorasExtras" class="java.lang.Integer"/>
+	<field name="diasContrato" class="java.lang.Integer"/>
+	<field name="diasTrabajados" class="java.lang.Integer"/>
+	<field name="diasVacaciones" class="java.lang.Integer"/>
+	<field name="diasLicencias" class="java.lang.Integer"/>
+	<field name="diasDescanso" class="java.lang.Integer"/>
+	<field name="diasGuias" class="java.lang.Integer"/>
+	<field name="diasLimpios" class="java.lang.Integer"/>
+	<field name="totalDias" class="java.lang.Integer"/>
+	<field name="bonotne" class="java.lang.Integer"/>
+	<field name="pagotne" class="java.lang.Integer"/>
+	<field name="imposicionestne" class="java.lang.Integer"/>
 	<field name="cincoPorcientoTotal" class="java.lang.Integer"/>
 	<field name="cincoPorciento" class="java.lang.Integer"/>
 	<field name="anexoCinco" class="java.lang.Integer"/>
@@ -56,7 +81,7 @@
 	<field name="ajusteComision" class="java.lang.Integer"/>
 	<field name="numeroCargas" class="java.lang.Integer"/>
 	<field name="montoCargas" class="java.lang.Integer"/>
-	<field name="montoFeriado" class="java.lang.Integer"/>
+	<field name="montoRetroactivo" class="java.lang.Integer"/>
 	<field name="nombreAfp" class="java.lang.String"/>
 	<field name="porcentajeAfp" class="java.lang.String"/>
 	<field name="montoAfp" class="java.lang.Integer"/>
@@ -72,13 +97,6 @@
 	<field name="porcentajeInp" class="java.lang.String"/>
 	<field name="montoInp" class="java.lang.Integer"/>
 	<field name="observacion" class="java.lang.String"/>
-	<field name="diasTrabajados" class="java.lang.Integer"/>
-	<field name="diasVacaciones" class="java.lang.Integer"/>
-	<field name="diasLicencias" class="java.lang.Integer"/>
-	<field name="diasDescanso" class="java.lang.Integer"/>
-	<field name="diasGuias" class="java.lang.Integer"/>
-	<field name="diasLimpios" class="java.lang.Integer"/>
-	<field name="totalDias" class="java.lang.Integer"/>
 	<field name="fechaDesdeContrato" class="java.sql.Date"/>
 	<field name="fechaHastaContrato" class="java.sql.Date"/>
 	<field name="fechaDesdeFeriado" class="java.sql.Date"/>
@@ -101,6 +119,7 @@
 	<field name="totalFinalDescuentos" class="java.lang.Integer"/>
 	<field name="saldoFinal" class="java.lang.Integer"/>
 	<field name="saldoReal" class="java.lang.Integer"/>
+	<field name="errorSaldo" class="java.lang.String"/>
 	<variable name="montoCargas_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{montoCargas}]]></variableExpression>
 	</variable>
@@ -191,6 +210,12 @@
 	<variable name="anexoCinco_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{anexoCinco}]]></variableExpression>
 	</variable>
+	<variable name="vAjusteBase_1" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{vAjusteBase}]]></variableExpression>
+	</variable>
+	<variable name="vAjusteBase_2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vAjusteBase}]]></variableExpression>
+	</variable>
 	<group name="Empresario" keepTogether="true">
 		<groupExpression><![CDATA[$F{NombreEmpresario}]]></groupExpression>
 		<groupHeader>
@@ -226,13 +251,6 @@
 					</textElement>
 					<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
 				</staticText>
-				<textField pattern="#,##0">
-					<reportElement x="249" y="14" width="37" height="20" uuid="d6ec860f-bebc-49c6-83d8-bf831f67c5c4"/>
-					<textElement textAlignment="Right">
-						<font fontName="Arial" size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{montoCargas_2}]]></textFieldExpression>
-				</textField>
 				<textField pattern="#,##0">
 					<reportElement x="286" y="14" width="34" height="20" uuid="badd978b-9780-44ee-ab54-080947ac4b08"/>
 					<textElement textAlignment="Right">
@@ -325,6 +343,13 @@
 					</textElement>
 					<text><![CDATA[TOTAL EMPRESA :]]></text>
 				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="236" y="14" width="50" height="20" uuid="dea5085a-216c-49fa-aa6d-c774b30427b2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{vAjusteBase_1}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -448,7 +473,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[Tot.Carga]]></text>
+				<text><![CDATA[Ajuste]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="290" y="3" width="30" height="14" uuid="5eab845c-7974-4872-8c52-af25406d4ee0">
@@ -614,6 +639,15 @@
 				</textElement>
 				<text><![CDATA[Anexo]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="811" y="3" width="19" height="14" uuid="343db457-9c33-4f7a-9b19-5c10b80b88c9">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[C]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -767,14 +801,14 @@
 				<textFieldExpression><![CDATA[$F{abonos}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.###">
-				<reportElement x="249" y="0" width="25" height="14" uuid="8ef36191-c426-41a8-a0b2-85e6a9b9de36">
+				<reportElement x="249" y="0" width="41" height="14" uuid="8ef36191-c426-41a8-a0b2-85e6a9b9de36">
 					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
 				</reportElement>
 				<box rightPadding="0"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{montoCargas}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{vAjusteBase}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="703" y="0" width="36" height="14" uuid="5de3e632-e50e-48dd-b2dd-6a399a931c02">
@@ -813,11 +847,11 @@
 				<textFieldExpression><![CDATA[$F{montoCreditoSalud}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="274" y="0" width="16" height="14" uuid="f6a1a368-d31a-41c3-9f67-4a7bf1b9f188">
+				<reportElement x="814" y="0" width="16" height="14" uuid="f6a1a368-d31a-41c3-9f67-4a7bf1b9f188">
 					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
 				</reportElement>
 				<box rightPadding="2"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" ("+$F{numeroCargas}+")"]]></textFieldExpression>
@@ -845,13 +879,6 @@
 	</pageFooter>
 	<summary>
 		<band height="21" splitType="Stretch">
-			<textField pattern="#,##0">
-				<reportElement x="249" y="0" width="38" height="20" uuid="231384da-e8d4-4ac0-9913-66209b2f8ade"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{montoCargas_1}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="287" y="0" width="33" height="20" uuid="3aafacd3-e023-4d20-8c47-08b063118fad"/>
 				<textElement textAlignment="Right">
@@ -963,6 +990,13 @@
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{anexoCinco_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="236" y="0" width="50" height="20" uuid="6f3d21b5-b546-44f7-b7a2-0716840d72c8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{vAjusteBase_2}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
