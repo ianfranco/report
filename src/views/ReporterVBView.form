@@ -158,6 +158,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Listado"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -220,7 +223,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="conductoresSinContratoMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Conductores Sin Contrato - OK"/>
+                <Property name="text" type="java.lang.String" value="Conductores Sin Contrato "/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="conductoresSinContratoMenuItemActionPerformed"/>

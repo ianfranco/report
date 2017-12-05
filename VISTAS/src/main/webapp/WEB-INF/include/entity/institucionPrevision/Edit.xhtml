@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="InstitucionPrevisionEditDlg" widgetVar="InstitucionPrevisionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditInstitucionPrevisionTitle}" closeOnEscape="true">
+
+            <h:form id="InstitucionPrevisionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{institucionPrevisionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditInstitucionPrevisionLabel_idInstitucionPrevision}" for="idInstitucionPrevision" />
+                        <h:panelGroup>
+                            <h:outputText id="idInstitucionPrevision" value="#{institucionPrevisionController.selected.idInstitucionPrevision}" />
+                            <p:tooltip for="idInstitucionPrevision" value="#{institucionPrevisionController.getComponentMessages('idInstitucionPrevision', myBundle.EditInstitucionPrevisionHelpText_idInstitucionPrevision)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionPrevisionLabel_nombreInstitucionPrevision}" for="nombreInstitucionPrevision" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreInstitucionPrevision" value="#{institucionPrevisionController.selected.nombreInstitucionPrevision}" title="#{myBundle.EditInstitucionPrevisionTitle_nombreInstitucionPrevision}" required="true" requiredMessage="#{myBundle.EditInstitucionPrevisionRequiredMessage_nombreInstitucionPrevision}" size="255" maxlength="255"/>
+                            <p:tooltip for="nombreInstitucionPrevision" value="#{institucionPrevisionController.getComponentMessages('nombreInstitucionPrevision', myBundle.EditInstitucionPrevisionHelpText_nombreInstitucionPrevision)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionPrevisionLabel_comision}" for="comision" />
+                        <h:panelGroup>
+                            <p:inputText id="comision" value="#{institucionPrevisionController.selected.comision}" title="#{myBundle.EditInstitucionPrevisionTitle_comision}"/>
+                            <p:tooltip for="comision" value="#{institucionPrevisionController.getComponentMessages('comision', myBundle.EditInstitucionPrevisionHelpText_comision)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionPrevisionLabel_porcentajeDescuento}" for="porcentajeDescuento" />
+                        <h:panelGroup>
+                            <p:inputText id="porcentajeDescuento" value="#{institucionPrevisionController.selected.porcentajeDescuento}" title="#{myBundle.EditInstitucionPrevisionTitle_porcentajeDescuento}" required="true" requiredMessage="#{myBundle.EditInstitucionPrevisionRequiredMessage_porcentajeDescuento}"/>
+                            <p:tooltip for="porcentajeDescuento" value="#{institucionPrevisionController.getComponentMessages('porcentajeDescuento', myBundle.EditInstitucionPrevisionHelpText_porcentajeDescuento)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{institucionPrevisionController.save}" value="#{myBundle.Save}" update="display,:InstitucionPrevisionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InstitucionPrevisionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('InstitucionPrevisionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

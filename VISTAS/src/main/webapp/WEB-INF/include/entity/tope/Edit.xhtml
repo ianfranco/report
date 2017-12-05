@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TopeEditDlg" widgetVar="TopeEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTopeTitle}" closeOnEscape="true">
+
+            <h:form id="TopeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{topeController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTopeLabel_idTope}" for="idTope" />
+                        <h:panelGroup>
+                            <h:outputText id="idTope" value="#{topeController.selected.idTope}" />
+                            <p:tooltip for="idTope" value="#{topeController.getComponentMessages('idTope', myBundle.EditTopeHelpText_idTope)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTopeLabel_nombreTope}" for="nombreTope" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreTope" value="#{topeController.selected.nombreTope}" title="#{myBundle.EditTopeTitle_nombreTope}" required="true" requiredMessage="#{myBundle.EditTopeRequiredMessage_nombreTope}" size="255" maxlength="255"/>
+                            <p:tooltip for="nombreTope" value="#{topeController.getComponentMessages('nombreTope', myBundle.EditTopeHelpText_nombreTope)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTopeLabel_montoUf}" for="montoUf" />
+                        <h:panelGroup>
+                            <p:inputText id="montoUf" value="#{topeController.selected.montoUf}" title="#{myBundle.EditTopeTitle_montoUf}" required="true" requiredMessage="#{myBundle.EditTopeRequiredMessage_montoUf}"/>
+                            <p:tooltip for="montoUf" value="#{topeController.getComponentMessages('montoUf', myBundle.EditTopeHelpText_montoUf)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{topeController.save}" value="#{myBundle.Save}" update="display,:TopeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TopeEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TopeEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

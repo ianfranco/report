@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ImpuestoSegundaCategoriaEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditImpuestoSegundaCategoriaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ImpuestoSegundaCategoriaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ImpuestoSegundaCategoriaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{impuestoSegundaCategoriaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditImpuestoSegundaCategoriaLabel_idImpuestaSegundaCategoria}" for="idImpuestaSegundaCategoria" />
+                            <h:panelGroup>
+                                <h:outputText id="idImpuestaSegundaCategoria" value="#{impuestoSegundaCategoriaController.selected.idImpuestaSegundaCategoria}" />
+                                <p:tooltip for="idImpuestaSegundaCategoria" value="#{impuestoSegundaCategoriaController.getComponentMessages('idImpuestaSegundaCategoria', myBundle.EditImpuestoSegundaCategoriaHelpText_idImpuestaSegundaCategoria)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditImpuestoSegundaCategoriaLabel_desde}" for="desde" />
+                            <h:panelGroup>
+                                <p:inputText id="desde" value="#{impuestoSegundaCategoriaController.selected.desde}" title="#{myBundle.EditImpuestoSegundaCategoriaTitle_desde}" required="true" requiredMessage="#{myBundle.EditImpuestoSegundaCategoriaRequiredMessage_desde}"/>
+                                <p:tooltip for="desde" value="#{impuestoSegundaCategoriaController.getComponentMessages('desde', myBundle.EditImpuestoSegundaCategoriaHelpText_desde)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditImpuestoSegundaCategoriaLabel_hasta}" for="hasta" />
+                            <h:panelGroup>
+                                <p:inputText id="hasta" value="#{impuestoSegundaCategoriaController.selected.hasta}" title="#{myBundle.EditImpuestoSegundaCategoriaTitle_hasta}" required="true" requiredMessage="#{myBundle.EditImpuestoSegundaCategoriaRequiredMessage_hasta}"/>
+                                <p:tooltip for="hasta" value="#{impuestoSegundaCategoriaController.getComponentMessages('hasta', myBundle.EditImpuestoSegundaCategoriaHelpText_hasta)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditImpuestoSegundaCategoriaLabel_factor}" for="factor" />
+                            <h:panelGroup>
+                                <p:inputText id="factor" value="#{impuestoSegundaCategoriaController.selected.factor}" title="#{myBundle.EditImpuestoSegundaCategoriaTitle_factor}"/>
+                                <p:tooltip for="factor" value="#{impuestoSegundaCategoriaController.getComponentMessages('factor', myBundle.EditImpuestoSegundaCategoriaHelpText_factor)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditImpuestoSegundaCategoriaLabel_rebaja}" for="rebaja" />
+                            <h:panelGroup>
+                                <p:inputText id="rebaja" value="#{impuestoSegundaCategoriaController.selected.rebaja}" title="#{myBundle.EditImpuestoSegundaCategoriaTitle_rebaja}"/>
+                                <p:tooltip for="rebaja" value="#{impuestoSegundaCategoriaController.getComponentMessages('rebaja', myBundle.EditImpuestoSegundaCategoriaHelpText_rebaja)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{impuestoSegundaCategoriaController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:ImpuestoSegundaCategoriaListPage:ImpuestoSegundaCategoriaListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:ImpuestoSegundaCategoriaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

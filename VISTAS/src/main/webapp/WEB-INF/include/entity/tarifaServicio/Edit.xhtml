@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TarifaServicioEditDlg" widgetVar="TarifaServicioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTarifaServicioTitle}" closeOnEscape="true">
+
+            <h:form id="TarifaServicioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tarifaServicioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTarifaServicioLabel_idTarifaServicio}" for="idTarifaServicio" />
+                        <h:panelGroup>
+                            <h:outputText id="idTarifaServicio" value="#{tarifaServicioController.selected.idTarifaServicio}" />
+                            <p:tooltip for="idTarifaServicio" value="#{tarifaServicioController.getComponentMessages('idTarifaServicio', myBundle.EditTarifaServicioHelpText_idTarifaServicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTarifaServicioLabel_valorTarifa}" for="valorTarifa" />
+                        <h:panelGroup>
+                            <p:inputText id="valorTarifa" value="#{tarifaServicioController.selected.valorTarifa}" title="#{myBundle.EditTarifaServicioTitle_valorTarifa}" required="true" requiredMessage="#{myBundle.EditTarifaServicioRequiredMessage_valorTarifa}"/>
+                            <p:tooltip for="valorTarifa" value="#{tarifaServicioController.getComponentMessages('valorTarifa', myBundle.EditTarifaServicioHelpText_valorTarifa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTarifaServicioLabel_mes}" for="mes" />
+                        <h:panelGroup>
+                            <p:inputText id="mes" value="#{tarifaServicioController.selected.mes}" title="#{myBundle.EditTarifaServicioTitle_mes}" required="true" requiredMessage="#{myBundle.EditTarifaServicioRequiredMessage_mes}"/>
+                            <p:tooltip for="mes" value="#{tarifaServicioController.getComponentMessages('mes', myBundle.EditTarifaServicioHelpText_mes)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTarifaServicioLabel_año}" for="año" />
+                        <h:panelGroup>
+                            <p:inputText id="año" value="#{tarifaServicioController.selected.año}" title="#{myBundle.EditTarifaServicioTitle_año}" required="true" requiredMessage="#{myBundle.EditTarifaServicioRequiredMessage_año}"/>
+                            <p:tooltip for="año" value="#{tarifaServicioController.getComponentMessages('año', myBundle.EditTarifaServicioHelpText_año)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTarifaServicioLabel_activa}" for="activa" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="activa" value="#{tarifaServicioController.selected.activa}" required="true" requiredMessage="#{myBundle.EditTarifaServicioRequiredMessage_activa}"/>
+                            <p:tooltip for="activa" value="#{tarifaServicioController.getComponentMessages('activa', myBundle.EditTarifaServicioHelpText_activa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTarifaServicioLabel_idBoleto}" for="idBoleto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idBoleto" value="#{tarifaServicioController.selected.idBoleto}" required="true" requiredMessage="#{myBundle.EditTarifaServicioRequiredMessage_idBoleto}" converter="boletoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{boletoController.items}"
+                                               var="idBoletoItem"
+                                               itemValue="#{idBoletoItem}"
+                                               itemLabel="#{idBoletoItem.idBoleto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idBoleto" value="#{tarifaServicioController.getComponentMessages('idBoleto', myBundle.EditTarifaServicioHelpText_idBoleto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTarifaServicioLabel_idServicio}" for="idServicio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idServicio" value="#{tarifaServicioController.selected.idServicio}" required="true" requiredMessage="#{myBundle.EditTarifaServicioRequiredMessage_idServicio}" converter="servicioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{servicioController.items}"
+                                               var="idServicioItem"
+                                               itemValue="#{idServicioItem}"
+                                               itemLabel="#{idServicioItem.idServicio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idServicio" value="#{tarifaServicioController.getComponentMessages('idServicio', myBundle.EditTarifaServicioHelpText_idServicio)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tarifaServicioController.save}" value="#{myBundle.Save}" update="display,:TarifaServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TarifaServicioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TarifaServicioEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

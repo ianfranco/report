@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DescuentoTrabajadorListForm">
+
+        <p:panel header="#{myBundle.ListDescuentoTrabajadorTitle}">
+            <p:contextMenu id="DescuentoTrabajadorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('DescuentoTrabajadorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('DescuentoTrabajadorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('DescuentoTrabajadorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('DescuentoTrabajadorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.DescuentoTrabajadorMenuItem_idTipoDescuento}" icon="ui-icon-search"  actionListener="#{descuentoTrabajadorController.prepareIdTipoDescuento}" update=":TipoDescuentoViewForm" oncomplete="PF('TipoDescuentoViewDialog').show()" disabled="#{empty descuentoTrabajadorController.selected.idTipoDescuento}"/>  
+                <p:menuitem value="#{myBundle.DescuentoTrabajadorMenuItem_idTrabajador}" icon="ui-icon-search"  actionListener="#{descuentoTrabajadorController.prepareIdTrabajador}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty descuentoTrabajadorController.selected.idTrabajador}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{descuentoTrabajadorController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{descuentoTrabajadorController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{descuentoTrabajadorController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idDescuentoTrabajador}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DescuentoTrabajadorDataTableContextMenu" listener="#{descuentoTrabajadorController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DescuentoTrabajadorDataTableContextMenu" listener="#{descuentoTrabajadorController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{descuentoTrabajadorController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DescuentoTrabajadorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idDescuentoTrabajador}" filterBy="#{item.idDescuentoTrabajador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDescuentoTrabajadorTitle_idDescuentoTrabajador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idDescuentoTrabajador}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDescuentoTrabajadorTitle_fechaIngreso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaIngreso}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDescuentoTrabajadorTitle_fechaInicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaInicio}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numeroCuotas}" filterBy="#{item.numeroCuotas}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDescuentoTrabajadorTitle_numeroCuotas}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numeroCuotas}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.monto}" filterBy="#{item.monto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDescuentoTrabajadorTitle_monto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.monto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.activoDescuentoTrabajador}" filterBy="#{item.activoDescuentoTrabajador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDescuentoTrabajadorTitle_activoDescuentoTrabajador}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="activoDescuentoTrabajador" value="#{item.activoDescuentoTrabajador}" title="#{myBundle.EditDescuentoTrabajadorTitle_activoDescuentoTrabajador}" required="true" requiredMessage="#{myBundle.EditDescuentoTrabajadorRequiredMessage_activoDescuentoTrabajador}" disabled="true"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.idTipoDescuento.idTipoDescuento}" filterBy="#{item.idTipoDescuento.idTipoDescuento}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListDescuentoTrabajadorTitle_idTipoDescuento}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idTipoDescuento.idTipoDescuento}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListDescuentoTrabajadorTitle_idTrabajador}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{descuentoTrabajadorController.prepareCreate}" update=":DescuentoTrabajadorCreateForm" oncomplete="PF('DescuentoTrabajadorCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":DescuentoTrabajadorViewForm" oncomplete="PF('DescuentoTrabajadorViewDialog').show()" disabled="#{empty descuentoTrabajadorController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DescuentoTrabajadorEditForm" oncomplete="PF('DescuentoTrabajadorEditDialog').show()" disabled="#{empty descuentoTrabajadorController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{descuentoTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty descuentoTrabajadorController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

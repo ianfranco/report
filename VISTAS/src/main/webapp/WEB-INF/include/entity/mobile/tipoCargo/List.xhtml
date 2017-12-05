@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoCargoListPage">
+        <pm:header title="#{myBundle.ListTipoCargoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":TipoCargoCreatePage:TipoCargoCreateForm" actionListener="#{tipoCargoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TipoCargoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoCargoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{tipoCargoController.items}"
+                             var="item"
+                             rowKey="#{item.idTipoCargo}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{tipoCargoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TipoCargoListPage:TipoCargoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TipoCargoListPage:TipoCargoListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TipoCargoListPage:TipoCargoListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idTipoCargo}" filterBy="#{item.idTipoCargo}" headerText="#{myBundle.ListTipoCargoTitle_idTipoCargo}">
+                        <h:outputText value="#{item.idTipoCargo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreTipoCargo}" filterBy="#{item.nombreTipoCargo}" headerText="#{myBundle.ListTipoCargoTitle_nombreTipoCargo}">
+                        <h:outputText value="#{item.nombreTipoCargo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}" headerText="#{myBundle.ListTipoCargoTitle_fechaIngreso}">
+                        <h:outputText value="#{item.fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.montoDefecto}" filterBy="#{item.montoDefecto}" headerText="#{myBundle.ListTipoCargoTitle_montoDefecto}">
+                        <h:outputText value="#{item.montoDefecto}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoCargoEditPage:TipoCargoEditForm" disabled="#{empty tipoCargoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TipoCargoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoCargoController.delete}" update=":growl,datalist" disabled="#{empty tipoCargoController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty tipoCargoController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.TipoCargoHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.TipoCargoMenuItem_cargoBusList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty tipoCargoController.selected.cargoBusList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{tipoCargoController.navigateCargoBusList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

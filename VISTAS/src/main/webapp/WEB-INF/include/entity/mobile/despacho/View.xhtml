@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DespachoViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewDespachoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DespachoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DespachoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{despachoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDespachoLabel_idDespacho}"/>
+                            <h:outputText value="#{despachoController.selected.idDespacho}" title="#{myBundle.ViewDespachoTitle_idDespacho}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDespachoLabel_fecha}"/>
+                            <h:outputText value="#{despachoController.selected.fecha}" title="#{myBundle.ViewDespachoTitle_fecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDespachoLabel_horario}"/>
+                            <h:outputText value="#{despachoController.selected.horario}" title="#{myBundle.ViewDespachoTitle_horario}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDespachoLabel_idBus}"/>
+                            <h:outputText value="#{despachoController.selected.idBus.idBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDespachoLabel_idTrabajador}"/>
+                            <h:outputText value="#{despachoController.selected.idTrabajador.idTrabajador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDespachoLabel_idInspector}"/>
+                            <h:outputText value="#{despachoController.selected.idInspector.idUsario}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDespachoLabel_idServicio}"/>
+                            <h:outputText value="#{despachoController.selected.idServicio.idServicio}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

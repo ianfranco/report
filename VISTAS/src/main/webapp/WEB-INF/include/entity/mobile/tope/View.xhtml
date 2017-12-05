@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TopeViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewTopeTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TopeListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TopeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{topeController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTopeLabel_idTope}"/>
+                            <h:outputText value="#{topeController.selected.idTope}" title="#{myBundle.ViewTopeTitle_idTope}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTopeLabel_nombreTope}"/>
+                            <h:outputText value="#{topeController.selected.nombreTope}" title="#{myBundle.ViewTopeTitle_nombreTope}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTopeLabel_montoUf}"/>
+                            <h:outputText value="#{topeController.selected.montoUf}" title="#{myBundle.ViewTopeTitle_montoUf}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

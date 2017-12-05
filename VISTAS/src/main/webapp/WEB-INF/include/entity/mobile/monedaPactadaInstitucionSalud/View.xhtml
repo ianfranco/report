@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="MonedaPactadaInstitucionSaludViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewMonedaPactadaInstitucionSaludTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:MonedaPactadaInstitucionSaludListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="MonedaPactadaInstitucionSaludViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{monedaPactadaInstitucionSaludController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewMonedaPactadaInstitucionSaludLabel_idMonedaSalud}"/>
+                            <h:outputText value="#{monedaPactadaInstitucionSaludController.selected.idMonedaSalud}" title="#{myBundle.ViewMonedaPactadaInstitucionSaludTitle_idMonedaSalud}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewMonedaPactadaInstitucionSaludLabel_nombreMonedaSalud}"/>
+                            <h:outputText value="#{monedaPactadaInstitucionSaludController.selected.nombreMonedaSalud}" title="#{myBundle.ViewMonedaPactadaInstitucionSaludTitle_nombreMonedaSalud}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

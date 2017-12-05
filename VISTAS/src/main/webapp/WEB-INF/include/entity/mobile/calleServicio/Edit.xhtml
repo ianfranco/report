@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CalleServicioEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditCalleServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CalleServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CalleServicioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{calleServicioController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditCalleServicioLabel_idCalleServicio}" for="idCalleServicio" />
+                            <h:panelGroup>
+                                <h:outputText id="idCalleServicio" value="#{calleServicioController.selected.idCalleServicio}" />
+                                <p:tooltip for="idCalleServicio" value="#{calleServicioController.getComponentMessages('idCalleServicio', myBundle.EditCalleServicioHelpText_idCalleServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalleServicioLabel_numeroOrden}" for="numeroOrden" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroOrden" value="#{calleServicioController.selected.numeroOrden}" title="#{myBundle.EditCalleServicioTitle_numeroOrden}" required="true" requiredMessage="#{myBundle.EditCalleServicioRequiredMessage_numeroOrden}"/>
+                                <p:tooltip for="numeroOrden" value="#{calleServicioController.getComponentMessages('numeroOrden', myBundle.EditCalleServicioHelpText_numeroOrden)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalleServicioLabel_sentido}" for="sentido" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="sentido" value="#{calleServicioController.selected.sentido}" />
+                                <p:tooltip for="sentido" value="#{calleServicioController.getComponentMessages('sentido', myBundle.EditCalleServicioHelpText_sentido)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalleServicioLabel_idCalle}" for="idCalle" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idCalle" value="#{calleServicioController.selected.idCalle}" required="true" requiredMessage="#{myBundle.EditCalleServicioRequiredMessage_idCalle}" converter="calleConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{calleController.items}"
+                                                   var="idCalleItem"
+                                                   itemValue="#{idCalleItem}"
+                                                   itemLabel="#{idCalleItem.idCalle.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idCalle" value="#{calleServicioController.getComponentMessages('idCalle', myBundle.EditCalleServicioHelpText_idCalle)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalleServicioLabel_idServicio}" for="idServicio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idServicio" value="#{calleServicioController.selected.idServicio}" required="true" requiredMessage="#{myBundle.EditCalleServicioRequiredMessage_idServicio}" converter="servicioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{servicioController.items}"
+                                                   var="idServicioItem"
+                                                   itemValue="#{idServicioItem}"
+                                                   itemLabel="#{idServicioItem.idServicio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idServicio" value="#{calleServicioController.getComponentMessages('idServicio', myBundle.EditCalleServicioHelpText_idServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{calleServicioController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:CalleServicioListPage:CalleServicioListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:CalleServicioListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

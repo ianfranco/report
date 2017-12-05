@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="OperadorTransporteListPage">
+        <pm:header title="#{myBundle.ListOperadorTransporteTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":OperadorTransporteCreatePage:OperadorTransporteCreateForm" actionListener="#{operadorTransporteController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:OperadorTransporteCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="OperadorTransporteListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{operadorTransporteController.items}"
+                             var="item"
+                             rowKey="#{item.idOperadorTransporte}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{operadorTransporteController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('OperadorTransporteListPage:OperadorTransporteListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('OperadorTransporteListPage:OperadorTransporteListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('OperadorTransporteListPage:OperadorTransporteListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idOperadorTransporte}" filterBy="#{item.idOperadorTransporte}" headerText="#{myBundle.ListOperadorTransporteTitle_idOperadorTransporte}">
+                        <h:outputText value="#{item.idOperadorTransporte}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.rutOperador}" filterBy="#{item.rutOperador}" headerText="#{myBundle.ListOperadorTransporteTitle_rutOperador}">
+                        <h:outputText value="#{item.rutOperador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreOperador}" filterBy="#{item.nombreOperador}" headerText="#{myBundle.ListOperadorTransporteTitle_nombreOperador}">
+                        <h:outputText value="#{item.nombreOperador}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":OperadorTransporteEditPage:OperadorTransporteEditForm" disabled="#{empty operadorTransporteController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:OperadorTransporteEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{operadorTransporteController.delete}" update=":growl,datalist" disabled="#{empty operadorTransporteController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty operadorTransporteController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.OperadorTransporteHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.OperadorTransporteMenuItem_unidadNegocioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty operadorTransporteController.selected.unidadNegocioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{operadorTransporteController.navigateUnidadNegocioList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

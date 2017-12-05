@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ContratoUnidadEditDlg" widgetVar="ContratoUnidadEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditContratoUnidadTitle}" closeOnEscape="true">
+
+            <h:form id="ContratoUnidadEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{contratoUnidadController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditContratoUnidadLabel_idContratoUnidad}" for="idContratoUnidad" />
+                        <h:panelGroup>
+                            <h:outputText id="idContratoUnidad" value="#{contratoUnidadController.selected.idContratoUnidad}" />
+                            <p:tooltip for="idContratoUnidad" value="#{contratoUnidadController.getComponentMessages('idContratoUnidad', myBundle.EditContratoUnidadHelpText_idContratoUnidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditContratoUnidadLabel_identificadorContratoUnidad}" for="identificadorContratoUnidad" />
+                        <h:panelGroup>
+                            <p:inputText id="identificadorContratoUnidad" value="#{contratoUnidadController.selected.identificadorContratoUnidad}" title="#{myBundle.EditContratoUnidadTitle_identificadorContratoUnidad}" required="true" requiredMessage="#{myBundle.EditContratoUnidadRequiredMessage_identificadorContratoUnidad}" size="45" maxlength="45"/>
+                            <p:tooltip for="identificadorContratoUnidad" value="#{contratoUnidadController.getComponentMessages('identificadorContratoUnidad', myBundle.EditContratoUnidadHelpText_identificadorContratoUnidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditContratoUnidadLabel_desdeContratoUnidad}" for="desdeContratoUnidad" />
+                        <h:panelGroup>
+                            <p:calendar id="desdeContratoUnidad" pattern="MM/dd/yyyy" value="#{contratoUnidadController.selected.desdeContratoUnidad}" title="#{myBundle.EditContratoUnidadTitle_desdeContratoUnidad}" required="true" requiredMessage="#{myBundle.EditContratoUnidadRequiredMessage_desdeContratoUnidad}" showOn="button"/>
+                            <p:tooltip for="desdeContratoUnidad" value="#{contratoUnidadController.getComponentMessages('desdeContratoUnidad', myBundle.EditContratoUnidadHelpText_desdeContratoUnidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditContratoUnidadLabel_hastaContratoUnidad}" for="hastaContratoUnidad" />
+                        <h:panelGroup>
+                            <p:calendar id="hastaContratoUnidad" pattern="MM/dd/yyyy" value="#{contratoUnidadController.selected.hastaContratoUnidad}" title="#{myBundle.EditContratoUnidadTitle_hastaContratoUnidad}" required="true" requiredMessage="#{myBundle.EditContratoUnidadRequiredMessage_hastaContratoUnidad}" showOn="button"/>
+                            <p:tooltip for="hastaContratoUnidad" value="#{contratoUnidadController.getComponentMessages('hastaContratoUnidad', myBundle.EditContratoUnidadHelpText_hastaContratoUnidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditContratoUnidadLabel_nombreContratoUnidad}" for="nombreContratoUnidad" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreContratoUnidad" value="#{contratoUnidadController.selected.nombreContratoUnidad}" title="#{myBundle.EditContratoUnidadTitle_nombreContratoUnidad}" required="true" requiredMessage="#{myBundle.EditContratoUnidadRequiredMessage_nombreContratoUnidad}" size="100" maxlength="100"/>
+                            <p:tooltip for="nombreContratoUnidad" value="#{contratoUnidadController.getComponentMessages('nombreContratoUnidad', myBundle.EditContratoUnidadHelpText_nombreContratoUnidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditContratoUnidadLabel_descripcionContratoUnidad}" for="descripcionContratoUnidad" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcionContratoUnidad" value="#{contratoUnidadController.selected.descripcionContratoUnidad}" title="#{myBundle.EditContratoUnidadTitle_descripcionContratoUnidad}" />
+                            <p:tooltip for="descripcionContratoUnidad" value="#{contratoUnidadController.getComponentMessages('descripcionContratoUnidad', myBundle.EditContratoUnidadHelpText_descripcionContratoUnidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditContratoUnidadLabel_idUnidadNegocio}" for="idUnidadNegocio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idUnidadNegocio" value="#{contratoUnidadController.selected.idUnidadNegocio}" required="true" requiredMessage="#{myBundle.EditContratoUnidadRequiredMessage_idUnidadNegocio}" converter="unidadNegocioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{unidadNegocioController.items}"
+                                               var="idUnidadNegocioItem"
+                                               itemValue="#{idUnidadNegocioItem}"
+                                               itemLabel="#{idUnidadNegocioItem.idUnidadNegocio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idUnidadNegocio" value="#{contratoUnidadController.getComponentMessages('idUnidadNegocio', myBundle.EditContratoUnidadHelpText_idUnidadNegocio)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contratoUnidadController.save}" value="#{myBundle.Save}" update="display,:ContratoUnidadListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ContratoUnidadEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ContratoUnidadEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

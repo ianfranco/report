@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="BusDeviceCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateBusDeviceTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:BusDeviceListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="BusDeviceCreateForm">
+
+                <h:panelGroup id="display" rendered="#{busDeviceController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateBusDeviceLabel_fechaRegistro}" for="fechaRegistro" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy" value="#{busDeviceController.selected.fechaRegistro}" title="#{myBundle.CreateBusDeviceTitle_fechaRegistro}" required="true" requiredMessage="#{myBundle.CreateBusDeviceRequiredMessage_fechaRegistro}" showOn="button"/>
+                                <p:tooltip for="fechaRegistro" value="#{busDeviceController.getComponentMessages('fechaRegistro', myBundle.CreateBusDeviceHelpText_fechaRegistro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateBusDeviceLabel_idBus}" for="idBus" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idBus" value="#{busDeviceController.selected.idBus}" required="true" requiredMessage="#{myBundle.CreateBusDeviceRequiredMessage_idBus}" converter="busConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{busController.items}"
+                                                   var="idBusItem"
+                                                   itemValue="#{idBusItem}"
+                                                   itemLabel="#{idBusItem.idBus.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idBus" value="#{busDeviceController.getComponentMessages('idBus', myBundle.CreateBusDeviceHelpText_idBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateBusDeviceLabel_idDevice}" for="idDevice" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idDevice" value="#{busDeviceController.selected.idDevice}" required="true" requiredMessage="#{myBundle.CreateBusDeviceRequiredMessage_idDevice}" converter="deviceConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{deviceController.items}"
+                                                   var="idDeviceItem"
+                                                   itemValue="#{idDeviceItem}"
+                                                   itemLabel="#{idDeviceItem.name.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idDevice" value="#{busDeviceController.getComponentMessages('idDevice', myBundle.CreateBusDeviceHelpText_idDevice)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{busDeviceController.saveNew}" value="#{myBundle.Save}" update="display,:BusDeviceListPage:BusDeviceListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:BusDeviceListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

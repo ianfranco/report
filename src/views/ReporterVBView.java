@@ -302,6 +302,11 @@ public class ReporterVBView extends javax.swing.JFrame {
         busesMenu.add(produccionBusMenuItem);
 
         jMenuItem2.setText("Listado");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         busesMenu.add(jMenuItem2);
 
         menuBar.add(busesMenu);
@@ -355,7 +360,7 @@ public class ReporterVBView extends javax.swing.JFrame {
         });
         remuneracionesMenu.add(planillonDescuentosMenuItem);
 
-        conductoresSinContratoMenuItem.setText("Conductores Sin Contrato - OK");
+        conductoresSinContratoMenuItem.setText("Conductores Sin Contrato ");
         conductoresSinContratoMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 conductoresSinContratoMenuItemActionPerformed(evt);
@@ -911,6 +916,23 @@ public class ReporterVBView extends javax.swing.JFrame {
         LiquidacionDinamicaController controller = new LiquidacionDinamicaController(this.mesSelectorLiquidacionView, this);
         setNewTab(this.mesSelectorLiquidacionView, "Liquidaciones");
     }//GEN-LAST:event_jMenuItem25ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            Map params = new HashMap();
+            JasperReport jasperReport;
+            InputStream in = getClass().getResourceAsStream("/jrxml/INF-BusxTerminal.jrxml");
+
+            jasperReport = JasperCompileManager.compileReport(in);
+
+            Conexion con = new Conexion();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, con.getConnection());
+            setNewReport(new JRViewer(jasperPrint), "Listado Terminal x Bus");
+        } catch (JRException jre) {
+            System.err.println(jre.getMessage());
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

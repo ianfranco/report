@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoHaberListPage">
+        <pm:header title="#{myBundle.ListTipoHaberTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":TipoHaberCreatePage:TipoHaberCreateForm" actionListener="#{tipoHaberController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TipoHaberCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoHaberListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{tipoHaberController.items}"
+                             var="item"
+                             rowKey="#{item.idTipoHaber}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{tipoHaberController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TipoHaberListPage:TipoHaberListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TipoHaberListPage:TipoHaberListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TipoHaberListPage:TipoHaberListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idTipoHaber}" filterBy="#{item.idTipoHaber}" headerText="#{myBundle.ListTipoHaberTitle_idTipoHaber}">
+                        <h:outputText value="#{item.idTipoHaber}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreTipoHaber}" filterBy="#{item.nombreTipoHaber}" headerText="#{myBundle.ListTipoHaberTitle_nombreTipoHaber}">
+                        <h:outputText value="#{item.nombreTipoHaber}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}" headerText="#{myBundle.ListTipoHaberTitle_fechaIngreso}">
+                        <h:outputText value="#{item.fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.montoDefecto}" filterBy="#{item.montoDefecto}" headerText="#{myBundle.ListTipoHaberTitle_montoDefecto}">
+                        <h:outputText value="#{item.montoDefecto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.imponible}" filterBy="#{item.imponible}" headerText="#{myBundle.ListTipoHaberTitle_imponible}">
+                        <h:selectBooleanCheckbox id="imponible" value="#{item.imponible}" title="#{myBundle.EditTipoHaberTitle_imponible}" required="true" requiredMessage="#{myBundle.EditTipoHaberRequiredMessage_imponible}" disabled="true"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoHaberEditPage:TipoHaberEditForm" disabled="#{empty tipoHaberController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TipoHaberEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoHaberController.delete}" update=":growl,datalist" disabled="#{empty tipoHaberController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty tipoHaberController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.TipoHaberHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.TipoHaberMenuItem_haberTrabajadorList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty tipoHaberController.selected.haberTrabajadorList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{tipoHaberController.navigateHaberTrabajadorList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

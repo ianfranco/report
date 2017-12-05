@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EstadoGuiaEditDlg" widgetVar="EstadoGuiaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEstadoGuiaTitle}" closeOnEscape="true">
+
+            <h:form id="EstadoGuiaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{estadoGuiaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEstadoGuiaLabel_idEstadoGuia}" for="idEstadoGuia" />
+                        <h:panelGroup>
+                            <h:outputText id="idEstadoGuia" value="#{estadoGuiaController.selected.idEstadoGuia}" />
+                            <p:tooltip for="idEstadoGuia" value="#{estadoGuiaController.getComponentMessages('idEstadoGuia', myBundle.EditEstadoGuiaHelpText_idEstadoGuia)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditEstadoGuiaLabel_nombreEstado}" for="nombreEstado" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreEstado" value="#{estadoGuiaController.selected.nombreEstado}" title="#{myBundle.EditEstadoGuiaTitle_nombreEstado}" required="true" requiredMessage="#{myBundle.EditEstadoGuiaRequiredMessage_nombreEstado}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombreEstado" value="#{estadoGuiaController.getComponentMessages('nombreEstado', myBundle.EditEstadoGuiaHelpText_nombreEstado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditEstadoGuiaLabel_activo}" for="activo" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="activo" value="#{estadoGuiaController.selected.activo}" required="true" requiredMessage="#{myBundle.EditEstadoGuiaRequiredMessage_activo}"/>
+                            <p:tooltip for="activo" value="#{estadoGuiaController.getComponentMessages('activo', myBundle.EditEstadoGuiaHelpText_activo)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estadoGuiaController.save}" value="#{myBundle.Save}" update="display,:EstadoGuiaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EstadoGuiaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EstadoGuiaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

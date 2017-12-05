@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ModeloMarcaBusCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateModeloMarcaBusTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ModeloMarcaBusListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ModeloMarcaBusCreateForm">
+
+                <h:panelGroup id="display" rendered="#{modeloMarcaBusController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateModeloMarcaBusLabel_nombreModeloMarcaBus}" for="nombreModeloMarcaBus" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreModeloMarcaBus" value="#{modeloMarcaBusController.selected.nombreModeloMarcaBus}" title="#{myBundle.CreateModeloMarcaBusTitle_nombreModeloMarcaBus}" required="true" requiredMessage="#{myBundle.CreateModeloMarcaBusRequiredMessage_nombreModeloMarcaBus}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreModeloMarcaBus" value="#{modeloMarcaBusController.getComponentMessages('nombreModeloMarcaBus', myBundle.CreateModeloMarcaBusHelpText_nombreModeloMarcaBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateModeloMarcaBusLabel_idMarcaBus}" for="idMarcaBus" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idMarcaBus" value="#{modeloMarcaBusController.selected.idMarcaBus}" required="true" requiredMessage="#{myBundle.CreateModeloMarcaBusRequiredMessage_idMarcaBus}" converter="marcaBusConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{marcaBusController.items}"
+                                                   var="idMarcaBusItem"
+                                                   itemValue="#{idMarcaBusItem}"
+                                                   itemLabel="#{idMarcaBusItem.idMarcasBus.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idMarcaBus" value="#{modeloMarcaBusController.getComponentMessages('idMarcaBus', myBundle.CreateModeloMarcaBusHelpText_idMarcaBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{modeloMarcaBusController.saveNew}" value="#{myBundle.Save}" update="display,:ModeloMarcaBusListPage:ModeloMarcaBusListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:ModeloMarcaBusListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

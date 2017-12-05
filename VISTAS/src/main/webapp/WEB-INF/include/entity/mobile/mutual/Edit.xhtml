@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="MutualEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditMutualTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:MutualListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="MutualEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{mutualController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditMutualLabel_idMutual}" for="idMutual" />
+                            <h:panelGroup>
+                                <h:outputText id="idMutual" value="#{mutualController.selected.idMutual}" />
+                                <p:tooltip for="idMutual" value="#{mutualController.getComponentMessages('idMutual', myBundle.EditMutualHelpText_idMutual)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditMutualLabel_nombreMutual}" for="nombreMutual" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreMutual" value="#{mutualController.selected.nombreMutual}" title="#{myBundle.EditMutualTitle_nombreMutual}" required="true" requiredMessage="#{myBundle.EditMutualRequiredMessage_nombreMutual}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreMutual" value="#{mutualController.getComponentMessages('nombreMutual', myBundle.EditMutualHelpText_nombreMutual)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditMutualLabel_comision}" for="comision" />
+                            <h:panelGroup>
+                                <p:inputText id="comision" value="#{mutualController.selected.comision}" title="#{myBundle.EditMutualTitle_comision}"/>
+                                <p:tooltip for="comision" value="#{mutualController.getComponentMessages('comision', myBundle.EditMutualHelpText_comision)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditMutualLabel_porcentajeDescuento}" for="porcentajeDescuento" />
+                            <h:panelGroup>
+                                <p:inputText id="porcentajeDescuento" value="#{mutualController.selected.porcentajeDescuento}" title="#{myBundle.EditMutualTitle_porcentajeDescuento}" required="true" requiredMessage="#{myBundle.EditMutualRequiredMessage_porcentajeDescuento}"/>
+                                <p:tooltip for="porcentajeDescuento" value="#{mutualController.getComponentMessages('porcentajeDescuento', myBundle.EditMutualHelpText_porcentajeDescuento)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{mutualController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:MutualListPage:MutualListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:MutualListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

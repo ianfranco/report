@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AsignacionFamiliarViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewAsignacionFamiliarTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:AsignacionFamiliarListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AsignacionFamiliarViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{asignacionFamiliarController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_idAsignacionFamiliar}"/>
+                            <h:outputText value="#{asignacionFamiliarController.selected.idAsignacionFamiliar}" title="#{myBundle.ViewAsignacionFamiliarTitle_idAsignacionFamiliar}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_codigoAsignacionFamiliar}"/>
+                            <h:outputText value="#{asignacionFamiliarController.selected.codigoAsignacionFamiliar}" title="#{myBundle.ViewAsignacionFamiliarTitle_codigoAsignacionFamiliar}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_tramo}"/>
+                            <h:outputText value="#{asignacionFamiliarController.selected.tramo}" title="#{myBundle.ViewAsignacionFamiliarTitle_tramo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_monto}"/>
+                            <h:outputText value="#{asignacionFamiliarController.selected.monto}" title="#{myBundle.ViewAsignacionFamiliarTitle_monto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_desde}"/>
+                            <h:outputText value="#{asignacionFamiliarController.selected.desde}" title="#{myBundle.ViewAsignacionFamiliarTitle_desde}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAsignacionFamiliarLabel_hasta}"/>
+                            <h:outputText value="#{asignacionFamiliarController.selected.hasta}" title="#{myBundle.ViewAsignacionFamiliarTitle_hasta}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

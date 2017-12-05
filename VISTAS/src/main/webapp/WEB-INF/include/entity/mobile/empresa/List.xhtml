@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EmpresaListPage">
+        <pm:header title="#{myBundle.ListEmpresaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":EmpresaCreatePage:EmpresaCreateForm" actionListener="#{empresaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:EmpresaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EmpresaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{empresaController.items}"
+                             var="item"
+                             rowKey="#{item.idEmpresa}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{empresaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{empresaController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{empresaController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('EmpresaListPage:EmpresaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('EmpresaListPage:EmpresaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('EmpresaListPage:EmpresaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idEmpresa}" filterBy="#{item.idEmpresa}" headerText="#{myBundle.ListEmpresaTitle_idEmpresa}">
+                        <h:outputText value="#{item.idEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.rutEmpresa}" filterBy="#{item.rutEmpresa}" headerText="#{myBundle.ListEmpresaTitle_rutEmpresa}">
+                        <h:outputText value="#{item.rutEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreEmpresa}" filterBy="#{item.nombreEmpresa}" headerText="#{myBundle.ListEmpresaTitle_nombreEmpresa}">
+                        <h:outputText value="#{item.nombreEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.giro}" filterBy="#{item.giro}" headerText="#{myBundle.ListEmpresaTitle_giro}">
+                        <h:outputText value="#{item.giro}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.direccionEmpresa}" filterBy="#{item.direccionEmpresa}" headerText="#{myBundle.ListEmpresaTitle_direccionEmpresa}">
+                        <h:outputText value="#{item.direccionEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.telefonoEmpresa}" filterBy="#{item.telefonoEmpresa}" headerText="#{myBundle.ListEmpresaTitle_telefonoEmpresa}">
+                        <h:outputText value="#{item.telefonoEmpresa}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.fax}" filterBy="#{item.fax}" headerText="#{myBundle.ListEmpresaTitle_fax}">
+                                            <h:outputText value="#{item.fax}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.emailEmpresa}" filterBy="#{item.emailEmpresa}" headerText="#{myBundle.ListEmpresaTitle_emailEmpresa}">
+                                            <h:outputText value="#{item.emailEmpresa}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idCajaCompensacion.idCajaCompensacion}" filterBy="#{item.idCajaCompensacion.idCajaCompensacion}" headerText="#{myBundle.ListEmpresaTitle_idCajaCompensacion}">
+                                            <h:outputText value="#{item.idCajaCompensacion.idCajaCompensacion}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idMutual.idMutual}" filterBy="#{item.idMutual.idMutual}" headerText="#{myBundle.ListEmpresaTitle_idMutual}">
+                                            <h:outputText value="#{item.idMutual.idMutual}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpresaEditPage:EmpresaEditForm" disabled="#{empty empresaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:EmpresaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empresaController.delete}" update=":growl,datalist" disabled="#{empty empresaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty empresaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.EmpresaHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.EmpresaMenuItem_liquidacionEmpresaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty empresaController.selected.liquidacionEmpresaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{empresaController.navigateLiquidacionEmpresaList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.EmpresaMenuItem_representanteEmpresaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty empresaController.selected.representanteEmpresaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{empresaController.navigateRepresentanteEmpresaList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.EmpresaMenuItem_busList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty empresaController.selected.busList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{empresaController.navigateBusList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.EmpresaMenuItem_relacionLaboralList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty empresaController.selected.relacionLaboralList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{empresaController.navigateRelacionLaboralList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.EmpresaMenuItem_idCajaCompensacion}" icon="ui-icon-search" update=":CajaCompensacionEditPage:CajaCompensacionEditForm" disabled="#{empty empresaController.selected.idCajaCompensacion}" actionListener="#{empresaController.prepareIdCajaCompensacion}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:CajaCompensacionEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.EmpresaMenuItem_idMutual}" icon="ui-icon-search" update=":MutualEditPage:MutualEditForm" disabled="#{empty empresaController.selected.idMutual}" actionListener="#{empresaController.prepareIdMutual}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:MutualEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="BusViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewBusTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:BusListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="BusViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{busController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_idBus}"/>
+                            <h:outputText value="#{busController.selected.idBus}" title="#{myBundle.ViewBusTitle_idBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_numeroBus}"/>
+                            <h:outputText value="#{busController.selected.numeroBus}" title="#{myBundle.ViewBusTitle_numeroBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_patente}"/>
+                            <h:outputText value="#{busController.selected.patente}" title="#{myBundle.ViewBusTitle_patente}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_año}"/>
+                            <h:outputText value="#{busController.selected.año}" title="#{myBundle.ViewBusTitle_año}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_numeroMotor}"/>
+                            <h:outputText value="#{busController.selected.numeroMotor}" title="#{myBundle.ViewBusTitle_numeroMotor}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_numeroChasis}"/>
+                            <h:outputText value="#{busController.selected.numeroChasis}" title="#{myBundle.ViewBusTitle_numeroChasis}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_carroceria}"/>
+                            <h:outputText value="#{busController.selected.carroceria}" title="#{myBundle.ViewBusTitle_carroceria}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_idEmpresa}"/>
+                            <h:outputText value="#{busController.selected.idEmpresa.idEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_idFlota}"/>
+                            <h:outputText value="#{busController.selected.idFlota.idFlota}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_idModelo}"/>
+                            <h:outputText value="#{busController.selected.idModelo.idModeloMarcaBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_idTerminal}"/>
+                            <h:outputText value="#{busController.selected.idTerminal.idTerminal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewBusLabel_idUnidadNegocio}"/>
+                            <h:outputText value="#{busController.selected.idUnidadNegocio.idUnidadNegocio}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

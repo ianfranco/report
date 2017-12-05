@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-09-28T16:50:47 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-Planillon_imposiciones" pageWidth="1002" pageHeight="709" orientation="Landscape" columnWidth="962" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e90a759c-15d2-4847-8640-5a2677063648">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<queryString>
+		<![CDATA[SELECT mae_con_modificado.CON_COD AS Codigo, 
+CON_RUT AS Rut, 
+CON_NOM AS Conductor, 
+EMP_RUT AS RutEmpresario,
+CON_EMP AS CodigoEmpresario, 
+EMP_NOM AS NombreEmpresario,
+CON_GAR,
+GAR_NOM As Garita, 
+CON_FIN AS FechaContrato, 
+CON_FNA AS FechaNacimiento, 
+CON_TIP, 
+CON_EMP, 
+CON_AFP,
+CON_SUEIMP AS Imponible,
+@sueldobase:=round(IF(CON_DIASGU>14, 257500, (257500/30)*CON_DIASGU)) AS 'SUELDOBASE', 
+@bruto:=round((CON_SUEIMP*100)/19) AS Bruto, 
+@unoporciento:=round(@bruto*1/100) AS 'unoporciento', 
+@dosporciento:=round(@bruto*2/100) AS 'dosporciento',
+@unocomados:=round(@bruto*1.2/100) AS 'unocomados', 
+@cerocomaocho:=round(@bruto*0.8/100) AS 'cerocomaocho',
+@dieciseis:=round(@bruto*16/100) AS 'dieciseis', 
+@imposicion:=IFNULL((SELECT SUM(MOV_RET) FROM mov_con WHERE MOV_CON = mae_con_modificado.CON_COD group by MOV_CON), 0) AS imposiciones, 
+@anticipo:=IFNULL((SELECT SUM(MOV_ANT) FROM mov_con WHERE MOV_CON = mae_con_modificado.CON_COD group by MOV_CON), 0) AS anticipo, 
+@ajustecomision:= ROUND(CON_SUEIMP-(@sueldobase+@dosporciento+@dosporciento+IFNULL(CON_D02, 0))) AS ajustecomision, 
+@diasdt:=IF(@ajustecomision<0, CON_DIASGU-2, CON_DIASGU) as diasdt,
+@sueldoreal:=ROUND(IF(@ajustecomision<0, round((257500/30)*@diasdt), @sueldobase)) AS 'SUELDOREAL',
+@ajustecomisionreal:=ROUND(CON_SUEIMP-(@sueldoreal+@dosporciento+@unocomados+@cerocomaocho+IFNULL(CON_D02, 0))) AS ajustecomisionreal, 
+ROUND(@sueldobase-@sueldoreal) As diferencia,
+AFP_NOM, 
+@valorafp:=IF(mae_con_modificado.CON_AFP = 0, 0, round(CON_SUEIMP*afp.AFP_POR/100)) AS 'ValorAfp',  
+IF(mae_con_modificado.CON_AFP = 0, 0, afp.AFP_POR) AS porcentajeafp, 
+@valorcaja:=IF(CON_PAC > 0, 0, IF(mae_emp.EMP_JAV=1,round(CON_SUEIMP*0.006), 0)) AS 'Caja18',
+@porcentajecaja:=IF(CON_PAC > 0, 0, IF(mae_emp.EMP_JAV=1,"0.6%", "0.0%")) AS 'porcentajeCaja',
+@valorinp:=IF(CON_PAC > 0, 0, IF(mae_con_modificado.CON_AFP <> 0, IF(mae_emp.CODIGO=10, round(CON_SUEIMP*0.105), IF(mae_emp.CODIGO=25, round(CON_SUEIMP*0.064), IF(mae_emp.CODIGO = 20, round(CON_SUEIMP*0.070), round(CON_SUEIMP*0.099)))), round(CON_SUEIMP*afp.AFP_POR/100))) AS 'INP',
+
+@porcentajeinp:=IF(CON_PAC > 0, "0.0%", IF(mae_con_modificado.CON_AFP <> 0, IF(mae_emp.CODIGO=10, "10.5%", IF(mae_emp.CODIGO=25, "6.4%", IF(mae_emp.CODIGO = 20, "7.0%", "9.9%"))), round(CON_SUEIMP*afp.AFP_POR/100))) AS 'porcentajeINP',
+@cesantia:=IF(CON_AFP<>99, (IF(CONTRATO=1 OR CON_SEGCES = 'S', IF( CON_SUEIMP<>0 AND CON_DIASLI = 0, round(CON_SUEIMP*0.006), IF(CON_DIASLI>0, round(CON_SUEIMP*0.006) ,ROUND(257500*0.006)) ), 0)), 0) As Cesantia,  
+
+@cesantiaEmpresario:=IF(CON_AFP<>99, (IF(CONTRATO=1 OR CON_SEGCES = 'S', IF(CON_SUEIMP<>0  AND CON_DIASLI = 0, round(CON_SUEIMP*0.024), IF(CON_DIASLI>0 ,round(CON_SUEIMP*0.024) , ROUND(257500*0.024))), 0)), 0) As CesantiaEmpresario,
+@tresporciento:=IF((@cesantia=0 AND CON_FIN>'2002-10-02') , IF(CON_SUEIMP<>0 AND CON_DIASLI=0, round(CON_SUEIMP*0.030), IF(CON_DIASLI>0 AND CON_SUEIMP>257500, ROUND(CON_SUEIMP*0.030), ROUND(257500*0.030))), IF(@cesantia=0 AND CON_SEGCES = 'S', IF(CON_SUEIMP<>0 AND CON_DIASLI=0, round(CON_SUEIMP*0.030), ROUND(257500*0.030)), 0)) AS tresporciento,
+@sis:=IF(CON_AFP<>99 AND CON_AFP <>0, round(CON_SUEIMP*0.0149), 0) AS SIS, 
+@ahorroVoluntario:=ROUND(IFNULL(CON_ADI, 0))  AS 'AhorroVoluntario',
+CON_OBS AS Observaciones, 
+@ahorroConductor:=ROUND(IFNULL(con_d04+con_d05, 0)) as AHORROCONDUCTOR,
+@total:=@cesantia  +@cesantiaEmpresario + @tresporciento + @sis + @ahorroVoluntario +@valorafp   AS TotalROW, 
+CON_MIN, 
+CON_ISA,
+CON_PAC,
+CON_JUB,
+CON_SEGCES,
+CON_CAR AS NumeroCargas,
+CON_VALCAR AS 'T.Cargas',
+CON_RET AS 'Cantidad Retroactivos',
+CON_VALRET AS Retroactivos, 
+CON_DIASGU AS DT, 
+ROUND(IFNULL(CON_D02, 0)) AS 'ValorVacaciones',
+CON_DIASVA AS Vacaciones,
+CON_DIASDE AS Descansos,
+CON_DIASLI AS Licencias, 
+CON_SUEBAS,
+con_pac AS ISAPRE, 
+IFNULL(isapre.Isa_nom, " ") As NombreIsapre, 
+CON_TIPSUE,
+CON_DIASTV,
+CON_d13,
+CON_IMPMAR,
+CON_BONO,
+CON_CTAAFP,
+CON_HOREXT,
+
+@saldoAnterior:=ROUND(IFNULL(con_d06, 0)) as SALDOANTERIOR,
+@sindicato:=ROUND(IFNULL(con_d07, 0)) as SINDICATO,
+@retencionJudicial:=ROUND(IFNULL(con_d08, 0)) as RETENCIONJUDICIAL,
+@creditoCaja:=ROUND(IFNULL(con_d17, 0)) as CREDITOCAJA, 
+@seguroExtra:=ROUND(IFNULL(CON_D12, 0)) AS SEGUROEXTRA , 
+(@saldoAnterior +@sindicato +@retencionJudicial +@creditoCaja + @valorafp + @valorcaja + @valorinp + @valorcesantia + CON_PAC + CON_ADI + @seguroExtra) AS TotalDescuentos 
+FROM mae_con_modificado left join MAE_EMP ON mae_con_modificado.CON_EMP = mae_emp.EMP_COD 
+LEFT JOIN des_con ON mae_con_modificado.CON_COD = des_con.CON_COD 
+LEFT JOIN afp ON CON_AFP = afp.AFP_COD 
+LEFT JOIN mae_gar ON mae_con_modificado.CON_GAR = mae_gar.GAR_COD
+LEFT JOIN isapre ON mae_con_modificado.con_isa = isapre.isa_cod 
+where con_tip = 1  
+ORDER BY NombreEmpresario ASC, Conductor ASC]]>
+	</queryString>
+	<field name="Codigo" class="java.lang.String"/>
+	<field name="Rut" class="java.lang.String"/>
+	<field name="Conductor" class="java.lang.String"/>
+	<field name="RutEmpresario" class="java.lang.String"/>
+	<field name="CodigoEmpresario" class="java.lang.String"/>
+	<field name="NombreEmpresario" class="java.lang.String"/>
+	<field name="CON_GAR" class="java.lang.Integer"/>
+	<field name="Garita" class="java.lang.String"/>
+	<field name="FechaContrato" class="java.sql.Timestamp"/>
+	<field name="FechaNacimiento" class="java.sql.Timestamp"/>
+	<field name="CON_TIP" class="java.lang.String"/>
+	<field name="CON_EMP" class="java.lang.String"/>
+	<field name="CON_AFP" class="java.lang.String"/>
+	<field name="Imponible" class="java.lang.Integer"/>
+	<field name="SUELDOBASE" class="java.math.BigDecimal"/>
+	<field name="Bruto" class="java.math.BigDecimal"/>
+	<field name="unoporciento" class="java.lang.Double"/>
+	<field name="dosporciento" class="java.lang.Double"/>
+	<field name="unocomados" class="java.lang.Double"/>
+	<field name="cerocomaocho" class="java.lang.Double"/>
+	<field name="dieciseis" class="java.lang.Double"/>
+	<field name="imposiciones" class="java.math.BigDecimal"/>
+	<field name="anticipo" class="java.math.BigDecimal"/>
+	<field name="ajustecomision" class="java.lang.Double"/>
+	<field name="diasdt" class="java.lang.Long"/>
+	<field name="SUELDOREAL" class="java.lang.Double"/>
+	<field name="ajustecomisionreal" class="java.lang.Double"/>
+	<field name="diferencia" class="java.lang.Double"/>
+	<field name="AFP_NOM" class="java.lang.String"/>
+	<field name="ValorAfp" class="java.lang.Double"/>
+	<field name="porcentajeafp" class="java.lang.Double"/>
+	<field name="Caja18" class="java.math.BigDecimal"/>
+	<field name="porcentajeCaja" class="java.lang.String"/>
+	<field name="INP" class="java.lang.Double"/>
+	<field name="porcentajeINP" class="java.lang.String"/>
+	<field name="Cesantia" class="java.math.BigDecimal"/>
+	<field name="CesantiaEmpresario" class="java.math.BigDecimal"/>
+	<field name="tresporciento" class="java.math.BigDecimal"/>
+	<field name="SIS" class="java.math.BigDecimal"/>
+	<field name="AhorroVoluntario" class="java.lang.Long"/>
+	<field name="Observaciones" class="java.lang.String"/>
+	<field name="AHORROCONDUCTOR" class="java.lang.Long"/>
+	<field name="TotalROW" class="java.lang.Double"/>
+	<field name="CON_MIN" class="java.lang.Integer"/>
+	<field name="CON_ISA" class="java.lang.String"/>
+	<field name="CON_PAC" class="java.lang.Integer"/>
+	<field name="CON_JUB" class="java.lang.String"/>
+	<field name="CON_SEGCES" class="java.lang.String"/>
+	<field name="NumeroCargas" class="java.lang.Integer"/>
+	<field name="T.Cargas" class="java.lang.Integer"/>
+	<field name="Cantidad Retroactivos" class="java.lang.Integer"/>
+	<field name="Retroactivos" class="java.lang.Integer"/>
+	<field name="DT" class="java.lang.Integer"/>
+	<field name="ValorVacaciones" class="java.lang.Long"/>
+	<field name="Vacaciones" class="java.lang.Integer"/>
+	<field name="Descansos" class="java.lang.Integer"/>
+	<field name="Licencias" class="java.lang.Integer"/>
+	<field name="CON_SUEBAS" class="java.lang.Integer"/>
+	<field name="ISAPRE" class="java.lang.Integer"/>
+	<field name="NombreIsapre" class="java.lang.String"/>
+	<field name="CON_TIPSUE" class="java.lang.String"/>
+	<field name="CON_DIASTV" class="java.lang.Integer"/>
+	<field name="CON_d13" class="java.lang.Integer"/>
+	<field name="CON_IMPMAR" class="java.lang.Integer"/>
+	<field name="CON_BONO" class="java.lang.Integer"/>
+	<field name="CON_CTAAFP" class="java.lang.Integer"/>
+	<field name="CON_HOREXT" class="java.lang.Integer"/>
+	<field name="SALDOANTERIOR" class="java.lang.Long"/>
+	<field name="SINDICATO" class="java.lang.Long"/>
+	<field name="RETENCIONJUDICIAL" class="java.lang.Long"/>
+	<field name="CREDITOCAJA" class="java.lang.Long"/>
+	<field name="SEGUROEXTRA" class="java.lang.Double"/>
+	<field name="TotalDescuentos" class="java.lang.Double"/>
+	<variable name="Imponible1" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{Imponible}]]></variableExpression>
+	</variable>
+	<variable name="Caja181" class="java.math.BigDecimal" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{Caja18}]]></variableExpression>
+	</variable>
+	<variable name="INP1" class="java.lang.Double" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{INP}]]></variableExpression>
+	</variable>
+	<variable name="ISAPRE1" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{ISAPRE}]]></variableExpression>
+	</variable>
+	<variable name="Imponible2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{Imponible}]]></variableExpression>
+	</variable>
+	<variable name="total_row" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{ValorAfp}.intValue()+$F{Cesantia}.intValue()+$F{CesantiaEmpresario}.intValue()+$F{tresporciento}.intValue()+$F{SIS}.intValue()]]></variableExpression>
+	</variable>
+	<variable name="TotalROW1" class="java.lang.Double" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalROW}]]></variableExpression>
+	</variable>
+	<variable name="TotalROW2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalROW}]]></variableExpression>
+	</variable>
+	<variable name="ISAPRE2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{ISAPRE}]]></variableExpression>
+	</variable>
+	<variable name="Caja182" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Caja18}]]></variableExpression>
+	</variable>
+	<variable name="INP2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{INP}]]></variableExpression>
+	</variable>
+	<group name="Empresario" keepTogether="true">
+		<groupExpression><![CDATA[$F{NombreEmpresario}]]></groupExpression>
+		<groupHeader>
+			<band height="12">
+				<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				<textField>
+					<reportElement x="40" y="0" width="220" height="11" uuid="976953ac-61b6-40d0-b24a-d11766e6ed99">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Square721 Cn BT" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NombreEmpresario}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="260" y="0" width="190" height="11" uuid="8e836abf-0ff3-48a0-b850-9797c125283d"/>
+					<textElement textAlignment="Right">
+						<font fontName="Square721 Cn BT" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RutEmpresario}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="40" height="11" uuid="b2aa882e-d85c-43aa-aac1-a1e5040d265f"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Square721 Cn BT" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CodigoEmpresario}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="36">
+				<textField pattern="#,##0.###;(#,##0.###-)">
+					<reportElement x="226" y="10" width="50" height="13" uuid="6575ab23-2e66-4930-872e-2da5ebf72d28"/>
+					<box rightPadding="7"/>
+					<textElement textAlignment="Right">
+						<font fontName="Square721 Cn BT" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Imponible1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.###;(#,##0.###-)">
+					<reportElement x="494" y="10" width="36" height="13" uuid="47fe59ae-749b-4e14-8779-587594f0d93c"/>
+					<box rightPadding="0"/>
+					<textElement textAlignment="Right">
+						<font fontName="Square721 Cn BT" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalROW1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.###;(#,##0.###-)">
+					<reportElement x="697" y="10" width="40" height="12" uuid="6afcb8a0-2622-4b75-8b0f-be205063fcdf"/>
+					<textElement textAlignment="Right">
+						<font fontName="Square721 Cn BT" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Caja181}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.###;(#,##0.###-)">
+					<reportElement x="791" y="10" width="36" height="12" uuid="10850023-ec7a-4b59-a6f2-267462eabac1"/>
+					<textElement textAlignment="Right">
+						<font fontName="Square721 Cn BT" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{INP1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.###;(#,##0.###-)">
+					<reportElement x="605" y="10" width="40" height="12" uuid="a33350fc-0b93-483d-9f01-0056df9178fb"/>
+					<textElement textAlignment="Right">
+						<font fontName="Square721 Cn BT" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ISAPRE1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="226" y="0" width="50" height="10" uuid="ad2d09d0-cb76-448e-b4ec-0926056fa114">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans Mono" size="8"/>
+					</textElement>
+					<text><![CDATA[--------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="480" y="0" width="50" height="10" uuid="f71ee8df-877b-4619-8d71-2e7a642bb0d7">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans Mono" size="8"/>
+					</textElement>
+					<text><![CDATA[--------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="593" y="0" width="52" height="10" uuid="afc4b3a9-6443-45e1-aa53-2e881440eed4">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans Mono" size="8"/>
+					</textElement>
+					<text><![CDATA[--------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="687" y="0" width="50" height="10" uuid="37f9357e-2e41-4717-ac49-13883018cd9c">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans Mono" size="8"/>
+					</textElement>
+					<text><![CDATA[--------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="777" y="0" width="50" height="10" uuid="7ec2de16-ce8e-4676-958e-2203bd804f4d">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="DejaVu Sans Mono" size="8"/>
+					</textElement>
+					<text><![CDATA[--------]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="109" height="20" uuid="acd3f655-fa32-4b8a-ac09-77b90d459009"/>
+				<textElement>
+					<font fontName="Square721 Cn BT"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="28" width="199" height="14" uuid="5da19b2d-945b-4aad-a823-117766194ec0"/>
+				<textElement>
+					<font fontName="Square721 Cn BT"/>
+				</textElement>
+				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="28" width="109" height="14" uuid="6ddbfc82-6dc0-405f-b401-9b9e5777a6a2"/>
+				<textElement>
+					<font fontName="Square721 Cn BT"/>
+				</textElement>
+				<text><![CDATA[AGOSTO 2016]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="740" y="53" width="92" height="16" uuid="90f00557-6599-4842-9645-157c0500717b"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans Mono" size="8"/>
+				</textElement>
+				<text><![CDATA[┌----- INP -----┐]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="920" y="20" width="40" height="16" uuid="11f967b3-310f-4904-8baa-460a2da7a1c9"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="880" y="20" width="40" height="14" uuid="724a3cab-58ef-434b-9bf5-b3bc5ac1d53b">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="920" y="0" width="40" height="14" uuid="936341c5-54a9-4a48-acda-8fb4f4fa98dd">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[31/08/2016]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="880" y="0" width="40" height="14" uuid="c308eea7-0258-4dc9-bc5a-7a68d5b86d7e">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="53" width="92" height="16" uuid="b6f8348c-3b80-4593-9359-f922f00c03fc"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans Mono" size="8"/>
+				</textElement>
+				<text><![CDATA[┌--- J.C. -----┐]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="535" y="53" width="110" height="16" uuid="ea0e074a-cb49-4dfb-9ae3-0ff7424587bb"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans Mono" size="8"/>
+				</textElement>
+				<text><![CDATA[┌----- ISAPRE ------┐]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="53" width="275" height="15" uuid="37d6c4b6-6640-4d21-95d2-ef7d6c3e7689"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans Mono" size="8"/>
+				</textElement>
+				<text><![CDATA[┌--------------------- A.F.P ------------------------┐]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="960" height="11" uuid="85ba46c7-8643-4ae3-bf35-bd09cf5c1da5"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans Mono" size="9"/>
+				</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+			<staticText>
+				<reportElement x="0" y="3" width="30" height="14" uuid="c3d03b76-0369-49a0-8a2f-ff177aaa727f"/>
+				<textElement>
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[COD.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="3" width="110" height="14" uuid="fb323381-cd34-41c3-9ecf-ad10efacbe40">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[NOMBRE CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="3" width="60" height="14" uuid="8913ab84-cdaa-46bf-86ab-14f46cfd5ca6">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[R.U.T.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="3" width="38" height="14" uuid="147c3830-e319-4dd1-a25b-2d5ba9ef44ab">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[F.NAC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="3" width="38" height="14" uuid="69070495-0ebb-49d6-81d4-d3ae7a0089b0">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[S.IMP.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="3" width="54" height="14" uuid="4c5184be-ed3b-410f-bd19-661ad31ba09a">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[NOMBRE AFP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="3" width="20" height="14" uuid="935f8ee7-f88e-422b-b13f-024fa7e43849">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[(%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="3" width="30" height="14" uuid="5eab845c-7974-4872-8c52-af25406d4ee0">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="3" width="30" height="14" uuid="7effd416-677c-40d7-ab7b-7e25f77929ad">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[0.6 %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="3" width="30" height="14" uuid="a5481ac0-5fd4-4250-a34b-cc85b608e4e2">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[2.4 %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="3" width="30" height="14" uuid="f1cabc09-b44d-4224-9fd7-d3019ee85d3f">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[3 %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="3" width="30" height="14" uuid="e9cdb944-ba67-414c-9695-4f9382fd058c">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[AHORRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="3" width="30" height="14" uuid="4dfb9cda-0282-4daa-b764-7140feee4f53">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[S.I.S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="545" y="3" width="60" height="14" uuid="455b6deb-cb70-4d6b-bb44-e43bc315cae0">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[NOMBRE ISAPRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="605" y="3" width="39" height="14" uuid="08adc2d5-c5de-4ded-85f6-f027eb656fe5">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="667" y="3" width="20" height="14" uuid="ca89fb60-922c-4c94-b0e6-73a91fc81b6f">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[(%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="697" y="3" width="40" height="14" uuid="e5320aad-62e8-49fb-a14f-d07f1a3159ac">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="737" y="3" width="40" height="14" uuid="eba9cbb4-0ee0-490a-832f-6a479f85da50">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[(%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="787" y="3" width="40" height="14" uuid="a3368b75-2737-44ba-bbb7-9373bc5119fb">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="829" y="3" width="58" height="14" uuid="a535d6a0-4617-4744-8460-b26da2e903ab">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="890" y="3" width="20" height="14" uuid="7c680da9-bb87-4dd7-803a-38120451ced8">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[D.T.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="920" y="3" width="40" height="14" uuid="0b72ba42-d29d-4817-926f-4a1a1a8fa2a4">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<text><![CDATA[F.CONT.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="13" width="960" height="10" uuid="b496a200-6e7f-47b0-b15d-033bbadceec6">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans Mono" size="8"/>
+				</textElement>
+				<text><![CDATA[----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+			<textField>
+				<reportElement x="30" y="0" width="110" height="14" uuid="57ea5f34-25a9-477f-87ce-0cf01528c143">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Conductor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="30" height="14" uuid="a70dc431-686d-4ba1-99f4-bee966663ca1">
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="60" height="14" uuid="298bb973-0d65-4187-8201-50453890a179">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Rut}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="238" y="0" width="38" height="14" uuid="1fa11f1a-6f9f-4a52-8859-92b6b42c569e">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box rightPadding="7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Imponible}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="54" height="14" uuid="b96a6a2f-20d0-45e2-b5fe-7f521c65522f">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AFP_NOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="20" height="14" uuid="2444089c-a219-4559-a877-7da219df27fc">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcentajeafp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="350" y="0" width="30" height="14" uuid="a42ec631-bf88-4372-a318-14adeae386fa">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ValorAfp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="380" y="0" width="30" height="14" uuid="a7a46e8d-3c5d-42b4-9ab9-3a377cefa90d">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cesantia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="410" y="0" width="30" height="14" uuid="7aa07438-d49c-4501-a0cb-9bf0175eb0ab">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CesantiaEmpresario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="440" y="0" width="30" height="14" uuid="ac31168a-4566-4f19-ad1f-bc34b4a3a0a1">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tresporciento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="470" y="0" width="30" height="14" uuid="fb2cb998-6171-4119-be37-3081c7dae59c">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AhorroVoluntario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="500" y="0" width="30" height="14" uuid="74e41d11-103c-4f70-ab86-aeb1dc3cbffd">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SIS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="545" y="0" width="60" height="14" uuid="0e2f4131-3661-4747-b5df-1b4284900bdd">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreIsapre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="605" y="0" width="40" height="14" uuid="8add5e78-1646-4b9e-8994-fd9fbb4f36ae">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ISAPRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="667" y="0" width="20" height="14" uuid="a656d965-6b28-47f9-a739-4c47e8bc2669">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcentajeCaja}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="697" y="0" width="40" height="14" uuid="9e980617-0d3e-4525-aa51-da17f96ae213">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Caja18}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="737" y="0" width="40" height="14" uuid="2a49b7d9-debf-421a-8b53-09f30d32aff6">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcentajeINP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="787" y="0" width="40" height="14" uuid="6b853062-ee29-4cfd-aeb1-d90dd9d31400">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="832" y="0" width="50" height="14" uuid="932eb0b8-c2d9-44ae-8542-d7c9cf30ffd0">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Observaciones}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="890" y="0" width="20" height="14" uuid="a9a82868-85bc-4be2-8a58-c53f1fa51633">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("+$F{DT}+")"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="920" y="0" width="40" height="14" uuid="014d7d38-28f6-41c0-aaee-b8d381faeebf">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaContrato}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="199" y="0" width="39" height="14" uuid="52f794f3-fd4b-4457-8882-0c87d1b71ae4">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaNacimiento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="46" splitType="Stretch">
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="226" y="0" width="50" height="20" uuid="8f545ffd-c80a-4290-b6a2-10071df9eb9a"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Imponible2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="480" y="0" width="50" height="20" uuid="a6a39203-053e-454b-86cb-86c243eea39d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalROW2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="605" y="0" width="40" height="20" uuid="4682f2ac-dc36-4ba5-8875-4300834eef41"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ISAPRE2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="697" y="0" width="40" height="20" uuid="3fc44c56-78c7-448f-9ce5-045f9ca6c290"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Caja182}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="787" y="0" width="40" height="20" uuid="fa894cf0-8799-4688-a3d3-9b211cdca27a"/>
+				<textElement textAlignment="Right">
+					<font fontName="Square721 Cn BT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{INP2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

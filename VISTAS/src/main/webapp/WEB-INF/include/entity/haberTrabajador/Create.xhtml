@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HaberTrabajadorCreateDlg" widgetVar="HaberTrabajadorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateHaberTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="HaberTrabajadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{haberTrabajadorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateHaberTrabajadorLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{haberTrabajadorController.selected.fechaIngreso}" title="#{myBundle.CreateHaberTrabajadorTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.CreateHaberTrabajadorRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{haberTrabajadorController.getComponentMessages('fechaIngreso', myBundle.CreateHaberTrabajadorHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateHaberTrabajadorLabel_fechaInicio}" for="fechaInicio" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{haberTrabajadorController.selected.fechaInicio}" title="#{myBundle.CreateHaberTrabajadorTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.CreateHaberTrabajadorRequiredMessage_fechaInicio}" showOn="button"/>
+                            <p:tooltip for="fechaInicio" value="#{haberTrabajadorController.getComponentMessages('fechaInicio', myBundle.CreateHaberTrabajadorHelpText_fechaInicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateHaberTrabajadorLabel_numeroCuotas}" for="numeroCuotas" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroCuotas" value="#{haberTrabajadorController.selected.numeroCuotas}" title="#{myBundle.CreateHaberTrabajadorTitle_numeroCuotas}"/>
+                            <p:tooltip for="numeroCuotas" value="#{haberTrabajadorController.getComponentMessages('numeroCuotas', myBundle.CreateHaberTrabajadorHelpText_numeroCuotas)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateHaberTrabajadorLabel_monto}" for="monto" />
+                        <h:panelGroup>
+                            <p:inputText id="monto" value="#{haberTrabajadorController.selected.monto}" title="#{myBundle.CreateHaberTrabajadorTitle_monto}" required="true" requiredMessage="#{myBundle.CreateHaberTrabajadorRequiredMessage_monto}"/>
+                            <p:tooltip for="monto" value="#{haberTrabajadorController.getComponentMessages('monto', myBundle.CreateHaberTrabajadorHelpText_monto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateHaberTrabajadorLabel_activoHaberTrabajador}" for="activoHaberTrabajador" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="activoHaberTrabajador" value="#{haberTrabajadorController.selected.activoHaberTrabajador}" required="true" requiredMessage="#{myBundle.CreateHaberTrabajadorRequiredMessage_activoHaberTrabajador}"/>
+                            <p:tooltip for="activoHaberTrabajador" value="#{haberTrabajadorController.getComponentMessages('activoHaberTrabajador', myBundle.CreateHaberTrabajadorHelpText_activoHaberTrabajador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateHaberTrabajadorLabel_idTipoHaber}" for="idTipoHaber" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTipoHaber" value="#{haberTrabajadorController.selected.idTipoHaber}" required="true" requiredMessage="#{myBundle.CreateHaberTrabajadorRequiredMessage_idTipoHaber}" converter="tipoHaberConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{tipoHaberController.items}"
+                                               var="idTipoHaberItem"
+                                               itemValue="#{idTipoHaberItem}"
+                                               itemLabel="#{idTipoHaberItem.idTipoHaber.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTipoHaber" value="#{haberTrabajadorController.getComponentMessages('idTipoHaber', myBundle.CreateHaberTrabajadorHelpText_idTipoHaber)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateHaberTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{haberTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.CreateHaberTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{haberTrabajadorController.getComponentMessages('idTrabajador', myBundle.CreateHaberTrabajadorHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{haberTrabajadorController.saveNew}" value="#{myBundle.Save}" update="display,:HaberTrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('HaberTrabajadorCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('HaberTrabajadorCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

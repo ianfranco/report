@@ -13,17 +13,49 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[CALL `final_planillon_distribucion_aguinaldo_solymar`(1, '2016-11-01')]]>
+		<![CDATA[SELECT 
+    codigoTerminal,
+    nombreTerminal,
+    codigoTrabajador,
+    nombreTrabajador,
+    rutTrabajador,
+    codigoEmpleador,
+    NombreEmpresario,
+    fecha,
+    montoAguinaldo
+FROM
+    aguinaldo_septiembre_2017
+WHERE codigoTrabajador IN (2936, 1029, 139, 2407, 41)
+GROUP BY codigoTrabajador 
+ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 	</queryString>
-	<field name="codigoTerminal" class="java.lang.Long"/>
-	<field name="nombreTerminal" class="java.lang.String"/>
-	<field name="codigoTrabajador" class="java.lang.Integer"/>
-	<field name="nombreTrabajador" class="java.lang.String"/>
-	<field name="rutTrabajador" class="java.lang.String"/>
-	<field name="codigoEmpleador" class="java.lang.Integer"/>
-	<field name="NombreEmpresario" class="java.lang.String"/>
-	<field name="fecha" class="java.sql.Date"/>
-	<field name="montoAguinaldo" class="java.lang.Integer"/>
+	<field name="codigoTerminal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreTerminal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoTrabajador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreTrabajador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rutTrabajador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoEmpleador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreEmpresario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoAguinaldo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -43,11 +75,11 @@
 	<detail>
 		<band height="374" splitType="Stretch">
 			<staticText>
-				<reportElement x="98" y="55" width="370" height="30" uuid="f346521d-f702-41fa-8531-38eb42542ecd"/>
+				<reportElement x="98" y="45" width="370" height="30" uuid="f346521d-f702-41fa-8531-38eb42542ecd"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[AGUINALDO VOLUNTARIO NAVIDAD 2016]]></text>
+				<text><![CDATA[AGUINALDO VOLUNTARIO ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="7" width="210" height="30" uuid="5ace7a81-3f00-4a2a-95a0-818a94346026"/>
@@ -156,6 +188,13 @@
 				<reportElement x="34" y="299" width="190" height="33" uuid="fdd38a59-5085-4453-9fae-3a60a1a934b5"/>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<text><![CDATA[APROBADO POR RONALD PARADA FUENTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="177" y="75" width="213" height="30" uuid="aa664c46-bdd9-4d8e-96e8-603ef354e6a5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIESTAS PATRIAS 2017]]></text>
 			</staticText>
 		</band>
 	</detail>

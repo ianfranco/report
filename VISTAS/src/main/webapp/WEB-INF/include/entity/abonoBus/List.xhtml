@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="AbonoBusListForm">
+
+        <p:panel header="#{myBundle.ListAbonoBusTitle}">
+            <p:contextMenu id="AbonoBusDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('AbonoBusListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('AbonoBusListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('AbonoBusListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('AbonoBusListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.AbonoBusMenuItem_idBus}" icon="ui-icon-search"  actionListener="#{abonoBusController.prepareIdBus}" update=":BusViewForm" oncomplete="PF('BusViewDialog').show()" disabled="#{empty abonoBusController.selected.idBus}"/>  
+                <p:menuitem value="#{myBundle.AbonoBusMenuItem_idTipoAbono}" icon="ui-icon-search"  actionListener="#{abonoBusController.prepareIdTipoAbono}" update=":TipoAbonoViewForm" oncomplete="PF('TipoAbonoViewDialog').show()" disabled="#{empty abonoBusController.selected.idTipoAbono}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{abonoBusController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{abonoBusController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{abonoBusController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idAbonoBus}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AbonoBusDataTableContextMenu" listener="#{abonoBusController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AbonoBusDataTableContextMenu" listener="#{abonoBusController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{abonoBusController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AbonoBusListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idAbonoBus}" filterBy="#{item.idAbonoBus}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAbonoBusTitle_idAbonoBus}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idAbonoBus}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaIngresoAbonoBus}" filterBy="#{item.fechaIngresoAbonoBus}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAbonoBusTitle_fechaIngresoAbonoBus}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaIngresoAbonoBus}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaInicioAbonoBus}" filterBy="#{item.fechaInicioAbonoBus}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAbonoBusTitle_fechaInicioAbonoBus}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaInicioAbonoBus}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numeroCuotasAbonoBus}" filterBy="#{item.numeroCuotasAbonoBus}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAbonoBusTitle_numeroCuotasAbonoBus}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numeroCuotasAbonoBus}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.montoAbonoBus}" filterBy="#{item.montoAbonoBus}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAbonoBusTitle_montoAbonoBus}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.montoAbonoBus}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.activoAbonoBus}" filterBy="#{item.activoAbonoBus}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAbonoBusTitle_activoAbonoBus}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="activoAbonoBus" value="#{item.activoAbonoBus}" title="#{myBundle.EditAbonoBusTitle_activoAbonoBus}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_activoAbonoBus}" disabled="true"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.idBus.idBus}" filterBy="#{item.idBus.idBus}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListAbonoBusTitle_idBus}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idBus.idBus}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idTipoAbono.idTipoAbono}" filterBy="#{item.idTipoAbono.idTipoAbono}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListAbonoBusTitle_idTipoAbono}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idTipoAbono.idTipoAbono}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{abonoBusController.prepareCreate}" update=":AbonoBusCreateForm" oncomplete="PF('AbonoBusCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":AbonoBusViewForm" oncomplete="PF('AbonoBusViewDialog').show()" disabled="#{empty abonoBusController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":AbonoBusEditForm" oncomplete="PF('AbonoBusEditDialog').show()" disabled="#{empty abonoBusController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{abonoBusController.delete}" update=":growl,datalist" disabled="#{empty abonoBusController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

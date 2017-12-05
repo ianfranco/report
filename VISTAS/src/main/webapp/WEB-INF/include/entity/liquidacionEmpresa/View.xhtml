@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LiquidacionEmpresaViewDlg" widgetVar="LiquidacionEmpresaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewLiquidacionEmpresaTitle}" closeOnEscape="true">
+
+            <h:form id="LiquidacionEmpresaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{liquidacionEmpresaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_idLiquidacionEmpresa}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.idLiquidacionEmpresa}" title="#{myBundle.ViewLiquidacionEmpresaTitle_idLiquidacionEmpresa}"/>
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_mes}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.mes}" title="#{myBundle.ViewLiquidacionEmpresaTitle_mes}"/>
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_año}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.año}" title="#{myBundle.ViewLiquidacionEmpresaTitle_año}"/>
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_fechaEmision}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.fechaEmision}" title="#{myBundle.ViewLiquidacionEmpresaTitle_fechaEmision}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_fechaPago}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.fechaPago}" title="#{myBundle.ViewLiquidacionEmpresaTitle_fechaPago}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_totalAbonos}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.totalAbonos}" title="#{myBundle.ViewLiquidacionEmpresaTitle_totalAbonos}"/>
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_totalCargos}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.totalCargos}" title="#{myBundle.ViewLiquidacionEmpresaTitle_totalCargos}"/>
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_saldo}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.saldo}" title="#{myBundle.ViewLiquidacionEmpresaTitle_saldo}"/>
+
+                        <h:outputText value="#{myBundle.ViewLiquidacionEmpresaLabel_idEmpresa}"/>
+                        <h:outputText value="#{liquidacionEmpresaController.selected.idEmpresa.idEmpresa}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('LiquidacionEmpresaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

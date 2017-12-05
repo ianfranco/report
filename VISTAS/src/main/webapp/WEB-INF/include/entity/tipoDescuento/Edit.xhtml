@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TipoDescuentoEditDlg" widgetVar="TipoDescuentoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTipoDescuentoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoDescuentoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tipoDescuentoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTipoDescuentoLabel_idTipoDescuento}" for="idTipoDescuento" />
+                        <h:panelGroup>
+                            <h:outputText id="idTipoDescuento" value="#{tipoDescuentoController.selected.idTipoDescuento}" />
+                            <p:tooltip for="idTipoDescuento" value="#{tipoDescuentoController.getComponentMessages('idTipoDescuento', myBundle.EditTipoDescuentoHelpText_idTipoDescuento)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTipoDescuentoLabel_nombreTipoDescuento}" for="nombreTipoDescuento" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreTipoDescuento" value="#{tipoDescuentoController.selected.nombreTipoDescuento}" title="#{myBundle.EditTipoDescuentoTitle_nombreTipoDescuento}" required="true" requiredMessage="#{myBundle.EditTipoDescuentoRequiredMessage_nombreTipoDescuento}" size="255" maxlength="255"/>
+                            <p:tooltip for="nombreTipoDescuento" value="#{tipoDescuentoController.getComponentMessages('nombreTipoDescuento', myBundle.EditTipoDescuentoHelpText_nombreTipoDescuento)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTipoDescuentoLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{tipoDescuentoController.selected.fechaIngreso}" title="#{myBundle.EditTipoDescuentoTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.EditTipoDescuentoRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{tipoDescuentoController.getComponentMessages('fechaIngreso', myBundle.EditTipoDescuentoHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTipoDescuentoLabel_montoDefecto}" for="montoDefecto" />
+                        <h:panelGroup>
+                            <p:inputText id="montoDefecto" value="#{tipoDescuentoController.selected.montoDefecto}" title="#{myBundle.EditTipoDescuentoTitle_montoDefecto}"/>
+                            <p:tooltip for="montoDefecto" value="#{tipoDescuentoController.getComponentMessages('montoDefecto', myBundle.EditTipoDescuentoHelpText_montoDefecto)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoDescuentoController.save}" value="#{myBundle.Save}" update="display,:TipoDescuentoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoDescuentoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoDescuentoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

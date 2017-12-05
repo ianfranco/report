@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BusServicioCreateDlg" widgetVar="BusServicioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateBusServicioTitle}" closeOnEscape="true">
+
+            <h:form id="BusServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{busServicioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateBusServicioLabel_idBus}" for="idBus" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idBus" value="#{busServicioController.selected.idBus}" required="true" requiredMessage="#{myBundle.CreateBusServicioRequiredMessage_idBus}" converter="busConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{busController.items}"
+                                               var="idBusItem"
+                                               itemValue="#{idBusItem}"
+                                               itemLabel="#{idBusItem.idBus.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idBus" value="#{busServicioController.getComponentMessages('idBus', myBundle.CreateBusServicioHelpText_idBus)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusServicioLabel_idServicio}" for="idServicio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idServicio" value="#{busServicioController.selected.idServicio}" required="true" requiredMessage="#{myBundle.CreateBusServicioRequiredMessage_idServicio}" converter="servicioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{servicioController.items}"
+                                               var="idServicioItem"
+                                               itemValue="#{idServicioItem}"
+                                               itemLabel="#{idServicioItem.idServicio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idServicio" value="#{busServicioController.getComponentMessages('idServicio', myBundle.CreateBusServicioHelpText_idServicio)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{busServicioController.saveNew}" value="#{myBundle.Save}" update="display,:BusServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BusServicioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BusServicioCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

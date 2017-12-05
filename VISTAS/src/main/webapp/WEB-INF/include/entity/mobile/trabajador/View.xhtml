@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TrabajadorViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TrabajadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="TrabajadorTabView">
+
+                        <p:tab id="TrabajadorTab1" title="#{myBundle.TabHeaderPrefix} 1">
+                            <p:outputPanel rendered="#{trabajadorController.selected != null}">
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_idTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.idTrabajador}" title="#{myBundle.ViewTrabajadorTitle_idTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_rutTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.rutTrabajador}" title="#{myBundle.ViewTrabajadorTitle_rutTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_nombreTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.nombreTrabajador}" title="#{myBundle.ViewTrabajadorTitle_nombreTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_apellidoPaternoTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.apellidoPaternoTrabajador}" title="#{myBundle.ViewTrabajadorTitle_apellidoPaternoTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_apellidoMaternoTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.apellidoMaternoTrabajador}" title="#{myBundle.ViewTrabajadorTitle_apellidoMaternoTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_fechaNacimientoTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.fechaNacimientoTrabajador}" title="#{myBundle.ViewTrabajadorTitle_fechaNacimientoTrabajador}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_nacionalidad}"/>
+                                    <h:selectBooleanCheckbox id="nacionalidad" value="#{trabajadorController.selected.nacionalidad}" title="#{myBundle.EditTrabajadorTitle_nacionalidad}"  disabled="true"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_sexo}"/>
+                                    <h:selectBooleanCheckbox id="sexo" value="#{trabajadorController.selected.sexo}" title="#{myBundle.EditTrabajadorTitle_sexo}"  disabled="true"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_direccionTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.direccionTrabajador}" title="#{myBundle.ViewTrabajadorTitle_direccionTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_telefonoFijoTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.telefonoFijoTrabajador}" title="#{myBundle.ViewTrabajadorTitle_telefonoFijoTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_celularTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.celularTrabajador}" title="#{myBundle.ViewTrabajadorTitle_celularTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_emailTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.emailTrabajador}" title="#{myBundle.ViewTrabajadorTitle_emailTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_numeroCargas}"/>
+                                    <h:outputText value="#{trabajadorController.selected.numeroCargas}" title="#{myBundle.ViewTrabajadorTitle_numeroCargas}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_montoSalud}"/>
+                                    <h:outputText value="#{trabajadorController.selected.montoSalud}" title="#{myBundle.ViewTrabajadorTitle_montoSalud}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_formaPagoApv}"/>
+                                    <h:selectBooleanCheckbox id="formaPagoApv" value="#{trabajadorController.selected.formaPagoApv}" title="#{myBundle.EditTrabajadorTitle_formaPagoApv}"  disabled="true"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_subsidioJoven}"/>
+                                    <h:selectBooleanCheckbox id="subsidioJoven" value="#{trabajadorController.selected.subsidioJoven}" title="#{myBundle.EditTrabajadorTitle_subsidioJoven}"  disabled="true"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_idInstitucionApv}"/>
+                                    <h:outputText value="#{trabajadorController.selected.idInstitucionApv.idInstitucionApv}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_idAsignacionFamiliar}"/>
+                                    <h:outputText value="#{trabajadorController.selected.idAsignacionFamiliar.idAsignacionFamiliar}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_idTipoCotizacionTrabajador}"/>
+                                    <h:outputText value="#{trabajadorController.selected.idTipoCotizacionTrabajador.idTipoCotizacionTrabajador}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_idMonedaPactadaSalud}"/>
+                                    <h:outputText value="#{trabajadorController.selected.idMonedaPactadaSalud.idMonedaSalud}"/>
+                                </pm:field>
+
+                            </p:outputPanel>
+                        </p:tab>
+                        <p:tab id="TrabajadorTab2" title="#{myBundle.TabHeaderPrefix} 2">
+                            <p:outputPanel rendered="#{trabajadorController.selected != null}">
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_idInstitucionPrevision}"/>
+                                    <h:outputText value="#{trabajadorController.selected.idInstitucionPrevision.idInstitucionPrevision}"/>
+                                </pm:field>
+
+                                <pm:field>
+                                    <h:outputText value="#{myBundle.ViewTrabajadorLabel_idInstitucionSalud}"/>
+                                    <h:outputText value="#{trabajadorController.selected.idInstitucionSalud.idInstitucionSalud}"/>
+                                </pm:field>
+                            </p:outputPanel>
+                        </p:tab>
+                    </p:tabView>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

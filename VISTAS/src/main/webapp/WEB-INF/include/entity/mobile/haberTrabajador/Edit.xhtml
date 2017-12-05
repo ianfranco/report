@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="HaberTrabajadorEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditHaberTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:HaberTrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="HaberTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{haberTrabajadorController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditHaberTrabajadorLabel_idHaberTrabajador}" for="idHaberTrabajador" />
+                            <h:panelGroup>
+                                <h:outputText id="idHaberTrabajador" value="#{haberTrabajadorController.selected.idHaberTrabajador}" />
+                                <p:tooltip for="idHaberTrabajador" value="#{haberTrabajadorController.getComponentMessages('idHaberTrabajador', myBundle.EditHaberTrabajadorHelpText_idHaberTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditHaberTrabajadorLabel_fechaIngreso}" for="fechaIngreso" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{haberTrabajadorController.selected.fechaIngreso}" title="#{myBundle.EditHaberTrabajadorTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.EditHaberTrabajadorRequiredMessage_fechaIngreso}" showOn="button"/>
+                                <p:tooltip for="fechaIngreso" value="#{haberTrabajadorController.getComponentMessages('fechaIngreso', myBundle.EditHaberTrabajadorHelpText_fechaIngreso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditHaberTrabajadorLabel_fechaInicio}" for="fechaInicio" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{haberTrabajadorController.selected.fechaInicio}" title="#{myBundle.EditHaberTrabajadorTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.EditHaberTrabajadorRequiredMessage_fechaInicio}" showOn="button"/>
+                                <p:tooltip for="fechaInicio" value="#{haberTrabajadorController.getComponentMessages('fechaInicio', myBundle.EditHaberTrabajadorHelpText_fechaInicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditHaberTrabajadorLabel_numeroCuotas}" for="numeroCuotas" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroCuotas" value="#{haberTrabajadorController.selected.numeroCuotas}" title="#{myBundle.EditHaberTrabajadorTitle_numeroCuotas}"/>
+                                <p:tooltip for="numeroCuotas" value="#{haberTrabajadorController.getComponentMessages('numeroCuotas', myBundle.EditHaberTrabajadorHelpText_numeroCuotas)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditHaberTrabajadorLabel_monto}" for="monto" />
+                            <h:panelGroup>
+                                <p:inputText id="monto" value="#{haberTrabajadorController.selected.monto}" title="#{myBundle.EditHaberTrabajadorTitle_monto}" required="true" requiredMessage="#{myBundle.EditHaberTrabajadorRequiredMessage_monto}"/>
+                                <p:tooltip for="monto" value="#{haberTrabajadorController.getComponentMessages('monto', myBundle.EditHaberTrabajadorHelpText_monto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditHaberTrabajadorLabel_activoHaberTrabajador}" for="activoHaberTrabajador" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="activoHaberTrabajador" value="#{haberTrabajadorController.selected.activoHaberTrabajador}" required="true" requiredMessage="#{myBundle.EditHaberTrabajadorRequiredMessage_activoHaberTrabajador}"/>
+                                <p:tooltip for="activoHaberTrabajador" value="#{haberTrabajadorController.getComponentMessages('activoHaberTrabajador', myBundle.EditHaberTrabajadorHelpText_activoHaberTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditHaberTrabajadorLabel_idTipoHaber}" for="idTipoHaber" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTipoHaber" value="#{haberTrabajadorController.selected.idTipoHaber}" required="true" requiredMessage="#{myBundle.EditHaberTrabajadorRequiredMessage_idTipoHaber}" converter="tipoHaberConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoHaberController.items}"
+                                                   var="idTipoHaberItem"
+                                                   itemValue="#{idTipoHaberItem}"
+                                                   itemLabel="#{idTipoHaberItem.idTipoHaber.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTipoHaber" value="#{haberTrabajadorController.getComponentMessages('idTipoHaber', myBundle.EditHaberTrabajadorHelpText_idTipoHaber)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditHaberTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTrabajador" value="#{haberTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.EditHaberTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{trabajadorController.items}"
+                                                   var="idTrabajadorItem"
+                                                   itemValue="#{idTrabajadorItem}"
+                                                   itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTrabajador" value="#{haberTrabajadorController.getComponentMessages('idTrabajador', myBundle.EditHaberTrabajadorHelpText_idTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{haberTrabajadorController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:HaberTrabajadorListPage:HaberTrabajadorListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:HaberTrabajadorListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

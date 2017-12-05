@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InventarioInternoCreateDlg" widgetVar="InventarioInternoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateInventarioInternoTitle}" closeOnEscape="true">
+
+            <h:form id="InventarioInternoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{inventarioInternoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateInventarioInternoLabel_serie}" for="serie" />
+                        <h:panelGroup>
+                            <p:inputText id="serie" value="#{inventarioInternoController.selected.serie}" title="#{myBundle.CreateInventarioInternoTitle_serie}" required="true" requiredMessage="#{myBundle.CreateInventarioInternoRequiredMessage_serie}"/>
+                            <p:tooltip for="serie" value="#{inventarioInternoController.getComponentMessages('serie', myBundle.CreateInventarioInternoHelpText_serie)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInventarioInternoLabel_identificador}" for="identificador" />
+                        <h:panelGroup>
+                            <p:inputText id="identificador" value="#{inventarioInternoController.selected.identificador}" title="#{myBundle.CreateInventarioInternoTitle_identificador}" size="45" maxlength="45"/>
+                            <p:tooltip for="identificador" value="#{inventarioInternoController.getComponentMessages('identificador', myBundle.CreateInventarioInternoHelpText_identificador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInventarioInternoLabel_cantidadRollos}" for="cantidadRollos" />
+                        <h:panelGroup>
+                            <p:inputText id="cantidadRollos" value="#{inventarioInternoController.selected.cantidadRollos}" title="#{myBundle.CreateInventarioInternoTitle_cantidadRollos}" required="true" requiredMessage="#{myBundle.CreateInventarioInternoRequiredMessage_cantidadRollos}"/>
+                            <p:tooltip for="cantidadRollos" value="#{inventarioInternoController.getComponentMessages('cantidadRollos', myBundle.CreateInventarioInternoHelpText_cantidadRollos)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInventarioInternoLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="estado" value="#{inventarioInternoController.selected.estado}" />
+                            <p:tooltip for="estado" value="#{inventarioInternoController.getComponentMessages('estado', myBundle.CreateInventarioInternoHelpText_estado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInventarioInternoLabel_idBoleto}" for="idBoleto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idBoleto" value="#{inventarioInternoController.selected.idBoleto}" required="true" requiredMessage="#{myBundle.CreateInventarioInternoRequiredMessage_idBoleto}" converter="boletoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{boletoController.items}"
+                                               var="idBoletoItem"
+                                               itemValue="#{idBoletoItem}"
+                                               itemLabel="#{idBoletoItem.idBoleto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idBoleto" value="#{inventarioInternoController.getComponentMessages('idBoleto', myBundle.CreateInventarioInternoHelpText_idBoleto)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{inventarioInternoController.saveNew}" value="#{myBundle.Save}" update="display,:InventarioInternoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InventarioInternoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('InventarioInternoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

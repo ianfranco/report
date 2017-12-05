@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="OperadorTransporteViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewOperadorTransporteTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:OperadorTransporteListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="OperadorTransporteViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{operadorTransporteController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewOperadorTransporteLabel_idOperadorTransporte}"/>
+                            <h:outputText value="#{operadorTransporteController.selected.idOperadorTransporte}" title="#{myBundle.ViewOperadorTransporteTitle_idOperadorTransporte}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewOperadorTransporteLabel_rutOperador}"/>
+                            <h:outputText value="#{operadorTransporteController.selected.rutOperador}" title="#{myBundle.ViewOperadorTransporteTitle_rutOperador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewOperadorTransporteLabel_nombreOperador}"/>
+                            <h:outputText value="#{operadorTransporteController.selected.nombreOperador}" title="#{myBundle.ViewOperadorTransporteTitle_nombreOperador}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

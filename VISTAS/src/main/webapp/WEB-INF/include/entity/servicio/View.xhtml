@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ServicioViewDlg" widgetVar="ServicioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewServicioTitle}" closeOnEscape="true">
+
+            <h:form id="ServicioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{servicioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_idServicio}"/>
+                        <h:outputText value="#{servicioController.selected.idServicio}" title="#{myBundle.ViewServicioTitle_idServicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_numeroServicio}"/>
+                        <h:outputText value="#{servicioController.selected.numeroServicio}" title="#{myBundle.ViewServicioTitle_numeroServicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_longitud}"/>
+                        <h:outputText value="#{servicioController.selected.longitud}" title="#{myBundle.ViewServicioTitle_longitud}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_nombreServicio}"/>
+                        <h:outputText value="#{servicioController.selected.nombreServicio}" title="#{myBundle.ViewServicioTitle_nombreServicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_origenServicio}"/>
+                        <h:outputText value="#{servicioController.selected.origenServicio}" title="#{myBundle.ViewServicioTitle_origenServicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_destinoServicio}"/>
+                        <h:outputText value="#{servicioController.selected.destinoServicio}" title="#{myBundle.ViewServicioTitle_destinoServicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_idTerminal}"/>
+                        <h:outputText value="#{servicioController.selected.idTerminal.idTerminal}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_idUnidad}"/>
+                        <h:outputText value="#{servicioController.selected.idUnidad.idUnidadNegocio}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ServicioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

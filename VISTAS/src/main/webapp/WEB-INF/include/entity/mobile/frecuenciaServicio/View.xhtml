@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="FrecuenciaServicioViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewFrecuenciaServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:FrecuenciaServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="FrecuenciaServicioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{frecuenciaServicioController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewFrecuenciaServicioLabel_idFrecuenciaServicio}"/>
+                            <h:outputText value="#{frecuenciaServicioController.selected.idFrecuenciaServicio}" title="#{myBundle.ViewFrecuenciaServicioTitle_idFrecuenciaServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewFrecuenciaServicioLabel_numeroBuses}"/>
+                            <h:outputText value="#{frecuenciaServicioController.selected.numeroBuses}" title="#{myBundle.ViewFrecuenciaServicioTitle_numeroBuses}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewFrecuenciaServicioLabel_idPeriodoFrecuencia}"/>
+                            <h:outputText value="#{frecuenciaServicioController.selected.idPeriodoFrecuencia.idPeriodoFrecuencia}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewFrecuenciaServicioLabel_idServicio}"/>
+                            <h:outputText value="#{frecuenciaServicioController.selected.idServicio.idServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewFrecuenciaServicioLabel_idTipoDemanda}"/>
+                            <h:outputText value="#{frecuenciaServicioController.selected.idTipoDemanda.idTipoDemanda}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewFrecuenciaServicioLabel_idTipoDiaFrecuencia}"/>
+                            <h:outputText value="#{frecuenciaServicioController.selected.idTipoDiaFrecuencia.idTipoDiaFrecuencia}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

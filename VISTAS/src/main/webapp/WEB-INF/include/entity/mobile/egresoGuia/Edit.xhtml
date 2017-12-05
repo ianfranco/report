@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EgresoGuiaEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditEgresoGuiaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EgresoGuiaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EgresoGuiaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{egresoGuiaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditEgresoGuiaLabel_idEgresoGuia}" for="idEgresoGuia" />
+                            <h:panelGroup>
+                                <h:outputText id="idEgresoGuia" value="#{egresoGuiaController.selected.idEgresoGuia}" />
+                                <p:tooltip for="idEgresoGuia" value="#{egresoGuiaController.getComponentMessages('idEgresoGuia', myBundle.EditEgresoGuiaHelpText_idEgresoGuia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEgresoGuiaLabel_monto}" for="monto" />
+                            <h:panelGroup>
+                                <p:inputText id="monto" value="#{egresoGuiaController.selected.monto}" title="#{myBundle.EditEgresoGuiaTitle_monto}" required="true" requiredMessage="#{myBundle.EditEgresoGuiaRequiredMessage_monto}"/>
+                                <p:tooltip for="monto" value="#{egresoGuiaController.getComponentMessages('monto', myBundle.EditEgresoGuiaHelpText_monto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEgresoGuiaLabel_idEgresoServicio}" for="idEgresoServicio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idEgresoServicio" value="#{egresoGuiaController.selected.idEgresoServicio}" required="true" requiredMessage="#{myBundle.EditEgresoGuiaRequiredMessage_idEgresoServicio}" converter="egresoServicioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{egresoServicioController.items}"
+                                                   var="idEgresoServicioItem"
+                                                   itemValue="#{idEgresoServicioItem}"
+                                                   itemLabel="#{idEgresoServicioItem.idEgresoServicio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idEgresoServicio" value="#{egresoGuiaController.getComponentMessages('idEgresoServicio', myBundle.EditEgresoGuiaHelpText_idEgresoServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEgresoGuiaLabel_idGuia}" for="idGuia" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idGuia" value="#{egresoGuiaController.selected.idGuia}" required="true" requiredMessage="#{myBundle.EditEgresoGuiaRequiredMessage_idGuia}" converter="guiaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{guiaController.items}"
+                                                   var="idGuiaItem"
+                                                   itemValue="#{idGuiaItem}"
+                                                   itemLabel="#{idGuiaItem.idGuia.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idGuia" value="#{egresoGuiaController.getComponentMessages('idGuia', myBundle.EditEgresoGuiaHelpText_idGuia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{egresoGuiaController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:EgresoGuiaListPage:EgresoGuiaListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:EgresoGuiaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

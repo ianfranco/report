@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CargasTrabajadorViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewCargasTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CargasTrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CargasTrabajadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{cargasTrabajadorController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_idCargasTrabajador}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.idCargasTrabajador}" title="#{myBundle.ViewCargasTrabajadorTitle_idCargasTrabajador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_apellidoCargaTrabajador}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.apellidoCargaTrabajador}" title="#{myBundle.ViewCargasTrabajadorTitle_apellidoCargaTrabajador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_nombreCargaTrabajador}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.nombreCargaTrabajador}" title="#{myBundle.ViewCargasTrabajadorTitle_nombreCargaTrabajador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_rut}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.rut}" title="#{myBundle.ViewCargasTrabajadorTitle_rut}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_fechaNacimiento}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.fechaNacimiento}" title="#{myBundle.ViewCargasTrabajadorTitle_fechaNacimiento}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_fechaIngreso}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.fechaIngreso}" title="#{myBundle.ViewCargasTrabajadorTitle_fechaIngreso}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_activa}"/>
+                            <h:selectBooleanCheckbox id="activa" value="#{cargasTrabajadorController.selected.activa}" title="#{myBundle.EditCargasTrabajadorTitle_activa}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_activa}" disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_idParentescoCarga}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.idParentescoCarga.idParentescoCarga}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_idTipoCarga}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.idTipoCarga.idTipoCarga}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargasTrabajadorLabel_idTrabajador}"/>
+                            <h:outputText value="#{cargasTrabajadorController.selected.idTrabajador.idTrabajador}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

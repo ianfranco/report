@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoTrabajadorListPage">
+        <pm:header title="#{myBundle.ListTipoTrabajadorTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":TipoTrabajadorCreatePage:TipoTrabajadorCreateForm" actionListener="#{tipoTrabajadorController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TipoTrabajadorCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoTrabajadorListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{tipoTrabajadorController.items}"
+                             var="item"
+                             rowKey="#{item.idTipoTrabajador}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{tipoTrabajadorController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TipoTrabajadorListPage:TipoTrabajadorListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TipoTrabajadorListPage:TipoTrabajadorListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TipoTrabajadorListPage:TipoTrabajadorListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idTipoTrabajador}" filterBy="#{item.idTipoTrabajador}" headerText="#{myBundle.ListTipoTrabajadorTitle_idTipoTrabajador}">
+                        <h:outputText value="#{item.idTipoTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreTipoTrabajador}" filterBy="#{item.nombreTipoTrabajador}" headerText="#{myBundle.ListTipoTrabajadorTitle_nombreTipoTrabajador}">
+                        <h:outputText value="#{item.nombreTipoTrabajador}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoTrabajadorEditPage:TipoTrabajadorEditForm" disabled="#{empty tipoTrabajadorController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TipoTrabajadorEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty tipoTrabajadorController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty tipoTrabajadorController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.TipoTrabajadorHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.TipoTrabajadorMenuItem_relacionLaboralList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty tipoTrabajadorController.selected.relacionLaboralList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{tipoTrabajadorController.navigateRelacionLaboralList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

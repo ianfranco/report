@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" printOrder="Horizontal" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="521dd92c-34ec-475c-8aa9-5780462a6fc1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="desde" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2009-05-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2009-05-31"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="emp" class="java.lang.String">
+		<defaultValueExpression><![CDATA["6"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT IdBus, (DAY(FECHA)) As Dia FROM Guias, Buses WHERE Guias.IdBus = Buses.Codigo AND Buses.Codigo =
+$P{emp} AND Fecha BETWEEN $P{desde} AND $P{hasta} ORDER BY IdBus ASC]]>
+	</queryString>
+	<field name="IdBus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Dia" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="79">
+			<staticText>
+				<reportElement x="0" y="29" width="143" height="20" uuid="63cf2f2b-1400-4f7b-a91e-577ecbe2477f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Guías Cortadas Bus N° :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="197" height="29" uuid="362a5ef3-da53-4a10-a093-56bf507ad99f"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FM - Septiembre 17]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="49" width="100" height="20" uuid="34dccecd-1b51-4df9-a109-12973c7bb33c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="29" width="100" height="20" uuid="721d14e1-bd54-4567-963c-78a4d420d878"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{emp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band height="221">
+			<crosstab>
+				<reportElement x="0" y="0" width="968" height="221" uuid="2ae88ac9-e2ef-4b49-b4e4-81af1b4d1145"/>
+				<rowGroup name="IdBus" width="41" totalPosition="End">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{IdBus}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="41" height="15" uuid="aa94b69f-aabd-465a-96f0-92bd9be7bb3b"/>
+								<textElement>
+									<font size="11" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{IdBus}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="41" height="16" uuid="a5415917-32be-4f25-95a8-cc7af695deed"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="Dia" height="18" totalPosition="End">
+					<bucket class="java.lang.Long">
+						<bucketExpression><![CDATA[$F{Dia}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="19" height="16" uuid="813fb06f-1f40-4288-bb46-796d3fb36d6b"/>
+								<textElement>
+									<font size="11" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{Dia}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="16" uuid="32cf4437-cc98-4598-886a-e4f501c8e900"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="IdBusMeasure" class="java.lang.Integer" calculation="Count">
+					<measureExpression><![CDATA[$F{IdBus}]]></measureExpression>
+				</measure>
+				<crosstabCell width="19" height="18">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="19" height="15" uuid="fd95f038-8e2e-4e10-bb9d-d58747eb13f1"/>
+							<textFieldExpression><![CDATA[$V{IdBusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="19" height="16" rowTotalGroup="IdBus">
+					<cellContents backcolor="#BFE1FF">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="19" height="16" uuid="fb1b3004-2ec5-478a-89d3-16918c078774"/>
+							<textElement>
+								<font size="11" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{IdBusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="25" height="18" columnTotalGroup="Dia">
+					<cellContents backcolor="#BFE1FF">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="15" uuid="c3a765cf-146c-4133-b3cb-9649502470c7"/>
+							<textElement>
+								<font size="11" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{IdBusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="25" height="16" rowTotalGroup="IdBus" columnTotalGroup="Dia">
+					<cellContents backcolor="#BFE1FF">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="16" uuid="dd777cf2-1406-47d7-b470-071218374ab0"/>
+							<textElement>
+								<font size="11" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{IdBusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

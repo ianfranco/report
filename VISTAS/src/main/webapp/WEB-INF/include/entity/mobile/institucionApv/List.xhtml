@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="InstitucionApvListPage">
+        <pm:header title="#{myBundle.ListInstitucionApvTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":InstitucionApvCreatePage:InstitucionApvCreateForm" actionListener="#{institucionApvController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:InstitucionApvCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="InstitucionApvListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{institucionApvController.items}"
+                             var="item"
+                             rowKey="#{item.idInstitucionApv}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{institucionApvController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('InstitucionApvListPage:InstitucionApvListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('InstitucionApvListPage:InstitucionApvListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('InstitucionApvListPage:InstitucionApvListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idInstitucionApv}" filterBy="#{item.idInstitucionApv}" headerText="#{myBundle.ListInstitucionApvTitle_idInstitucionApv}">
+                        <h:outputText value="#{item.idInstitucionApv}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreInstitucionApv}" filterBy="#{item.nombreInstitucionApv}" headerText="#{myBundle.ListInstitucionApvTitle_nombreInstitucionApv}">
+                        <h:outputText value="#{item.nombreInstitucionApv}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":InstitucionApvEditPage:InstitucionApvEditForm" disabled="#{empty institucionApvController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:InstitucionApvEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{institucionApvController.delete}" update=":growl,datalist" disabled="#{empty institucionApvController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty institucionApvController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.InstitucionApvHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.InstitucionApvMenuItem_trabajadorList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty institucionApvController.selected.trabajadorList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{institucionApvController.navigateTrabajadorList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

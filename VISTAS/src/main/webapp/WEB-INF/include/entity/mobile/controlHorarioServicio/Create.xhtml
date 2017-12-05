@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ControlHorarioServicioCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateControlHorarioServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ControlHorarioServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ControlHorarioServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{controlHorarioServicioController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_tiempo}" for="tiempo" />
+                            <h:panelGroup>
+                                <p:inputText id="tiempo" value="#{controlHorarioServicioController.selected.tiempo}" title="#{myBundle.CreateControlHorarioServicioTitle_tiempo}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_tiempo}"/>
+                                <p:tooltip for="tiempo" value="#{controlHorarioServicioController.getComponentMessages('tiempo', myBundle.CreateControlHorarioServicioHelpText_tiempo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_multa}" for="multa" />
+                            <h:panelGroup>
+                                <p:inputText id="multa" value="#{controlHorarioServicioController.selected.multa}" title="#{myBundle.CreateControlHorarioServicioTitle_multa}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_multa}"/>
+                                <p:tooltip for="multa" value="#{controlHorarioServicioController.getComponentMessages('multa', myBundle.CreateControlHorarioServicioHelpText_multa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_peso}" for="peso" />
+                            <h:panelGroup>
+                                <p:inputText id="peso" value="#{controlHorarioServicioController.selected.peso}" title="#{myBundle.CreateControlHorarioServicioTitle_peso}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_peso}"/>
+                                <p:tooltip for="peso" value="#{controlHorarioServicioController.getComponentMessages('peso', myBundle.CreateControlHorarioServicioHelpText_peso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_idControlServicio}" for="idControlServicio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idControlServicio" value="#{controlHorarioServicioController.selected.idControlServicio}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_idControlServicio}" converter="controlServicioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{controlServicioController.items}"
+                                                   var="idControlServicioItem"
+                                                   itemValue="#{idControlServicioItem}"
+                                                   itemLabel="#{idControlServicioItem.idControlServicio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idControlServicio" value="#{controlHorarioServicioController.getComponentMessages('idControlServicio', myBundle.CreateControlHorarioServicioHelpText_idControlServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_idHorarioServicio}" for="idHorarioServicio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idHorarioServicio" value="#{controlHorarioServicioController.selected.idHorarioServicio}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_idHorarioServicio}" converter="horarioServicioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{horarioServicioController.items}"
+                                                   var="idHorarioServicioItem"
+                                                   itemValue="#{idHorarioServicioItem}"
+                                                   itemLabel="#{idHorarioServicioItem.idHorarioServicio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idHorarioServicio" value="#{controlHorarioServicioController.getComponentMessages('idHorarioServicio', myBundle.CreateControlHorarioServicioHelpText_idHorarioServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{controlHorarioServicioController.saveNew}" value="#{myBundle.Save}" update="display,:ControlHorarioServicioListPage:ControlHorarioServicioListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:ControlHorarioServicioListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

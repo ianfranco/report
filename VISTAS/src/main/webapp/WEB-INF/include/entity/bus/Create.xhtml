@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BusCreateDlg" widgetVar="BusCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateBusTitle}" closeOnEscape="true">
+
+            <h:form id="BusCreateForm">
+
+                <h:panelGroup id="display" rendered="#{busController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_numeroBus}" for="numeroBus" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroBus" value="#{busController.selected.numeroBus}" title="#{myBundle.CreateBusTitle_numeroBus}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_numeroBus}"/>
+                            <p:tooltip for="numeroBus" value="#{busController.getComponentMessages('numeroBus', myBundle.CreateBusHelpText_numeroBus)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_patente}" for="patente" />
+                        <h:panelGroup>
+                            <p:inputText id="patente" value="#{busController.selected.patente}" title="#{myBundle.CreateBusTitle_patente}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_patente}" size="45" maxlength="45"/>
+                            <p:tooltip for="patente" value="#{busController.getComponentMessages('patente', myBundle.CreateBusHelpText_patente)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_año}" for="año" />
+                        <h:panelGroup>
+                            <p:inputText id="año" value="#{busController.selected.año}" title="#{myBundle.CreateBusTitle_año}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_año}"/>
+                            <p:tooltip for="año" value="#{busController.getComponentMessages('año', myBundle.CreateBusHelpText_año)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_numeroMotor}" for="numeroMotor" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroMotor" value="#{busController.selected.numeroMotor}" title="#{myBundle.CreateBusTitle_numeroMotor}" size="45" maxlength="45"/>
+                            <p:tooltip for="numeroMotor" value="#{busController.getComponentMessages('numeroMotor', myBundle.CreateBusHelpText_numeroMotor)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_numeroChasis}" for="numeroChasis" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroChasis" value="#{busController.selected.numeroChasis}" title="#{myBundle.CreateBusTitle_numeroChasis}" size="45" maxlength="45"/>
+                            <p:tooltip for="numeroChasis" value="#{busController.getComponentMessages('numeroChasis', myBundle.CreateBusHelpText_numeroChasis)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_carroceria}" for="carroceria" />
+                        <h:panelGroup>
+                            <p:inputText id="carroceria" value="#{busController.selected.carroceria}" title="#{myBundle.CreateBusTitle_carroceria}" size="45" maxlength="45"/>
+                            <p:tooltip for="carroceria" value="#{busController.getComponentMessages('carroceria', myBundle.CreateBusHelpText_carroceria)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_idEmpresa}" for="idEmpresa" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idEmpresa" value="#{busController.selected.idEmpresa}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_idEmpresa}" converter="empresaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{empresaController.items}"
+                                               var="idEmpresaItem"
+                                               itemValue="#{idEmpresaItem}"
+                                               itemLabel="#{idEmpresaItem.idEmpresa.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idEmpresa" value="#{busController.getComponentMessages('idEmpresa', myBundle.CreateBusHelpText_idEmpresa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_idFlota}" for="idFlota" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idFlota" value="#{busController.selected.idFlota}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_idFlota}" converter="flotaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{flotaController.items}"
+                                               var="idFlotaItem"
+                                               itemValue="#{idFlotaItem}"
+                                               itemLabel="#{idFlotaItem.idFlota.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idFlota" value="#{busController.getComponentMessages('idFlota', myBundle.CreateBusHelpText_idFlota)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_idModelo}" for="idModelo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idModelo" value="#{busController.selected.idModelo}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_idModelo}" converter="modeloMarcaBusConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{modeloMarcaBusController.items}"
+                                               var="idModeloItem"
+                                               itemValue="#{idModeloItem}"
+                                               itemLabel="#{idModeloItem.idModeloMarcaBus.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idModelo" value="#{busController.getComponentMessages('idModelo', myBundle.CreateBusHelpText_idModelo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_idTerminal}" for="idTerminal" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTerminal" value="#{busController.selected.idTerminal}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_idTerminal}" converter="terminalConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{terminalController.items}"
+                                               var="idTerminalItem"
+                                               itemValue="#{idTerminalItem}"
+                                               itemLabel="#{idTerminalItem.idTerminal.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTerminal" value="#{busController.getComponentMessages('idTerminal', myBundle.CreateBusHelpText_idTerminal)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateBusLabel_idUnidadNegocio}" for="idUnidadNegocio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idUnidadNegocio" value="#{busController.selected.idUnidadNegocio}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_idUnidadNegocio}" converter="unidadNegocioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{unidadNegocioController.items}"
+                                               var="idUnidadNegocioItem"
+                                               itemValue="#{idUnidadNegocioItem}"
+                                               itemLabel="#{idUnidadNegocioItem.idUnidadNegocio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idUnidadNegocio" value="#{busController.getComponentMessages('idUnidadNegocio', myBundle.CreateBusHelpText_idUnidadNegocio)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{busController.saveNew}" value="#{myBundle.Save}" update="display,:BusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BusCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('BusCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

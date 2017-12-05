@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AnticipoTrabajadorCreateDlg" widgetVar="AnticipoTrabajadorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateAnticipoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="AnticipoTrabajadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{anticipoTrabajadorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateAnticipoTrabajadorLabel_mes}" for="mes" />
+                        <h:panelGroup>
+                            <p:inputText id="mes" value="#{anticipoTrabajadorController.selected.mes}" title="#{myBundle.CreateAnticipoTrabajadorTitle_mes}" required="true" requiredMessage="#{myBundle.CreateAnticipoTrabajadorRequiredMessage_mes}"/>
+                            <p:tooltip for="mes" value="#{anticipoTrabajadorController.getComponentMessages('mes', myBundle.CreateAnticipoTrabajadorHelpText_mes)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateAnticipoTrabajadorLabel_año}" for="año" />
+                        <h:panelGroup>
+                            <p:inputText id="año" value="#{anticipoTrabajadorController.selected.año}" title="#{myBundle.CreateAnticipoTrabajadorTitle_año}" required="true" requiredMessage="#{myBundle.CreateAnticipoTrabajadorRequiredMessage_año}"/>
+                            <p:tooltip for="año" value="#{anticipoTrabajadorController.getComponentMessages('año', myBundle.CreateAnticipoTrabajadorHelpText_año)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateAnticipoTrabajadorLabel_monto}" for="monto" />
+                        <h:panelGroup>
+                            <p:inputText id="monto" value="#{anticipoTrabajadorController.selected.monto}" title="#{myBundle.CreateAnticipoTrabajadorTitle_monto}" required="true" requiredMessage="#{myBundle.CreateAnticipoTrabajadorRequiredMessage_monto}"/>
+                            <p:tooltip for="monto" value="#{anticipoTrabajadorController.getComponentMessages('monto', myBundle.CreateAnticipoTrabajadorHelpText_monto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateAnticipoTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{anticipoTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.CreateAnticipoTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{anticipoTrabajadorController.getComponentMessages('idTrabajador', myBundle.CreateAnticipoTrabajadorHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{anticipoTrabajadorController.saveNew}" value="#{myBundle.Save}" update="display,:AnticipoTrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AnticipoTrabajadorCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AnticipoTrabajadorCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ServicioViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ServicioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{servicioController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewServicioLabel_idServicio}"/>
+                            <h:outputText value="#{servicioController.selected.idServicio}" title="#{myBundle.ViewServicioTitle_idServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewServicioLabel_numeroServicio}"/>
+                            <h:outputText value="#{servicioController.selected.numeroServicio}" title="#{myBundle.ViewServicioTitle_numeroServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewServicioLabel_longitud}"/>
+                            <h:outputText value="#{servicioController.selected.longitud}" title="#{myBundle.ViewServicioTitle_longitud}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewServicioLabel_nombreServicio}"/>
+                            <h:outputText value="#{servicioController.selected.nombreServicio}" title="#{myBundle.ViewServicioTitle_nombreServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewServicioLabel_origenServicio}"/>
+                            <h:outputText value="#{servicioController.selected.origenServicio}" title="#{myBundle.ViewServicioTitle_origenServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewServicioLabel_destinoServicio}"/>
+                            <h:outputText value="#{servicioController.selected.destinoServicio}" title="#{myBundle.ViewServicioTitle_destinoServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewServicioLabel_idTerminal}"/>
+                            <h:outputText value="#{servicioController.selected.idTerminal.idTerminal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewServicioLabel_idUnidad}"/>
+                            <h:outputText value="#{servicioController.selected.idUnidad.idUnidadNegocio}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DetalleCompraBoletoListForm">
+
+        <p:panel header="#{myBundle.ListDetalleCompraBoletoTitle}">
+            <p:contextMenu id="DetalleCompraBoletoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('DetalleCompraBoletoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('DetalleCompraBoletoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('DetalleCompraBoletoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('DetalleCompraBoletoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.DetalleCompraBoletoMenuItem_idBoleto}" icon="ui-icon-search"  actionListener="#{detalleCompraBoletoController.prepareIdBoleto}" update=":BoletoViewForm" oncomplete="PF('BoletoViewDialog').show()" disabled="#{empty detalleCompraBoletoController.selected.idBoleto}"/>  
+                <p:menuitem value="#{myBundle.DetalleCompraBoletoMenuItem_idCompraBoleto}" icon="ui-icon-search"  actionListener="#{detalleCompraBoletoController.prepareIdCompraBoleto}" update=":CompraBoletoViewForm" oncomplete="PF('CompraBoletoViewDialog').show()" disabled="#{empty detalleCompraBoletoController.selected.idCompraBoleto}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{detalleCompraBoletoController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{detalleCompraBoletoController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{detalleCompraBoletoController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idDetalleCompraBoleto}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DetalleCompraBoletoDataTableContextMenu" listener="#{detalleCompraBoletoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:DetalleCompraBoletoDataTableContextMenu" listener="#{detalleCompraBoletoController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{detalleCompraBoletoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DetalleCompraBoletoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idDetalleCompraBoleto}" filterBy="#{item.idDetalleCompraBoleto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleCompraBoletoTitle_idDetalleCompraBoleto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idDetalleCompraBoleto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cantidadRollos}" filterBy="#{item.cantidadRollos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleCompraBoletoTitle_cantidadRollos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidadRollos}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.serie}" filterBy="#{item.serie}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleCompraBoletoTitle_serie}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.serie}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.total}" filterBy="#{item.total}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleCompraBoletoTitle_total}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.total}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idBoleto.idBoleto}" filterBy="#{item.idBoleto.idBoleto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleCompraBoletoTitle_idBoleto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idBoleto.idBoleto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idCompraBoleto.idCompraBoleto}" filterBy="#{item.idCompraBoleto.idCompraBoleto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleCompraBoletoTitle_idCompraBoleto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idCompraBoleto.idCompraBoleto}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{detalleCompraBoletoController.prepareCreate}" update=":DetalleCompraBoletoCreateForm" oncomplete="PF('DetalleCompraBoletoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":DetalleCompraBoletoViewForm" oncomplete="PF('DetalleCompraBoletoViewDialog').show()" disabled="#{empty detalleCompraBoletoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DetalleCompraBoletoEditForm" oncomplete="PF('DetalleCompraBoletoEditDialog').show()" disabled="#{empty detalleCompraBoletoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{detalleCompraBoletoController.delete}" update=":growl,datalist" disabled="#{empty detalleCompraBoletoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="InventarioInternoViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewInventarioInternoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:InventarioInternoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="InventarioInternoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{inventarioInternoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioInternoLabel_idInventarioInterno}"/>
+                            <h:outputText value="#{inventarioInternoController.selected.idInventarioInterno}" title="#{myBundle.ViewInventarioInternoTitle_idInventarioInterno}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioInternoLabel_serie}"/>
+                            <h:outputText value="#{inventarioInternoController.selected.serie}" title="#{myBundle.ViewInventarioInternoTitle_serie}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioInternoLabel_identificador}"/>
+                            <h:outputText value="#{inventarioInternoController.selected.identificador}" title="#{myBundle.ViewInventarioInternoTitle_identificador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioInternoLabel_cantidadRollos}"/>
+                            <h:outputText value="#{inventarioInternoController.selected.cantidadRollos}" title="#{myBundle.ViewInventarioInternoTitle_cantidadRollos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioInternoLabel_estado}"/>
+                            <h:selectBooleanCheckbox id="estado" value="#{inventarioInternoController.selected.estado}" title="#{myBundle.EditInventarioInternoTitle_estado}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioInternoLabel_idBoleto}"/>
+                            <h:outputText value="#{inventarioInternoController.selected.idBoleto.idBoleto}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

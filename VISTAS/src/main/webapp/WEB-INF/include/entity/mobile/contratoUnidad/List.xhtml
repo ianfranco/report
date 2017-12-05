@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ContratoUnidadListPage">
+        <pm:header title="#{myBundle.ListContratoUnidadTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":ContratoUnidadCreatePage:ContratoUnidadCreateForm" actionListener="#{contratoUnidadController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:ContratoUnidadCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ContratoUnidadListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{contratoUnidadController.items}"
+                             var="item"
+                             rowKey="#{item.idContratoUnidad}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{contratoUnidadController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{contratoUnidadController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{contratoUnidadController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('ContratoUnidadListPage:ContratoUnidadListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('ContratoUnidadListPage:ContratoUnidadListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('ContratoUnidadListPage:ContratoUnidadListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idContratoUnidad}" filterBy="#{item.idContratoUnidad}" headerText="#{myBundle.ListContratoUnidadTitle_idContratoUnidad}">
+                        <h:outputText value="#{item.idContratoUnidad}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.identificadorContratoUnidad}" filterBy="#{item.identificadorContratoUnidad}" headerText="#{myBundle.ListContratoUnidadTitle_identificadorContratoUnidad}">
+                        <h:outputText value="#{item.identificadorContratoUnidad}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.desdeContratoUnidad}" filterBy="#{item.desdeContratoUnidad}" headerText="#{myBundle.ListContratoUnidadTitle_desdeContratoUnidad}">
+                        <h:outputText value="#{item.desdeContratoUnidad}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.hastaContratoUnidad}" filterBy="#{item.hastaContratoUnidad}" headerText="#{myBundle.ListContratoUnidadTitle_hastaContratoUnidad}">
+                        <h:outputText value="#{item.hastaContratoUnidad}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreContratoUnidad}" filterBy="#{item.nombreContratoUnidad}" headerText="#{myBundle.ListContratoUnidadTitle_nombreContratoUnidad}">
+                        <h:outputText value="#{item.nombreContratoUnidad}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.descripcionContratoUnidad}" filterBy="#{item.descripcionContratoUnidad}" headerText="#{myBundle.ListContratoUnidadTitle_descripcionContratoUnidad}">
+                        <h:outputText value="#{item.descripcionContratoUnidad}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.idUnidadNegocio.idUnidadNegocio}" filterBy="#{item.idUnidadNegocio.idUnidadNegocio}" headerText="#{myBundle.ListContratoUnidadTitle_idUnidadNegocio}">
+                                            <h:outputText value="#{item.idUnidadNegocio.idUnidadNegocio}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ContratoUnidadEditPage:ContratoUnidadEditForm" disabled="#{empty contratoUnidadController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:ContratoUnidadEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{contratoUnidadController.delete}" update=":growl,datalist" disabled="#{empty contratoUnidadController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty contratoUnidadController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.ContratoUnidadHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.ContratoUnidadMenuItem_idUnidadNegocio}" icon="ui-icon-search" update=":UnidadNegocioEditPage:UnidadNegocioEditForm" disabled="#{empty contratoUnidadController.selected.idUnidadNegocio}" actionListener="#{contratoUnidadController.prepareIdUnidadNegocio}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:UnidadNegocioEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

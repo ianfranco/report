@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="SindicatoTrabajadorListForm">
+
+        <p:panel header="#{myBundle.ListSindicatoTrabajadorTitle}">
+            <p:contextMenu id="SindicatoTrabajadorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('SindicatoTrabajadorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('SindicatoTrabajadorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('SindicatoTrabajadorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('SindicatoTrabajadorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.SindicatoTrabajadorMenuItem_idSindicato}" icon="ui-icon-search"  actionListener="#{sindicatoTrabajadorController.prepareIdSindicato}" update=":SindicatoViewForm" oncomplete="PF('SindicatoViewDialog').show()" disabled="#{empty sindicatoTrabajadorController.selected.idSindicato}"/>  
+                <p:menuitem value="#{myBundle.SindicatoTrabajadorMenuItem_idTrabajador}" icon="ui-icon-search"  actionListener="#{sindicatoTrabajadorController.prepareIdTrabajador}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty sindicatoTrabajadorController.selected.idTrabajador}"/>  
+                <p:menuitem value="#{myBundle.SindicatoTrabajadorMenuItem_montoSindicatoTrabajadorList}" icon="ui-icon-search"  action="#{sindicatoTrabajadorController.navigateMontoSindicatoTrabajadorList}" disabled="#{empty sindicatoTrabajadorController.selected.montoSindicatoTrabajadorList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{sindicatoTrabajadorController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{sindicatoTrabajadorController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{sindicatoTrabajadorController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idSindicatoTrabajador}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SindicatoTrabajadorDataTableContextMenu" listener="#{sindicatoTrabajadorController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SindicatoTrabajadorDataTableContextMenu" listener="#{sindicatoTrabajadorController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{sindicatoTrabajadorController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SindicatoTrabajadorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idSindicatoTrabajador}" filterBy="#{item.idSindicatoTrabajador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSindicatoTrabajadorTitle_idSindicatoTrabajador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idSindicatoTrabajador}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSindicatoTrabajadorTitle_fechaIngreso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaIngreso}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idSindicato.idSindicato}" filterBy="#{item.idSindicato.idSindicato}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSindicatoTrabajadorTitle_idSindicato}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idSindicato.idSindicato}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSindicatoTrabajadorTitle_idTrabajador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{sindicatoTrabajadorController.prepareCreate}" update=":SindicatoTrabajadorCreateForm" oncomplete="PF('SindicatoTrabajadorCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":SindicatoTrabajadorViewForm" oncomplete="PF('SindicatoTrabajadorViewDialog').show()" disabled="#{empty sindicatoTrabajadorController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":SindicatoTrabajadorEditForm" oncomplete="PF('SindicatoTrabajadorEditDialog').show()" disabled="#{empty sindicatoTrabajadorController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{sindicatoTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty sindicatoTrabajadorController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EgresoServicioCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateEgresoServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EgresoServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EgresoServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{egresoServicioController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEgresoServicioLabel_valorDefectoEgreso}" for="valorDefectoEgreso" />
+                            <h:panelGroup>
+                                <p:inputText id="valorDefectoEgreso" value="#{egresoServicioController.selected.valorDefectoEgreso}" title="#{myBundle.CreateEgresoServicioTitle_valorDefectoEgreso}" required="true" requiredMessage="#{myBundle.CreateEgresoServicioRequiredMessage_valorDefectoEgreso}"/>
+                                <p:tooltip for="valorDefectoEgreso" value="#{egresoServicioController.getComponentMessages('valorDefectoEgreso', myBundle.CreateEgresoServicioHelpText_valorDefectoEgreso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEgresoServicioLabel_porcentaje}" for="porcentaje" />
+                            <h:panelGroup>
+                                <p:inputText id="porcentaje" value="#{egresoServicioController.selected.porcentaje}" title="#{myBundle.CreateEgresoServicioTitle_porcentaje}" required="true" requiredMessage="#{myBundle.CreateEgresoServicioRequiredMessage_porcentaje}"/>
+                                <p:tooltip for="porcentaje" value="#{egresoServicioController.getComponentMessages('porcentaje', myBundle.CreateEgresoServicioHelpText_porcentaje)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEgresoServicioLabel_numeroOrdenEgreso}" for="numeroOrdenEgreso" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroOrdenEgreso" value="#{egresoServicioController.selected.numeroOrdenEgreso}" title="#{myBundle.CreateEgresoServicioTitle_numeroOrdenEgreso}" required="true" requiredMessage="#{myBundle.CreateEgresoServicioRequiredMessage_numeroOrdenEgreso}"/>
+                                <p:tooltip for="numeroOrdenEgreso" value="#{egresoServicioController.getComponentMessages('numeroOrdenEgreso', myBundle.CreateEgresoServicioHelpText_numeroOrdenEgreso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEgresoServicioLabel_activo}" for="activo" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="activo" value="#{egresoServicioController.selected.activo}" required="true" requiredMessage="#{myBundle.CreateEgresoServicioRequiredMessage_activo}"/>
+                                <p:tooltip for="activo" value="#{egresoServicioController.getComponentMessages('activo', myBundle.CreateEgresoServicioHelpText_activo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEgresoServicioLabel_idServicio}" for="idServicio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idServicio" value="#{egresoServicioController.selected.idServicio}" required="true" requiredMessage="#{myBundle.CreateEgresoServicioRequiredMessage_idServicio}" converter="servicioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{servicioController.items}"
+                                                   var="idServicioItem"
+                                                   itemValue="#{idServicioItem}"
+                                                   itemLabel="#{idServicioItem.idServicio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idServicio" value="#{egresoServicioController.getComponentMessages('idServicio', myBundle.CreateEgresoServicioHelpText_idServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEgresoServicioLabel_idEgreso}" for="idEgreso" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idEgreso" value="#{egresoServicioController.selected.idEgreso}" required="true" requiredMessage="#{myBundle.CreateEgresoServicioRequiredMessage_idEgreso}" converter="egresoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{egresoController.items}"
+                                                   var="idEgresoItem"
+                                                   itemValue="#{idEgresoItem}"
+                                                   itemLabel="#{idEgresoItem.idEgreso.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idEgreso" value="#{egresoServicioController.getComponentMessages('idEgreso', myBundle.CreateEgresoServicioHelpText_idEgreso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{egresoServicioController.saveNew}" value="#{myBundle.Save}" update="display,:EgresoServicioListPage:EgresoServicioListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:EgresoServicioListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AnticipoTrabajadorListPage">
+        <pm:header title="#{myBundle.ListAnticipoTrabajadorTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":AnticipoTrabajadorCreatePage:AnticipoTrabajadorCreateForm" actionListener="#{anticipoTrabajadorController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:AnticipoTrabajadorCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AnticipoTrabajadorListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{anticipoTrabajadorController.items}"
+                             var="item"
+                             rowKey="#{item.idAnticipoTrabajador}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{anticipoTrabajadorController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{anticipoTrabajadorController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{anticipoTrabajadorController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('AnticipoTrabajadorListPage:AnticipoTrabajadorListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('AnticipoTrabajadorListPage:AnticipoTrabajadorListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('AnticipoTrabajadorListPage:AnticipoTrabajadorListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idAnticipoTrabajador}" filterBy="#{item.idAnticipoTrabajador}" headerText="#{myBundle.ListAnticipoTrabajadorTitle_idAnticipoTrabajador}">
+                        <h:outputText value="#{item.idAnticipoTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.mes}" filterBy="#{item.mes}" headerText="#{myBundle.ListAnticipoTrabajadorTitle_mes}">
+                        <h:outputText value="#{item.mes}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.año}" filterBy="#{item.año}" headerText="#{myBundle.ListAnticipoTrabajadorTitle_año}">
+                        <h:outputText value="#{item.año}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.monto}" filterBy="#{item.monto}" headerText="#{myBundle.ListAnticipoTrabajadorTitle_monto}">
+                        <h:outputText value="#{item.monto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListAnticipoTrabajadorTitle_idTrabajador}">
+                        <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":AnticipoTrabajadorEditPage:AnticipoTrabajadorEditForm" disabled="#{empty anticipoTrabajadorController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:AnticipoTrabajadorEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{anticipoTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty anticipoTrabajadorController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty anticipoTrabajadorController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.AnticipoTrabajadorHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.AnticipoTrabajadorMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty anticipoTrabajadorController.selected.idTrabajador}" actionListener="#{anticipoTrabajadorController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

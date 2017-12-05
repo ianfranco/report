@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DetalleIntervalosMensualListPage">
+        <pm:header title="#{myBundle.ListDetalleIntervalosMensualTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":DetalleIntervalosMensualCreatePage:DetalleIntervalosMensualCreateForm" actionListener="#{detalleIntervalosMensualController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DetalleIntervalosMensualCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DetalleIntervalosMensualListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{detalleIntervalosMensualController.items}"
+                             var="item"
+                             rowKey="#{item.idDetalleIntervalosMensual}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{detalleIntervalosMensualController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{detalleIntervalosMensualController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{detalleIntervalosMensualController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DetalleIntervalosMensualListPage:DetalleIntervalosMensualListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DetalleIntervalosMensualListPage:DetalleIntervalosMensualListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('DetalleIntervalosMensualListPage:DetalleIntervalosMensualListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idDetalleIntervalosMensual}" filterBy="#{item.idDetalleIntervalosMensual}" headerText="#{myBundle.ListDetalleIntervalosMensualTitle_idDetalleIntervalosMensual}">
+                        <h:outputText value="#{item.idDetalleIntervalosMensual}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroBuses}" filterBy="#{item.numeroBuses}" headerText="#{myBundle.ListDetalleIntervalosMensualTitle_numeroBuses}">
+                        <h:outputText value="#{item.numeroBuses}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idAdministracionMensual.idAdministracionMensual}" filterBy="#{item.idAdministracionMensual.idAdministracionMensual}" headerText="#{myBundle.ListDetalleIntervalosMensualTitle_idAdministracionMensual}">
+                        <h:outputText value="#{item.idAdministracionMensual.idAdministracionMensual}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idIntervaloAdministracion.idIntervalosAdministracion}" filterBy="#{item.idIntervaloAdministracion.idIntervalosAdministracion}" headerText="#{myBundle.ListDetalleIntervalosMensualTitle_idIntervaloAdministracion}">
+                        <h:outputText value="#{item.idIntervaloAdministracion.idIntervalosAdministracion}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DetalleIntervalosMensualEditPage:DetalleIntervalosMensualEditForm" disabled="#{empty detalleIntervalosMensualController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DetalleIntervalosMensualEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{detalleIntervalosMensualController.delete}" update=":growl,datalist" disabled="#{empty detalleIntervalosMensualController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty detalleIntervalosMensualController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.DetalleIntervalosMensualHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.DetalleIntervalosMensualMenuItem_idAdministracionMensual}" icon="ui-icon-search" update=":AdministracionMensualEditPage:AdministracionMensualEditForm" disabled="#{empty detalleIntervalosMensualController.selected.idAdministracionMensual}" actionListener="#{detalleIntervalosMensualController.prepareIdAdministracionMensual}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:AdministracionMensualEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.DetalleIntervalosMensualMenuItem_idIntervaloAdministracion}" icon="ui-icon-search" update=":IntervalosAdministracionEditPage:IntervalosAdministracionEditForm" disabled="#{empty detalleIntervalosMensualController.selected.idIntervaloAdministracion}" actionListener="#{detalleIntervalosMensualController.prepareIdIntervaloAdministracion}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:IntervalosAdministracionEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

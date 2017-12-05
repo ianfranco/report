@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ParametroCesantiaListPage">
+        <pm:header title="#{myBundle.ListParametroCesantiaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":ParametroCesantiaCreatePage:ParametroCesantiaCreateForm" actionListener="#{parametroCesantiaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:ParametroCesantiaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ParametroCesantiaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{parametroCesantiaController.items}"
+                             var="item"
+                             rowKey="#{item.idParametroCesantia}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{parametroCesantiaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('ParametroCesantiaListPage:ParametroCesantiaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('ParametroCesantiaListPage:ParametroCesantiaListForm:editButton').click();"/>
+
+                    <p:column sortBy="#{item.idParametroCesantia}" filterBy="#{item.idParametroCesantia}" headerText="#{myBundle.ListParametroCesantiaTitle_idParametroCesantia}">
+                        <h:outputText value="#{item.idParametroCesantia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.empleador}" filterBy="#{item.empleador}" headerText="#{myBundle.ListParametroCesantiaTitle_empleador}">
+                        <h:outputText value="#{item.empleador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.trabajador}" filterBy="#{item.trabajador}" headerText="#{myBundle.ListParametroCesantiaTitle_trabajador}">
+                        <h:outputText value="#{item.trabajador}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ParametroCesantiaEditPage:ParametroCesantiaEditForm" disabled="#{empty parametroCesantiaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:ParametroCesantiaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{parametroCesantiaController.delete}" update=":growl,datalist" disabled="#{empty parametroCesantiaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

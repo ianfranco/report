@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-Contabilidad_bus" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3b5a4b46-ef00-41ff-b88e-57482fc83323">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="252"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="742"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT 
+bus.id_bus, 
+    bus.numero_bus,
+    unidad_negocio.numero_unidad_negocio,
+    bus.patente,
+    bus.anio,
+    empresa.id_empresa,
+    empresa.nombre_empresa,
+    IF(LENGTH(empresa.rut_empresa) = 8,
+        CONCAT(LEFT(empresa.rut_empresa, 1),
+                '.',
+                SUBSTRING(empresa.rut_empresa, 2, 3),
+                '.',
+                SUBSTRING(empresa.rut_empresa, 5, 3),
+                '-',
+                RIGHT(empresa.rut_empresa, 1)),
+        CONCAT(LEFT(empresa.rut_empresa, 2),
+                '.',
+                SUBSTRING(empresa.rut_empresa, 3, 3),
+                '.',
+                SUBSTRING(empresa.rut_empresa, 6, 3),
+                '-',
+                RIGHT(empresa.rut_empresa, 1))) AS rut_empresa, 
+    flota.id_flota, 
+    flota.nombre_flota,
+    tipo_cargo.nombre_tipo_cargo,
+    SUM(cargo_bus.monto_cargo_bus) AS monto_cargo
+FROM
+    cargo_bus
+        LEFT JOIN
+    bus ON cargo_bus.id_bus = bus.id_bus
+        LEFT JOIN
+    empresa ON bus.id_empresa = empresa.id_empresa
+        LEFT JOIN
+    unidad_negocio ON bus.id_unidad_negocio = unidad_negocio.id_unidad_negocio
+        LEFT JOIN
+    tipo_cargo ON cargo_bus.id_tipo_cargo = tipo_cargo.id_tipo_cargo
+        LEFT JOIN
+    flota ON bus.id_flota = flota.id_flota
+WHERE
+    cargo_bus.fecha_inicio_cargo_bus BETWEEN '2016-01-01' AND '2016-12-31' AND cargo_bus.id_tipo_cargo IN (2, 110, 139, 117, 113, 112, 118, 120, 116, 114, 121, 10, 119, 149, 14, 122)
+GROUP BY empresa.id_empresa , cargo_bus.id_tipo_cargo
+ORDER BY empresa.nombre_empresa ASC, bus.numero_bus ASC , unidad_negocio.numero_unidad_negocio ASC , tipo_cargo.nombre_tipo_cargo ASC]]>
+	</queryString>
+	<field name="id_bus" class="java.lang.Long"/>
+	<field name="numero_bus" class="java.lang.Long"/>
+	<field name="numero_unidad_negocio" class="java.lang.Long"/>
+	<field name="patente" class="java.lang.String"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="id_empresa" class="java.lang.Long"/>
+	<field name="nombre_empresa" class="java.lang.String"/>
+	<field name="rut_empresa" class="java.lang.String"/>
+	<field name="id_flota" class="java.lang.Long"/>
+	<field name="nombre_flota" class="java.lang.String"/>
+	<field name="nombre_tipo_cargo" class="java.lang.String"/>
+	<field name="monto_cargo" class="java.math.BigDecimal"/>
+	<variable name="monto_cargo1" class="java.math.BigDecimal" resetType="Group" resetGroup="id_empresa" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_cargo}]]></variableExpression>
+	</variable>
+	<group name="id_empresa" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{id_empresa}]]></groupExpression>
+		<groupHeader>
+			<band height="49">
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<staticText>
+					<reportElement x="0" y="0" width="50" height="20" uuid="843c5ffc-d9b6-44ac-91a9-ec628632fe6d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Empresa:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="50" y="0" width="290" height="20" uuid="a0aabbc1-8e0b-474e-85cf-920cb8fe1b54"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_empresa}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="340" y="0" width="50" height="20" uuid="7e9eac1d-e99e-4b75-a5c9-7dbedc550089"/>
+					<textElement>
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Rut:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="390" y="0" width="90" height="20" uuid="1044b3f5-a8d8-493f-854a-d598007fee7e"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{rut_empresa}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="29" width="240" height="15" uuid="862cd55a-2494-42fa-8c8f-811ced9cf9e3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<text><![CDATA[Gasto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="240" y="29" width="100" height="15" uuid="b3539648-624d-41c0-bb1b-8d9f686e089a"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Monto]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="195">
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<textField pattern="$ #,###.###">
+					<reportElement x="240" y="0" width="100" height="15" uuid="f32163da-20d5-462d-8932-72b8ed1ad87f"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{monto_cargo1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="140" y="0" width="100" height="15" uuid="c588718e-c065-46df-b8d8-497ea2b230c5">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Total Empresa:]]></text>
+				</staticText>
+				<subreport>
+					<reportElement x="0" y="27" width="570" height="163" uuid="2352dcd2-a5f1-46c4-ac8c-6ee5c2628eae"/>
+					<subreportParameter name="idEmpresa">
+						<subreportParameterExpression><![CDATA[$F{id_empresa}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["Listado_buses_empresa.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="470" y="0" width="100" height="20" uuid="3e063efa-b89d-4b08-bce3-b85d8238bca6"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="230" height="20" uuid="b8a8de16-32ba-41e9-bff5-19f4abe65466"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE ANUAL DE GASTOS ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="60" height="20" uuid="8ba94ee4-cc1f-4c4e-bc4b-f591571343c2"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2016]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="240" height="15" uuid="a6455a14-e2e7-42f3-a6a7-5566aa40db28">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nombre_tipo_cargo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,###.###">
+				<reportElement x="240" y="0" width="100" height="15" uuid="64ad17aa-42a5-4bf1-b3bd-90a845da2814"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{monto_cargo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</summary>
+</jasperReport>

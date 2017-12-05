@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoHaberViewDlg" widgetVar="TipoHaberViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTipoHaberTitle}" closeOnEscape="true">
+
+            <h:form id="TipoHaberViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tipoHaberController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTipoHaberLabel_idTipoHaber}"/>
+                        <h:outputText value="#{tipoHaberController.selected.idTipoHaber}" title="#{myBundle.ViewTipoHaberTitle_idTipoHaber}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoHaberLabel_nombreTipoHaber}"/>
+                        <h:outputText value="#{tipoHaberController.selected.nombreTipoHaber}" title="#{myBundle.ViewTipoHaberTitle_nombreTipoHaber}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoHaberLabel_fechaIngreso}"/>
+                        <h:outputText value="#{tipoHaberController.selected.fechaIngreso}" title="#{myBundle.ViewTipoHaberTitle_fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewTipoHaberLabel_montoDefecto}"/>
+                        <h:outputText value="#{tipoHaberController.selected.montoDefecto}" title="#{myBundle.ViewTipoHaberTitle_montoDefecto}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoHaberLabel_imponible}"/>
+                        <h:selectBooleanCheckbox id="imponible" value="#{tipoHaberController.selected.imponible}" title="#{myBundle.EditTipoHaberTitle_imponible}" required="true" requiredMessage="#{myBundle.EditTipoHaberRequiredMessage_imponible}" disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('TipoHaberViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

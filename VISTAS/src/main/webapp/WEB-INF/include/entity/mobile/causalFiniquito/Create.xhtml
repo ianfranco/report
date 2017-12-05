@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CausalFiniquitoCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateCausalFiniquitoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CausalFiniquitoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CausalFiniquitoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{causalFiniquitoController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCausalFiniquitoLabel_codigoCausalFiniquito}" for="codigoCausalFiniquito" />
+                            <h:panelGroup>
+                                <p:inputText id="codigoCausalFiniquito" value="#{causalFiniquitoController.selected.codigoCausalFiniquito}" title="#{myBundle.CreateCausalFiniquitoTitle_codigoCausalFiniquito}" required="true" requiredMessage="#{myBundle.CreateCausalFiniquitoRequiredMessage_codigoCausalFiniquito}" size="45" maxlength="45"/>
+                                <p:tooltip for="codigoCausalFiniquito" value="#{causalFiniquitoController.getComponentMessages('codigoCausalFiniquito', myBundle.CreateCausalFiniquitoHelpText_codigoCausalFiniquito)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCausalFiniquitoLabel_descripcionCausalFiniquito}" for="descripcionCausalFiniquito" />
+                            <h:panelGroup>
+                                <p:inputText id="descripcionCausalFiniquito" value="#{causalFiniquitoController.selected.descripcionCausalFiniquito}" title="#{myBundle.CreateCausalFiniquitoTitle_descripcionCausalFiniquito}" required="true" requiredMessage="#{myBundle.CreateCausalFiniquitoRequiredMessage_descripcionCausalFiniquito}" size="150" maxlength="150"/>
+                                <p:tooltip for="descripcionCausalFiniquito" value="#{causalFiniquitoController.getComponentMessages('descripcionCausalFiniquito', myBundle.CreateCausalFiniquitoHelpText_descripcionCausalFiniquito)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{causalFiniquitoController.saveNew}" value="#{myBundle.Save}" update="display,:CausalFiniquitoListPage:CausalFiniquitoListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:CausalFiniquitoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

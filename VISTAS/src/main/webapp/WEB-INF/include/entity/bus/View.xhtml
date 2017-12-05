@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BusViewDlg" widgetVar="BusViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewBusTitle}" closeOnEscape="true">
+
+            <h:form id="BusViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{busController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_idBus}"/>
+                        <h:outputText value="#{busController.selected.idBus}" title="#{myBundle.ViewBusTitle_idBus}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_numeroBus}"/>
+                        <h:outputText value="#{busController.selected.numeroBus}" title="#{myBundle.ViewBusTitle_numeroBus}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_patente}"/>
+                        <h:outputText value="#{busController.selected.patente}" title="#{myBundle.ViewBusTitle_patente}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_año}"/>
+                        <h:outputText value="#{busController.selected.año}" title="#{myBundle.ViewBusTitle_año}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_numeroMotor}"/>
+                        <h:outputText value="#{busController.selected.numeroMotor}" title="#{myBundle.ViewBusTitle_numeroMotor}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_numeroChasis}"/>
+                        <h:outputText value="#{busController.selected.numeroChasis}" title="#{myBundle.ViewBusTitle_numeroChasis}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_carroceria}"/>
+                        <h:outputText value="#{busController.selected.carroceria}" title="#{myBundle.ViewBusTitle_carroceria}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_idEmpresa}"/>
+                        <h:outputText value="#{busController.selected.idEmpresa.idEmpresa}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_idFlota}"/>
+                        <h:outputText value="#{busController.selected.idFlota.idFlota}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_idModelo}"/>
+                        <h:outputText value="#{busController.selected.idModelo.idModeloMarcaBus}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_idTerminal}"/>
+                        <h:outputText value="#{busController.selected.idTerminal.idTerminal}"/>
+
+                        <h:outputText value="#{myBundle.ViewBusLabel_idUnidadNegocio}"/>
+                        <h:outputText value="#{busController.selected.idUnidadNegocio.idUnidadNegocio}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('BusViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

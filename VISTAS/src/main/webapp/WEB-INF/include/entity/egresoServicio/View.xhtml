@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EgresoServicioViewDlg" widgetVar="EgresoServicioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEgresoServicioTitle}" closeOnEscape="true">
+
+            <h:form id="EgresoServicioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{egresoServicioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEgresoServicioLabel_idEgresoServicio}"/>
+                        <h:outputText value="#{egresoServicioController.selected.idEgresoServicio}" title="#{myBundle.ViewEgresoServicioTitle_idEgresoServicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoServicioLabel_valorDefectoEgreso}"/>
+                        <h:outputText value="#{egresoServicioController.selected.valorDefectoEgreso}" title="#{myBundle.ViewEgresoServicioTitle_valorDefectoEgreso}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoServicioLabel_porcentaje}"/>
+                        <h:outputText value="#{egresoServicioController.selected.porcentaje}" title="#{myBundle.ViewEgresoServicioTitle_porcentaje}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoServicioLabel_numeroOrdenEgreso}"/>
+                        <h:outputText value="#{egresoServicioController.selected.numeroOrdenEgreso}" title="#{myBundle.ViewEgresoServicioTitle_numeroOrdenEgreso}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoServicioLabel_activo}"/>
+                        <h:selectBooleanCheckbox id="activo" value="#{egresoServicioController.selected.activo}" title="#{myBundle.EditEgresoServicioTitle_activo}" required="true" requiredMessage="#{myBundle.EditEgresoServicioRequiredMessage_activo}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoServicioLabel_idServicio}"/>
+                        <h:outputText value="#{egresoServicioController.selected.idServicio.idServicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewEgresoServicioLabel_idEgreso}"/>
+                        <h:outputText value="#{egresoServicioController.selected.idEgreso.idEgreso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EgresoServicioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

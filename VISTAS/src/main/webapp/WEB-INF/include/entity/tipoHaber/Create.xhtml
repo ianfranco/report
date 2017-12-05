@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoHaberCreateDlg" widgetVar="TipoHaberCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTipoHaberTitle}" closeOnEscape="true">
+
+            <h:form id="TipoHaberCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoHaberController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTipoHaberLabel_nombreTipoHaber}" for="nombreTipoHaber" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreTipoHaber" value="#{tipoHaberController.selected.nombreTipoHaber}" title="#{myBundle.CreateTipoHaberTitle_nombreTipoHaber}" required="true" requiredMessage="#{myBundle.CreateTipoHaberRequiredMessage_nombreTipoHaber}" size="255" maxlength="255"/>
+                            <p:tooltip for="nombreTipoHaber" value="#{tipoHaberController.getComponentMessages('nombreTipoHaber', myBundle.CreateTipoHaberHelpText_nombreTipoHaber)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoHaberLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{tipoHaberController.selected.fechaIngreso}" title="#{myBundle.CreateTipoHaberTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.CreateTipoHaberRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{tipoHaberController.getComponentMessages('fechaIngreso', myBundle.CreateTipoHaberHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoHaberLabel_montoDefecto}" for="montoDefecto" />
+                        <h:panelGroup>
+                            <p:inputText id="montoDefecto" value="#{tipoHaberController.selected.montoDefecto}" title="#{myBundle.CreateTipoHaberTitle_montoDefecto}"/>
+                            <p:tooltip for="montoDefecto" value="#{tipoHaberController.getComponentMessages('montoDefecto', myBundle.CreateTipoHaberHelpText_montoDefecto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoHaberLabel_imponible}" for="imponible" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="imponible" value="#{tipoHaberController.selected.imponible}" required="true" requiredMessage="#{myBundle.CreateTipoHaberRequiredMessage_imponible}"/>
+                            <p:tooltip for="imponible" value="#{tipoHaberController.getComponentMessages('imponible', myBundle.CreateTipoHaberHelpText_imponible)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoHaberController.saveNew}" value="#{myBundle.Save}" update="display,:TipoHaberListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoHaberCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoHaberCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

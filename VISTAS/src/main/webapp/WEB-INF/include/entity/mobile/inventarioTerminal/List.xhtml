@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="InventarioTerminalListPage">
+        <pm:header title="#{myBundle.ListInventarioTerminalTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":InventarioTerminalCreatePage:InventarioTerminalCreateForm" actionListener="#{inventarioTerminalController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:InventarioTerminalCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="InventarioTerminalListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{inventarioTerminalController.items}"
+                             var="item"
+                             rowKey="#{item.idInventarioTerminal}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{inventarioTerminalController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{inventarioTerminalController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{inventarioTerminalController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('InventarioTerminalListPage:InventarioTerminalListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('InventarioTerminalListPage:InventarioTerminalListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('InventarioTerminalListPage:InventarioTerminalListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idInventarioTerminal}" filterBy="#{item.idInventarioTerminal}" headerText="#{myBundle.ListInventarioTerminalTitle_idInventarioTerminal}">
+                        <h:outputText value="#{item.idInventarioTerminal}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.estado}" filterBy="#{item.estado}" headerText="#{myBundle.ListInventarioTerminalTitle_estado}">
+                        <h:selectBooleanCheckbox id="estado" value="#{item.estado}" title="#{myBundle.EditInventarioTerminalTitle_estado}"  disabled="true"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.serie}" filterBy="#{item.serie}" headerText="#{myBundle.ListInventarioTerminalTitle_serie}">
+                        <h:outputText value="#{item.serie}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.identificador}" filterBy="#{item.identificador}" headerText="#{myBundle.ListInventarioTerminalTitle_identificador}">
+                        <h:outputText value="#{item.identificador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idBoleto.idBoleto}" filterBy="#{item.idBoleto.idBoleto}" headerText="#{myBundle.ListInventarioTerminalTitle_idBoleto}">
+                        <h:outputText value="#{item.idBoleto.idBoleto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idTerminal.idTerminal}" filterBy="#{item.idTerminal.idTerminal}" headerText="#{myBundle.ListInventarioTerminalTitle_idTerminal}">
+                        <h:outputText value="#{item.idTerminal.idTerminal}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":InventarioTerminalEditPage:InventarioTerminalEditForm" disabled="#{empty inventarioTerminalController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:InventarioTerminalEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{inventarioTerminalController.delete}" update=":growl,datalist" disabled="#{empty inventarioTerminalController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty inventarioTerminalController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.InventarioTerminalHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.InventarioTerminalMenuItem_idBoleto}" icon="ui-icon-search" update=":BoletoEditPage:BoletoEditForm" disabled="#{empty inventarioTerminalController.selected.idBoleto}" actionListener="#{inventarioTerminalController.prepareIdBoleto}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:BoletoEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.InventarioTerminalMenuItem_idTerminal}" icon="ui-icon-search" update=":TerminalEditPage:TerminalEditForm" disabled="#{empty inventarioTerminalController.selected.idTerminal}" actionListener="#{inventarioTerminalController.prepareIdTerminal}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TerminalEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.InventarioTerminalMenuItem_ventaBoletoGuiaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty inventarioTerminalController.selected.ventaBoletoGuiaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{inventarioTerminalController.navigateVentaBoletoGuiaList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

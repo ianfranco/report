@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="UnidadNegocioListPage">
+        <pm:header title="#{myBundle.ListUnidadNegocioTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":UnidadNegocioCreatePage:UnidadNegocioCreateForm" actionListener="#{unidadNegocioController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:UnidadNegocioCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="UnidadNegocioListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{unidadNegocioController.items}"
+                             var="item"
+                             rowKey="#{item.idUnidadNegocio}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{unidadNegocioController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{unidadNegocioController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{unidadNegocioController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('UnidadNegocioListPage:UnidadNegocioListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('UnidadNegocioListPage:UnidadNegocioListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('UnidadNegocioListPage:UnidadNegocioListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idUnidadNegocio}" filterBy="#{item.idUnidadNegocio}" headerText="#{myBundle.ListUnidadNegocioTitle_idUnidadNegocio}">
+                        <h:outputText value="#{item.idUnidadNegocio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroUnidadNegocio}" filterBy="#{item.numeroUnidadNegocio}" headerText="#{myBundle.ListUnidadNegocioTitle_numeroUnidadNegocio}">
+                        <h:outputText value="#{item.numeroUnidadNegocio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreUnidadNegocio}" filterBy="#{item.nombreUnidadNegocio}" headerText="#{myBundle.ListUnidadNegocioTitle_nombreUnidadNegocio}">
+                        <h:outputText value="#{item.nombreUnidadNegocio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idOperadorTransporte.idOperadorTransporte}" filterBy="#{item.idOperadorTransporte.idOperadorTransporte}" headerText="#{myBundle.ListUnidadNegocioTitle_idOperadorTransporte}">
+                        <h:outputText value="#{item.idOperadorTransporte.idOperadorTransporte}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idRegion.idRegion}" filterBy="#{item.idRegion.idRegion}" headerText="#{myBundle.ListUnidadNegocioTitle_idRegion}">
+                        <h:outputText value="#{item.idRegion.idRegion}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":UnidadNegocioEditPage:UnidadNegocioEditForm" disabled="#{empty unidadNegocioController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:UnidadNegocioEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{unidadNegocioController.delete}" update=":growl,datalist" disabled="#{empty unidadNegocioController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty unidadNegocioController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.UnidadNegocioHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.UnidadNegocioMenuItem_contratoUnidadList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty unidadNegocioController.selected.contratoUnidadList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{unidadNegocioController.navigateContratoUnidadList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.UnidadNegocioMenuItem_busList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty unidadNegocioController.selected.busList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{unidadNegocioController.navigateBusList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.UnidadNegocioMenuItem_valorRolloUnidadList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty unidadNegocioController.selected.valorRolloUnidadList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{unidadNegocioController.navigateValorRolloUnidadList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.UnidadNegocioMenuItem_idOperadorTransporte}" icon="ui-icon-search" update=":OperadorTransporteEditPage:OperadorTransporteEditForm" disabled="#{empty unidadNegocioController.selected.idOperadorTransporte}" actionListener="#{unidadNegocioController.prepareIdOperadorTransporte}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:OperadorTransporteEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.UnidadNegocioMenuItem_idRegion}" icon="ui-icon-search" update=":RegionEditPage:RegionEditForm" disabled="#{empty unidadNegocioController.selected.idRegion}" actionListener="#{unidadNegocioController.prepareIdRegion}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:RegionEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.UnidadNegocioMenuItem_servicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty unidadNegocioController.selected.servicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{unidadNegocioController.navigateServicioList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

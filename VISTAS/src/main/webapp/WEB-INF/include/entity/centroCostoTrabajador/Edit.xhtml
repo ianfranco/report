@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CentroCostoTrabajadorEditDlg" widgetVar="CentroCostoTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCentroCostoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="CentroCostoTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{centroCostoTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCentroCostoTrabajadorLabel_idCentroCostoTrabajador}" for="idCentroCostoTrabajador" />
+                        <h:panelGroup>
+                            <h:outputText id="idCentroCostoTrabajador" value="#{centroCostoTrabajadorController.selected.idCentroCostoTrabajador}" />
+                            <p:tooltip for="idCentroCostoTrabajador" value="#{centroCostoTrabajadorController.getComponentMessages('idCentroCostoTrabajador', myBundle.EditCentroCostoTrabajadorHelpText_idCentroCostoTrabajador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCentroCostoTrabajadorLabel_idCentroCosto}" for="idCentroCosto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idCentroCosto" value="#{centroCostoTrabajadorController.selected.idCentroCosto}" required="true" requiredMessage="#{myBundle.EditCentroCostoTrabajadorRequiredMessage_idCentroCosto}" converter="centroCostoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{centroCostoController.items}"
+                                               var="idCentroCostoItem"
+                                               itemValue="#{idCentroCostoItem}"
+                                               itemLabel="#{idCentroCostoItem.idCentroCosto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idCentroCosto" value="#{centroCostoTrabajadorController.getComponentMessages('idCentroCosto', myBundle.EditCentroCostoTrabajadorHelpText_idCentroCosto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCentroCostoTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{centroCostoTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.EditCentroCostoTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{centroCostoTrabajadorController.getComponentMessages('idTrabajador', myBundle.EditCentroCostoTrabajadorHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{centroCostoTrabajadorController.save}" value="#{myBundle.Save}" update="display,:CentroCostoTrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CentroCostoTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CentroCostoTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

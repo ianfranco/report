@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AnticipoTrabajadorViewDlg" widgetVar="AnticipoTrabajadorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewAnticipoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="AnticipoTrabajadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{anticipoTrabajadorController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewAnticipoTrabajadorLabel_idAnticipoTrabajador}"/>
+                        <h:outputText value="#{anticipoTrabajadorController.selected.idAnticipoTrabajador}" title="#{myBundle.ViewAnticipoTrabajadorTitle_idAnticipoTrabajador}"/>
+
+                        <h:outputText value="#{myBundle.ViewAnticipoTrabajadorLabel_mes}"/>
+                        <h:outputText value="#{anticipoTrabajadorController.selected.mes}" title="#{myBundle.ViewAnticipoTrabajadorTitle_mes}"/>
+
+                        <h:outputText value="#{myBundle.ViewAnticipoTrabajadorLabel_año}"/>
+                        <h:outputText value="#{anticipoTrabajadorController.selected.año}" title="#{myBundle.ViewAnticipoTrabajadorTitle_año}"/>
+
+                        <h:outputText value="#{myBundle.ViewAnticipoTrabajadorLabel_monto}"/>
+                        <h:outputText value="#{anticipoTrabajadorController.selected.monto}" title="#{myBundle.ViewAnticipoTrabajadorTitle_monto}"/>
+
+                        <h:outputText value="#{myBundle.ViewAnticipoTrabajadorLabel_idTrabajador}"/>
+                        <h:outputText value="#{anticipoTrabajadorController.selected.idTrabajador.idTrabajador}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('AnticipoTrabajadorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -155,7 +155,7 @@ public class MesSelectorlLiquidacionView extends javax.swing.JPanel {
     public String getCodigo(){
         return this.codigoTextField.getText();
     }
-    
+      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField codigoTextField;
     private javax.swing.JComboBox<String> empresa;

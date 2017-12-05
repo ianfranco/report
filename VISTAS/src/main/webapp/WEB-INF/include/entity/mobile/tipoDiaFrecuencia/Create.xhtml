@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoDiaFrecuenciaCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateTipoDiaFrecuenciaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TipoDiaFrecuenciaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoDiaFrecuenciaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoDiaFrecuenciaController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTipoDiaFrecuenciaLabel_nombreTipoDiaFrecuencia}" for="nombreTipoDiaFrecuencia" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreTipoDiaFrecuencia" value="#{tipoDiaFrecuenciaController.selected.nombreTipoDiaFrecuencia}" title="#{myBundle.CreateTipoDiaFrecuenciaTitle_nombreTipoDiaFrecuencia}" required="true" requiredMessage="#{myBundle.CreateTipoDiaFrecuenciaRequiredMessage_nombreTipoDiaFrecuencia}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreTipoDiaFrecuencia" value="#{tipoDiaFrecuenciaController.getComponentMessages('nombreTipoDiaFrecuencia', myBundle.CreateTipoDiaFrecuenciaHelpText_nombreTipoDiaFrecuencia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTipoDiaFrecuenciaLabel_activo}" for="activo" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="activo" value="#{tipoDiaFrecuenciaController.selected.activo}" required="true" requiredMessage="#{myBundle.CreateTipoDiaFrecuenciaRequiredMessage_activo}"/>
+                                <p:tooltip for="activo" value="#{tipoDiaFrecuenciaController.getComponentMessages('activo', myBundle.CreateTipoDiaFrecuenciaHelpText_activo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tipoDiaFrecuenciaController.saveNew}" value="#{myBundle.Save}" update="display,:TipoDiaFrecuenciaListPage:TipoDiaFrecuenciaListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:TipoDiaFrecuenciaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

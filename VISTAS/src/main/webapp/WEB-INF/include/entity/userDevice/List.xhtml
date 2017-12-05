@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="UserDeviceListForm">
+
+        <p:panel header="#{myBundle.ListUserDeviceTitle}">
+            <p:contextMenu id="UserDeviceDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('UserDeviceListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('UserDeviceListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('UserDeviceListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('UserDeviceListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.UserDeviceMenuItem_userId}" icon="ui-icon-search"  actionListener="#{userDeviceController.prepareUserId}" update=":UserViewForm" oncomplete="PF('UserViewDialog').show()" disabled="#{empty userDeviceController.selected.userId}"/>  
+                <p:menuitem value="#{myBundle.UserDeviceMenuItem_deviceId}" icon="ui-icon-search"  actionListener="#{userDeviceController.prepareDeviceId}" update=":DeviceViewForm" oncomplete="PF('DeviceViewDialog').show()" disabled="#{empty userDeviceController.selected.deviceId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{userDeviceController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{userDeviceController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{userDeviceController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idUserDevice}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:UserDeviceDataTableContextMenu" listener="#{userDeviceController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:UserDeviceDataTableContextMenu" listener="#{userDeviceController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{userDeviceController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('UserDeviceListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idUserDevice}" filterBy="#{item.idUserDevice}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListUserDeviceTitle_idUserDevice}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idUserDevice}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.read}" filterBy="#{item.read}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListUserDeviceTitle_read}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="read" value="#{item.read}" title="#{myBundle.EditUserDeviceTitle_read}" required="true" requiredMessage="#{myBundle.EditUserDeviceRequiredMessage_read}" disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.write}" filterBy="#{item.write}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListUserDeviceTitle_write}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="write" value="#{item.write}" title="#{myBundle.EditUserDeviceTitle_write}" required="true" requiredMessage="#{myBundle.EditUserDeviceRequiredMessage_write}" disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.userId.name}" filterBy="#{item.userId.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListUserDeviceTitle_userId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userId.name}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.deviceId.name}" filterBy="#{item.deviceId.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListUserDeviceTitle_deviceId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deviceId.name}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{userDeviceController.prepareCreate}" update=":UserDeviceCreateForm" oncomplete="PF('UserDeviceCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":UserDeviceViewForm" oncomplete="PF('UserDeviceViewDialog').show()" disabled="#{empty userDeviceController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":UserDeviceEditForm" oncomplete="PF('UserDeviceEditDialog').show()" disabled="#{empty userDeviceController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{userDeviceController.delete}" update=":growl,datalist" disabled="#{empty userDeviceController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

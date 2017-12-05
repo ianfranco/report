@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TrabajadorTerminalListPage">
+        <pm:header title="#{myBundle.ListTrabajadorTerminalTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":TrabajadorTerminalCreatePage:TrabajadorTerminalCreateForm" actionListener="#{trabajadorTerminalController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TrabajadorTerminalCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TrabajadorTerminalListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{trabajadorTerminalController.items}"
+                             var="item"
+                             rowKey="#{item.idTrabajadorTerminal}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{trabajadorTerminalController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{trabajadorTerminalController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{trabajadorTerminalController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TrabajadorTerminalListPage:TrabajadorTerminalListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TrabajadorTerminalListPage:TrabajadorTerminalListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TrabajadorTerminalListPage:TrabajadorTerminalListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idTrabajadorTerminal}" filterBy="#{item.idTrabajadorTerminal}" headerText="#{myBundle.ListTrabajadorTerminalTitle_idTrabajadorTerminal}">
+                        <h:outputText value="#{item.idTrabajadorTerminal}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idTerminal.idTerminal}" filterBy="#{item.idTerminal.idTerminal}" headerText="#{myBundle.ListTrabajadorTerminalTitle_idTerminal}">
+                        <h:outputText value="#{item.idTerminal.idTerminal}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListTrabajadorTerminalTitle_idTrabajador}">
+                        <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TrabajadorTerminalEditPage:TrabajadorTerminalEditForm" disabled="#{empty trabajadorTerminalController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TrabajadorTerminalEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{trabajadorTerminalController.delete}" update=":growl,datalist" disabled="#{empty trabajadorTerminalController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty trabajadorTerminalController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.TrabajadorTerminalHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.TrabajadorTerminalMenuItem_idTerminal}" icon="ui-icon-search" update=":TerminalEditPage:TerminalEditForm" disabled="#{empty trabajadorTerminalController.selected.idTerminal}" actionListener="#{trabajadorTerminalController.prepareIdTerminal}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TerminalEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.TrabajadorTerminalMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty trabajadorTerminalController.selected.idTrabajador}" actionListener="#{trabajadorTerminalController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

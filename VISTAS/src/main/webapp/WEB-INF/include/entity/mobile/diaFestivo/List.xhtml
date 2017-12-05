@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DiaFestivoListPage">
+        <pm:header title="#{myBundle.ListDiaFestivoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":DiaFestivoCreatePage:DiaFestivoCreateForm" actionListener="#{diaFestivoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DiaFestivoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DiaFestivoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{diaFestivoController.items}"
+                             var="item"
+                             rowKey="#{item.idDiaFestivo}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{diaFestivoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DiaFestivoListPage:DiaFestivoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DiaFestivoListPage:DiaFestivoListForm:editButton').click();"/>
+
+                    <p:column sortBy="#{item.idDiaFestivo}" filterBy="#{item.idDiaFestivo}" headerText="#{myBundle.ListDiaFestivoTitle_idDiaFestivo}">
+                        <h:outputText value="#{item.idDiaFestivo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreDiaFestivo}" filterBy="#{item.nombreDiaFestivo}" headerText="#{myBundle.ListDiaFestivoTitle_nombreDiaFestivo}">
+                        <h:outputText value="#{item.nombreDiaFestivo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}" headerText="#{myBundle.ListDiaFestivoTitle_fecha}">
+                        <h:outputText value="#{item.fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DiaFestivoEditPage:DiaFestivoEditForm" disabled="#{empty diaFestivoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DiaFestivoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{diaFestivoController.delete}" update=":growl,datalist" disabled="#{empty diaFestivoController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

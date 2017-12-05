@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ControlHorarioServicioEditDlg" widgetVar="ControlHorarioServicioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditControlHorarioServicioTitle}" closeOnEscape="true">
+
+            <h:form id="ControlHorarioServicioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{controlHorarioServicioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditControlHorarioServicioLabel_idControlHorarioServicio}" for="idControlHorarioServicio" />
+                        <h:panelGroup>
+                            <h:outputText id="idControlHorarioServicio" value="#{controlHorarioServicioController.selected.idControlHorarioServicio}" />
+                            <p:tooltip for="idControlHorarioServicio" value="#{controlHorarioServicioController.getComponentMessages('idControlHorarioServicio', myBundle.EditControlHorarioServicioHelpText_idControlHorarioServicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditControlHorarioServicioLabel_tiempo}" for="tiempo" />
+                        <h:panelGroup>
+                            <p:inputText id="tiempo" value="#{controlHorarioServicioController.selected.tiempo}" title="#{myBundle.EditControlHorarioServicioTitle_tiempo}" required="true" requiredMessage="#{myBundle.EditControlHorarioServicioRequiredMessage_tiempo}"/>
+                            <p:tooltip for="tiempo" value="#{controlHorarioServicioController.getComponentMessages('tiempo', myBundle.EditControlHorarioServicioHelpText_tiempo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditControlHorarioServicioLabel_multa}" for="multa" />
+                        <h:panelGroup>
+                            <p:inputText id="multa" value="#{controlHorarioServicioController.selected.multa}" title="#{myBundle.EditControlHorarioServicioTitle_multa}" required="true" requiredMessage="#{myBundle.EditControlHorarioServicioRequiredMessage_multa}"/>
+                            <p:tooltip for="multa" value="#{controlHorarioServicioController.getComponentMessages('multa', myBundle.EditControlHorarioServicioHelpText_multa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditControlHorarioServicioLabel_peso}" for="peso" />
+                        <h:panelGroup>
+                            <p:inputText id="peso" value="#{controlHorarioServicioController.selected.peso}" title="#{myBundle.EditControlHorarioServicioTitle_peso}" required="true" requiredMessage="#{myBundle.EditControlHorarioServicioRequiredMessage_peso}"/>
+                            <p:tooltip for="peso" value="#{controlHorarioServicioController.getComponentMessages('peso', myBundle.EditControlHorarioServicioHelpText_peso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditControlHorarioServicioLabel_idControlServicio}" for="idControlServicio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idControlServicio" value="#{controlHorarioServicioController.selected.idControlServicio}" required="true" requiredMessage="#{myBundle.EditControlHorarioServicioRequiredMessage_idControlServicio}" converter="controlServicioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{controlServicioController.items}"
+                                               var="idControlServicioItem"
+                                               itemValue="#{idControlServicioItem}"
+                                               itemLabel="#{idControlServicioItem.idControlServicio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idControlServicio" value="#{controlHorarioServicioController.getComponentMessages('idControlServicio', myBundle.EditControlHorarioServicioHelpText_idControlServicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditControlHorarioServicioLabel_idHorarioServicio}" for="idHorarioServicio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idHorarioServicio" value="#{controlHorarioServicioController.selected.idHorarioServicio}" required="true" requiredMessage="#{myBundle.EditControlHorarioServicioRequiredMessage_idHorarioServicio}" converter="horarioServicioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{horarioServicioController.items}"
+                                               var="idHorarioServicioItem"
+                                               itemValue="#{idHorarioServicioItem}"
+                                               itemLabel="#{idHorarioServicioItem.idHorarioServicio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idHorarioServicio" value="#{controlHorarioServicioController.getComponentMessages('idHorarioServicio', myBundle.EditControlHorarioServicioHelpText_idHorarioServicio)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{controlHorarioServicioController.save}" value="#{myBundle.Save}" update="display,:ControlHorarioServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ControlHorarioServicioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ControlHorarioServicioEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

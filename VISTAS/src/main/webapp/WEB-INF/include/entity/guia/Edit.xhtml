@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="GuiaEditDlg" widgetVar="GuiaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditGuiaTitle}" closeOnEscape="true">
+
+            <h:form id="GuiaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{guiaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditGuiaLabel_idGuia}" for="idGuia" />
+                        <h:panelGroup>
+                            <h:outputText id="idGuia" value="#{guiaController.selected.idGuia}" />
+                            <p:tooltip for="idGuia" value="#{guiaController.getComponentMessages('idGuia', myBundle.EditGuiaHelpText_idGuia)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_folio}" for="folio" />
+                        <h:panelGroup>
+                            <p:inputText id="folio" value="#{guiaController.selected.folio}" title="#{myBundle.EditGuiaTitle_folio}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_folio}"/>
+                            <p:tooltip for="folio" value="#{guiaController.getComponentMessages('folio', myBundle.EditGuiaHelpText_folio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_fechaRecaudacion}" for="fechaRecaudacion" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaRecaudacion" pattern="MM/dd/yyyy" value="#{guiaController.selected.fechaRecaudacion}" title="#{myBundle.EditGuiaTitle_fechaRecaudacion}"  showOn="button"/>
+                            <p:tooltip for="fechaRecaudacion" value="#{guiaController.getComponentMessages('fechaRecaudacion', myBundle.EditGuiaHelpText_fechaRecaudacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{guiaController.selected.fecha}" title="#{myBundle.EditGuiaTitle_fecha}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_fecha}" showOn="button"/>
+                            <p:tooltip for="fecha" value="#{guiaController.getComponentMessages('fecha', myBundle.EditGuiaHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_totalIngresos}" for="totalIngresos" />
+                        <h:panelGroup>
+                            <p:inputText id="totalIngresos" value="#{guiaController.selected.totalIngresos}" title="#{myBundle.EditGuiaTitle_totalIngresos}"/>
+                            <p:tooltip for="totalIngresos" value="#{guiaController.getComponentMessages('totalIngresos', myBundle.EditGuiaHelpText_totalIngresos)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_totalEgresos}" for="totalEgresos" />
+                        <h:panelGroup>
+                            <p:inputText id="totalEgresos" value="#{guiaController.selected.totalEgresos}" title="#{myBundle.EditGuiaTitle_totalEgresos}"/>
+                            <p:tooltip for="totalEgresos" value="#{guiaController.getComponentMessages('totalEgresos', myBundle.EditGuiaHelpText_totalEgresos)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_viajeEspecial}" for="viajeEspecial" />
+                        <h:panelGroup>
+                            <p:inputText id="viajeEspecial" value="#{guiaController.selected.viajeEspecial}" title="#{myBundle.EditGuiaTitle_viajeEspecial}"/>
+                            <p:tooltip for="viajeEspecial" value="#{guiaController.getComponentMessages('viajeEspecial', myBundle.EditGuiaHelpText_viajeEspecial)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_otrosIngresos}" for="otrosIngresos" />
+                        <h:panelGroup>
+                            <p:inputText id="otrosIngresos" value="#{guiaController.selected.otrosIngresos}" title="#{myBundle.EditGuiaTitle_otrosIngresos}"/>
+                            <p:tooltip for="otrosIngresos" value="#{guiaController.getComponentMessages('otrosIngresos', myBundle.EditGuiaHelpText_otrosIngresos)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_saldo}" for="saldo" />
+                        <h:panelGroup>
+                            <p:inputText id="saldo" value="#{guiaController.selected.saldo}" title="#{myBundle.EditGuiaTitle_saldo}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_saldo}"/>
+                            <p:tooltip for="saldo" value="#{guiaController.getComponentMessages('saldo', myBundle.EditGuiaHelpText_saldo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_numeroVueltas}" for="numeroVueltas" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroVueltas" value="#{guiaController.selected.numeroVueltas}" title="#{myBundle.EditGuiaTitle_numeroVueltas}"/>
+                            <p:tooltip for="numeroVueltas" value="#{guiaController.getComponentMessages('numeroVueltas', myBundle.EditGuiaHelpText_numeroVueltas)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_turno}" for="turno" />
+                        <h:panelGroup>
+                            <p:inputText id="turno" value="#{guiaController.selected.turno}" title="#{myBundle.EditGuiaTitle_turno}"/>
+                            <p:tooltip for="turno" value="#{guiaController.getComponentMessages('turno', myBundle.EditGuiaHelpText_turno)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_observacion}" for="observacion" />
+                        <h:panelGroup>
+                            <p:inputText id="observacion" value="#{guiaController.selected.observacion}" title="#{myBundle.EditGuiaTitle_observacion}" size="100" maxlength="100"/>
+                            <p:tooltip for="observacion" value="#{guiaController.getComponentMessages('observacion', myBundle.EditGuiaHelpText_observacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_recaudada}" for="recaudada" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="recaudada" value="#{guiaController.selected.recaudada}" />
+                            <p:tooltip for="recaudada" value="#{guiaController.getComponentMessages('recaudada', myBundle.EditGuiaHelpText_recaudada)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_idBus}" for="idBus" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idBus" value="#{guiaController.selected.idBus}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_idBus}" converter="busConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{busController.items}"
+                                               var="idBusItem"
+                                               itemValue="#{idBusItem}"
+                                               itemLabel="#{idBusItem.idBus.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idBus" value="#{guiaController.getComponentMessages('idBus', myBundle.EditGuiaHelpText_idBus)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_idEstado}" for="idEstado" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idEstado" value="#{guiaController.selected.idEstado}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_idEstado}" converter="estadoGuiaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{estadoGuiaController.items}"
+                                               var="idEstadoItem"
+                                               itemValue="#{idEstadoItem}"
+                                               itemLabel="#{idEstadoItem.idEstadoGuia.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idEstado" value="#{guiaController.getComponentMessages('idEstado', myBundle.EditGuiaHelpText_idEstado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_idServicio}" for="idServicio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idServicio" value="#{guiaController.selected.idServicio}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_idServicio}" converter="servicioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{servicioController.items}"
+                                               var="idServicioItem"
+                                               itemValue="#{idServicioItem}"
+                                               itemLabel="#{idServicioItem.idServicio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idServicio" value="#{guiaController.getComponentMessages('idServicio', myBundle.EditGuiaHelpText_idServicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditGuiaLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{guiaController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.EditGuiaRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{guiaController.getComponentMessages('idTrabajador', myBundle.EditGuiaHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{guiaController.save}" value="#{myBundle.Save}" update="display,:GuiaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GuiaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('GuiaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

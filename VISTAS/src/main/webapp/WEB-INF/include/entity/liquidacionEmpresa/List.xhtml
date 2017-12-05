@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="LiquidacionEmpresaListForm">
+
+        <p:panel header="#{myBundle.ListLiquidacionEmpresaTitle}">
+            <p:contextMenu id="LiquidacionEmpresaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('LiquidacionEmpresaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('LiquidacionEmpresaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('LiquidacionEmpresaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('LiquidacionEmpresaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.LiquidacionEmpresaMenuItem_idEmpresa}" icon="ui-icon-search"  actionListener="#{liquidacionEmpresaController.prepareIdEmpresa}" update=":EmpresaViewForm" oncomplete="PF('EmpresaViewDialog').show()" disabled="#{empty liquidacionEmpresaController.selected.idEmpresa}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{liquidacionEmpresaController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{liquidacionEmpresaController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{liquidacionEmpresaController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idLiquidacionEmpresa}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:LiquidacionEmpresaDataTableContextMenu" listener="#{liquidacionEmpresaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:LiquidacionEmpresaDataTableContextMenu" listener="#{liquidacionEmpresaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{liquidacionEmpresaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('LiquidacionEmpresaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idLiquidacionEmpresa}" filterBy="#{item.idLiquidacionEmpresa}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_idLiquidacionEmpresa}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idLiquidacionEmpresa}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.mes}" filterBy="#{item.mes}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_mes}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.mes}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.año}" filterBy="#{item.año}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_año}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.año}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaEmision}" filterBy="#{item.fechaEmision}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_fechaEmision}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaEmision}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaPago}" filterBy="#{item.fechaPago}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_fechaPago}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaPago}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.totalAbonos}" filterBy="#{item.totalAbonos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_totalAbonos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.totalAbonos}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.totalCargos}" filterBy="#{item.totalCargos}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_totalCargos}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.totalCargos}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.saldo}" filterBy="#{item.saldo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_saldo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.saldo}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idEmpresa.idEmpresa}" filterBy="#{item.idEmpresa.idEmpresa}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListLiquidacionEmpresaTitle_idEmpresa}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idEmpresa.idEmpresa}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{liquidacionEmpresaController.prepareCreate}" update=":LiquidacionEmpresaCreateForm" oncomplete="PF('LiquidacionEmpresaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":LiquidacionEmpresaViewForm" oncomplete="PF('LiquidacionEmpresaViewDialog').show()" disabled="#{empty liquidacionEmpresaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":LiquidacionEmpresaEditForm" oncomplete="PF('LiquidacionEmpresaEditDialog').show()" disabled="#{empty liquidacionEmpresaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{liquidacionEmpresaController.delete}" update=":growl,datalist" disabled="#{empty liquidacionEmpresaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

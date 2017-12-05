@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleCompraBoletoViewDlg" widgetVar="DetalleCompraBoletoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewDetalleCompraBoletoTitle}" closeOnEscape="true">
+
+            <h:form id="DetalleCompraBoletoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{detalleCompraBoletoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_idDetalleCompraBoleto}"/>
+                        <h:outputText value="#{detalleCompraBoletoController.selected.idDetalleCompraBoleto}" title="#{myBundle.ViewDetalleCompraBoletoTitle_idDetalleCompraBoleto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_cantidadRollos}"/>
+                        <h:outputText value="#{detalleCompraBoletoController.selected.cantidadRollos}" title="#{myBundle.ViewDetalleCompraBoletoTitle_cantidadRollos}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_serie}"/>
+                        <h:outputText value="#{detalleCompraBoletoController.selected.serie}" title="#{myBundle.ViewDetalleCompraBoletoTitle_serie}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_total}"/>
+                        <h:outputText value="#{detalleCompraBoletoController.selected.total}" title="#{myBundle.ViewDetalleCompraBoletoTitle_total}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_idBoleto}"/>
+                        <h:outputText value="#{detalleCompraBoletoController.selected.idBoleto.idBoleto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_idCompraBoleto}"/>
+                        <h:outputText value="#{detalleCompraBoletoController.selected.idCompraBoleto.idCompraBoleto}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('DetalleCompraBoletoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

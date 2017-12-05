@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PeriodoFrecuenciaCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreatePeriodoFrecuenciaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:PeriodoFrecuenciaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PeriodoFrecuenciaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{periodoFrecuenciaController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePeriodoFrecuenciaLabel_desde}" for="desde" />
+                            <h:panelGroup>
+                                <p:calendar id="desde" pattern="HH:mm:ss" value="#{periodoFrecuenciaController.selected.desde}" title="#{myBundle.CreatePeriodoFrecuenciaTitle_desde}" required="true" requiredMessage="#{myBundle.CreatePeriodoFrecuenciaRequiredMessage_desde}" showOn="button"/>
+                                <p:tooltip for="desde" value="#{periodoFrecuenciaController.getComponentMessages('desde', myBundle.CreatePeriodoFrecuenciaHelpText_desde)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePeriodoFrecuenciaLabel_hasta}" for="hasta" />
+                            <h:panelGroup>
+                                <p:calendar id="hasta" pattern="HH:mm:ss" value="#{periodoFrecuenciaController.selected.hasta}" title="#{myBundle.CreatePeriodoFrecuenciaTitle_hasta}" required="true" requiredMessage="#{myBundle.CreatePeriodoFrecuenciaRequiredMessage_hasta}" showOn="button"/>
+                                <p:tooltip for="hasta" value="#{periodoFrecuenciaController.getComponentMessages('hasta', myBundle.CreatePeriodoFrecuenciaHelpText_hasta)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{periodoFrecuenciaController.saveNew}" value="#{myBundle.Save}" update="display,:PeriodoFrecuenciaListPage:PeriodoFrecuenciaListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:PeriodoFrecuenciaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

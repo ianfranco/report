@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="1008" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="desde" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2009-07-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2009-07-31"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="emp" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["6"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT @nBus:=Guias.IdBus AS Codigo,
+       (SELECT SUM(Cantidad)
+	FROM RecaudacionXGuias,Guias
+	WHERE RecaudacionXGuias.IdGuia = Guias.Folio AND
+	RecaudacionXGuias.IdBoleto = 1 AND
+	Guias.IdBus = @nBus AND
+	Guias.Fecha BETWEEN $P{desde} AND $P{hasta}
+	GROUP BY Guias.IdBus) AS Directo,
+       (SELECT SUM(Cantidad)
+	FROM RecaudacionXGuias,Guias
+	WHERE RecaudacionXGuias.IdGuia = Guias.Folio AND
+	RecaudacionXGuias.IdBoleto = 2 AND
+	Guias.IdBus = @nBus AND
+	Guias.Fecha BETWEEN $P{desde} AND $P{hasta}
+	GROUP BY Guias.IdBus) AS 'Local Viña',
+       (SELECT SUM(Cantidad)
+	FROM RecaudacionXGuias,Guias
+	WHERE RecaudacionXGuias.IdGuia = Guias.Folio AND
+	RecaudacionXGuias.IdBoleto = 3 AND
+	Guias.IdBus = @nBus AND
+	Guias.Fecha BETWEEN $P{desde} AND $P{hasta}
+	GROUP BY Guias.IdBus) AS 'Local',
+       (SELECT SUM(Cantidad)
+	FROM RecaudacionXGuias,Guias
+	WHERE RecaudacionXGuias.IdGuia = Guias.Folio AND
+	RecaudacionXGuias.IdBoleto = 4 AND
+	Guias.IdBus = @nBus AND
+	Guias.Fecha BETWEEN $P{desde} AND $P{hasta}
+	GROUP BY Guias.IdBus) AS 'Escolar Directo',
+       (SELECT SUM(Cantidad)
+	FROM RecaudacionXGuias,Guias
+	WHERE RecaudacionXGuias.IdGuia = Guias.Folio AND
+	RecaudacionXGuias.IdBoleto = 5 AND
+	Guias.IdBus = @nBus AND
+	Guias.Fecha BETWEEN $P{desde} AND $P{hasta}
+	GROUP BY Guias.IdBus) AS 'Escolar Local',
+	SUM(Guias.TotalIngresos) AS TotalIngresos,
+	SUM(Guias.Saldo) AS Liquido
+	FROM Guias WHERE Guias.Fecha BETWEEN $P{desde} AND $P{hasta} AND Guias.IdBus IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,170,171,172,173,174, 138, 134, 131, 161, 141, 159, 183)
+	GROUP BY IdBus
+	ORDER BY IdBus]]>
+	</queryString>
+	<field name="Codigo" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Directo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Local Viña" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Local" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Escolar Directo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Escolar Local" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalIngresos" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Liquido" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="Directo_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Directo}]]></variableExpression>
+	</variable>
+	<variable name="Local Viña_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Local Viña}]]></variableExpression>
+	</variable>
+	<variable name="Local_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Local}]]></variableExpression>
+	</variable>
+	<variable name="Escolar Directo_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Escolar Directo}]]></variableExpression>
+	</variable>
+	<variable name="Escolar Local_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Escolar Local}]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="70">
+			<staticText>
+				<reportElement x="0" y="30" width="219" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Corte de Boletos X Bus - Octubre 2009]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="50" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="198" height="30"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Garita Ex Baquedano]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cond.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="0" width="60" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Directo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="0" width="60" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Local Viña]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="0" width="60" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Local]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="0" width="70" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Escolar Directo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="0" width="70" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Escolar Local]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField>
+				<reportElement x="0" y="0" width="43" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{Codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="0" width="60" height="15"/>
+				<box rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Directo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="0" width="60" height="15"/>
+				<box rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Local Viña}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="0" width="60" height="15"/>
+				<box rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Local}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="0" width="70" height="15"/>
+				<box rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Escolar Directo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="293" y="0" width="70" height="15"/>
+				<box rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Escolar Local}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54">
+			<textField>
+				<reportElement x="0" y="12" width="64" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="64" y="12" width="53" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="12" y="10" width="351" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42">
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totales :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="0" width="60" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Directo_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="0" width="60" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Local Viña_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="0" width="60" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Local_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="0" width="70" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Escolar Directo_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="293" y="0" width="70" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Escolar Local_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

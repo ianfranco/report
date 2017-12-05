@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CargoBusCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateCargoBusTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CargoBusListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CargoBusCreateForm">
+
+                <h:panelGroup id="display" rendered="#{cargoBusController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCargoBusLabel_fechaIngresoCargoBus}" for="fechaIngresoCargoBus" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaIngresoCargoBus" pattern="MM/dd/yyyy" value="#{cargoBusController.selected.fechaIngresoCargoBus}" title="#{myBundle.CreateCargoBusTitle_fechaIngresoCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_fechaIngresoCargoBus}" showOn="button"/>
+                                <p:tooltip for="fechaIngresoCargoBus" value="#{cargoBusController.getComponentMessages('fechaIngresoCargoBus', myBundle.CreateCargoBusHelpText_fechaIngresoCargoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCargoBusLabel_fechaInicioCargoBus}" for="fechaInicioCargoBus" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaInicioCargoBus" pattern="MM/dd/yyyy" value="#{cargoBusController.selected.fechaInicioCargoBus}" title="#{myBundle.CreateCargoBusTitle_fechaInicioCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_fechaInicioCargoBus}" showOn="button"/>
+                                <p:tooltip for="fechaInicioCargoBus" value="#{cargoBusController.getComponentMessages('fechaInicioCargoBus', myBundle.CreateCargoBusHelpText_fechaInicioCargoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCargoBusLabel_numeroCuotasCargoBus}" for="numeroCuotasCargoBus" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroCuotasCargoBus" value="#{cargoBusController.selected.numeroCuotasCargoBus}" title="#{myBundle.CreateCargoBusTitle_numeroCuotasCargoBus}"/>
+                                <p:tooltip for="numeroCuotasCargoBus" value="#{cargoBusController.getComponentMessages('numeroCuotasCargoBus', myBundle.CreateCargoBusHelpText_numeroCuotasCargoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCargoBusLabel_montoCargoBus}" for="montoCargoBus" />
+                            <h:panelGroup>
+                                <p:inputText id="montoCargoBus" value="#{cargoBusController.selected.montoCargoBus}" title="#{myBundle.CreateCargoBusTitle_montoCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_montoCargoBus}"/>
+                                <p:tooltip for="montoCargoBus" value="#{cargoBusController.getComponentMessages('montoCargoBus', myBundle.CreateCargoBusHelpText_montoCargoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCargoBusLabel_activoCargoBus}" for="activoCargoBus" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="activoCargoBus" value="#{cargoBusController.selected.activoCargoBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_activoCargoBus}"/>
+                                <p:tooltip for="activoCargoBus" value="#{cargoBusController.getComponentMessages('activoCargoBus', myBundle.CreateCargoBusHelpText_activoCargoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCargoBusLabel_idBus}" for="idBus" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idBus" value="#{cargoBusController.selected.idBus}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_idBus}" converter="busConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{busController.items}"
+                                                   var="idBusItem"
+                                                   itemValue="#{idBusItem}"
+                                                   itemLabel="#{idBusItem.idBus.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idBus" value="#{cargoBusController.getComponentMessages('idBus', myBundle.CreateCargoBusHelpText_idBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCargoBusLabel_idTipoCargo}" for="idTipoCargo" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTipoCargo" value="#{cargoBusController.selected.idTipoCargo}" required="true" requiredMessage="#{myBundle.CreateCargoBusRequiredMessage_idTipoCargo}" converter="tipoCargoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoCargoController.items}"
+                                                   var="idTipoCargoItem"
+                                                   itemValue="#{idTipoCargoItem}"
+                                                   itemLabel="#{idTipoCargoItem.idTipoCargo.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTipoCargo" value="#{cargoBusController.getComponentMessages('idTipoCargo', myBundle.CreateCargoBusHelpText_idTipoCargo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{cargoBusController.saveNew}" value="#{myBundle.Save}" update="display,:CargoBusListPage:CargoBusListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:CargoBusListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

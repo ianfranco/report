@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TopeEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditTopeTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TopeListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TopeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{topeController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditTopeLabel_idTope}" for="idTope" />
+                            <h:panelGroup>
+                                <h:outputText id="idTope" value="#{topeController.selected.idTope}" />
+                                <p:tooltip for="idTope" value="#{topeController.getComponentMessages('idTope', myBundle.EditTopeHelpText_idTope)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTopeLabel_nombreTope}" for="nombreTope" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreTope" value="#{topeController.selected.nombreTope}" title="#{myBundle.EditTopeTitle_nombreTope}" required="true" requiredMessage="#{myBundle.EditTopeRequiredMessage_nombreTope}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreTope" value="#{topeController.getComponentMessages('nombreTope', myBundle.EditTopeHelpText_nombreTope)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTopeLabel_montoUf}" for="montoUf" />
+                            <h:panelGroup>
+                                <p:inputText id="montoUf" value="#{topeController.selected.montoUf}" title="#{myBundle.EditTopeTitle_montoUf}" required="true" requiredMessage="#{myBundle.EditTopeRequiredMessage_montoUf}"/>
+                                <p:tooltip for="montoUf" value="#{topeController.getComponentMessages('montoUf', myBundle.EditTopeHelpText_montoUf)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{topeController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:TopeListPage:TopeListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:TopeListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

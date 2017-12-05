@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CargasTrabajadorListPage">
+        <pm:header title="#{myBundle.ListCargasTrabajadorTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":CargasTrabajadorCreatePage:CargasTrabajadorCreateForm" actionListener="#{cargasTrabajadorController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:CargasTrabajadorCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CargasTrabajadorListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{cargasTrabajadorController.items}"
+                             var="item"
+                             rowKey="#{item.idCargasTrabajador}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{cargasTrabajadorController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{cargasTrabajadorController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{cargasTrabajadorController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('CargasTrabajadorListPage:CargasTrabajadorListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('CargasTrabajadorListPage:CargasTrabajadorListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('CargasTrabajadorListPage:CargasTrabajadorListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idCargasTrabajador}" filterBy="#{item.idCargasTrabajador}" headerText="#{myBundle.ListCargasTrabajadorTitle_idCargasTrabajador}">
+                        <h:outputText value="#{item.idCargasTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.apellidoCargaTrabajador}" filterBy="#{item.apellidoCargaTrabajador}" headerText="#{myBundle.ListCargasTrabajadorTitle_apellidoCargaTrabajador}">
+                        <h:outputText value="#{item.apellidoCargaTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreCargaTrabajador}" filterBy="#{item.nombreCargaTrabajador}" headerText="#{myBundle.ListCargasTrabajadorTitle_nombreCargaTrabajador}">
+                        <h:outputText value="#{item.nombreCargaTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.rut}" filterBy="#{item.rut}" headerText="#{myBundle.ListCargasTrabajadorTitle_rut}">
+                        <h:outputText value="#{item.rut}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaNacimiento}" filterBy="#{item.fechaNacimiento}" headerText="#{myBundle.ListCargasTrabajadorTitle_fechaNacimiento}">
+                        <h:outputText value="#{item.fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}" headerText="#{myBundle.ListCargasTrabajadorTitle_fechaIngreso}">
+                        <h:outputText value="#{item.fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.activa}" filterBy="#{item.activa}" headerText="#{myBundle.ListCargasTrabajadorTitle_activa}">
+                                            <h:selectBooleanCheckbox id="activa" value="#{item.activa}" title="#{myBundle.EditCargasTrabajadorTitle_activa}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_activa}" disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idParentescoCarga.idParentescoCarga}" filterBy="#{item.idParentescoCarga.idParentescoCarga}" headerText="#{myBundle.ListCargasTrabajadorTitle_idParentescoCarga}">
+                                            <h:outputText value="#{item.idParentescoCarga.idParentescoCarga}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTipoCarga.idTipoCarga}" filterBy="#{item.idTipoCarga.idTipoCarga}" headerText="#{myBundle.ListCargasTrabajadorTitle_idTipoCarga}">
+                                            <h:outputText value="#{item.idTipoCarga.idTipoCarga}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListCargasTrabajadorTitle_idTrabajador}">
+                                            <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CargasTrabajadorEditPage:CargasTrabajadorEditForm" disabled="#{empty cargasTrabajadorController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:CargasTrabajadorEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{cargasTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty cargasTrabajadorController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty cargasTrabajadorController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.CargasTrabajadorHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.CargasTrabajadorMenuItem_idParentescoCarga}" icon="ui-icon-search" update=":ParentescoCargaEditPage:ParentescoCargaEditForm" disabled="#{empty cargasTrabajadorController.selected.idParentescoCarga}" actionListener="#{cargasTrabajadorController.prepareIdParentescoCarga}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:ParentescoCargaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.CargasTrabajadorMenuItem_idTipoCarga}" icon="ui-icon-search" update=":TipoCargaEditPage:TipoCargaEditForm" disabled="#{empty cargasTrabajadorController.selected.idTipoCarga}" actionListener="#{cargasTrabajadorController.prepareIdTipoCarga}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoCargaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.CargasTrabajadorMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty cargasTrabajadorController.selected.idTrabajador}" actionListener="#{cargasTrabajadorController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.CargasTrabajadorMenuItem_cargaRetroactivaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty cargasTrabajadorController.selected.cargaRetroactivaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{cargasTrabajadorController.navigateCargaRetroactivaList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

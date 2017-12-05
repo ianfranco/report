@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="SindicatoTrabajadorViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewSindicatoTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:SindicatoTrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="SindicatoTrabajadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{sindicatoTrabajadorController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSindicatoTrabajadorLabel_idSindicatoTrabajador}"/>
+                            <h:outputText value="#{sindicatoTrabajadorController.selected.idSindicatoTrabajador}" title="#{myBundle.ViewSindicatoTrabajadorTitle_idSindicatoTrabajador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSindicatoTrabajadorLabel_fechaIngreso}"/>
+                            <h:outputText value="#{sindicatoTrabajadorController.selected.fechaIngreso}" title="#{myBundle.ViewSindicatoTrabajadorTitle_fechaIngreso}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSindicatoTrabajadorLabel_idSindicato}"/>
+                            <h:outputText value="#{sindicatoTrabajadorController.selected.idSindicato.idSindicato}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSindicatoTrabajadorLabel_idTrabajador}"/>
+                            <h:outputText value="#{sindicatoTrabajadorController.selected.idTrabajador.idTrabajador}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

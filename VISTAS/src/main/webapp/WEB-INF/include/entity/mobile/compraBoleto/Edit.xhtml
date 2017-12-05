@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CompraBoletoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditCompraBoletoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CompraBoletoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CompraBoletoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{compraBoletoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditCompraBoletoLabel_idCompraBoleto}" for="idCompraBoleto" />
+                            <h:panelGroup>
+                                <h:outputText id="idCompraBoleto" value="#{compraBoletoController.selected.idCompraBoleto}" />
+                                <p:tooltip for="idCompraBoleto" value="#{compraBoletoController.getComponentMessages('idCompraBoleto', myBundle.EditCompraBoletoHelpText_idCompraBoleto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCompraBoletoLabel_folioFactura}" for="folioFactura" />
+                            <h:panelGroup>
+                                <p:inputText id="folioFactura" value="#{compraBoletoController.selected.folioFactura}" title="#{myBundle.EditCompraBoletoTitle_folioFactura}" required="true" requiredMessage="#{myBundle.EditCompraBoletoRequiredMessage_folioFactura}"/>
+                                <p:tooltip for="folioFactura" value="#{compraBoletoController.getComponentMessages('folioFactura', myBundle.EditCompraBoletoHelpText_folioFactura)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCompraBoletoLabel_fechaCompraBoleto}" for="fechaCompraBoleto" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaCompraBoleto" pattern="MM/dd/yyyy" value="#{compraBoletoController.selected.fechaCompraBoleto}" title="#{myBundle.EditCompraBoletoTitle_fechaCompraBoleto}" required="true" requiredMessage="#{myBundle.EditCompraBoletoRequiredMessage_fechaCompraBoleto}" showOn="button"/>
+                                <p:tooltip for="fechaCompraBoleto" value="#{compraBoletoController.getComponentMessages('fechaCompraBoleto', myBundle.EditCompraBoletoHelpText_fechaCompraBoleto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCompraBoletoLabel_total}" for="total" />
+                            <h:panelGroup>
+                                <p:inputText id="total" value="#{compraBoletoController.selected.total}" title="#{myBundle.EditCompraBoletoTitle_total}" required="true" requiredMessage="#{myBundle.EditCompraBoletoRequiredMessage_total}"/>
+                                <p:tooltip for="total" value="#{compraBoletoController.getComponentMessages('total', myBundle.EditCompraBoletoHelpText_total)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{compraBoletoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:CompraBoletoListPage:CompraBoletoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:CompraBoletoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

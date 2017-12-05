@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TarifaServicioViewDlg" widgetVar="TarifaServicioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTarifaServicioTitle}" closeOnEscape="true">
+
+            <h:form id="TarifaServicioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tarifaServicioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTarifaServicioLabel_idTarifaServicio}"/>
+                        <h:outputText value="#{tarifaServicioController.selected.idTarifaServicio}" title="#{myBundle.ViewTarifaServicioTitle_idTarifaServicio}"/>
+
+                        <h:outputText value="#{myBundle.ViewTarifaServicioLabel_valorTarifa}"/>
+                        <h:outputText value="#{tarifaServicioController.selected.valorTarifa}" title="#{myBundle.ViewTarifaServicioTitle_valorTarifa}"/>
+
+                        <h:outputText value="#{myBundle.ViewTarifaServicioLabel_mes}"/>
+                        <h:outputText value="#{tarifaServicioController.selected.mes}" title="#{myBundle.ViewTarifaServicioTitle_mes}"/>
+
+                        <h:outputText value="#{myBundle.ViewTarifaServicioLabel_año}"/>
+                        <h:outputText value="#{tarifaServicioController.selected.año}" title="#{myBundle.ViewTarifaServicioTitle_año}"/>
+
+                        <h:outputText value="#{myBundle.ViewTarifaServicioLabel_activa}"/>
+                        <h:selectBooleanCheckbox id="activa" value="#{tarifaServicioController.selected.activa}" title="#{myBundle.EditTarifaServicioTitle_activa}" required="true" requiredMessage="#{myBundle.EditTarifaServicioRequiredMessage_activa}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewTarifaServicioLabel_idBoleto}"/>
+                        <h:outputText value="#{tarifaServicioController.selected.idBoleto.idBoleto}"/>
+
+                        <h:outputText value="#{myBundle.ViewTarifaServicioLabel_idServicio}"/>
+                        <h:outputText value="#{tarifaServicioController.selected.idServicio.idServicio}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('TarifaServicioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

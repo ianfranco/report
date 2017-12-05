@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ServicioListPage">
+        <pm:header title="#{myBundle.ListServicioTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":ServicioCreatePage:ServicioCreateForm" actionListener="#{servicioController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:ServicioCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ServicioListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{servicioController.items}"
+                             var="item"
+                             rowKey="#{item.idServicio}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{servicioController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{servicioController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{servicioController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('ServicioListPage:ServicioListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('ServicioListPage:ServicioListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('ServicioListPage:ServicioListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idServicio}" filterBy="#{item.idServicio}" headerText="#{myBundle.ListServicioTitle_idServicio}">
+                        <h:outputText value="#{item.idServicio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroServicio}" filterBy="#{item.numeroServicio}" headerText="#{myBundle.ListServicioTitle_numeroServicio}">
+                        <h:outputText value="#{item.numeroServicio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.longitud}" filterBy="#{item.longitud}" headerText="#{myBundle.ListServicioTitle_longitud}">
+                        <h:outputText value="#{item.longitud}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreServicio}" filterBy="#{item.nombreServicio}" headerText="#{myBundle.ListServicioTitle_nombreServicio}">
+                        <h:outputText value="#{item.nombreServicio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.origenServicio}" filterBy="#{item.origenServicio}" headerText="#{myBundle.ListServicioTitle_origenServicio}">
+                        <h:outputText value="#{item.origenServicio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.destinoServicio}" filterBy="#{item.destinoServicio}" headerText="#{myBundle.ListServicioTitle_destinoServicio}">
+                        <h:outputText value="#{item.destinoServicio}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.idTerminal.idTerminal}" filterBy="#{item.idTerminal.idTerminal}" headerText="#{myBundle.ListServicioTitle_idTerminal}">
+                                            <h:outputText value="#{item.idTerminal.idTerminal}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idUnidad.idUnidadNegocio}" filterBy="#{item.idUnidad.idUnidadNegocio}" headerText="#{myBundle.ListServicioTitle_idUnidad}">
+                                            <h:outputText value="#{item.idUnidad.idUnidadNegocio}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ServicioEditPage:ServicioEditForm" disabled="#{empty servicioController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:ServicioEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{servicioController.delete}" update=":growl,datalist" disabled="#{empty servicioController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty servicioController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.ServicioHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_calleServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.calleServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateCalleServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_despachoList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.despachoList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateDespachoList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_frecuenciaServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.frecuenciaServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateFrecuenciaServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_controlServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.controlServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateControlServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_egresoServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.egresoServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateEgresoServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_busServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.busServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateBusServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_guiaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.guiaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateGuiaList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_horarioServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.horarioServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateHorarioServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_tarifaServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty servicioController.selected.tarifaServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{servicioController.navigateTarifaServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_idTerminal}" icon="ui-icon-search" update=":TerminalEditPage:TerminalEditForm" disabled="#{empty servicioController.selected.idTerminal}" actionListener="#{servicioController.prepareIdTerminal}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TerminalEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.ServicioMenuItem_idUnidad}" icon="ui-icon-search" update=":UnidadNegocioEditPage:UnidadNegocioEditForm" disabled="#{empty servicioController.selected.idUnidad}" actionListener="#{servicioController.prepareIdUnidad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:UnidadNegocioEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

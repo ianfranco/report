@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UnidadNegocioCreateDlg" widgetVar="UnidadNegocioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateUnidadNegocioTitle}" closeOnEscape="true">
+
+            <h:form id="UnidadNegocioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{unidadNegocioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateUnidadNegocioLabel_numeroUnidadNegocio}" for="numeroUnidadNegocio" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroUnidadNegocio" value="#{unidadNegocioController.selected.numeroUnidadNegocio}" title="#{myBundle.CreateUnidadNegocioTitle_numeroUnidadNegocio}" required="true" requiredMessage="#{myBundle.CreateUnidadNegocioRequiredMessage_numeroUnidadNegocio}"/>
+                            <p:tooltip for="numeroUnidadNegocio" value="#{unidadNegocioController.getComponentMessages('numeroUnidadNegocio', myBundle.CreateUnidadNegocioHelpText_numeroUnidadNegocio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUnidadNegocioLabel_nombreUnidadNegocio}" for="nombreUnidadNegocio" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreUnidadNegocio" value="#{unidadNegocioController.selected.nombreUnidadNegocio}" title="#{myBundle.CreateUnidadNegocioTitle_nombreUnidadNegocio}" required="true" requiredMessage="#{myBundle.CreateUnidadNegocioRequiredMessage_nombreUnidadNegocio}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombreUnidadNegocio" value="#{unidadNegocioController.getComponentMessages('nombreUnidadNegocio', myBundle.CreateUnidadNegocioHelpText_nombreUnidadNegocio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUnidadNegocioLabel_idOperadorTransporte}" for="idOperadorTransporte" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idOperadorTransporte" value="#{unidadNegocioController.selected.idOperadorTransporte}" required="true" requiredMessage="#{myBundle.CreateUnidadNegocioRequiredMessage_idOperadorTransporte}" converter="operadorTransporteConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{operadorTransporteController.items}"
+                                               var="idOperadorTransporteItem"
+                                               itemValue="#{idOperadorTransporteItem}"
+                                               itemLabel="#{idOperadorTransporteItem.idOperadorTransporte.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idOperadorTransporte" value="#{unidadNegocioController.getComponentMessages('idOperadorTransporte', myBundle.CreateUnidadNegocioHelpText_idOperadorTransporte)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUnidadNegocioLabel_idRegion}" for="idRegion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idRegion" value="#{unidadNegocioController.selected.idRegion}" required="true" requiredMessage="#{myBundle.CreateUnidadNegocioRequiredMessage_idRegion}" converter="regionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{regionController.items}"
+                                               var="idRegionItem"
+                                               itemValue="#{idRegionItem}"
+                                               itemLabel="#{idRegionItem.idRegion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idRegion" value="#{unidadNegocioController.getComponentMessages('idRegion', myBundle.CreateUnidadNegocioHelpText_idRegion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{unidadNegocioController.saveNew}" value="#{myBundle.Save}" update="display,:UnidadNegocioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UnidadNegocioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('UnidadNegocioCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

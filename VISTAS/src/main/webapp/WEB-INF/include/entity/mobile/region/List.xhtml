@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="RegionListPage">
+        <pm:header title="#{myBundle.ListRegionTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":RegionCreatePage:RegionCreateForm" actionListener="#{regionController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:RegionCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="RegionListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{regionController.items}"
+                             var="item"
+                             rowKey="#{item.idRegion}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{regionController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('RegionListPage:RegionListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('RegionListPage:RegionListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('RegionListPage:RegionListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idRegion}" filterBy="#{item.idRegion}" headerText="#{myBundle.ListRegionTitle_idRegion}">
+                        <h:outputText value="#{item.idRegion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroRegion}" filterBy="#{item.numeroRegion}" headerText="#{myBundle.ListRegionTitle_numeroRegion}">
+                        <h:outputText value="#{item.numeroRegion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}" headerText="#{myBundle.ListRegionTitle_nombre}">
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RegionEditPage:RegionEditForm" disabled="#{empty regionController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:RegionEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{regionController.delete}" update=":growl,datalist" disabled="#{empty regionController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty regionController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.RegionHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.RegionMenuItem_unidadNegocioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty regionController.selected.unidadNegocioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{regionController.navigateUnidadNegocioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.RegionMenuItem_comunaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty regionController.selected.comunaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{regionController.navigateComunaList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

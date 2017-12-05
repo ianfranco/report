@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="BusListForm">
+
+        <p:panel header="#{myBundle.ListBusTitle}">
+            <p:contextMenu id="BusDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('BusListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('BusListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('BusListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('BusListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.BusMenuItem_abonoBusList}" icon="ui-icon-search"  action="#{busController.navigateAbonoBusList}" disabled="#{empty busController.selected.abonoBusList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_cargoBusList}" icon="ui-icon-search"  action="#{busController.navigateCargoBusList}" disabled="#{empty busController.selected.cargoBusList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_despachoList}" icon="ui-icon-search"  action="#{busController.navigateDespachoList}" disabled="#{empty busController.selected.despachoList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_idEmpresa}" icon="ui-icon-search"  actionListener="#{busController.prepareIdEmpresa}" update=":EmpresaViewForm" oncomplete="PF('EmpresaViewDialog').show()" disabled="#{empty busController.selected.idEmpresa}"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_idFlota}" icon="ui-icon-search"  actionListener="#{busController.prepareIdFlota}" update=":FlotaViewForm" oncomplete="PF('FlotaViewDialog').show()" disabled="#{empty busController.selected.idFlota}"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_idModelo}" icon="ui-icon-search"  actionListener="#{busController.prepareIdModelo}" update=":ModeloMarcaBusViewForm" oncomplete="PF('ModeloMarcaBusViewDialog').show()" disabled="#{empty busController.selected.idModelo}"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_idTerminal}" icon="ui-icon-search"  actionListener="#{busController.prepareIdTerminal}" update=":TerminalViewForm" oncomplete="PF('TerminalViewDialog').show()" disabled="#{empty busController.selected.idTerminal}"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_idUnidadNegocio}" icon="ui-icon-search"  actionListener="#{busController.prepareIdUnidadNegocio}" update=":UnidadNegocioViewForm" oncomplete="PF('UnidadNegocioViewDialog').show()" disabled="#{empty busController.selected.idUnidadNegocio}"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_busDeviceList}" icon="ui-icon-search"  action="#{busController.navigateBusDeviceList}" disabled="#{empty busController.selected.busDeviceList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_busServicioList}" icon="ui-icon-search"  action="#{busController.navigateBusServicioList}" disabled="#{empty busController.selected.busServicioList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BusMenuItem_guiaList}" icon="ui-icon-search"  action="#{busController.navigateGuiaList}" disabled="#{empty busController.selected.guiaList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{busController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{busController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{busController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idBus}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BusDataTableContextMenu" listener="#{busController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BusDataTableContextMenu" listener="#{busController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{busController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('BusListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idBus}" filterBy="#{item.idBus}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBusTitle_idBus}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idBus}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numeroBus}" filterBy="#{item.numeroBus}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBusTitle_numeroBus}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numeroBus}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.patente}" filterBy="#{item.patente}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBusTitle_patente}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.patente}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.año}" filterBy="#{item.año}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBusTitle_año}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.año}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numeroMotor}" filterBy="#{item.numeroMotor}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBusTitle_numeroMotor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numeroMotor}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numeroChasis}" filterBy="#{item.numeroChasis}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBusTitle_numeroChasis}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numeroChasis}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.carroceria}" filterBy="#{item.carroceria}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListBusTitle_carroceria}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.carroceria}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idEmpresa.idEmpresa}" filterBy="#{item.idEmpresa.idEmpresa}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListBusTitle_idEmpresa}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idEmpresa.idEmpresa}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idFlota.idFlota}" filterBy="#{item.idFlota.idFlota}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListBusTitle_idFlota}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idFlota.idFlota}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idModelo.idModeloMarcaBus}" filterBy="#{item.idModelo.idModeloMarcaBus}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListBusTitle_idModelo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idModelo.idModeloMarcaBus}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idTerminal.idTerminal}" filterBy="#{item.idTerminal.idTerminal}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListBusTitle_idTerminal}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idTerminal.idTerminal}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.idUnidadNegocio.idUnidadNegocio}" filterBy="#{item.idUnidadNegocio.idUnidadNegocio}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListBusTitle_idUnidadNegocio}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idUnidadNegocio.idUnidadNegocio}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{busController.prepareCreate}" update=":BusCreateForm" oncomplete="PF('BusCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":BusViewForm" oncomplete="PF('BusViewDialog').show()" disabled="#{empty busController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":BusEditForm" oncomplete="PF('BusEditDialog').show()" disabled="#{empty busController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{busController.delete}" update=":growl,datalist" disabled="#{empty busController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

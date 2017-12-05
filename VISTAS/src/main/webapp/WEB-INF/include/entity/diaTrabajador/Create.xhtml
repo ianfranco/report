@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DiaTrabajadorCreateDlg" widgetVar="DiaTrabajadorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateDiaTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="DiaTrabajadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{diaTrabajadorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateDiaTrabajadorLabel_desde}" for="desde" />
+                        <h:panelGroup>
+                            <p:calendar id="desde" pattern="MM/dd/yyyy" value="#{diaTrabajadorController.selected.desde}" title="#{myBundle.CreateDiaTrabajadorTitle_desde}" required="true" requiredMessage="#{myBundle.CreateDiaTrabajadorRequiredMessage_desde}" showOn="button"/>
+                            <p:tooltip for="desde" value="#{diaTrabajadorController.getComponentMessages('desde', myBundle.CreateDiaTrabajadorHelpText_desde)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateDiaTrabajadorLabel_hasta}" for="hasta" />
+                        <h:panelGroup>
+                            <p:calendar id="hasta" pattern="MM/dd/yyyy" value="#{diaTrabajadorController.selected.hasta}" title="#{myBundle.CreateDiaTrabajadorTitle_hasta}" required="true" requiredMessage="#{myBundle.CreateDiaTrabajadorRequiredMessage_hasta}" showOn="button"/>
+                            <p:tooltip for="hasta" value="#{diaTrabajadorController.getComponentMessages('hasta', myBundle.CreateDiaTrabajadorHelpText_hasta)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateDiaTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{diaTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.CreateDiaTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{diaTrabajadorController.getComponentMessages('idTrabajador', myBundle.CreateDiaTrabajadorHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateDiaTrabajadorLabel_idTipoDiaTrabajador}" for="idTipoDiaTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTipoDiaTrabajador" value="#{diaTrabajadorController.selected.idTipoDiaTrabajador}" required="true" requiredMessage="#{myBundle.CreateDiaTrabajadorRequiredMessage_idTipoDiaTrabajador}" converter="tipoDiaTrabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{tipoDiaTrabajadorController.items}"
+                                               var="idTipoDiaTrabajadorItem"
+                                               itemValue="#{idTipoDiaTrabajadorItem}"
+                                               itemLabel="#{idTipoDiaTrabajadorItem.idTipoDiaTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTipoDiaTrabajador" value="#{diaTrabajadorController.getComponentMessages('idTipoDiaTrabajador', myBundle.CreateDiaTrabajadorHelpText_idTipoDiaTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{diaTrabajadorController.saveNew}" value="#{myBundle.Save}" update="display,:DiaTrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DiaTrabajadorCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DiaTrabajadorCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

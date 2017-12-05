@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ValorFijoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditValorFijoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ValorFijoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ValorFijoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{valorFijoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditValorFijoLabel_idValorFijo}" for="idValorFijo" />
+                            <h:panelGroup>
+                                <h:outputText id="idValorFijo" value="#{valorFijoController.selected.idValorFijo}" />
+                                <p:tooltip for="idValorFijo" value="#{valorFijoController.getComponentMessages('idValorFijo', myBundle.EditValorFijoHelpText_idValorFijo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditValorFijoLabel_nombreValor}" for="nombreValor" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreValor" value="#{valorFijoController.selected.nombreValor}" title="#{myBundle.EditValorFijoTitle_nombreValor}" required="true" requiredMessage="#{myBundle.EditValorFijoRequiredMessage_nombreValor}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreValor" value="#{valorFijoController.getComponentMessages('nombreValor', myBundle.EditValorFijoHelpText_nombreValor)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditValorFijoLabel_monto}" for="monto" />
+                            <h:panelGroup>
+                                <p:inputText id="monto" value="#{valorFijoController.selected.monto}" title="#{myBundle.EditValorFijoTitle_monto}"/>
+                                <p:tooltip for="monto" value="#{valorFijoController.getComponentMessages('monto', myBundle.EditValorFijoHelpText_monto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{valorFijoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:ValorFijoListPage:ValorFijoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:ValorFijoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

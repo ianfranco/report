@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="IntervalosAdministracionViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewIntervalosAdministracionTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:IntervalosAdministracionListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="IntervalosAdministracionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{intervalosAdministracionController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewIntervalosAdministracionLabel_idIntervalosAdministracion}"/>
+                            <h:outputText value="#{intervalosAdministracionController.selected.idIntervalosAdministracion}" title="#{myBundle.ViewIntervalosAdministracionTitle_idIntervalosAdministracion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewIntervalosAdministracionLabel_nombreIntervaloAdministracion}"/>
+                            <h:outputText value="#{intervalosAdministracionController.selected.nombreIntervaloAdministracion}" title="#{myBundle.ViewIntervalosAdministracionTitle_nombreIntervaloAdministracion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewIntervalosAdministracionLabel_desde}"/>
+                            <h:outputText value="#{intervalosAdministracionController.selected.desde}" title="#{myBundle.ViewIntervalosAdministracionTitle_desde}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewIntervalosAdministracionLabel_hasta}"/>
+                            <h:outputText value="#{intervalosAdministracionController.selected.hasta}" title="#{myBundle.ViewIntervalosAdministracionTitle_hasta}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

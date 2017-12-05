@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="HaberTrabajadorViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewHaberTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:HaberTrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="HaberTrabajadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{haberTrabajadorController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHaberTrabajadorLabel_idHaberTrabajador}"/>
+                            <h:outputText value="#{haberTrabajadorController.selected.idHaberTrabajador}" title="#{myBundle.ViewHaberTrabajadorTitle_idHaberTrabajador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHaberTrabajadorLabel_fechaIngreso}"/>
+                            <h:outputText value="#{haberTrabajadorController.selected.fechaIngreso}" title="#{myBundle.ViewHaberTrabajadorTitle_fechaIngreso}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHaberTrabajadorLabel_fechaInicio}"/>
+                            <h:outputText value="#{haberTrabajadorController.selected.fechaInicio}" title="#{myBundle.ViewHaberTrabajadorTitle_fechaInicio}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHaberTrabajadorLabel_numeroCuotas}"/>
+                            <h:outputText value="#{haberTrabajadorController.selected.numeroCuotas}" title="#{myBundle.ViewHaberTrabajadorTitle_numeroCuotas}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHaberTrabajadorLabel_monto}"/>
+                            <h:outputText value="#{haberTrabajadorController.selected.monto}" title="#{myBundle.ViewHaberTrabajadorTitle_monto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHaberTrabajadorLabel_activoHaberTrabajador}"/>
+                            <h:selectBooleanCheckbox id="activoHaberTrabajador" value="#{haberTrabajadorController.selected.activoHaberTrabajador}" title="#{myBundle.EditHaberTrabajadorTitle_activoHaberTrabajador}" required="true" requiredMessage="#{myBundle.EditHaberTrabajadorRequiredMessage_activoHaberTrabajador}" disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHaberTrabajadorLabel_idTipoHaber}"/>
+                            <h:outputText value="#{haberTrabajadorController.selected.idTipoHaber.idTipoHaber}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHaberTrabajadorLabel_idTrabajador}"/>
+                            <h:outputText value="#{haberTrabajadorController.selected.idTrabajador.idTrabajador}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

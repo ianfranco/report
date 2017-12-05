@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ControlHorarioServicioViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewControlHorarioServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ControlHorarioServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ControlHorarioServicioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{controlHorarioServicioController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlHorarioServicioLabel_idControlHorarioServicio}"/>
+                            <h:outputText value="#{controlHorarioServicioController.selected.idControlHorarioServicio}" title="#{myBundle.ViewControlHorarioServicioTitle_idControlHorarioServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlHorarioServicioLabel_tiempo}"/>
+                            <h:outputText value="#{controlHorarioServicioController.selected.tiempo}" title="#{myBundle.ViewControlHorarioServicioTitle_tiempo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlHorarioServicioLabel_multa}"/>
+                            <h:outputText value="#{controlHorarioServicioController.selected.multa}" title="#{myBundle.ViewControlHorarioServicioTitle_multa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlHorarioServicioLabel_peso}"/>
+                            <h:outputText value="#{controlHorarioServicioController.selected.peso}" title="#{myBundle.ViewControlHorarioServicioTitle_peso}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlHorarioServicioLabel_idControlServicio}"/>
+                            <h:outputText value="#{controlHorarioServicioController.selected.idControlServicio.idControlServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlHorarioServicioLabel_idHorarioServicio}"/>
+                            <h:outputText value="#{controlHorarioServicioController.selected.idHorarioServicio.idHorarioServicio}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

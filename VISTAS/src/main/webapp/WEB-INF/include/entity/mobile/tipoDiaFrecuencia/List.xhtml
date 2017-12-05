@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoDiaFrecuenciaListPage">
+        <pm:header title="#{myBundle.ListTipoDiaFrecuenciaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":TipoDiaFrecuenciaCreatePage:TipoDiaFrecuenciaCreateForm" actionListener="#{tipoDiaFrecuenciaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TipoDiaFrecuenciaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoDiaFrecuenciaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{tipoDiaFrecuenciaController.items}"
+                             var="item"
+                             rowKey="#{item.idTipoDiaFrecuencia}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{tipoDiaFrecuenciaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TipoDiaFrecuenciaListPage:TipoDiaFrecuenciaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TipoDiaFrecuenciaListPage:TipoDiaFrecuenciaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TipoDiaFrecuenciaListPage:TipoDiaFrecuenciaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idTipoDiaFrecuencia}" filterBy="#{item.idTipoDiaFrecuencia}" headerText="#{myBundle.ListTipoDiaFrecuenciaTitle_idTipoDiaFrecuencia}">
+                        <h:outputText value="#{item.idTipoDiaFrecuencia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreTipoDiaFrecuencia}" filterBy="#{item.nombreTipoDiaFrecuencia}" headerText="#{myBundle.ListTipoDiaFrecuenciaTitle_nombreTipoDiaFrecuencia}">
+                        <h:outputText value="#{item.nombreTipoDiaFrecuencia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.activo}" filterBy="#{item.activo}" headerText="#{myBundle.ListTipoDiaFrecuenciaTitle_activo}">
+                        <h:selectBooleanCheckbox id="activo" value="#{item.activo}" title="#{myBundle.EditTipoDiaFrecuenciaTitle_activo}" required="true" requiredMessage="#{myBundle.EditTipoDiaFrecuenciaRequiredMessage_activo}" disabled="true"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoDiaFrecuenciaEditPage:TipoDiaFrecuenciaEditForm" disabled="#{empty tipoDiaFrecuenciaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TipoDiaFrecuenciaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoDiaFrecuenciaController.delete}" update=":growl,datalist" disabled="#{empty tipoDiaFrecuenciaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty tipoDiaFrecuenciaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.TipoDiaFrecuenciaHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.TipoDiaFrecuenciaMenuItem_frecuenciaServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty tipoDiaFrecuenciaController.selected.frecuenciaServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{tipoDiaFrecuenciaController.navigateFrecuenciaServicioList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

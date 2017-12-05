@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="BusEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditBusTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:BusListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="BusEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{busController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditBusLabel_idBus}" for="idBus" />
+                            <h:panelGroup>
+                                <h:outputText id="idBus" value="#{busController.selected.idBus}" />
+                                <p:tooltip for="idBus" value="#{busController.getComponentMessages('idBus', myBundle.EditBusHelpText_idBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_numeroBus}" for="numeroBus" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroBus" value="#{busController.selected.numeroBus}" title="#{myBundle.EditBusTitle_numeroBus}" required="true" requiredMessage="#{myBundle.EditBusRequiredMessage_numeroBus}"/>
+                                <p:tooltip for="numeroBus" value="#{busController.getComponentMessages('numeroBus', myBundle.EditBusHelpText_numeroBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_patente}" for="patente" />
+                            <h:panelGroup>
+                                <p:inputText id="patente" value="#{busController.selected.patente}" title="#{myBundle.EditBusTitle_patente}" required="true" requiredMessage="#{myBundle.EditBusRequiredMessage_patente}" size="45" maxlength="45"/>
+                                <p:tooltip for="patente" value="#{busController.getComponentMessages('patente', myBundle.EditBusHelpText_patente)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_año}" for="año" />
+                            <h:panelGroup>
+                                <p:inputText id="año" value="#{busController.selected.año}" title="#{myBundle.EditBusTitle_año}" required="true" requiredMessage="#{myBundle.EditBusRequiredMessage_año}"/>
+                                <p:tooltip for="año" value="#{busController.getComponentMessages('año', myBundle.EditBusHelpText_año)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_numeroMotor}" for="numeroMotor" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroMotor" value="#{busController.selected.numeroMotor}" title="#{myBundle.EditBusTitle_numeroMotor}" size="45" maxlength="45"/>
+                                <p:tooltip for="numeroMotor" value="#{busController.getComponentMessages('numeroMotor', myBundle.EditBusHelpText_numeroMotor)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_numeroChasis}" for="numeroChasis" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroChasis" value="#{busController.selected.numeroChasis}" title="#{myBundle.EditBusTitle_numeroChasis}" size="45" maxlength="45"/>
+                                <p:tooltip for="numeroChasis" value="#{busController.getComponentMessages('numeroChasis', myBundle.EditBusHelpText_numeroChasis)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_carroceria}" for="carroceria" />
+                            <h:panelGroup>
+                                <p:inputText id="carroceria" value="#{busController.selected.carroceria}" title="#{myBundle.EditBusTitle_carroceria}" size="45" maxlength="45"/>
+                                <p:tooltip for="carroceria" value="#{busController.getComponentMessages('carroceria', myBundle.EditBusHelpText_carroceria)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_idEmpresa}" for="idEmpresa" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idEmpresa" value="#{busController.selected.idEmpresa}" required="true" requiredMessage="#{myBundle.EditBusRequiredMessage_idEmpresa}" converter="empresaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{empresaController.items}"
+                                                   var="idEmpresaItem"
+                                                   itemValue="#{idEmpresaItem}"
+                                                   itemLabel="#{idEmpresaItem.idEmpresa.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idEmpresa" value="#{busController.getComponentMessages('idEmpresa', myBundle.EditBusHelpText_idEmpresa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_idFlota}" for="idFlota" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idFlota" value="#{busController.selected.idFlota}" required="true" requiredMessage="#{myBundle.EditBusRequiredMessage_idFlota}" converter="flotaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{flotaController.items}"
+                                                   var="idFlotaItem"
+                                                   itemValue="#{idFlotaItem}"
+                                                   itemLabel="#{idFlotaItem.idFlota.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idFlota" value="#{busController.getComponentMessages('idFlota', myBundle.EditBusHelpText_idFlota)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_idModelo}" for="idModelo" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idModelo" value="#{busController.selected.idModelo}" required="true" requiredMessage="#{myBundle.EditBusRequiredMessage_idModelo}" converter="modeloMarcaBusConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{modeloMarcaBusController.items}"
+                                                   var="idModeloItem"
+                                                   itemValue="#{idModeloItem}"
+                                                   itemLabel="#{idModeloItem.idModeloMarcaBus.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idModelo" value="#{busController.getComponentMessages('idModelo', myBundle.EditBusHelpText_idModelo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_idTerminal}" for="idTerminal" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTerminal" value="#{busController.selected.idTerminal}" required="true" requiredMessage="#{myBundle.EditBusRequiredMessage_idTerminal}" converter="terminalConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{terminalController.items}"
+                                                   var="idTerminalItem"
+                                                   itemValue="#{idTerminalItem}"
+                                                   itemLabel="#{idTerminalItem.idTerminal.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTerminal" value="#{busController.getComponentMessages('idTerminal', myBundle.EditBusHelpText_idTerminal)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditBusLabel_idUnidadNegocio}" for="idUnidadNegocio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idUnidadNegocio" value="#{busController.selected.idUnidadNegocio}" required="true" requiredMessage="#{myBundle.EditBusRequiredMessage_idUnidadNegocio}" converter="unidadNegocioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{unidadNegocioController.items}"
+                                                   var="idUnidadNegocioItem"
+                                                   itemValue="#{idUnidadNegocioItem}"
+                                                   itemLabel="#{idUnidadNegocioItem.idUnidadNegocio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idUnidadNegocio" value="#{busController.getComponentMessages('idUnidadNegocio', myBundle.EditBusHelpText_idUnidadNegocio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{busController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:BusListPage:BusListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:BusListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

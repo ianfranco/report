@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="GastosAdministracionMensualListPage">
+        <pm:header title="#{myBundle.ListGastosAdministracionMensualTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":GastosAdministracionMensualCreatePage:GastosAdministracionMensualCreateForm" actionListener="#{gastosAdministracionMensualController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:GastosAdministracionMensualCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="GastosAdministracionMensualListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{gastosAdministracionMensualController.items}"
+                             var="item"
+                             rowKey="#{item.idGastosAdministracionMensual}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{gastosAdministracionMensualController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{gastosAdministracionMensualController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{gastosAdministracionMensualController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('GastosAdministracionMensualListPage:GastosAdministracionMensualListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('GastosAdministracionMensualListPage:GastosAdministracionMensualListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('GastosAdministracionMensualListPage:GastosAdministracionMensualListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idGastosAdministracionMensual}" filterBy="#{item.idGastosAdministracionMensual}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_idGastosAdministracionMensual}">
+                        <h:outputText value="#{item.idGastosAdministracionMensual}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.mes}" filterBy="#{item.mes}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_mes}">
+                        <h:outputText value="#{item.mes}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.año}" filterBy="#{item.año}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_año}">
+                        <h:outputText value="#{item.año}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroFolio}" filterBy="#{item.numeroFolio}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_numeroFolio}">
+                        <h:outputText value="#{item.numeroFolio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreGastoAdministracion}" filterBy="#{item.nombreGastoAdministracion}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_nombreGastoAdministracion}">
+                        <h:outputText value="#{item.nombreGastoAdministracion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaGastoAdministracion}" filterBy="#{item.fechaGastoAdministracion}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_fechaGastoAdministracion}">
+                        <h:outputText value="#{item.fechaGastoAdministracion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_fechaIngreso}">
+                                            <h:outputText value="#{item.fechaIngreso}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:outputText>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.valor}" filterBy="#{item.valor}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_valor}">
+                                            <h:outputText value="#{item.valor}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:outputText>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.observacion}" filterBy="#{item.observacion}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_observacion}">
+                                            <h:outputText value="#{item.observacion}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idDepartamento.idDepartamento}" filterBy="#{item.idDepartamento.idDepartamento}" headerText="#{myBundle.ListGastosAdministracionMensualTitle_idDepartamento}">
+                                            <h:outputText value="#{item.idDepartamento.idDepartamento}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":GastosAdministracionMensualEditPage:GastosAdministracionMensualEditForm" disabled="#{empty gastosAdministracionMensualController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:GastosAdministracionMensualEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{gastosAdministracionMensualController.delete}" update=":growl,datalist" disabled="#{empty gastosAdministracionMensualController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty gastosAdministracionMensualController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.GastosAdministracionMensualHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.GastosAdministracionMensualMenuItem_idDepartamento}" icon="ui-icon-search" update=":DepartamentoEditPage:DepartamentoEditForm" disabled="#{empty gastosAdministracionMensualController.selected.idDepartamento}" actionListener="#{gastosAdministracionMensualController.prepareIdDepartamento}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:DepartamentoEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

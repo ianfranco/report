@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoAbonoViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewTipoAbonoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TipoAbonoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoAbonoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tipoAbonoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoAbonoLabel_idTipoAbono}"/>
+                            <h:outputText value="#{tipoAbonoController.selected.idTipoAbono}" title="#{myBundle.ViewTipoAbonoTitle_idTipoAbono}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoAbonoLabel_nombreTipoAbono}"/>
+                            <h:outputText value="#{tipoAbonoController.selected.nombreTipoAbono}" title="#{myBundle.ViewTipoAbonoTitle_nombreTipoAbono}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoAbonoLabel_fechaIngreso}"/>
+                            <h:outputText value="#{tipoAbonoController.selected.fechaIngreso}" title="#{myBundle.ViewTipoAbonoTitle_fechaIngreso}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoAbonoLabel_montoDefecto}"/>
+                            <h:outputText value="#{tipoAbonoController.selected.montoDefecto}" title="#{myBundle.ViewTipoAbonoTitle_montoDefecto}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

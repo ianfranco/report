@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DespachoViewDlg" widgetVar="DespachoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewDespachoTitle}" closeOnEscape="true">
+
+            <h:form id="DespachoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{despachoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDespachoLabel_idDespacho}"/>
+                        <h:outputText value="#{despachoController.selected.idDespacho}" title="#{myBundle.ViewDespachoTitle_idDespacho}"/>
+
+                        <h:outputText value="#{myBundle.ViewDespachoLabel_fecha}"/>
+                        <h:outputText value="#{despachoController.selected.fecha}" title="#{myBundle.ViewDespachoTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewDespachoLabel_horario}"/>
+                        <h:outputText value="#{despachoController.selected.horario}" title="#{myBundle.ViewDespachoTitle_horario}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewDespachoLabel_idBus}"/>
+                        <h:outputText value="#{despachoController.selected.idBus.idBus}"/>
+
+                        <h:outputText value="#{myBundle.ViewDespachoLabel_idTrabajador}"/>
+                        <h:outputText value="#{despachoController.selected.idTrabajador.idTrabajador}"/>
+
+                        <h:outputText value="#{myBundle.ViewDespachoLabel_idInspector}"/>
+                        <h:outputText value="#{despachoController.selected.idInspector.idUsario}"/>
+
+                        <h:outputText value="#{myBundle.ViewDespachoLabel_idServicio}"/>
+                        <h:outputText value="#{despachoController.selected.idServicio.idServicio}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('DespachoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

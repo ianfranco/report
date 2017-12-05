@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="FrecuenciaServicioListPage">
+        <pm:header title="#{myBundle.ListFrecuenciaServicioTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":FrecuenciaServicioCreatePage:FrecuenciaServicioCreateForm" actionListener="#{frecuenciaServicioController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:FrecuenciaServicioCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="FrecuenciaServicioListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{frecuenciaServicioController.items}"
+                             var="item"
+                             rowKey="#{item.idFrecuenciaServicio}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{frecuenciaServicioController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{frecuenciaServicioController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{frecuenciaServicioController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('FrecuenciaServicioListPage:FrecuenciaServicioListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('FrecuenciaServicioListPage:FrecuenciaServicioListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('FrecuenciaServicioListPage:FrecuenciaServicioListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idFrecuenciaServicio}" filterBy="#{item.idFrecuenciaServicio}" headerText="#{myBundle.ListFrecuenciaServicioTitle_idFrecuenciaServicio}">
+                        <h:outputText value="#{item.idFrecuenciaServicio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroBuses}" filterBy="#{item.numeroBuses}" headerText="#{myBundle.ListFrecuenciaServicioTitle_numeroBuses}">
+                        <h:outputText value="#{item.numeroBuses}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idPeriodoFrecuencia.idPeriodoFrecuencia}" filterBy="#{item.idPeriodoFrecuencia.idPeriodoFrecuencia}" headerText="#{myBundle.ListFrecuenciaServicioTitle_idPeriodoFrecuencia}">
+                        <h:outputText value="#{item.idPeriodoFrecuencia.idPeriodoFrecuencia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idServicio.idServicio}" filterBy="#{item.idServicio.idServicio}" headerText="#{myBundle.ListFrecuenciaServicioTitle_idServicio}">
+                        <h:outputText value="#{item.idServicio.idServicio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idTipoDemanda.idTipoDemanda}" filterBy="#{item.idTipoDemanda.idTipoDemanda}" headerText="#{myBundle.ListFrecuenciaServicioTitle_idTipoDemanda}">
+                        <h:outputText value="#{item.idTipoDemanda.idTipoDemanda}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idTipoDiaFrecuencia.idTipoDiaFrecuencia}" filterBy="#{item.idTipoDiaFrecuencia.idTipoDiaFrecuencia}" headerText="#{myBundle.ListFrecuenciaServicioTitle_idTipoDiaFrecuencia}">
+                        <h:outputText value="#{item.idTipoDiaFrecuencia.idTipoDiaFrecuencia}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":FrecuenciaServicioEditPage:FrecuenciaServicioEditForm" disabled="#{empty frecuenciaServicioController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:FrecuenciaServicioEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{frecuenciaServicioController.delete}" update=":growl,datalist" disabled="#{empty frecuenciaServicioController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty frecuenciaServicioController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.FrecuenciaServicioHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.FrecuenciaServicioMenuItem_idPeriodoFrecuencia}" icon="ui-icon-search" update=":PeriodoFrecuenciaEditPage:PeriodoFrecuenciaEditForm" disabled="#{empty frecuenciaServicioController.selected.idPeriodoFrecuencia}" actionListener="#{frecuenciaServicioController.prepareIdPeriodoFrecuencia}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:PeriodoFrecuenciaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.FrecuenciaServicioMenuItem_idServicio}" icon="ui-icon-search" update=":ServicioEditPage:ServicioEditForm" disabled="#{empty frecuenciaServicioController.selected.idServicio}" actionListener="#{frecuenciaServicioController.prepareIdServicio}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:ServicioEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.FrecuenciaServicioMenuItem_idTipoDemanda}" icon="ui-icon-search" update=":TipoDemandaEditPage:TipoDemandaEditForm" disabled="#{empty frecuenciaServicioController.selected.idTipoDemanda}" actionListener="#{frecuenciaServicioController.prepareIdTipoDemanda}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoDemandaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.FrecuenciaServicioMenuItem_idTipoDiaFrecuencia}" icon="ui-icon-search" update=":TipoDiaFrecuenciaEditPage:TipoDiaFrecuenciaEditForm" disabled="#{empty frecuenciaServicioController.selected.idTipoDiaFrecuencia}" actionListener="#{frecuenciaServicioController.prepareIdTipoDiaFrecuencia}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoDiaFrecuenciaEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

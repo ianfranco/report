@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InstitucionSaludCreateDlg" widgetVar="InstitucionSaludCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateInstitucionSaludTitle}" closeOnEscape="true">
+
+            <h:form id="InstitucionSaludCreateForm">
+
+                <h:panelGroup id="display" rendered="#{institucionSaludController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionSaludLabel_nombreInstitucionSalud}" for="nombreInstitucionSalud" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreInstitucionSalud" value="#{institucionSaludController.selected.nombreInstitucionSalud}" title="#{myBundle.CreateInstitucionSaludTitle_nombreInstitucionSalud}" required="true" requiredMessage="#{myBundle.CreateInstitucionSaludRequiredMessage_nombreInstitucionSalud}" size="255" maxlength="255"/>
+                            <p:tooltip for="nombreInstitucionSalud" value="#{institucionSaludController.getComponentMessages('nombreInstitucionSalud', myBundle.CreateInstitucionSaludHelpText_nombreInstitucionSalud)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionSaludLabel_comision}" for="comision" />
+                        <h:panelGroup>
+                            <p:inputText id="comision" value="#{institucionSaludController.selected.comision}" title="#{myBundle.CreateInstitucionSaludTitle_comision}"/>
+                            <p:tooltip for="comision" value="#{institucionSaludController.getComponentMessages('comision', myBundle.CreateInstitucionSaludHelpText_comision)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateInstitucionSaludLabel_porcentajeDescuento}" for="porcentajeDescuento" />
+                        <h:panelGroup>
+                            <p:inputText id="porcentajeDescuento" value="#{institucionSaludController.selected.porcentajeDescuento}" title="#{myBundle.CreateInstitucionSaludTitle_porcentajeDescuento}" required="true" requiredMessage="#{myBundle.CreateInstitucionSaludRequiredMessage_porcentajeDescuento}"/>
+                            <p:tooltip for="porcentajeDescuento" value="#{institucionSaludController.getComponentMessages('porcentajeDescuento', myBundle.CreateInstitucionSaludHelpText_porcentajeDescuento)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{institucionSaludController.saveNew}" value="#{myBundle.Save}" update="display,:InstitucionSaludListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InstitucionSaludCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('InstitucionSaludCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

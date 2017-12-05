@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe2ff371-55ca-4038-8610-3e7570537024">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT 
+    codigo_trabajador,
+    CONCAT(trabajador.apellido_paterno_trabajador,
+            ' ',
+            trabajador.apellido_materno_trabajador,
+            ' ',
+            trabajador.nombre_trabajador) AS nombreConductor,    
+    (SELECT 
+            empresa.nombre_empresa
+        FROM
+            relacion_laboral
+                LEFT JOIN
+            empresa ON relacion_laboral.id_empresa = empresa.id_empresa
+        WHERE
+            fecha_inicio <= LAST_DAY('2017-05-01')
+                AND fecha_fin BETWEEN IF(fecha_inicio = fecha_fin,
+                fecha_fin,
+                '2017-05-01') AND IF(fecha_fin > LAST_DAY('2017-05-01'),
+                fecha_fin,
+                LAST_DAY('2017-05-01'))
+                AND relacion_laboral.id_trabajador = trabajador.id_trabajador
+        GROUP BY id_trabajador
+        ORDER BY fecha_fin DESC) AS empleador,
+    (SELECT 
+            COUNT(*)
+        FROM
+            guia
+        WHERE
+            guia.id_trabajador = trabajador.id_trabajador
+                AND guia.fecha_recaudacion BETWEEN '2017-05-01' AND '2017-05-31' ) AS Guias, 
+                0 AS montoCinco, 
+                0 AS montoAhorro, 
+                haber_trabajador_liquidacion.monto AS montoAbono, 
+                haber_trabajador_liquidacion.monto AS montoHaberes , 
+                0 AS montoSaldoAnterior, 
+                0 AS montoReconocimiento, 
+                haber_trabajador_liquidacion.monto AS montoSaldo
+FROM
+    sigf_v1.haber_trabajador_liquidacion
+        LEFT JOIN
+    trabajador ON haber_trabajador_liquidacion.id_trabajador = trabajador.id_trabajador
+WHERE
+    haber_trabajador_liquidacion.fecha_inicio_haber BETWEEN '2017-05-01' AND '2017-05-31'
+        AND haber_trabajador_liquidacion.id_haber_trabajador <> 8
+HAVING empleador IS NULL AND Guias = 0]]>
+	</queryString>
+	<field name="codigo_trabajador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreConductor" class="java.lang.String"/>
+	<field name="empleador" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Guias" class="java.lang.Long"/>
+	<field name="montoCinco" class="java.lang.Long"/>
+	<field name="montoAhorro" class="java.lang.Long"/>
+	<field name="montoAbono" class="java.lang.Integer"/>
+	<field name="montoHaberes" class="java.lang.Integer"/>
+	<field name="montoSaldoAnterior" class="java.lang.Long"/>
+	<field name="montoReconocimiento" class="java.lang.Long"/>
+	<field name="montoSaldo" class="java.lang.Integer"/>
+	<variable name="montoHaberes_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoHaberes}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="39" width="360" height="20" uuid="a843fa88-848b-461a-a038-9d78a42b0646"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Abonos sin Movimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="59" width="180" height="15" uuid="91ed8d57-39e4-4073-b2f2-39f71f5adcde">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAYO 2017]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="15" uuid="2ba0f61d-4d20-4f4e-b9d8-3d4423e64a25">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="180" height="15" uuid="98a2be7d-51b7-48c9-8a78-6b113cf2850d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Administración (Conductores)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="41" width="60" height="20" uuid="7fc94536-aeda-4c0d-b183-12f2d465bdf3"/>
+				<text><![CDATA[Cód.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="41" width="237" height="20" uuid="4afdc42b-70a8-4aed-9e87-3fd6f15693a7"/>
+				<text><![CDATA[Conductor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="312" y="41" width="100" height="20" uuid="37d18151-aed3-4c43-8204-84c2eef9e0f4"/>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="0" width="60" height="20" uuid="57cf78a0-8e29-4344-878f-3032dcf4fa90"/>
+				<textFieldExpression><![CDATA[$F{codigo_trabajador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="0" width="237" height="20" uuid="820c5e44-3328-423f-8d50-3c59a80f313e"/>
+				<textFieldExpression><![CDATA[$F{nombreConductor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="312" y="0" width="100" height="20" uuid="33a24e52-c80a-4c49-910a-899be27c8cb5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{montoHaberes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="38" splitType="Stretch">
+			<textField pattern="$ #,##0">
+				<reportElement x="312" y="0" width="100" height="20" uuid="f5e3b507-598e-49fa-96e1-e62de5ccc51e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{montoHaberes_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

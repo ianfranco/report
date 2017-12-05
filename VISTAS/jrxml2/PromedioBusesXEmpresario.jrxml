@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aeeb6e8f-abb9-4524-a0af-17f2672862a2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="desde" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2009-05-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2009-05-31"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="emp" class="java.lang.String">
+		<defaultValueExpression><![CDATA["6"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="name" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+@numBus:=Idbus As 'N° Bus',
+Guias.IdBus As IdBus,
+@dt:=COUNT(DISTINCT Fecha) AS 'D.T.',
+SUM(TotalIngresos) As 'T.Ingresos',
+FLOOR(SUM(TotalIngresos)/COUNT(DISTINCT Fecha)) As ProBruto,
+SUM(EgresosXGuias.Administracion+EgresosXGuias.Licitacion) AS 'Líquido',
+FLOOR(SUM((EgresosXGuias.Administracion+EgresosXGuias.Licitacion))/COUNT(DISTINCT Fecha)) As ProLiquido,
+SUM(TotalEgresos) AS 'T.Egresos', SUM(EgresosXGuias.Combustible) As Combustible,
+FLOOR(SUM(EgresosXGuias.Combustible)/COUNT(DISTINCT Fecha)) AS CombDt,
+FLOOR(SUM(EgresosXGuias.Combustible)/IF(SUM(NumVueltas)=0, 1, SUM(NumVueltas))) AS CombVueltas,
+@vueltas:=IF(SUM(NumVueltas)=0, 1, SUM(NumVueltas)) AS 'N°Vueltas',
+FLOOR(IF(SUM(NumVueltas)=0, 1, SUM(NumVueltas))/COUNT(DISTINCT Fecha)) As PromVueltas, 
+
+CASE month($P{desde}) when "01" then "Enero"
+when "02" then "Febrero"
+when "03" then "Marzo"
+when "04" then "Abril"
+when "05" then "Mayo"
+when "06" then "Junio"
+when "07" then "Julio"
+when "08" then "Agosto"
+when "09" then "Septiembre"
+when "10" then "Octubre"
+when "11" then "Noviembre"
+when "12" then "Diciembre"
+END AS NombreMes, year($P{desde}) AS Anio
+
+FROM Guias, EgresosXGuias, Buses
+WHERE Fecha BETWEEN $P{desde} AND $P{hasta} AND Guias.Folio = EgresosXGuias.IdGuia AND Guias.IdBus = Buses.Codigo AND Buses.IdEmpresario = $P{emp}
+GROUP BY IdBus
+ORDER BY (SUM((EgresosXGuias.Administracion+EgresosXGuias.Licitacion))/COUNT(DISTINCT Fecha)) DESC]]>
+	</queryString>
+	<field name="N° Bus" class="java.lang.Long"/>
+	<field name="IdBus" class="java.lang.Integer"/>
+	<field name="D.T." class="java.lang.Long"/>
+	<field name="T.Ingresos" class="java.math.BigDecimal"/>
+	<field name="ProBruto" class="java.math.BigDecimal"/>
+	<field name="Líquido" class="java.math.BigDecimal"/>
+	<field name="ProLiquido" class="java.math.BigDecimal"/>
+	<field name="T.Egresos" class="java.math.BigDecimal"/>
+	<field name="Combustible" class="java.math.BigDecimal"/>
+	<field name="CombDt" class="java.math.BigDecimal"/>
+	<field name="CombVueltas" class="java.math.BigDecimal"/>
+	<field name="N°Vueltas" class="java.math.BigDecimal"/>
+	<field name="PromVueltas" class="java.math.BigDecimal"/>
+	<field name="NombreMes" class="java.lang.String"/>
+	<field name="Anio" class="java.lang.Long"/>
+	<variable name="D.T._1" class="java.lang.Long" calculation="Average">
+		<variableExpression><![CDATA[$F{D.T.}]]></variableExpression>
+	</variable>
+	<variable name="N°Vueltas_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{N°Vueltas}]]></variableExpression>
+	</variable>
+	<variable name="PromVueltas_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{PromVueltas}]]></variableExpression>
+	</variable>
+	<variable name="ProBruto_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{ProBruto}]]></variableExpression>
+	</variable>
+	<variable name="T.Ingresos_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{T.Ingresos}]]></variableExpression>
+	</variable>
+	<variable name="Líquido_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{Líquido}]]></variableExpression>
+	</variable>
+	<variable name="ProLiquido_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{ProLiquido}]]></variableExpression>
+	</variable>
+	<variable name="T.Egresos_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{T.Egresos}]]></variableExpression>
+	</variable>
+	<variable name="Combustible_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{Combustible}]]></variableExpression>
+	</variable>
+	<variable name="CombDt_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{CombDt}]]></variableExpression>
+	</variable>
+	<variable name="CombVueltas_1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{CombVueltas}]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="69">
+			<staticText>
+				<reportElement uuid="8b6d02bc-4442-4570-8bca-e44d72c13aa1" x="0" y="2" width="175" height="20"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ranking Buses X Empresario ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0ed64d9b-baa0-425b-8190-eb6b684b47ff" x="0" y="22" width="363" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="28cf05b1-3846-47a1-9cf6-ba5200f6de3d" x="1" y="42" width="82" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreMes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8e191409-1dc7-4eb2-90c0-230cb26d755d" x="84" y="42" width="89" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Anio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement uuid="e0b30c0e-8150-4422-9c9d-e861e114a393" x="0" y="0" width="53" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Bus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="19ac86bd-2010-4182-9463-784505eeccd9" x="53" y="0" width="30" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[D.T.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="edb7cc69-0a80-4172-940a-4dca5e3e99e4" x="203" y="0" width="67" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bruto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f6d6f25b-6005-4008-9566-8bdb9944a99c" x="270" y="0" width="67" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.Bruto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8a50c3cd-ebe3-4026-9202-f59f77b3ea40" x="337" y="0" width="67" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liquido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a4329a70-0fcd-44b4-8162-f869ce67f2cd" x="404" y="0" width="78" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.Líquido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e52f0e23-45f1-4a40-9e09-1b5f7d592da0" x="482" y="0" width="67" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Combustible]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="68c59621-9005-49a6-9215-d653993d3ce2" x="83" y="0" width="54" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Vueltas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c5248d3c-1ad2-40c9-aa21-7a2232d59e3d" x="137" y="0" width="66" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.Vueltas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="02b860fe-8bc3-43da-89d3-1856e4f970c2" x="549" y="0" width="67" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comb. / D.T.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="be15740c-1700-4979-9707-7a63d639a326" x="616" y="0" width="93" height="15"/>
+				<box leftPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comb. / N° Vueltas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField>
+				<reportElement uuid="56851f81-50ab-49ba-87a0-3bd4a2babf0c" x="0" y="0" width="53" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{IdBus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c21f0466-1889-4115-9f7f-d11b5cdc224e" x="53" y="0" width="30" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{D.T.}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="802025f9-a895-405b-ad63-cf95f64655cd" x="83" y="0" width="54" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{N°Vueltas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="98f7ae47-bce1-4132-be42-d48b3f364edc" x="137" y="0" width="66" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{PromVueltas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="f0b1a03c-41bc-43c1-a147-3d20854a31d6" x="203" y="0" width="67" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{T.Ingresos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="9f5c3edd-5c24-42a7-97f6-2834a63955f1" x="270" y="0" width="67" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{ProBruto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="4a9d07a9-642f-431b-9841-d0d3656622ba" x="337" y="0" width="67" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Líquido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="b51a093c-4308-4df0-b55f-c6802c29896a" x="404" y="0" width="78" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{ProLiquido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="68257c38-faaf-4754-8978-0390febde869" x="482" y="0" width="67" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Combustible}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="b7f40986-25d7-404c-a3d0-0eb675cb43df" x="549" y="0" width="67" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{CombDt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="61559bb1-dea4-424f-9dff-f7fd7b8c7a7d" x="616" y="0" width="93" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{CombVueltas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54">
+			<textField>
+				<reportElement uuid="0d587ac3-67b8-4b17-aaf2-4ea7305ad556" x="0" y="12" width="64" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="655d6adf-108d-4e37-90a5-657f60cf3339" x="64" y="12" width="53" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="d20dfe90-0d85-4ae5-99e4-1ba84749c6aa" x="12" y="10" width="951" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="22">
+			<staticText>
+				<reportElement uuid="c0550482-17d0-4b26-a09c-19a500d0772e" x="0" y="0" width="53" height="16"/>
+				<box leftPadding="0" rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bus Prom:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e2b20597-ede0-4ccc-a8da-93558a8bcd00" x="53" y="0" width="30" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{D.T._1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="45780bc6-72fd-4e29-b88a-f7b1ad20b990" x="83" y="0" width="54" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{N°Vueltas_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="15cc62fb-5f67-4931-9b62-c7557cce176c" x="137" y="0" width="66" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PromVueltas_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="230e04ea-aa44-4f99-83ab-345d917b7e4f" x="270" y="0" width="67" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ProBruto_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="41735056-0b8e-4dc2-9f59-2a65bf88aa78" x="203" y="0" width="67" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{T.Ingresos_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="244303f8-97f9-413f-802b-88d29d2a19c1" x="337" y="0" width="67" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Líquido_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="d82cba37-7efb-4f5d-84b0-07c44365959a" x="404" y="0" width="78" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ProLiquido_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="e5ef163c-77e3-43d0-90ca-e055a589763f" x="482" y="0" width="67" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Combustible_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="1994b18f-6dcd-46da-8923-d3bcb8cd4854" x="549" y="0" width="67" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CombDt_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="4fb086d7-712d-435b-a423-63cdb452a81c" x="616" y="0" width="93" height="16"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CombVueltas_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

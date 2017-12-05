@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TerminalListPage">
+        <pm:header title="#{myBundle.ListTerminalTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":TerminalCreatePage:TerminalCreateForm" actionListener="#{terminalController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TerminalCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TerminalListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{terminalController.items}"
+                             var="item"
+                             rowKey="#{item.idTerminal}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{terminalController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TerminalListPage:TerminalListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TerminalListPage:TerminalListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('TerminalListPage:TerminalListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idTerminal}" filterBy="#{item.idTerminal}" headerText="#{myBundle.ListTerminalTitle_idTerminal}">
+                        <h:outputText value="#{item.idTerminal}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreTerminal}" filterBy="#{item.nombreTerminal}" headerText="#{myBundle.ListTerminalTitle_nombreTerminal}">
+                        <h:outputText value="#{item.nombreTerminal}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.direccionTerminal}" filterBy="#{item.direccionTerminal}" headerText="#{myBundle.ListTerminalTitle_direccionTerminal}">
+                        <h:outputText value="#{item.direccionTerminal}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.superficie}" filterBy="#{item.superficie}" headerText="#{myBundle.ListTerminalTitle_superficie}">
+                        <h:outputText value="#{item.superficie}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.telefonoTerminal}" filterBy="#{item.telefonoTerminal}" headerText="#{myBundle.ListTerminalTitle_telefonoTerminal}">
+                        <h:outputText value="#{item.telefonoTerminal}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.emailTerminal}" filterBy="#{item.emailTerminal}" headerText="#{myBundle.ListTerminalTitle_emailTerminal}">
+                        <h:outputText value="#{item.emailTerminal}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.ubicacionLongitud}" filterBy="#{item.ubicacionLongitud}" headerText="#{myBundle.ListTerminalTitle_ubicacionLongitud}">
+                                            <h:outputText value="#{item.ubicacionLongitud}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.ubicacionLatitud}" filterBy="#{item.ubicacionLatitud}" headerText="#{myBundle.ListTerminalTitle_ubicacionLatitud}">
+                                            <h:outputText value="#{item.ubicacionLatitud}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TerminalEditPage:TerminalEditForm" disabled="#{empty terminalController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TerminalEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{terminalController.delete}" update=":growl,datalist" disabled="#{empty terminalController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty terminalController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.TerminalHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.TerminalMenuItem_inventarioTerminalList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty terminalController.selected.inventarioTerminalList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{terminalController.navigateInventarioTerminalList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.TerminalMenuItem_ventaBoletoList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty terminalController.selected.ventaBoletoList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{terminalController.navigateVentaBoletoList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.TerminalMenuItem_usuarioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty terminalController.selected.usuarioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{terminalController.navigateUsuarioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.TerminalMenuItem_busList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty terminalController.selected.busList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{terminalController.navigateBusList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.TerminalMenuItem_servicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty terminalController.selected.servicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{terminalController.navigateServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.TerminalMenuItem_trabajadorTerminalList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty terminalController.selected.trabajadorTerminalList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{terminalController.navigateTrabajadorTerminalList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

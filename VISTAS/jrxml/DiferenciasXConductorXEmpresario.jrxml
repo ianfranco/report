@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" printOrder="Horizontal" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fd08d6b0-0a55-45b4-a739-31359832b0b0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="desde" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2017-09-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2017-09-30"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="emp" class="java.lang.String">
+		<defaultValueExpression><![CDATA["6"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="name" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT @nCond:=Guias.IdConductor As 'nCond',
+	(SELECT CONCAT(Conductores.Apellidos," ",LEFT(Conductores.Nombres,1),".")
+	FROM Conductores
+	WHERE Conductores.Codigo = @nCond) AS NombreConductor,
+	(SELECT SUM(Total)
+	FROM RecaudacionxGuias,Guias
+	WHERE RecaudacionXGuias.IdGuia = Guias.Folio AND
+	Guias.Fecha BETWEEN $P{desde} AND $P{hasta} AND
+	Guias.IdConductor = @nCond
+	GROUP BY Guias.IdConductor) AS 'Real Ingresos',
+	SUM(Guias.TotalIngresos) As 'Ingresos',
+	(SELECT SUM(EgresosXGuias.Administracion+
+		EgresosXGuias.Combustible+
+		EgresosXGuias.Fam+
+		EgresosXGuias.Boletos+
+		EgresosXGuias.Taller+
+		EgresosXGuias.Repuestos+
+		EgresosXGuias.Viatico+
+		EgresosXGuias.Aseo+
+		EgresosXGuias.Otros+
+		EgresosXGuias.Conductor+
+		EgresosXGuias.Anticipo+
+		EgresosXGuias.Imposicion+
+		EgresosXGuias.Arriendo+
+		EgresosXGuias.Licitacion+
+		EgresosXGuias.Deficit+
+		EgresosXGuias.Minutos+
+		EgresosXGuias.CuotaSocial
+	)
+	FROM EgresosXGuias,Guias
+	WHERE EgresosXGuias.IdGuia = Guias.Folio AND
+	Guias.Fecha BETWEEN $P{desde} AND $P{hasta} AND
+	Guias.IdConductor = @nCond
+	GROUP BY Guias.IdConductor) AS 'Real Egresos',
+	SUM(Guias.TotalEgresos) AS 'Egresos',
+	SUM(Guias.Saldo) AS Liquido
+FROM Guias, Conductores WHERE Fecha BETWEEN $P{desde} AND $P{hasta} AND Guias.IdConductor = Conductores.Codigo GROUP BY IdConductor]]>
+	</queryString>
+	<field name="nCond" class="java.lang.Long"/>
+	<field name="NombreConductor" class="java.lang.String"/>
+	<field name="Real Ingresos" class="java.math.BigDecimal"/>
+	<field name="Ingresos" class="java.math.BigDecimal"/>
+	<field name="Real Egresos" class="java.math.BigDecimal"/>
+	<field name="Egresos" class="java.math.BigDecimal"/>
+	<field name="Liquido" class="java.math.BigDecimal"/>
+	<variable name="difEgresos" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new java.math.BigDecimal($F{Real Egresos}.intValue()-$F{Egresos}.intValue())]]></variableExpression>
+	</variable>
+	<variable name="difIngresos" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new java.math.BigDecimal(  ($F{Real Ingresos}.intValue()) -($F{Ingresos}.intValue()) )]]></variableExpression>
+	</variable>
+	<variable name="sumIngresos" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{difIngresos}]]></variableExpression>
+	</variable>
+	<variable name="sumEgresos" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{difEgresos}]]></variableExpression>
+	</variable>
+	<variable name="saldoReal" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new java.math.BigDecimal($F{Real Ingresos}.intValue()-$F{Real Egresos}.intValue())]]></variableExpression>
+	</variable>
+	<variable name="difSaldo" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new java.math.BigDecimal($V{saldoReal}.intValue()-$F{Liquido}.intValue())]]></variableExpression>
+	</variable>
+	<variable name="Real Ingresos_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Real Ingresos}]]></variableExpression>
+	</variable>
+	<variable name="Ingresos_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Ingresos}]]></variableExpression>
+	</variable>
+	<variable name="Real Egresos_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Real Egresos}]]></variableExpression>
+	</variable>
+	<variable name="Egresos_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Egresos}]]></variableExpression>
+	</variable>
+	<variable name="Liquido_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Liquido}]]></variableExpression>
+	</variable>
+	<variable name="sumSaldoReal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{saldoReal}]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="79">
+			<staticText>
+				<reportElement x="0" y="30" width="225" height="20" uuid="0af9cfe1-33b2-4b2a-8fda-eb59547f3941"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diferencias Conductor X Empresario :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="50" width="100" height="20" uuid="f7b9336e-7348-4f4d-80b3-d49594efcb8b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="225" y="30" width="396" height="20" uuid="c4dc31a3-89d2-47cd-bae4-22f4cfd383cf"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="15" uuid="5e665514-2025-458f-b524-be64e4e333bd"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cond.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="0" width="117" height="15" uuid="9680c915-3a17-412f-8adb-3183a518db69"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="0" width="67" height="15" uuid="6a92f026-763a-49f2-a57a-0a30d66a5d1b"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dif. Ingresos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="0" width="67" height="15" uuid="f10d1451-3562-471c-ae80-367e4c415153"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dif. Egresos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="0" width="65" height="15" uuid="661f5de2-42f2-4bd0-936d-d25f00d6fa3b"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ing. Real]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="0" width="65" height="15" uuid="1ebad2b7-2412-4712-8fef-66c14b139e49"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ing. Guía]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="0" width="65" height="15" uuid="a82c7d78-0e75-4307-98ce-61497c74adb4"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Egr. Real]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="0" width="65" height="15" uuid="46f9800d-62d1-452f-b37c-b565bd9fc0d6"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Egr. Guía]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="554" y="0" width="67" height="15" uuid="e963a53f-956e-4b4a-8212-334cbfa09ff3"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo Real]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="621" y="0" width="67" height="15" uuid="d7a5df62-5939-42aa-85a9-71915012d139"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo Guía]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="688" y="0" width="67" height="15" uuid="739f104f-77de-457b-a41a-c5b8deba4774"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dif. Saldo ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField pattern="$ #,##0">
+				<reportElement x="357" y="0" width="65" height="15" uuid="0a37f77d-9fe0-47f4-a989-34a04fe91c48"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Real Egresos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="422" y="0" width="65" height="15" uuid="4251a22e-8ed9-4e52-9ac7-627bd6560e9c"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Egresos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="43" height="15" uuid="c228e522-c68b-40a2-bdc4-bc7984ef1596"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{nCond}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="0" width="117" height="15" uuid="428dc789-dfe0-439a-807f-6144bb9c18a6"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{NombreConductor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="290" y="0" width="67" height="15" uuid="885ea0e2-df9a-4d3d-bf05-bef5a62ffd5e"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{difIngresos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="487" y="0" width="67" height="15" uuid="85f71652-53ae-4638-9fe7-04e6a305c45d"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{difEgresos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="160" y="0" width="65" height="15" uuid="0b1c1ccc-6fa7-40e5-bbad-45190f972aa6"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Real Ingresos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="225" y="0" width="65" height="15" uuid="acbf91f2-e977-4e4b-a595-fe7385693628"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Ingresos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="554" y="0" width="67" height="15" uuid="22bb64a4-75ca-4484-a4c5-bee0fa923ece"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{saldoReal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="621" y="0" width="67" height="15" uuid="d57bc5f7-3b57-4be7-8d57-0ae5f6a81ff1"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Liquido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="688" y="0" width="67" height="15" uuid="30a6b65b-cb50-4001-afcb-b0bd0830a33a"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{difSaldo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54">
+			<textField evaluationTime="Report">
+				<reportElement x="55" y="23" width="40" height="20" uuid="a7756a15-3cab-4c73-8a27-8e561add181f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="23" width="55" height="20" uuid="87ca9758-d20c-4fae-ad2c-a6c1134ca73b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="44" width="549" height="1" uuid="10b5ce4c-9c3b-4b30-a8bf-27361f3fed92"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42">
+			<staticText>
+				<reportElement x="43" y="0" width="117" height="15" uuid="b8c809cc-f241-46f3-a9e5-22480f1681f3"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totales]]></text>
+			</staticText>
+			<textField pattern="$ #,##0">
+				<reportElement x="160" y="0" width="65" height="15" uuid="6ad5daec-9281-4fc6-9188-ac1e53b7df55"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Real Ingresos_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="225" y="0" width="65" height="15" uuid="36d7b342-6db2-4f77-8c09-1a8c48a15e4d"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Ingresos_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="290" y="0" width="67" height="15" uuid="8b0b1315-ab5e-4465-aff5-282af57ddc90"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.math.BigDecimal($V{Real Ingresos_1}.intValue()-$V{Ingresos_1}.intValue())]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="357" y="0" width="65" height="15" uuid="648291e1-6732-4718-9423-29945c37c866"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Real Egresos_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="422" y="0" width="65" height="15" uuid="b08be718-85d6-4464-8677-67eebab71f27"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Egresos_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="621" y="0" width="67" height="15" uuid="d1448d31-5f7a-48f6-aed0-9f6c9300f5c7"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Liquido_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="487" y="0" width="67" height="15" uuid="64297a6b-2cf8-47bb-a628-28bde8cb085e"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.math.BigDecimal($V{Real Egresos_1}.intValue()-$V{Egresos_1}.intValue())]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="554" y="0" width="67" height="15" uuid="42d630fd-0d8d-4c72-89b2-78ba79221a9d"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumSaldoReal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="688" y="0" width="67" height="15" uuid="402bf7a7-3228-469c-9128-310840b94e06"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.math.BigDecimal($V{sumSaldoReal}.intValue()-$V{Liquido_1}.intValue())]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

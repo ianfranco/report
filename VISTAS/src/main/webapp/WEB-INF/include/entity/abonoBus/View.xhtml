@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AbonoBusViewDlg" widgetVar="AbonoBusViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewAbonoBusTitle}" closeOnEscape="true">
+
+            <h:form id="AbonoBusViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{abonoBusController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewAbonoBusLabel_idAbonoBus}"/>
+                        <h:outputText value="#{abonoBusController.selected.idAbonoBus}" title="#{myBundle.ViewAbonoBusTitle_idAbonoBus}"/>
+
+                        <h:outputText value="#{myBundle.ViewAbonoBusLabel_fechaIngresoAbonoBus}"/>
+                        <h:outputText value="#{abonoBusController.selected.fechaIngresoAbonoBus}" title="#{myBundle.ViewAbonoBusTitle_fechaIngresoAbonoBus}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewAbonoBusLabel_fechaInicioAbonoBus}"/>
+                        <h:outputText value="#{abonoBusController.selected.fechaInicioAbonoBus}" title="#{myBundle.ViewAbonoBusTitle_fechaInicioAbonoBus}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewAbonoBusLabel_numeroCuotasAbonoBus}"/>
+                        <h:outputText value="#{abonoBusController.selected.numeroCuotasAbonoBus}" title="#{myBundle.ViewAbonoBusTitle_numeroCuotasAbonoBus}"/>
+
+                        <h:outputText value="#{myBundle.ViewAbonoBusLabel_montoAbonoBus}"/>
+                        <h:outputText value="#{abonoBusController.selected.montoAbonoBus}" title="#{myBundle.ViewAbonoBusTitle_montoAbonoBus}"/>
+
+                        <h:outputText value="#{myBundle.ViewAbonoBusLabel_activoAbonoBus}"/>
+                        <h:selectBooleanCheckbox id="activoAbonoBus" value="#{abonoBusController.selected.activoAbonoBus}" title="#{myBundle.EditAbonoBusTitle_activoAbonoBus}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_activoAbonoBus}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewAbonoBusLabel_idBus}"/>
+                        <h:outputText value="#{abonoBusController.selected.idBus.idBus}"/>
+
+                        <h:outputText value="#{myBundle.ViewAbonoBusLabel_idTipoAbono}"/>
+                        <h:outputText value="#{abonoBusController.selected.idTipoAbono.idTipoAbono}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('AbonoBusViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

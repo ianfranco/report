@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserDeviceCreateDlg" widgetVar="UserDeviceCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateUserDeviceTitle}" closeOnEscape="true">
+
+            <h:form id="UserDeviceCreateForm">
+
+                <h:panelGroup id="display" rendered="#{userDeviceController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateUserDeviceLabel_read}" for="read" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="read" value="#{userDeviceController.selected.read}" required="true" requiredMessage="#{myBundle.CreateUserDeviceRequiredMessage_read}"/>
+                            <p:tooltip for="read" value="#{userDeviceController.getComponentMessages('read', myBundle.CreateUserDeviceHelpText_read)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserDeviceLabel_write}" for="write" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="write" value="#{userDeviceController.selected.write}" required="true" requiredMessage="#{myBundle.CreateUserDeviceRequiredMessage_write}"/>
+                            <p:tooltip for="write" value="#{userDeviceController.getComponentMessages('write', myBundle.CreateUserDeviceHelpText_write)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserDeviceLabel_userId}" for="userId" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="userId" value="#{userDeviceController.selected.userId}" required="true" requiredMessage="#{myBundle.CreateUserDeviceRequiredMessage_userId}" converter="userConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{userController.items}"
+                                               var="userIdItem"
+                                               itemValue="#{userIdItem}"
+                                               itemLabel="#{userIdItem.name.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="userId" value="#{userDeviceController.getComponentMessages('userId', myBundle.CreateUserDeviceHelpText_userId)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserDeviceLabel_deviceId}" for="deviceId" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="deviceId" value="#{userDeviceController.selected.deviceId}" required="true" requiredMessage="#{myBundle.CreateUserDeviceRequiredMessage_deviceId}" converter="deviceConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{deviceController.items}"
+                                               var="deviceIdItem"
+                                               itemValue="#{deviceIdItem}"
+                                               itemLabel="#{deviceIdItem.name.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="deviceId" value="#{userDeviceController.getComponentMessages('deviceId', myBundle.CreateUserDeviceHelpText_deviceId)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userDeviceController.saveNew}" value="#{myBundle.Save}" update="display,:UserDeviceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UserDeviceCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('UserDeviceCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

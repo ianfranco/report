@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoCargaEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditTipoCargaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TipoCargaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoCargaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tipoCargaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditTipoCargaLabel_idTipoCarga}" for="idTipoCarga" />
+                            <h:panelGroup>
+                                <h:outputText id="idTipoCarga" value="#{tipoCargaController.selected.idTipoCarga}" />
+                                <p:tooltip for="idTipoCarga" value="#{tipoCargaController.getComponentMessages('idTipoCarga', myBundle.EditTipoCargaHelpText_idTipoCarga)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTipoCargaLabel_nombreTipoCarga}" for="nombreTipoCarga" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreTipoCarga" value="#{tipoCargaController.selected.nombreTipoCarga}" title="#{myBundle.EditTipoCargaTitle_nombreTipoCarga}" required="true" requiredMessage="#{myBundle.EditTipoCargaRequiredMessage_nombreTipoCarga}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreTipoCarga" value="#{tipoCargaController.getComponentMessages('nombreTipoCarga', myBundle.EditTipoCargaHelpText_nombreTipoCarga)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tipoCargaController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:TipoCargaListPage:TipoCargaListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:TipoCargaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="496b5c78-aa6e-47dd-ae38-941647b2e2ca">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="16"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="name" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="emp" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2009-05-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2009-05-31"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CONCAT(Conductores.Apellidos, " ", LEFT(Conductores.Nombres, 1), ".") AS Nombre, Guias.IdConductor,
+DAY(Guias.Fecha) As Dia, Guias.Folio FROM Guias, Conductores WHERE Guias.IdConductor = Conductores.Codigo AND
+Guias.Fecha BETWEEN '2014-07-01' AND '2014-07-31' AND Guias.IdBus IN (102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,
+124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,
+148,149,150,151,152,153,154,155,156,205,206,207,208,222)
+ORDER BY Conductores.Apellidos]]>
+	</queryString>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IdConductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Dia" class="java.lang.Integer"/>
+	<field name="Folio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="43">
+			<staticText>
+				<reportElement x="0" y="0" width="510" height="20" uuid="465f2120-d1ca-452b-ae50-51adc53e0330"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Guias Cortadas X Conductor : Ñandu Tur S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="510" height="20" uuid="6870eef3-49cf-4f32-a6d5-40b85151661f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JULIO 2014]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band/>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54">
+			<textField>
+				<reportElement x="0" y="12" width="64" height="20" uuid="097b87cf-f65f-493b-a733-00d4856570dd"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="64" y="12" width="53" height="20" uuid="1be4df26-a427-4e7d-ad14-53353ac2f833"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="12" y="10" width="951" height="1" uuid="1196ade2-f78e-4662-9ccb-26522286ebf9"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="175">
+			<crosstab>
+				<reportElement x="0" y="0" width="968" height="175" uuid="0bc41e35-aa24-4a8d-8159-2cb50203e880"/>
+				<rowGroup name="Nombre" width="98" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{Nombre}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="98" height="15" uuid="d57a63d5-db2a-4f63-8190-b59bc775caba"/>
+								<textFieldExpression><![CDATA[$V{Nombre}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="98" height="15" uuid="c5b71edf-1596-4833-9912-6a2682c479d0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Nombre]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="Dia" height="16" totalPosition="End">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{Dia}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="19" height="16" uuid="e9c478e9-4cd9-46cd-be45-5684c9d2cfe0"/>
+								<textFieldExpression><![CDATA[$V{Dia}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="35" height="16" uuid="1c7123ef-5691-429f-b7a1-06d9cfdcd871"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total ]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="FolioMeasure" class="java.lang.Integer" calculation="Count">
+					<measureExpression><![CDATA[$F{Folio}]]></measureExpression>
+				</measure>
+				<crosstabCell width="19" height="15">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="19" height="15" uuid="b74359ca-a89d-426d-9506-e3a1cc3ab6d1"/>
+							<textFieldExpression><![CDATA[$V{FolioMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="19" height="16" rowTotalGroup="Nombre">
+					<cellContents backcolor="#BFE1FF">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="19" height="15" uuid="4dce150b-aa5b-495c-b0ee-6849ae1f343d"/>
+							<textFieldExpression><![CDATA[$V{FolioMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="35" height="15" columnTotalGroup="Dia">
+					<cellContents backcolor="#BFE1FF">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="15" uuid="0d938366-4e88-4a51-be55-5fc0816b8fbb"/>
+							<textFieldExpression><![CDATA[$V{FolioMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="35" height="16" rowTotalGroup="Nombre" columnTotalGroup="Dia">
+					<cellContents backcolor="#BFE1FF">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="15" uuid="a9e6c4d1-aefd-469a-a2c8-6b84be2f4843"/>
+							<textFieldExpression><![CDATA[$V{FolioMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

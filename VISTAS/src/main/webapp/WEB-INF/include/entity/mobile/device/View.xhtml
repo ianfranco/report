@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DeviceViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewDeviceTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DeviceListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DeviceViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{deviceController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDeviceLabel_id}"/>
+                            <h:outputText value="#{deviceController.selected.id}" title="#{myBundle.ViewDeviceTitle_id}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDeviceLabel_name}"/>
+                            <h:outputText value="#{deviceController.selected.name}" title="#{myBundle.ViewDeviceTitle_name}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDeviceLabel_uniqueId}"/>
+                            <h:outputText value="#{deviceController.selected.uniqueId}" title="#{myBundle.ViewDeviceTitle_uniqueId}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDeviceLabel_status}"/>
+                            <h:outputText value="#{deviceController.selected.status}" title="#{myBundle.ViewDeviceTitle_status}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDeviceLabel_lastUpdate}"/>
+                            <h:outputText value="#{deviceController.selected.lastUpdate}" title="#{myBundle.ViewDeviceTitle_lastUpdate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDeviceLabel_positionId}"/>
+                            <h:outputText value="#{deviceController.selected.positionId}" title="#{myBundle.ViewDeviceTitle_positionId}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

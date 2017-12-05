@@ -11,11 +11,13 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_distribucion_terminal($P{idOperador},$P{fecha});]]>
+		<![CDATA[call final_planillon_distribucion_terminal(1, '2017-10-01')]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="conductor" class="java.lang.String"/>
-	<field name="REALFINAL" class="java.math.BigDecimal"/>
+	<field name="REALFINAL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="nombre_terminal" class="java.lang.String"/>
 	<variable name="REALFINAL1" class="java.math.BigDecimal" resetType="Group" resetGroup="nombre_terminal" calculation="Sum">
 		<variableExpression><![CDATA[$F{REALFINAL}]]></variableExpression>

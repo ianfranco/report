@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="VentaBoletoGuiaEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditVentaBoletoGuiaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:VentaBoletoGuiaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="VentaBoletoGuiaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{ventaBoletoGuiaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditVentaBoletoGuiaLabel_idVentaBoletoGuia}" for="idVentaBoletoGuia" />
+                            <h:panelGroup>
+                                <h:outputText id="idVentaBoletoGuia" value="#{ventaBoletoGuiaController.selected.idVentaBoletoGuia}" />
+                                <p:tooltip for="idVentaBoletoGuia" value="#{ventaBoletoGuiaController.getComponentMessages('idVentaBoletoGuia', myBundle.EditVentaBoletoGuiaHelpText_idVentaBoletoGuia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentaBoletoGuiaLabel_valor}" for="valor" />
+                            <h:panelGroup>
+                                <p:inputText id="valor" value="#{ventaBoletoGuiaController.selected.valor}" title="#{myBundle.EditVentaBoletoGuiaTitle_valor}" required="true" requiredMessage="#{myBundle.EditVentaBoletoGuiaRequiredMessage_valor}"/>
+                                <p:tooltip for="valor" value="#{ventaBoletoGuiaController.getComponentMessages('valor', myBundle.EditVentaBoletoGuiaHelpText_valor)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentaBoletoGuiaLabel_recaudado}" for="recaudado" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="recaudado" value="#{ventaBoletoGuiaController.selected.recaudado}" />
+                                <p:tooltip for="recaudado" value="#{ventaBoletoGuiaController.getComponentMessages('recaudado', myBundle.EditVentaBoletoGuiaHelpText_recaudado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentaBoletoGuiaLabel_idGuia}" for="idGuia" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idGuia" value="#{ventaBoletoGuiaController.selected.idGuia}" required="true" requiredMessage="#{myBundle.EditVentaBoletoGuiaRequiredMessage_idGuia}" converter="guiaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{guiaController.items}"
+                                                   var="idGuiaItem"
+                                                   itemValue="#{idGuiaItem}"
+                                                   itemLabel="#{idGuiaItem.idGuia.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idGuia" value="#{ventaBoletoGuiaController.getComponentMessages('idGuia', myBundle.EditVentaBoletoGuiaHelpText_idGuia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentaBoletoGuiaLabel_idInventarioTerminal}" for="idInventarioTerminal" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idInventarioTerminal" value="#{ventaBoletoGuiaController.selected.idInventarioTerminal}" required="true" requiredMessage="#{myBundle.EditVentaBoletoGuiaRequiredMessage_idInventarioTerminal}" converter="inventarioTerminalConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{inventarioTerminalController.items}"
+                                                   var="idInventarioTerminalItem"
+                                                   itemValue="#{idInventarioTerminalItem}"
+                                                   itemLabel="#{idInventarioTerminalItem.idInventarioTerminal.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idInventarioTerminal" value="#{ventaBoletoGuiaController.getComponentMessages('idInventarioTerminal', myBundle.EditVentaBoletoGuiaHelpText_idInventarioTerminal)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{ventaBoletoGuiaController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:VentaBoletoGuiaListPage:VentaBoletoGuiaListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:VentaBoletoGuiaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

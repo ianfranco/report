@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="InstitucionSaludListForm">
+
+        <p:panel header="#{myBundle.ListInstitucionSaludTitle}">
+            <p:contextMenu id="InstitucionSaludDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('InstitucionSaludListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('InstitucionSaludListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('InstitucionSaludListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('InstitucionSaludListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.InstitucionSaludMenuItem_trabajadorList}" icon="ui-icon-search"  action="#{institucionSaludController.navigateTrabajadorList}" disabled="#{empty institucionSaludController.selected.trabajadorList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{institucionSaludController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{institucionSaludController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{institucionSaludController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idInstitucionSalud}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:InstitucionSaludDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:InstitucionSaludDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('InstitucionSaludListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idInstitucionSalud}" filterBy="#{item.idInstitucionSalud}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInstitucionSaludTitle_idInstitucionSalud}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idInstitucionSalud}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreInstitucionSalud}" filterBy="#{item.nombreInstitucionSalud}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInstitucionSaludTitle_nombreInstitucionSalud}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreInstitucionSalud}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.comision}" filterBy="#{item.comision}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInstitucionSaludTitle_comision}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.comision}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.porcentajeDescuento}" filterBy="#{item.porcentajeDescuento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListInstitucionSaludTitle_porcentajeDescuento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.porcentajeDescuento}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{institucionSaludController.prepareCreate}" update=":InstitucionSaludCreateForm" oncomplete="PF('InstitucionSaludCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":InstitucionSaludViewForm" oncomplete="PF('InstitucionSaludViewDialog').show()" disabled="#{empty institucionSaludController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":InstitucionSaludEditForm" oncomplete="PF('InstitucionSaludEditDialog').show()" disabled="#{empty institucionSaludController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{institucionSaludController.delete}" update=":growl,datalist" disabled="#{empty institucionSaludController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

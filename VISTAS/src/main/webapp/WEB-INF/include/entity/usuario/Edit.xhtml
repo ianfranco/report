@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="UsuarioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{usuarioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditUsuarioLabel_idUsario}" for="idUsario" />
+                        <h:panelGroup>
+                            <h:outputText id="idUsario" value="#{usuarioController.selected.idUsario}" />
+                            <p:tooltip for="idUsario" value="#{usuarioController.getComponentMessages('idUsario', myBundle.EditUsuarioHelpText_idUsario)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_rut}" for="rut" />
+                        <h:panelGroup>
+                            <p:inputText id="rut" value="#{usuarioController.selected.rut}" title="#{myBundle.EditUsuarioTitle_rut}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_rut}" size="9" maxlength="9"/>
+                            <p:tooltip for="rut" value="#{usuarioController.getComponentMessages('rut', myBundle.EditUsuarioHelpText_rut)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_pass}" for="pass" />
+                        <h:panelGroup>
+                            <p:inputText id="pass" value="#{usuarioController.selected.pass}" title="#{myBundle.EditUsuarioTitle_pass}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_pass}" size="45" maxlength="45"/>
+                            <p:tooltip for="pass" value="#{usuarioController.getComponentMessages('pass', myBundle.EditUsuarioHelpText_pass)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_nombres}" for="nombres" />
+                        <h:panelGroup>
+                            <p:inputText id="nombres" value="#{usuarioController.selected.nombres}" title="#{myBundle.EditUsuarioTitle_nombres}" size="255" maxlength="255"/>
+                            <p:tooltip for="nombres" value="#{usuarioController.getComponentMessages('nombres', myBundle.EditUsuarioHelpText_nombres)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_apellidoPaterno}" for="apellidoPaterno" />
+                        <h:panelGroup>
+                            <p:inputText id="apellidoPaterno" value="#{usuarioController.selected.apellidoPaterno}" title="#{myBundle.EditUsuarioTitle_apellidoPaterno}" size="255" maxlength="255"/>
+                            <p:tooltip for="apellidoPaterno" value="#{usuarioController.getComponentMessages('apellidoPaterno', myBundle.EditUsuarioHelpText_apellidoPaterno)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_apellidoMaterno}" for="apellidoMaterno" />
+                        <h:panelGroup>
+                            <p:inputText id="apellidoMaterno" value="#{usuarioController.selected.apellidoMaterno}" title="#{myBundle.EditUsuarioTitle_apellidoMaterno}" size="255" maxlength="255"/>
+                            <p:tooltip for="apellidoMaterno" value="#{usuarioController.getComponentMessages('apellidoMaterno', myBundle.EditUsuarioHelpText_apellidoMaterno)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_email}" for="email" />
+                        <h:panelGroup>
+                            <p:inputText id="email" value="#{usuarioController.selected.email}" title="#{myBundle.EditUsuarioTitle_email}" size="255" maxlength="255"/>
+                            <p:tooltip for="email" value="#{usuarioController.getComponentMessages('email', myBundle.EditUsuarioHelpText_email)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_idRol}" for="idRol" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idRol" value="#{usuarioController.selected.idRol}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_idRol}" converter="rolConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{rolController.items}"
+                                               var="idRolItem"
+                                               itemValue="#{idRolItem}"
+                                               itemLabel="#{idRolItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idRol" value="#{usuarioController.getComponentMessages('idRol', myBundle.EditUsuarioHelpText_idRol)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_idTerminal}" for="idTerminal" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTerminal" value="#{usuarioController.selected.idTerminal}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_idTerminal}" converter="terminalConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{terminalController.items}"
+                                               var="idTerminalItem"
+                                               itemValue="#{idTerminalItem}"
+                                               itemLabel="#{idTerminalItem.idTerminal.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTerminal" value="#{usuarioController.getComponentMessages('idTerminal', myBundle.EditUsuarioHelpText_idTerminal)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.save}" value="#{myBundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuarioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('UsuarioEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

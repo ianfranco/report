@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="UserDeviceEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditUserDeviceTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:UserDeviceListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="UserDeviceEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{userDeviceController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditUserDeviceLabel_idUserDevice}" for="idUserDevice" />
+                            <h:panelGroup>
+                                <h:outputText id="idUserDevice" value="#{userDeviceController.selected.idUserDevice}" />
+                                <p:tooltip for="idUserDevice" value="#{userDeviceController.getComponentMessages('idUserDevice', myBundle.EditUserDeviceHelpText_idUserDevice)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUserDeviceLabel_read}" for="read" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="read" value="#{userDeviceController.selected.read}" required="true" requiredMessage="#{myBundle.EditUserDeviceRequiredMessage_read}"/>
+                                <p:tooltip for="read" value="#{userDeviceController.getComponentMessages('read', myBundle.EditUserDeviceHelpText_read)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUserDeviceLabel_write}" for="write" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="write" value="#{userDeviceController.selected.write}" required="true" requiredMessage="#{myBundle.EditUserDeviceRequiredMessage_write}"/>
+                                <p:tooltip for="write" value="#{userDeviceController.getComponentMessages('write', myBundle.EditUserDeviceHelpText_write)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUserDeviceLabel_userId}" for="userId" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="userId" value="#{userDeviceController.selected.userId}" required="true" requiredMessage="#{myBundle.EditUserDeviceRequiredMessage_userId}" converter="userConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{userController.items}"
+                                                   var="userIdItem"
+                                                   itemValue="#{userIdItem}"
+                                                   itemLabel="#{userIdItem.name.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="userId" value="#{userDeviceController.getComponentMessages('userId', myBundle.EditUserDeviceHelpText_userId)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditUserDeviceLabel_deviceId}" for="deviceId" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="deviceId" value="#{userDeviceController.selected.deviceId}" required="true" requiredMessage="#{myBundle.EditUserDeviceRequiredMessage_deviceId}" converter="deviceConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{deviceController.items}"
+                                                   var="deviceIdItem"
+                                                   itemValue="#{deviceIdItem}"
+                                                   itemLabel="#{deviceIdItem.name.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="deviceId" value="#{userDeviceController.getComponentMessages('deviceId', myBundle.EditUserDeviceHelpText_deviceId)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{userDeviceController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:UserDeviceListPage:UserDeviceListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:UserDeviceListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

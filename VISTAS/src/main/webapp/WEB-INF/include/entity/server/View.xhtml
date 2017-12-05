@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ServerViewDlg" widgetVar="ServerViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewServerTitle}" closeOnEscape="true">
+
+            <h:form id="ServerViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{serverController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_id}"/>
+                        <h:outputText value="#{serverController.selected.id}" title="#{myBundle.ViewServerTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_registration}"/>
+                        <h:selectBooleanCheckbox id="registration" value="#{serverController.selected.registration}" title="#{myBundle.EditServerTitle_registration}" required="true" requiredMessage="#{myBundle.EditServerRequiredMessage_registration}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_map}"/>
+                        <h:outputText value="#{serverController.selected.map}" title="#{myBundle.ViewServerTitle_map}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_bingKey}"/>
+                        <h:outputText value="#{serverController.selected.bingKey}" title="#{myBundle.ViewServerTitle_bingKey}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_mapUrl}"/>
+                        <h:outputText value="#{serverController.selected.mapUrl}" title="#{myBundle.ViewServerTitle_mapUrl}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_language}"/>
+                        <h:outputText value="#{serverController.selected.language}" title="#{myBundle.ViewServerTitle_language}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_distanceUnit}"/>
+                        <h:outputText value="#{serverController.selected.distanceUnit}" title="#{myBundle.ViewServerTitle_distanceUnit}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_speedUnit}"/>
+                        <h:outputText value="#{serverController.selected.speedUnit}" title="#{myBundle.ViewServerTitle_speedUnit}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_latitude}"/>
+                        <h:outputText value="#{serverController.selected.latitude}" title="#{myBundle.ViewServerTitle_latitude}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_longitude}"/>
+                        <h:outputText value="#{serverController.selected.longitude}" title="#{myBundle.ViewServerTitle_longitude}"/>
+
+                        <h:outputText value="#{myBundle.ViewServerLabel_zoom}"/>
+                        <h:outputText value="#{serverController.selected.zoom}" title="#{myBundle.ViewServerTitle_zoom}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ServerViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CentroCostoTrabajadorCreateDlg" widgetVar="CentroCostoTrabajadorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCentroCostoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="CentroCostoTrabajadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{centroCostoTrabajadorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCentroCostoTrabajadorLabel_idCentroCosto}" for="idCentroCosto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idCentroCosto" value="#{centroCostoTrabajadorController.selected.idCentroCosto}" required="true" requiredMessage="#{myBundle.CreateCentroCostoTrabajadorRequiredMessage_idCentroCosto}" converter="centroCostoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{centroCostoController.items}"
+                                               var="idCentroCostoItem"
+                                               itemValue="#{idCentroCostoItem}"
+                                               itemLabel="#{idCentroCostoItem.idCentroCosto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idCentroCosto" value="#{centroCostoTrabajadorController.getComponentMessages('idCentroCosto', myBundle.CreateCentroCostoTrabajadorHelpText_idCentroCosto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCentroCostoTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{centroCostoTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.CreateCentroCostoTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{centroCostoTrabajadorController.getComponentMessages('idTrabajador', myBundle.CreateCentroCostoTrabajadorHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{centroCostoTrabajadorController.saveNew}" value="#{myBundle.Save}" update="display,:CentroCostoTrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CentroCostoTrabajadorCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CentroCostoTrabajadorCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EmpresaCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateEmpresaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EmpresaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EmpresaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{empresaController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_rutEmpresa}" for="rutEmpresa" />
+                            <h:panelGroup>
+                                <p:inputText id="rutEmpresa" value="#{empresaController.selected.rutEmpresa}" title="#{myBundle.CreateEmpresaTitle_rutEmpresa}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_rutEmpresa}" size="255" maxlength="255"/>
+                                <p:tooltip for="rutEmpresa" value="#{empresaController.getComponentMessages('rutEmpresa', myBundle.CreateEmpresaHelpText_rutEmpresa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_nombreEmpresa}" for="nombreEmpresa" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreEmpresa" value="#{empresaController.selected.nombreEmpresa}" title="#{myBundle.CreateEmpresaTitle_nombreEmpresa}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_nombreEmpresa}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreEmpresa" value="#{empresaController.getComponentMessages('nombreEmpresa', myBundle.CreateEmpresaHelpText_nombreEmpresa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_giro}" for="giro" />
+                            <h:panelGroup>
+                                <p:inputText id="giro" value="#{empresaController.selected.giro}" title="#{myBundle.CreateEmpresaTitle_giro}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_giro}" size="255" maxlength="255"/>
+                                <p:tooltip for="giro" value="#{empresaController.getComponentMessages('giro', myBundle.CreateEmpresaHelpText_giro)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_direccionEmpresa}" for="direccionEmpresa" />
+                            <h:panelGroup>
+                                <p:inputText id="direccionEmpresa" value="#{empresaController.selected.direccionEmpresa}" title="#{myBundle.CreateEmpresaTitle_direccionEmpresa}" size="255" maxlength="255"/>
+                                <p:tooltip for="direccionEmpresa" value="#{empresaController.getComponentMessages('direccionEmpresa', myBundle.CreateEmpresaHelpText_direccionEmpresa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_telefonoEmpresa}" for="telefonoEmpresa" />
+                            <h:panelGroup>
+                                <p:inputText id="telefonoEmpresa" value="#{empresaController.selected.telefonoEmpresa}" title="#{myBundle.CreateEmpresaTitle_telefonoEmpresa}" size="255" maxlength="255"/>
+                                <p:tooltip for="telefonoEmpresa" value="#{empresaController.getComponentMessages('telefonoEmpresa', myBundle.CreateEmpresaHelpText_telefonoEmpresa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_fax}" for="fax" />
+                            <h:panelGroup>
+                                <p:inputText id="fax" value="#{empresaController.selected.fax}" title="#{myBundle.CreateEmpresaTitle_fax}" size="255" maxlength="255"/>
+                                <p:tooltip for="fax" value="#{empresaController.getComponentMessages('fax', myBundle.CreateEmpresaHelpText_fax)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_emailEmpresa}" for="emailEmpresa" />
+                            <h:panelGroup>
+                                <p:inputText id="emailEmpresa" value="#{empresaController.selected.emailEmpresa}" title="#{myBundle.CreateEmpresaTitle_emailEmpresa}" size="255" maxlength="255"/>
+                                <p:tooltip for="emailEmpresa" value="#{empresaController.getComponentMessages('emailEmpresa', myBundle.CreateEmpresaHelpText_emailEmpresa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_idCajaCompensacion}" for="idCajaCompensacion" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idCajaCompensacion" value="#{empresaController.selected.idCajaCompensacion}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_idCajaCompensacion}" converter="cajaCompensacionConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{cajaCompensacionController.items}"
+                                                   var="idCajaCompensacionItem"
+                                                   itemValue="#{idCajaCompensacionItem}"
+                                                   itemLabel="#{idCajaCompensacionItem.idCajaCompensacion.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idCajaCompensacion" value="#{empresaController.getComponentMessages('idCajaCompensacion', myBundle.CreateEmpresaHelpText_idCajaCompensacion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEmpresaLabel_idMutual}" for="idMutual" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idMutual" value="#{empresaController.selected.idMutual}" required="true" requiredMessage="#{myBundle.CreateEmpresaRequiredMessage_idMutual}" converter="mutualConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{mutualController.items}"
+                                                   var="idMutualItem"
+                                                   itemValue="#{idMutualItem}"
+                                                   itemLabel="#{idMutualItem.idMutual.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idMutual" value="#{empresaController.getComponentMessages('idMutual', myBundle.CreateEmpresaHelpText_idMutual)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{empresaController.saveNew}" value="#{myBundle.Save}" update="display,:EmpresaListPage:EmpresaListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:EmpresaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

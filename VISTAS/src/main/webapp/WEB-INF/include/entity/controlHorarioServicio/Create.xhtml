@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ControlHorarioServicioCreateDlg" widgetVar="ControlHorarioServicioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateControlHorarioServicioTitle}" closeOnEscape="true">
+
+            <h:form id="ControlHorarioServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{controlHorarioServicioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_tiempo}" for="tiempo" />
+                        <h:panelGroup>
+                            <p:inputText id="tiempo" value="#{controlHorarioServicioController.selected.tiempo}" title="#{myBundle.CreateControlHorarioServicioTitle_tiempo}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_tiempo}"/>
+                            <p:tooltip for="tiempo" value="#{controlHorarioServicioController.getComponentMessages('tiempo', myBundle.CreateControlHorarioServicioHelpText_tiempo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_multa}" for="multa" />
+                        <h:panelGroup>
+                            <p:inputText id="multa" value="#{controlHorarioServicioController.selected.multa}" title="#{myBundle.CreateControlHorarioServicioTitle_multa}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_multa}"/>
+                            <p:tooltip for="multa" value="#{controlHorarioServicioController.getComponentMessages('multa', myBundle.CreateControlHorarioServicioHelpText_multa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_peso}" for="peso" />
+                        <h:panelGroup>
+                            <p:inputText id="peso" value="#{controlHorarioServicioController.selected.peso}" title="#{myBundle.CreateControlHorarioServicioTitle_peso}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_peso}"/>
+                            <p:tooltip for="peso" value="#{controlHorarioServicioController.getComponentMessages('peso', myBundle.CreateControlHorarioServicioHelpText_peso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_idControlServicio}" for="idControlServicio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idControlServicio" value="#{controlHorarioServicioController.selected.idControlServicio}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_idControlServicio}" converter="controlServicioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{controlServicioController.items}"
+                                               var="idControlServicioItem"
+                                               itemValue="#{idControlServicioItem}"
+                                               itemLabel="#{idControlServicioItem.idControlServicio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idControlServicio" value="#{controlHorarioServicioController.getComponentMessages('idControlServicio', myBundle.CreateControlHorarioServicioHelpText_idControlServicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateControlHorarioServicioLabel_idHorarioServicio}" for="idHorarioServicio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idHorarioServicio" value="#{controlHorarioServicioController.selected.idHorarioServicio}" required="true" requiredMessage="#{myBundle.CreateControlHorarioServicioRequiredMessage_idHorarioServicio}" converter="horarioServicioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{horarioServicioController.items}"
+                                               var="idHorarioServicioItem"
+                                               itemValue="#{idHorarioServicioItem}"
+                                               itemLabel="#{idHorarioServicioItem.idHorarioServicio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idHorarioServicio" value="#{controlHorarioServicioController.getComponentMessages('idHorarioServicio', myBundle.CreateControlHorarioServicioHelpText_idHorarioServicio)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{controlHorarioServicioController.saveNew}" value="#{myBundle.Save}" update="display,:ControlHorarioServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ControlHorarioServicioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ControlHorarioServicioCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

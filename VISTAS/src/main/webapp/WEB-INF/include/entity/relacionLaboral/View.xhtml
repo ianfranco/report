@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RelacionLaboralViewDlg" widgetVar="RelacionLaboralViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewRelacionLaboralTitle}" closeOnEscape="true">
+
+            <h:form id="RelacionLaboralViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{relacionLaboralController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_idRelacionLaboral}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.idRelacionLaboral}" title="#{myBundle.ViewRelacionLaboralTitle_idRelacionLaboral}"/>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_fechaInicio}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.fechaInicio}" title="#{myBundle.ViewRelacionLaboralTitle_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_fechaFin}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.fechaFin}" title="#{myBundle.ViewRelacionLaboralTitle_fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_tipoContrato}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.tipoContrato}" title="#{myBundle.ViewRelacionLaboralTitle_tipoContrato}"/>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_sueldoBase}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.sueldoBase}" title="#{myBundle.ViewRelacionLaboralTitle_sueldoBase}"/>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_rutaArchivoRespaldo}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.rutaArchivoRespaldo}" title="#{myBundle.ViewRelacionLaboralTitle_rutaArchivoRespaldo}"/>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_estado}"/>
+                        <h:selectBooleanCheckbox id="estado" value="#{relacionLaboralController.selected.estado}" title="#{myBundle.EditRelacionLaboralTitle_estado}"  disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_idTipoContrato}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.idTipoContrato.idTipoContrato}"/>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_idTipoTrabajador}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.idTipoTrabajador.idTipoTrabajador}"/>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_idEmpresa}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.idEmpresa.idEmpresa}"/>
+
+                        <h:outputText value="#{myBundle.ViewRelacionLaboralLabel_idTrabajador}"/>
+                        <h:outputText value="#{relacionLaboralController.selected.idTrabajador.idTrabajador}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('RelacionLaboralViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

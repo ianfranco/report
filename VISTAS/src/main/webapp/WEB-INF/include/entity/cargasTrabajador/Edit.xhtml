@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CargasTrabajadorEditDlg" widgetVar="CargasTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCargasTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="CargasTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{cargasTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_idCargasTrabajador}" for="idCargasTrabajador" />
+                        <h:panelGroup>
+                            <h:outputText id="idCargasTrabajador" value="#{cargasTrabajadorController.selected.idCargasTrabajador}" />
+                            <p:tooltip for="idCargasTrabajador" value="#{cargasTrabajadorController.getComponentMessages('idCargasTrabajador', myBundle.EditCargasTrabajadorHelpText_idCargasTrabajador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_apellidoCargaTrabajador}" for="apellidoCargaTrabajador" />
+                        <h:panelGroup>
+                            <p:inputText id="apellidoCargaTrabajador" value="#{cargasTrabajadorController.selected.apellidoCargaTrabajador}" title="#{myBundle.EditCargasTrabajadorTitle_apellidoCargaTrabajador}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_apellidoCargaTrabajador}" size="45" maxlength="45"/>
+                            <p:tooltip for="apellidoCargaTrabajador" value="#{cargasTrabajadorController.getComponentMessages('apellidoCargaTrabajador', myBundle.EditCargasTrabajadorHelpText_apellidoCargaTrabajador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_nombreCargaTrabajador}" for="nombreCargaTrabajador" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreCargaTrabajador" value="#{cargasTrabajadorController.selected.nombreCargaTrabajador}" title="#{myBundle.EditCargasTrabajadorTitle_nombreCargaTrabajador}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_nombreCargaTrabajador}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombreCargaTrabajador" value="#{cargasTrabajadorController.getComponentMessages('nombreCargaTrabajador', myBundle.EditCargasTrabajadorHelpText_nombreCargaTrabajador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_rut}" for="rut" />
+                        <h:panelGroup>
+                            <p:inputText id="rut" value="#{cargasTrabajadorController.selected.rut}" title="#{myBundle.EditCargasTrabajadorTitle_rut}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_rut}" size="45" maxlength="45"/>
+                            <p:tooltip for="rut" value="#{cargasTrabajadorController.getComponentMessages('rut', myBundle.EditCargasTrabajadorHelpText_rut)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_fechaNacimiento}" for="fechaNacimiento" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{cargasTrabajadorController.selected.fechaNacimiento}" title="#{myBundle.EditCargasTrabajadorTitle_fechaNacimiento}"  showOn="button"/>
+                            <p:tooltip for="fechaNacimiento" value="#{cargasTrabajadorController.getComponentMessages('fechaNacimiento', myBundle.EditCargasTrabajadorHelpText_fechaNacimiento)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{cargasTrabajadorController.selected.fechaIngreso}" title="#{myBundle.EditCargasTrabajadorTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{cargasTrabajadorController.getComponentMessages('fechaIngreso', myBundle.EditCargasTrabajadorHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_activa}" for="activa" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="activa" value="#{cargasTrabajadorController.selected.activa}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_activa}"/>
+                            <p:tooltip for="activa" value="#{cargasTrabajadorController.getComponentMessages('activa', myBundle.EditCargasTrabajadorHelpText_activa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_idParentescoCarga}" for="idParentescoCarga" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idParentescoCarga" value="#{cargasTrabajadorController.selected.idParentescoCarga}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_idParentescoCarga}" converter="parentescoCargaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{parentescoCargaController.items}"
+                                               var="idParentescoCargaItem"
+                                               itemValue="#{idParentescoCargaItem}"
+                                               itemLabel="#{idParentescoCargaItem.idParentescoCarga.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idParentescoCarga" value="#{cargasTrabajadorController.getComponentMessages('idParentescoCarga', myBundle.EditCargasTrabajadorHelpText_idParentescoCarga)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_idTipoCarga}" for="idTipoCarga" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTipoCarga" value="#{cargasTrabajadorController.selected.idTipoCarga}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_idTipoCarga}" converter="tipoCargaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{tipoCargaController.items}"
+                                               var="idTipoCargaItem"
+                                               itemValue="#{idTipoCargaItem}"
+                                               itemLabel="#{idTipoCargaItem.idTipoCarga.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTipoCarga" value="#{cargasTrabajadorController.getComponentMessages('idTipoCarga', myBundle.EditCargasTrabajadorHelpText_idTipoCarga)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditCargasTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{cargasTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.EditCargasTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{cargasTrabajadorController.getComponentMessages('idTrabajador', myBundle.EditCargasTrabajadorHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cargasTrabajadorController.save}" value="#{myBundle.Save}" update="display,:CargasTrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CargasTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CargasTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TrabajadorCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TrabajadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{trabajadorController.selected != null}">
+                    <p:tabView id="TrabajadorTabView">
+
+                        <p:tab id="TrabajadorTab1" title="#{myBundle.TabHeaderPrefix} 1">
+                            <p:outputPanel>
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_rutTrabajador}" for="rutTrabajador" />
+                                    <h:panelGroup>
+                                        <p:inputText id="rutTrabajador" value="#{trabajadorController.selected.rutTrabajador}" title="#{myBundle.CreateTrabajadorTitle_rutTrabajador}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_rutTrabajador}" size="9" maxlength="9"/>
+                                        <p:tooltip for="rutTrabajador" value="#{trabajadorController.getComponentMessages('rutTrabajador', myBundle.CreateTrabajadorHelpText_rutTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_nombreTrabajador}" for="nombreTrabajador" />
+                                    <h:panelGroup>
+                                        <p:inputText id="nombreTrabajador" value="#{trabajadorController.selected.nombreTrabajador}" title="#{myBundle.CreateTrabajadorTitle_nombreTrabajador}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_nombreTrabajador}" size="255" maxlength="255"/>
+                                        <p:tooltip for="nombreTrabajador" value="#{trabajadorController.getComponentMessages('nombreTrabajador', myBundle.CreateTrabajadorHelpText_nombreTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_apellidoPaternoTrabajador}" for="apellidoPaternoTrabajador" />
+                                    <h:panelGroup>
+                                        <p:inputText id="apellidoPaternoTrabajador" value="#{trabajadorController.selected.apellidoPaternoTrabajador}" title="#{myBundle.CreateTrabajadorTitle_apellidoPaternoTrabajador}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_apellidoPaternoTrabajador}" size="255" maxlength="255"/>
+                                        <p:tooltip for="apellidoPaternoTrabajador" value="#{trabajadorController.getComponentMessages('apellidoPaternoTrabajador', myBundle.CreateTrabajadorHelpText_apellidoPaternoTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_apellidoMaternoTrabajador}" for="apellidoMaternoTrabajador" />
+                                    <h:panelGroup>
+                                        <p:inputText id="apellidoMaternoTrabajador" value="#{trabajadorController.selected.apellidoMaternoTrabajador}" title="#{myBundle.CreateTrabajadorTitle_apellidoMaternoTrabajador}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_apellidoMaternoTrabajador}" size="255" maxlength="255"/>
+                                        <p:tooltip for="apellidoMaternoTrabajador" value="#{trabajadorController.getComponentMessages('apellidoMaternoTrabajador', myBundle.CreateTrabajadorHelpText_apellidoMaternoTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_fechaNacimientoTrabajador}" for="fechaNacimientoTrabajador" />
+                                    <h:panelGroup>
+                                        <p:calendar id="fechaNacimientoTrabajador" pattern="MM/dd/yyyy" value="#{trabajadorController.selected.fechaNacimientoTrabajador}" title="#{myBundle.CreateTrabajadorTitle_fechaNacimientoTrabajador}"  showOn="button"/>
+                                        <p:tooltip for="fechaNacimientoTrabajador" value="#{trabajadorController.getComponentMessages('fechaNacimientoTrabajador', myBundle.CreateTrabajadorHelpText_fechaNacimientoTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_nacionalidad}" for="nacionalidad" />
+                                    <h:panelGroup>
+                                        <p:selectBooleanCheckbox id="nacionalidad" value="#{trabajadorController.selected.nacionalidad}" />
+                                        <p:tooltip for="nacionalidad" value="#{trabajadorController.getComponentMessages('nacionalidad', myBundle.CreateTrabajadorHelpText_nacionalidad)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_sexo}" for="sexo" />
+                                    <h:panelGroup>
+                                        <p:selectBooleanCheckbox id="sexo" value="#{trabajadorController.selected.sexo}" />
+                                        <p:tooltip for="sexo" value="#{trabajadorController.getComponentMessages('sexo', myBundle.CreateTrabajadorHelpText_sexo)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_direccionTrabajador}" for="direccionTrabajador" />
+                                    <h:panelGroup>
+                                        <p:inputText id="direccionTrabajador" value="#{trabajadorController.selected.direccionTrabajador}" title="#{myBundle.CreateTrabajadorTitle_direccionTrabajador}" size="255" maxlength="255"/>
+                                        <p:tooltip for="direccionTrabajador" value="#{trabajadorController.getComponentMessages('direccionTrabajador', myBundle.CreateTrabajadorHelpText_direccionTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_telefonoFijoTrabajador}" for="telefonoFijoTrabajador" />
+                                    <h:panelGroup>
+                                        <p:inputText id="telefonoFijoTrabajador" value="#{trabajadorController.selected.telefonoFijoTrabajador}" title="#{myBundle.CreateTrabajadorTitle_telefonoFijoTrabajador}" size="255" maxlength="255"/>
+                                        <p:tooltip for="telefonoFijoTrabajador" value="#{trabajadorController.getComponentMessages('telefonoFijoTrabajador', myBundle.CreateTrabajadorHelpText_telefonoFijoTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_celularTrabajador}" for="celularTrabajador" />
+                                    <h:panelGroup>
+                                        <p:inputText id="celularTrabajador" value="#{trabajadorController.selected.celularTrabajador}" title="#{myBundle.CreateTrabajadorTitle_celularTrabajador}" size="255" maxlength="255"/>
+                                        <p:tooltip for="celularTrabajador" value="#{trabajadorController.getComponentMessages('celularTrabajador', myBundle.CreateTrabajadorHelpText_celularTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_emailTrabajador}" for="emailTrabajador" />
+                                    <h:panelGroup>
+                                        <p:inputText id="emailTrabajador" value="#{trabajadorController.selected.emailTrabajador}" title="#{myBundle.CreateTrabajadorTitle_emailTrabajador}" size="255" maxlength="255"/>
+                                        <p:tooltip for="emailTrabajador" value="#{trabajadorController.getComponentMessages('emailTrabajador', myBundle.CreateTrabajadorHelpText_emailTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_numeroCargas}" for="numeroCargas" />
+                                    <h:panelGroup>
+                                        <p:inputText id="numeroCargas" value="#{trabajadorController.selected.numeroCargas}" title="#{myBundle.CreateTrabajadorTitle_numeroCargas}"/>
+                                        <p:tooltip for="numeroCargas" value="#{trabajadorController.getComponentMessages('numeroCargas', myBundle.CreateTrabajadorHelpText_numeroCargas)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_montoSalud}" for="montoSalud" />
+                                    <h:panelGroup>
+                                        <p:inputText id="montoSalud" value="#{trabajadorController.selected.montoSalud}" title="#{myBundle.CreateTrabajadorTitle_montoSalud}"/>
+                                        <p:tooltip for="montoSalud" value="#{trabajadorController.getComponentMessages('montoSalud', myBundle.CreateTrabajadorHelpText_montoSalud)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_formaPagoApv}" for="formaPagoApv" />
+                                    <h:panelGroup>
+                                        <p:selectBooleanCheckbox id="formaPagoApv" value="#{trabajadorController.selected.formaPagoApv}" />
+                                        <p:tooltip for="formaPagoApv" value="#{trabajadorController.getComponentMessages('formaPagoApv', myBundle.CreateTrabajadorHelpText_formaPagoApv)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_subsidioJoven}" for="subsidioJoven" />
+                                    <h:panelGroup>
+                                        <p:selectBooleanCheckbox id="subsidioJoven" value="#{trabajadorController.selected.subsidioJoven}" />
+                                        <p:tooltip for="subsidioJoven" value="#{trabajadorController.getComponentMessages('subsidioJoven', myBundle.CreateTrabajadorHelpText_subsidioJoven)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_idInstitucionApv}" for="idInstitucionApv" />
+                                    <h:panelGroup>
+                                        <p:selectOneMenu id="idInstitucionApv" value="#{trabajadorController.selected.idInstitucionApv}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_idInstitucionApv}" converter="institucionApvConverter">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                            <f:selectItems value="#{institucionApvController.items}"
+                                                           var="idInstitucionApvItem"
+                                                           itemValue="#{idInstitucionApvItem}"
+                                                           itemLabel="#{idInstitucionApvItem.idInstitucionApv.toString()}"
+                                                           />
+
+                                        </p:selectOneMenu>
+                                        <p:tooltip for="idInstitucionApv" value="#{trabajadorController.getComponentMessages('idInstitucionApv', myBundle.CreateTrabajadorHelpText_idInstitucionApv)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_idAsignacionFamiliar}" for="idAsignacionFamiliar" />
+                                    <h:panelGroup>
+                                        <p:selectOneMenu id="idAsignacionFamiliar" value="#{trabajadorController.selected.idAsignacionFamiliar}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_idAsignacionFamiliar}" converter="asignacionFamiliarConverter">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                            <f:selectItems value="#{asignacionFamiliarController.items}"
+                                                           var="idAsignacionFamiliarItem"
+                                                           itemValue="#{idAsignacionFamiliarItem}"
+                                                           itemLabel="#{idAsignacionFamiliarItem.idAsignacionFamiliar.toString()}"
+                                                           />
+
+                                        </p:selectOneMenu>
+                                        <p:tooltip for="idAsignacionFamiliar" value="#{trabajadorController.getComponentMessages('idAsignacionFamiliar', myBundle.CreateTrabajadorHelpText_idAsignacionFamiliar)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_idTipoCotizacionTrabajador}" for="idTipoCotizacionTrabajador" />
+                                    <h:panelGroup>
+                                        <p:selectOneMenu id="idTipoCotizacionTrabajador" value="#{trabajadorController.selected.idTipoCotizacionTrabajador}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_idTipoCotizacionTrabajador}" converter="tipoCotizacionTrabajadorConverter">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                            <f:selectItems value="#{tipoCotizacionTrabajadorController.items}"
+                                                           var="idTipoCotizacionTrabajadorItem"
+                                                           itemValue="#{idTipoCotizacionTrabajadorItem}"
+                                                           itemLabel="#{idTipoCotizacionTrabajadorItem.idTipoCotizacionTrabajador.toString()}"
+                                                           />
+
+                                        </p:selectOneMenu>
+                                        <p:tooltip for="idTipoCotizacionTrabajador" value="#{trabajadorController.getComponentMessages('idTipoCotizacionTrabajador', myBundle.CreateTrabajadorHelpText_idTipoCotizacionTrabajador)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_idMonedaPactadaSalud}" for="idMonedaPactadaSalud" />
+                                    <h:panelGroup>
+                                        <p:selectOneMenu id="idMonedaPactadaSalud" value="#{trabajadorController.selected.idMonedaPactadaSalud}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_idMonedaPactadaSalud}" converter="monedaPactadaInstitucionSaludConverter">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                            <f:selectItems value="#{monedaPactadaInstitucionSaludController.items}"
+                                                           var="idMonedaPactadaSaludItem"
+                                                           itemValue="#{idMonedaPactadaSaludItem}"
+                                                           itemLabel="#{idMonedaPactadaSaludItem.idMonedaSalud.toString()}"
+                                                           />
+
+                                        </p:selectOneMenu>
+                                        <p:tooltip for="idMonedaPactadaSalud" value="#{trabajadorController.getComponentMessages('idMonedaPactadaSalud', myBundle.CreateTrabajadorHelpText_idMonedaPactadaSalud)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_idInstitucionPrevision}" for="idInstitucionPrevision" />
+                                    <h:panelGroup>
+                                        <p:selectOneMenu id="idInstitucionPrevision" value="#{trabajadorController.selected.idInstitucionPrevision}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_idInstitucionPrevision}" converter="institucionPrevisionConverter">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                            <f:selectItems value="#{institucionPrevisionController.items}"
+                                                           var="idInstitucionPrevisionItem"
+                                                           itemValue="#{idInstitucionPrevisionItem}"
+                                                           itemLabel="#{idInstitucionPrevisionItem.idInstitucionPrevision.toString()}"
+                                                           />
+
+                                        </p:selectOneMenu>
+                                        <p:tooltip for="idInstitucionPrevision" value="#{trabajadorController.getComponentMessages('idInstitucionPrevision', myBundle.CreateTrabajadorHelpText_idInstitucionPrevision)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+
+                            </p:outputPanel>
+                        </p:tab>
+                        <p:tab id="TrabajadorTab2" title="#{myBundle.TabHeaderPrefix} 2">
+                            <p:outputPanel>
+                                <pm:field>
+                                    <p:outputLabel value="#{myBundle.CreateTrabajadorLabel_idInstitucionSalud}" for="idInstitucionSalud" />
+                                    <h:panelGroup>
+                                        <p:selectOneMenu id="idInstitucionSalud" value="#{trabajadorController.selected.idInstitucionSalud}" required="true" requiredMessage="#{myBundle.CreateTrabajadorRequiredMessage_idInstitucionSalud}" converter="institucionSaludConverter">
+                                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                            <f:selectItems value="#{institucionSaludController.items}"
+                                                           var="idInstitucionSaludItem"
+                                                           itemValue="#{idInstitucionSaludItem}"
+                                                           itemLabel="#{idInstitucionSaludItem.idInstitucionSalud.toString()}"
+                                                           />
+
+                                        </p:selectOneMenu>
+                                        <p:tooltip for="idInstitucionSalud" value="#{trabajadorController.getComponentMessages('idInstitucionSalud', myBundle.CreateTrabajadorHelpText_idInstitucionSalud)}"/>
+                                    </h:panelGroup>
+                                </pm:field>
+                                </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton actionListener="#{trabajadorController.saveNew}" value="#{myBundle.Save}" update="display,:TrabajadorListPage:TrabajadorListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:TrabajadorListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

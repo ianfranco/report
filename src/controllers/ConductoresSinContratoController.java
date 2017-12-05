@@ -80,6 +80,7 @@ public class ConductoresSinContratoController {
             
             params.put("año", this.view.getAnio());
             params.put("mes", this.view.getMes());
+            params.put("fechaCompleta", this.view.getMes()+" "+this.view.getAnio());
             
             
              int index = this.view.getEmpresa().getSelectedIndex();

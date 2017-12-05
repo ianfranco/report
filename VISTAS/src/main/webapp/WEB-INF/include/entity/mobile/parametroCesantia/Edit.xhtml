@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ParametroCesantiaEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditParametroCesantiaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ParametroCesantiaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ParametroCesantiaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{parametroCesantiaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditParametroCesantiaLabel_idParametroCesantia}" for="idParametroCesantia" />
+                            <h:panelGroup>
+                                <h:outputText id="idParametroCesantia" value="#{parametroCesantiaController.selected.idParametroCesantia}" />
+                                <p:tooltip for="idParametroCesantia" value="#{parametroCesantiaController.getComponentMessages('idParametroCesantia', myBundle.EditParametroCesantiaHelpText_idParametroCesantia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditParametroCesantiaLabel_empleador}" for="empleador" />
+                            <h:panelGroup>
+                                <p:inputText id="empleador" value="#{parametroCesantiaController.selected.empleador}" title="#{myBundle.EditParametroCesantiaTitle_empleador}" required="true" requiredMessage="#{myBundle.EditParametroCesantiaRequiredMessage_empleador}"/>
+                                <p:tooltip for="empleador" value="#{parametroCesantiaController.getComponentMessages('empleador', myBundle.EditParametroCesantiaHelpText_empleador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditParametroCesantiaLabel_trabajador}" for="trabajador" />
+                            <h:panelGroup>
+                                <p:inputText id="trabajador" value="#{parametroCesantiaController.selected.trabajador}" title="#{myBundle.EditParametroCesantiaTitle_trabajador}" required="true" requiredMessage="#{myBundle.EditParametroCesantiaRequiredMessage_trabajador}"/>
+                                <p:tooltip for="trabajador" value="#{parametroCesantiaController.getComponentMessages('trabajador', myBundle.EditParametroCesantiaHelpText_trabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{parametroCesantiaController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:ParametroCesantiaListPage:ParametroCesantiaListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:ParametroCesantiaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

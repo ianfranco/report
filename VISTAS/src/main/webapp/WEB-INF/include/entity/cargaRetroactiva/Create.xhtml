@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CargaRetroactivaCreateDlg" widgetVar="CargaRetroactivaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCargaRetroactivaTitle}" closeOnEscape="true">
+
+            <h:form id="CargaRetroactivaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{cargaRetroactivaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCargaRetroactivaLabel_mesLiquidacion}" for="mesLiquidacion" />
+                        <h:panelGroup>
+                            <p:inputText id="mesLiquidacion" value="#{cargaRetroactivaController.selected.mesLiquidacion}" title="#{myBundle.CreateCargaRetroactivaTitle_mesLiquidacion}" required="true" requiredMessage="#{myBundle.CreateCargaRetroactivaRequiredMessage_mesLiquidacion}"/>
+                            <p:tooltip for="mesLiquidacion" value="#{cargaRetroactivaController.getComponentMessages('mesLiquidacion', myBundle.CreateCargaRetroactivaHelpText_mesLiquidacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCargaRetroactivaLabel_añoLiquidacion}" for="añoLiquidacion" />
+                        <h:panelGroup>
+                            <p:inputText id="añoLiquidacion" value="#{cargaRetroactivaController.selected.añoLiquidacion}" title="#{myBundle.CreateCargaRetroactivaTitle_añoLiquidacion}" required="true" requiredMessage="#{myBundle.CreateCargaRetroactivaRequiredMessage_añoLiquidacion}"/>
+                            <p:tooltip for="añoLiquidacion" value="#{cargaRetroactivaController.getComponentMessages('añoLiquidacion', myBundle.CreateCargaRetroactivaHelpText_añoLiquidacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCargaRetroactivaLabel_montoRetroactivo}" for="montoRetroactivo" />
+                        <h:panelGroup>
+                            <p:inputText id="montoRetroactivo" value="#{cargaRetroactivaController.selected.montoRetroactivo}" title="#{myBundle.CreateCargaRetroactivaTitle_montoRetroactivo}" required="true" requiredMessage="#{myBundle.CreateCargaRetroactivaRequiredMessage_montoRetroactivo}"/>
+                            <p:tooltip for="montoRetroactivo" value="#{cargaRetroactivaController.getComponentMessages('montoRetroactivo', myBundle.CreateCargaRetroactivaHelpText_montoRetroactivo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCargaRetroactivaLabel_idCargaTrabajador}" for="idCargaTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idCargaTrabajador" value="#{cargaRetroactivaController.selected.idCargaTrabajador}" required="true" requiredMessage="#{myBundle.CreateCargaRetroactivaRequiredMessage_idCargaTrabajador}" converter="cargasTrabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{cargasTrabajadorController.items}"
+                                               var="idCargaTrabajadorItem"
+                                               itemValue="#{idCargaTrabajadorItem}"
+                                               itemLabel="#{idCargaTrabajadorItem.idCargasTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idCargaTrabajador" value="#{cargaRetroactivaController.getComponentMessages('idCargaTrabajador', myBundle.CreateCargaRetroactivaHelpText_idCargaTrabajador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateCargaRetroactivaLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{cargaRetroactivaController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.CreateCargaRetroactivaRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{cargaRetroactivaController.getComponentMessages('idTrabajador', myBundle.CreateCargaRetroactivaHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cargaRetroactivaController.saveNew}" value="#{myBundle.Save}" update="display,:CargaRetroactivaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CargaRetroactivaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CargaRetroactivaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

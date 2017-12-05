@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="5150477d-a198-4e34-83ba-c786d088b356">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="1068"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT mae_con.CON_COD AS CodigoConductor, 
+CON_RUT AS RutConductor, 
+CON_NOM AS NombreConductor, 
+CON_EMP AS CodigoEmpresario, 
+EMP_RUT AS RutEmpresario,
+EMP_NOM AS NombreEmpresario,
+CON_GAR AS CodigoGarita,
+GAR_NOM As NombreGarita, 
+CON_TIP AS Contratado, 
+
+CON_SUEIMP AS Imponible,
+@bruto:=round((CON_SUEIMP*100)/19) AS Bruto, 
+@sueldobase:=round(IF(CON_DIASGU>14, 250000, (250000/30)*CON_DIASGU)) AS 'SueldoBaseAuxiliar', 
+@unoporciento:=round(@bruto*1/100) AS 'unoporciento', 
+@dosporciento:=round(@bruto*2/100) AS 'dosporciento',
+@unocomados:=round(@bruto*1.2/100) AS 'unocomados', 
+@cerocomaocho:=round(@bruto*0.8/100) AS 'cerocomaocho',
+@dieciseis:=round(@bruto*16/100) AS 'dieciseis', 
+@imposicion:=IFNULL((SELECT SUM(MOV_RET) FROM mov_con WHERE MOV_CON = mae_con.CON_COD group by MOV_CON), 0) AS '5%', 
+@anticipo:=IFNULL((SELECT SUM(MOV_ANT) FROM mov_con WHERE MOV_CON = mae_con.CON_COD group by MOV_CON), 0) AS Anticipo, 
+@ajustecomision:= (CON_SUEIMP-(@sueldobase+@dosporciento+@dosporciento+IFNULL(CON_D02, 0))) AS AjusteComision, 
+@diasdt:=IF(@ajustecomision<0, CON_DIASGU-2, CON_DIASGU) as diasdt,
+@sueldoreal:=ROUND(IF(@ajustecomision<0, round((250000/30)*@diasdt), @sueldobase)) AS 'SueldoReal',
+@ajustecomisionreal:=(CON_SUEIMP-(@sueldoreal+@dosporciento+@unocomados+@cerocomaocho+IFNULL(CON_D02, 0))) AS AjusteComisionReal, 
+ROUND(@sueldobase-@sueldoreal) As DiferenciaSueldos,
+CON_AFP AS CodigoAfp,
+AFP_NOM AS NombreAfp, 
+@valorafp:=round(CON_SUEIMP*afp.AFP_POR/100) AS 'ValorAfp',  
+afp.AFP_POR AS '%AFP', 
+@valorcaja:=IF(mae_emp.EMP_JAV=1 AND CON_PAC =0,round(CON_SUEIMP*0.006), 0) AS 'Caja18',
+@porcentajecaja:=IF(mae_emp.EMP_JAV=1 AND CON_PAC =0,"0.6%", "0.0%") AS '%Caja',
+@valorinp:=IF(CON_PAC= 0, if(mae_emp.EMP_JAV=1 , round(CON_SUEIMP*0.064), round(CON_SUEIMP*0.07)), 0) AS 'INP',
+@porcentajecaja:= IF(CON_PAC= 0, IF(mae_emp.EMP_JAV=1 AND CON_PAC =0,"6.4%", "7.0%"), "0.0%") AS '%INP',
+@valorcesantia:=IF(CON_AFP<>99, (IF(CONTRATO=1, round(CON_SUEIMP*0.006), 0)), 0) As ValorCesantia, 
+CON_ADI  AS 'AhorroVoluntario',
+CON_MIN, 
+CON_ISA AS CodigoIsapre,
+IFNULL(isapre.Isa_nom, " ") As NombreIsapre, 
+CON_PAC AS 'AdicionalIsapre',
+CON_FFI, 
+CON_JUB,
+CON_SEGCES,
+CON_CAR AS NumeroCargas,
+CON_VALCAR AS 'ValorCargas',
+CON_RET AS 'NumeroRetroactivos',
+CON_VALRET AS ValorRetroactivos, 
+ROUND(IFNULL(CON_D02, 0)) AS 'ValorVacaciones',
+CON_DIASGU AS DiasTrabajados, 
+CON_DIASVA AS DiasVacaciones,
+CON_DIASDE AS DiasDescansos,
+CON_DIASLI AS DiasLicencias, 
+CON_TIPSUE AS TipoSueldo,
+CON_DIASTV,
+CON_d13 AS Descuento2dContrato,
+CON_IMPMAR,
+CON_BONO AS BonoTNE,
+CON_CTAAFP,
+CON_HOREXT,
+con_d05 as AHORROCONDUCTOR,
+con_d06 as SALDOANTERIOR,
+con_d07 as SINDICATO,
+con_d08 as RETENCIONJUDICIAL,
+con_d17 as CREDITOCAJA, 
+
+(con_d06 +con_d07 +con_d08 +con_d17 + @valorafp + @valorcaja + @valorinp + @valorcesantia + CON_PAC + CON_ADI + CON_D12) AS TotalDescuentos
+FROM MAE_CON left join MAE_EMP ON mae_con.CON_EMP = mae_emp.EMP_COD 
+LEFT JOIN des_con ON mae_con.CON_COD = des_con.CON_COD 
+LEFT JOIN afp ON CON_AFP = afp.AFP_COD 
+LEFT JOIN mae_gar ON mae_con.CON_GAR = mae_gar.GAR_COD
+LEFT JOIN isapre ON mae_con.con_isa = isapre.isa_cod 
+where con_tip = 1  AND CON_DIASVA = 0 and  CON_TIPSUE = 'V'  
+ORDER BY NombreEmpresario ASC, NombreConductor ASC]]>
+	</queryString>
+	<field name="CodigoConductor" class="java.lang.String"/>
+	<field name="RutConductor" class="java.lang.String"/>
+	<field name="NombreConductor" class="java.lang.String"/>
+	<field name="CodigoEmpresario" class="java.lang.String"/>
+	<field name="RutEmpresario" class="java.lang.String"/>
+	<field name="NombreEmpresario" class="java.lang.String"/>
+	<field name="CodigoGarita" class="java.lang.Integer"/>
+	<field name="NombreGarita" class="java.lang.String"/>
+	<field name="Contratado" class="java.lang.String"/>
+	<field name="Imponible" class="java.lang.Integer"/>
+	<field name="Bruto" class="java.math.BigDecimal"/>
+	<field name="SueldoBaseAuxiliar" class="java.math.BigDecimal"/>
+	<field name="unoporciento" class="java.lang.Double"/>
+	<field name="dosporciento" class="java.lang.Double"/>
+	<field name="unocomados" class="java.lang.Double"/>
+	<field name="cerocomaocho" class="java.lang.Double"/>
+	<field name="dieciseis" class="java.lang.Double"/>
+	<field name="5%" class="java.math.BigDecimal"/>
+	<field name="Anticipo" class="java.math.BigDecimal"/>
+	<field name="AjusteComision" class="java.lang.Double"/>
+	<field name="diasdt" class="java.lang.Long"/>
+	<field name="SueldoReal" class="java.lang.Double"/>
+	<field name="AjusteComisionReal" class="java.lang.Double"/>
+	<field name="DiferenciaSueldos" class="java.lang.Double"/>
+	<field name="CodigoAfp" class="java.lang.String"/>
+	<field name="NombreAfp" class="java.lang.String"/>
+	<field name="ValorAfp" class="java.lang.Double"/>
+	<field name="%AFP" class="java.lang.Double"/>
+	<field name="Caja18" class="java.math.BigDecimal"/>
+	<field name="%Caja" class="java.lang.String"/>
+	<field name="INP" class="java.math.BigDecimal"/>
+	<field name="%INP" class="java.lang.String"/>
+	<field name="ValorCesantia" class="java.math.BigDecimal"/>
+	<field name="AhorroVoluntario" class="java.lang.Integer"/>
+	<field name="CON_MIN" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CodigoIsapre" class="java.lang.String"/>
+	<field name="NombreIsapre" class="java.lang.String"/>
+	<field name="AdicionalIsapre" class="java.lang.Integer"/>
+	<field name="CON_FFI" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CON_JUB" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CON_SEGCES" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NumeroCargas" class="java.lang.Integer"/>
+	<field name="ValorCargas" class="java.lang.Integer"/>
+	<field name="NumeroRetroactivos" class="java.lang.Integer"/>
+	<field name="ValorRetroactivos" class="java.lang.Integer"/>
+	<field name="ValorVacaciones" class="java.lang.Long"/>
+	<field name="DiasTrabajados" class="java.lang.Integer"/>
+	<field name="DiasVacaciones" class="java.lang.Integer"/>
+	<field name="DiasDescansos" class="java.lang.Integer"/>
+	<field name="DiasLicencias" class="java.lang.Integer"/>
+	<field name="TipoSueldo" class="java.lang.String"/>
+	<field name="CON_DIASTV" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descuento2dContrato" class="java.lang.Integer"/>
+	<field name="CON_IMPMAR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BonoTNE" class="java.lang.Integer"/>
+	<field name="CON_CTAAFP" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CON_HOREXT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AHORROCONDUCTOR" class="java.lang.Integer"/>
+	<field name="SALDOANTERIOR" class="java.lang.Integer"/>
+	<field name="SINDICATO" class="java.lang.Integer"/>
+	<field name="RETENCIONJUDICIAL" class="java.lang.Integer"/>
+	<field name="CREDITOCAJA" class="java.lang.Integer"/>
+	<field name="TotalDescuentos" class="java.lang.Double"/>
+	<group name="NombreEmpresario" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{NombreEmpresario}]]></groupExpression>
+		<groupHeader>
+			<band height="26">
+				<textField isBlankWhenNull="true">
+					<reportElement x="666" y="2" width="260" height="20" uuid="efb35264-f0d3-4b77-a311-3489cc81d99f"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NombreEmpresario}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="516" y="2" width="50" height="20" uuid="262577af-b34d-4bd4-a9e7-f64463db1584"/>
+					<textElement textAlignment="Center">
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CodigoEmpresario}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="566" y="2" width="100" height="20" uuid="f7bef17f-8869-4675-a6aa-d7d0bfd4e4f2"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RutEmpresario}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="14" uuid="0ef8dd43-45c8-4632-887b-6f07ca7937fa"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="38" width="87" height="20" uuid="093313c5-026b-4268-bfdc-b1d01c77afcf"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Junio 2016]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="0" width="168" height="24" uuid="8fdb202c-895b-400d-80e6-b388c481cda6"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="14" width="182" height="24" uuid="45847b70-c4ec-454d-8226-c5373ce56ba2"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REMUNERACIONES ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="32" height="20" uuid="ccabe306-1749-4d71-9b0f-9f02a3d5bd7e"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cód.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="0" width="54" height="20" uuid="ecca97f0-1196-415b-965b-f9438c02bdb2"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rut]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="87" y="0" width="239" height="20" uuid="b5dcfd8d-e699-4000-a96e-87fca8ac4ef5"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="0" width="27" height="20" uuid="d7af224d-f1b3-429d-85c5-496da1b9ff1b"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="0" width="67" height="20" uuid="7099bac1-24d6-4ad1-9d83-3014f29bb1dc"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Imponible (19%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="0" width="77" height="20" uuid="0d52ab94-1824-4219-9b4e-7ddd8bd0b359"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bruto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="497" y="0" width="69" height="20" uuid="1c4a4061-9ad1-4e7a-8b1f-6df751393f29"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="773" y="0" width="73" height="20" uuid="5e8c1fec-dfaf-49b9-be8b-861743d6b618"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Anticipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="633" y="0" width="76" height="20" uuid="97a0ede7-0941-4936-95b9-5ffa31e485c9"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descuentos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="566" y="0" width="67" height="20" uuid="1516e1f6-6db7-4d8e-8bde-b64bf0055d73"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Haberes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="709" y="0" width="63" height="20" uuid="3afa3bff-e007-4d5a-a51c-4ad1c266bfe3"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A. Líquido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="859" y="0" width="85" height="20" uuid="bc21caba-dc4e-4ce9-9e8d-fba3ec8c1513"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="1" width="32" height="20" uuid="820b0000-00f0-4262-95e7-56d364d05165"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CodigoConductor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="33" y="1" width="54" height="20" uuid="84d7051d-cc33-46dc-a00a-268b03c46621"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RutConductor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="1" width="239" height="20" uuid="60efb8d9-7110-45d2-bd09-5629a4af01ff"/>
+				<box leftPadding="4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreConductor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="1" width="27" height="20" uuid="452793df-f5cc-472f-adc6-b5fe3f9ee95e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DiasTrabajados}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="430" y="1" width="67" height="20" uuid="e73b8264-4ef8-4192-9d40-36a78d1dfe16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Imponible}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="true">
+				<reportElement x="353" y="1" width="77" height="20" uuid="814ce81f-dda3-4526-b945-1d0cc0e4015d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Bruto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="497" y="1" width="69" height="20" uuid="ae292289-0526-4591-965d-b58b1166dffa"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{5%}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="773" y="1" width="73" height="20" uuid="21d62e6e-28ba-45f2-82e5-30ddaf2bf2a4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{Imponible}+$F{dosporciento})-$F{TotalDescuentos})-(($F{5%})-$F{TotalDescuentos})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="23" width="943" height="1" uuid="8ed8e0dd-5443-4507-9900-8222322c300c"/>
+			</line>
+			<textField pattern="$ #,##0">
+				<reportElement x="633" y="1" width="76" height="20" uuid="5267fb2c-a678-4e73-b526-1b9af7959c88"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalDescuentos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="566" y="1" width="67" height="20" uuid="72a5e86c-266b-4b0d-bb04-f86b36680f1c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Imponible}+$F{dosporciento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="709" y="1" width="63" height="20" uuid="771a15f3-c716-464e-b40a-054437118e34"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{Imponible}+$F{dosporciento})-$F{TotalDescuentos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="859" y="1" width="87" height="20" uuid="f4d65cd2-bdaa-4623-b7e8-6fba7039b673"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{5%})-$F{TotalDescuentos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="846" y="0" width="80" height="15" uuid="0e7ff7bf-a5b7-490c-9be8-2303d67664c0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="926" y="0" width="40" height="15" uuid="973efe43-0ef9-4998-aba5-6089969dbc12"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

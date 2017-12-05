@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ServerEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditServerTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ServerListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ServerEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{serverController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditServerLabel_id}" for="id" />
+                            <h:panelGroup>
+                                <h:outputText id="id" value="#{serverController.selected.id}" />
+                                <p:tooltip for="id" value="#{serverController.getComponentMessages('id', myBundle.EditServerHelpText_id)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_registration}" for="registration" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="registration" value="#{serverController.selected.registration}" required="true" requiredMessage="#{myBundle.EditServerRequiredMessage_registration}"/>
+                                <p:tooltip for="registration" value="#{serverController.getComponentMessages('registration', myBundle.EditServerHelpText_registration)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_map}" for="map" />
+                            <h:panelGroup>
+                                <p:inputText id="map" value="#{serverController.selected.map}" title="#{myBundle.EditServerTitle_map}" size="128" maxlength="128"/>
+                                <p:tooltip for="map" value="#{serverController.getComponentMessages('map', myBundle.EditServerHelpText_map)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_bingKey}" for="bingKey" />
+                            <h:panelGroup>
+                                <p:inputText id="bingKey" value="#{serverController.selected.bingKey}" title="#{myBundle.EditServerTitle_bingKey}" size="128" maxlength="128"/>
+                                <p:tooltip for="bingKey" value="#{serverController.getComponentMessages('bingKey', myBundle.EditServerHelpText_bingKey)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_mapUrl}" for="mapUrl" />
+                            <h:panelGroup>
+                                <p:inputText id="mapUrl" value="#{serverController.selected.mapUrl}" title="#{myBundle.EditServerTitle_mapUrl}" size="128" maxlength="128"/>
+                                <p:tooltip for="mapUrl" value="#{serverController.getComponentMessages('mapUrl', myBundle.EditServerHelpText_mapUrl)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_language}" for="language" />
+                            <h:panelGroup>
+                                <p:inputText id="language" value="#{serverController.selected.language}" title="#{myBundle.EditServerTitle_language}" size="128" maxlength="128"/>
+                                <p:tooltip for="language" value="#{serverController.getComponentMessages('language', myBundle.EditServerHelpText_language)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_distanceUnit}" for="distanceUnit" />
+                            <h:panelGroup>
+                                <p:inputText id="distanceUnit" value="#{serverController.selected.distanceUnit}" title="#{myBundle.EditServerTitle_distanceUnit}" size="128" maxlength="128"/>
+                                <p:tooltip for="distanceUnit" value="#{serverController.getComponentMessages('distanceUnit', myBundle.EditServerHelpText_distanceUnit)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_speedUnit}" for="speedUnit" />
+                            <h:panelGroup>
+                                <p:inputText id="speedUnit" value="#{serverController.selected.speedUnit}" title="#{myBundle.EditServerTitle_speedUnit}" size="128" maxlength="128"/>
+                                <p:tooltip for="speedUnit" value="#{serverController.getComponentMessages('speedUnit', myBundle.EditServerHelpText_speedUnit)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_latitude}" for="latitude" />
+                            <h:panelGroup>
+                                <p:inputText id="latitude" value="#{serverController.selected.latitude}" title="#{myBundle.EditServerTitle_latitude}" required="true" requiredMessage="#{myBundle.EditServerRequiredMessage_latitude}"/>
+                                <p:tooltip for="latitude" value="#{serverController.getComponentMessages('latitude', myBundle.EditServerHelpText_latitude)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_longitude}" for="longitude" />
+                            <h:panelGroup>
+                                <p:inputText id="longitude" value="#{serverController.selected.longitude}" title="#{myBundle.EditServerTitle_longitude}" required="true" requiredMessage="#{myBundle.EditServerRequiredMessage_longitude}"/>
+                                <p:tooltip for="longitude" value="#{serverController.getComponentMessages('longitude', myBundle.EditServerHelpText_longitude)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditServerLabel_zoom}" for="zoom" />
+                            <h:panelGroup>
+                                <p:inputText id="zoom" value="#{serverController.selected.zoom}" title="#{myBundle.EditServerTitle_zoom}" required="true" requiredMessage="#{myBundle.EditServerRequiredMessage_zoom}"/>
+                                <p:tooltip for="zoom" value="#{serverController.getComponentMessages('zoom', myBundle.EditServerHelpText_zoom)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{serverController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:ServerListPage:ServerListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:ServerListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

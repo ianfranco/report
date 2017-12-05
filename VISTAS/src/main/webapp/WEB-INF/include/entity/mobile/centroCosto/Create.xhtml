@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CentroCostoCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateCentroCostoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CentroCostoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CentroCostoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{centroCostoController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCentroCostoLabel_nombreCentroCosto}" for="nombreCentroCosto" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreCentroCosto" value="#{centroCostoController.selected.nombreCentroCosto}" title="#{myBundle.CreateCentroCostoTitle_nombreCentroCosto}" required="true" requiredMessage="#{myBundle.CreateCentroCostoRequiredMessage_nombreCentroCosto}" size="100" maxlength="100"/>
+                                <p:tooltip for="nombreCentroCosto" value="#{centroCostoController.getComponentMessages('nombreCentroCosto', myBundle.CreateCentroCostoHelpText_nombreCentroCosto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{centroCostoController.saveNew}" value="#{myBundle.Save}" update="display,:CentroCostoListPage:CentroCostoListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:CentroCostoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

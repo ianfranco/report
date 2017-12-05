@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="RepresentanteEmpresaListPage">
+        <pm:header title="#{myBundle.ListRepresentanteEmpresaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":RepresentanteEmpresaCreatePage:RepresentanteEmpresaCreateForm" actionListener="#{representanteEmpresaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:RepresentanteEmpresaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="RepresentanteEmpresaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{representanteEmpresaController.items}"
+                             var="item"
+                             rowKey="#{item.idRepresentanteEmpresa}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{representanteEmpresaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{representanteEmpresaController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{representanteEmpresaController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('RepresentanteEmpresaListPage:RepresentanteEmpresaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('RepresentanteEmpresaListPage:RepresentanteEmpresaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('RepresentanteEmpresaListPage:RepresentanteEmpresaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idRepresentanteEmpresa}" filterBy="#{item.idRepresentanteEmpresa}" headerText="#{myBundle.ListRepresentanteEmpresaTitle_idRepresentanteEmpresa}">
+                        <h:outputText value="#{item.idRepresentanteEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idEmpresa.idEmpresa}" filterBy="#{item.idEmpresa.idEmpresa}" headerText="#{myBundle.ListRepresentanteEmpresaTitle_idEmpresa}">
+                        <h:outputText value="#{item.idEmpresa.idEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idRepresentanteLegal.idRepresentanteLegal}" filterBy="#{item.idRepresentanteLegal.idRepresentanteLegal}" headerText="#{myBundle.ListRepresentanteEmpresaTitle_idRepresentanteLegal}">
+                        <h:outputText value="#{item.idRepresentanteLegal.idRepresentanteLegal}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RepresentanteEmpresaEditPage:RepresentanteEmpresaEditForm" disabled="#{empty representanteEmpresaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:RepresentanteEmpresaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{representanteEmpresaController.delete}" update=":growl,datalist" disabled="#{empty representanteEmpresaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty representanteEmpresaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.RepresentanteEmpresaHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.RepresentanteEmpresaMenuItem_idEmpresa}" icon="ui-icon-search" update=":EmpresaEditPage:EmpresaEditForm" disabled="#{empty representanteEmpresaController.selected.idEmpresa}" actionListener="#{representanteEmpresaController.prepareIdEmpresa}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EmpresaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.RepresentanteEmpresaMenuItem_idRepresentanteLegal}" icon="ui-icon-search" update=":RepresentanteLegalEditPage:RepresentanteLegalEditForm" disabled="#{empty representanteEmpresaController.selected.idRepresentanteLegal}" actionListener="#{representanteEmpresaController.prepareIdRepresentanteLegal}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:RepresentanteLegalEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

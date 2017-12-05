@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="MonedaPactadaInstitucionSaludCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateMonedaPactadaInstitucionSaludTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:MonedaPactadaInstitucionSaludListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="MonedaPactadaInstitucionSaludCreateForm">
+
+                <h:panelGroup id="display" rendered="#{monedaPactadaInstitucionSaludController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateMonedaPactadaInstitucionSaludLabel_nombreMonedaSalud}" for="nombreMonedaSalud" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreMonedaSalud" value="#{monedaPactadaInstitucionSaludController.selected.nombreMonedaSalud}" title="#{myBundle.CreateMonedaPactadaInstitucionSaludTitle_nombreMonedaSalud}" required="true" requiredMessage="#{myBundle.CreateMonedaPactadaInstitucionSaludRequiredMessage_nombreMonedaSalud}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreMonedaSalud" value="#{monedaPactadaInstitucionSaludController.getComponentMessages('nombreMonedaSalud', myBundle.CreateMonedaPactadaInstitucionSaludHelpText_nombreMonedaSalud)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{monedaPactadaInstitucionSaludController.saveNew}" value="#{myBundle.Save}" update="display,:MonedaPactadaInstitucionSaludListPage:MonedaPactadaInstitucionSaludListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:MonedaPactadaInstitucionSaludListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

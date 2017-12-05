@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AbonoBusEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditAbonoBusTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:AbonoBusListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AbonoBusEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{abonoBusController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditAbonoBusLabel_idAbonoBus}" for="idAbonoBus" />
+                            <h:panelGroup>
+                                <h:outputText id="idAbonoBus" value="#{abonoBusController.selected.idAbonoBus}" />
+                                <p:tooltip for="idAbonoBus" value="#{abonoBusController.getComponentMessages('idAbonoBus', myBundle.EditAbonoBusHelpText_idAbonoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAbonoBusLabel_fechaIngresoAbonoBus}" for="fechaIngresoAbonoBus" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaIngresoAbonoBus" pattern="MM/dd/yyyy" value="#{abonoBusController.selected.fechaIngresoAbonoBus}" title="#{myBundle.EditAbonoBusTitle_fechaIngresoAbonoBus}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_fechaIngresoAbonoBus}" showOn="button"/>
+                                <p:tooltip for="fechaIngresoAbonoBus" value="#{abonoBusController.getComponentMessages('fechaIngresoAbonoBus', myBundle.EditAbonoBusHelpText_fechaIngresoAbonoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAbonoBusLabel_fechaInicioAbonoBus}" for="fechaInicioAbonoBus" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaInicioAbonoBus" pattern="MM/dd/yyyy" value="#{abonoBusController.selected.fechaInicioAbonoBus}" title="#{myBundle.EditAbonoBusTitle_fechaInicioAbonoBus}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_fechaInicioAbonoBus}" showOn="button"/>
+                                <p:tooltip for="fechaInicioAbonoBus" value="#{abonoBusController.getComponentMessages('fechaInicioAbonoBus', myBundle.EditAbonoBusHelpText_fechaInicioAbonoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAbonoBusLabel_numeroCuotasAbonoBus}" for="numeroCuotasAbonoBus" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroCuotasAbonoBus" value="#{abonoBusController.selected.numeroCuotasAbonoBus}" title="#{myBundle.EditAbonoBusTitle_numeroCuotasAbonoBus}"/>
+                                <p:tooltip for="numeroCuotasAbonoBus" value="#{abonoBusController.getComponentMessages('numeroCuotasAbonoBus', myBundle.EditAbonoBusHelpText_numeroCuotasAbonoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAbonoBusLabel_montoAbonoBus}" for="montoAbonoBus" />
+                            <h:panelGroup>
+                                <p:inputText id="montoAbonoBus" value="#{abonoBusController.selected.montoAbonoBus}" title="#{myBundle.EditAbonoBusTitle_montoAbonoBus}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_montoAbonoBus}"/>
+                                <p:tooltip for="montoAbonoBus" value="#{abonoBusController.getComponentMessages('montoAbonoBus', myBundle.EditAbonoBusHelpText_montoAbonoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAbonoBusLabel_activoAbonoBus}" for="activoAbonoBus" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="activoAbonoBus" value="#{abonoBusController.selected.activoAbonoBus}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_activoAbonoBus}"/>
+                                <p:tooltip for="activoAbonoBus" value="#{abonoBusController.getComponentMessages('activoAbonoBus', myBundle.EditAbonoBusHelpText_activoAbonoBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAbonoBusLabel_idBus}" for="idBus" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idBus" value="#{abonoBusController.selected.idBus}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_idBus}" converter="busConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{busController.items}"
+                                                   var="idBusItem"
+                                                   itemValue="#{idBusItem}"
+                                                   itemLabel="#{idBusItem.idBus.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idBus" value="#{abonoBusController.getComponentMessages('idBus', myBundle.EditAbonoBusHelpText_idBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAbonoBusLabel_idTipoAbono}" for="idTipoAbono" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTipoAbono" value="#{abonoBusController.selected.idTipoAbono}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_idTipoAbono}" converter="tipoAbonoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoAbonoController.items}"
+                                                   var="idTipoAbonoItem"
+                                                   itemValue="#{idTipoAbonoItem}"
+                                                   itemLabel="#{idTipoAbonoItem.idTipoAbono.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTipoAbono" value="#{abonoBusController.getComponentMessages('idTipoAbono', myBundle.EditAbonoBusHelpText_idTipoAbono)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{abonoBusController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:AbonoBusListPage:AbonoBusListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:AbonoBusListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

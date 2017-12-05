@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EgresoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditEgresoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EgresoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EgresoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{egresoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditEgresoLabel_idEgreso}" for="idEgreso" />
+                            <h:panelGroup>
+                                <h:outputText id="idEgreso" value="#{egresoController.selected.idEgreso}" />
+                                <p:tooltip for="idEgreso" value="#{egresoController.getComponentMessages('idEgreso', myBundle.EditEgresoHelpText_idEgreso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEgresoLabel_nombreEgreso}" for="nombreEgreso" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreEgreso" value="#{egresoController.selected.nombreEgreso}" title="#{myBundle.EditEgresoTitle_nombreEgreso}" required="true" requiredMessage="#{myBundle.EditEgresoRequiredMessage_nombreEgreso}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreEgreso" value="#{egresoController.getComponentMessages('nombreEgreso', myBundle.EditEgresoHelpText_nombreEgreso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditEgresoLabel_activo}" for="activo" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="activo" value="#{egresoController.selected.activo}" required="true" requiredMessage="#{myBundle.EditEgresoRequiredMessage_activo}"/>
+                                <p:tooltip for="activo" value="#{egresoController.getComponentMessages('activo', myBundle.EditEgresoHelpText_activo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{egresoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:EgresoListPage:EgresoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:EgresoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

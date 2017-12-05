@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AbonoBusListPage">
+        <pm:header title="#{myBundle.ListAbonoBusTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":AbonoBusCreatePage:AbonoBusCreateForm" actionListener="#{abonoBusController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:AbonoBusCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AbonoBusListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{abonoBusController.items}"
+                             var="item"
+                             rowKey="#{item.idAbonoBus}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{abonoBusController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{abonoBusController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{abonoBusController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('AbonoBusListPage:AbonoBusListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('AbonoBusListPage:AbonoBusListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('AbonoBusListPage:AbonoBusListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idAbonoBus}" filterBy="#{item.idAbonoBus}" headerText="#{myBundle.ListAbonoBusTitle_idAbonoBus}">
+                        <h:outputText value="#{item.idAbonoBus}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaIngresoAbonoBus}" filterBy="#{item.fechaIngresoAbonoBus}" headerText="#{myBundle.ListAbonoBusTitle_fechaIngresoAbonoBus}">
+                        <h:outputText value="#{item.fechaIngresoAbonoBus}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaInicioAbonoBus}" filterBy="#{item.fechaInicioAbonoBus}" headerText="#{myBundle.ListAbonoBusTitle_fechaInicioAbonoBus}">
+                        <h:outputText value="#{item.fechaInicioAbonoBus}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroCuotasAbonoBus}" filterBy="#{item.numeroCuotasAbonoBus}" headerText="#{myBundle.ListAbonoBusTitle_numeroCuotasAbonoBus}">
+                        <h:outputText value="#{item.numeroCuotasAbonoBus}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.montoAbonoBus}" filterBy="#{item.montoAbonoBus}" headerText="#{myBundle.ListAbonoBusTitle_montoAbonoBus}">
+                        <h:outputText value="#{item.montoAbonoBus}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.activoAbonoBus}" filterBy="#{item.activoAbonoBus}" headerText="#{myBundle.ListAbonoBusTitle_activoAbonoBus}">
+                        <h:selectBooleanCheckbox id="activoAbonoBus" value="#{item.activoAbonoBus}" title="#{myBundle.EditAbonoBusTitle_activoAbonoBus}" required="true" requiredMessage="#{myBundle.EditAbonoBusRequiredMessage_activoAbonoBus}" disabled="true"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.idBus.idBus}" filterBy="#{item.idBus.idBus}" headerText="#{myBundle.ListAbonoBusTitle_idBus}">
+                                            <h:outputText value="#{item.idBus.idBus}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTipoAbono.idTipoAbono}" filterBy="#{item.idTipoAbono.idTipoAbono}" headerText="#{myBundle.ListAbonoBusTitle_idTipoAbono}">
+                                            <h:outputText value="#{item.idTipoAbono.idTipoAbono}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":AbonoBusEditPage:AbonoBusEditForm" disabled="#{empty abonoBusController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:AbonoBusEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{abonoBusController.delete}" update=":growl,datalist" disabled="#{empty abonoBusController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty abonoBusController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.AbonoBusHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.AbonoBusMenuItem_idBus}" icon="ui-icon-search" update=":BusEditPage:BusEditForm" disabled="#{empty abonoBusController.selected.idBus}" actionListener="#{abonoBusController.prepareIdBus}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:BusEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.AbonoBusMenuItem_idTipoAbono}" icon="ui-icon-search" update=":TipoAbonoEditPage:TipoAbonoEditForm" disabled="#{empty abonoBusController.selected.idTipoAbono}" actionListener="#{abonoBusController.prepareIdTipoAbono}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoAbonoEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

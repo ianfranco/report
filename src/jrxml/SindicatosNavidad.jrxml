@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0e0ab515-11e4-4cc1-aca8-7c77b643d5e0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[CALL sindicatos_navidad(0, '2017-10-01')]]>
+	</queryString>
+	<field name="codigoTrabajador" class="java.lang.Integer"/>
+	<field name="nombreTrabajador" class="java.lang.String"/>
+	<field name="nombre_terminal" class="java.lang.String"/>
+	<field name="nombreSindicato" class="java.lang.String"/>
+	<field name="NombreEmpresario" class="java.lang.String"/>
+	<field name="montoSindicato" class="java.lang.Integer"/>
+	<variable name="montoSindicato_1" class="java.lang.Integer" resetType="Group" resetGroup="NombreEmpresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoSindicato}]]></variableExpression>
+	</variable>
+	<variable name="montoSindicato_2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoSindicato}]]></variableExpression>
+	</variable>
+	<group name="NombreEmpresario" keepTogether="true">
+		<groupExpression><![CDATA[$F{NombreEmpresario}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<textField>
+					<reportElement x="61" y="0" width="260" height="20" uuid="1d8a1a58-5faa-45be-854f-2227bf5bd247"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NombreEmpresario}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="61" height="20" uuid="b07c1d76-ee7f-45f9-bf7e-136c7e8dae68"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Empresario:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="22" width="246" height="15" uuid="9e1661f9-b696-44f4-bce6-5bd52e1f560a"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Conductor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="246" y="22" width="184" height="15" uuid="cc8f55e0-21e9-4bfb-9b99-f749e19ad871"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sindicato]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="430" y="22" width="100" height="15" uuid="f542ca26-93f5-42a3-b0e1-144c502644ff"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Monto]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="29">
+				<staticText>
+					<reportElement x="330" y="0" width="100" height="20" uuid="d571c067-336a-45a5-aa09-cb96749f6771"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Total:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="432" y="19" width="100" height="1" uuid="816703ef-2aa4-49de-a529-7fc665c66dbe"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="29" width="232" height="20" uuid="fc83e3e8-c0a3-413a-8d37-108d08cc60cf"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Listado de Conductores x Empresario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="0" width="163" height="20" uuid="fafc77b8-5ceb-4c79-9ce9-a9ee5bbdace6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Sindicatos - Navidad 2017]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="19" uuid="a5de8883-e0f7-4c58-944b-2c103b8ced4d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="38" width="40" height="30" uuid="4e91c26a-edc1-4e5f-8238-6bafb60e334f"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="38" width="159" height="30" uuid="6ec2af2e-e327-4c3e-bc34-edbc68ea1bf8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="246" height="20" uuid="c3f94af2-c86e-48f8-a93d-db4583d28252"/>
+				<textFieldExpression><![CDATA[$F{nombreTrabajador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="0" width="184" height="20" uuid="5522242b-3060-42ae-92cf-cb3575435da3"/>
+				<textFieldExpression><![CDATA[$F{nombreSindicato}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="432" y="19" width="100" height="1" uuid="31b00e4e-c54e-478d-8791-3e187c5756d1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

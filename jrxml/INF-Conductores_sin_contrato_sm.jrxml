@@ -5,103 +5,38 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="157"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="834"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="215"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-    codigo_trabajador,
-    CONCAT(trabajador.apellido_paterno_trabajador,
-            ' ',
-            trabajador.apellido_materno_trabajador,
-            ' ',
-            trabajador.nombre_trabajador) AS nombreConductor,
-    (SELECT
-            empresa.nombre_empresa
-        FROM
-            relacion_laboral
-                LEFT JOIN
-            empresa ON relacion_laboral.id_empresa = empresa.id_empresa
-        WHERE
-            fecha_fin BETWEEN IF(fecha_inicio = fecha_fin,
-                fecha_inicio,
-                '2016-12-01') AND '2016-12-31'
-                AND relacion_laboral.id_trabajador = trabajador.id_trabajador
-        GROUP BY id_trabajador
-        ORDER BY fecha_fin DESC) AS empleador,
-    COUNT(guia.folio) AS guias,
-    @cinco:=IFNULL((SELECT
-            SUM(egreso_guia.monto)
-        FROM
-            egreso_guia
-                RIGHT JOIN
-            guia ON guia.id_guia = egreso_guia.id_guia
-                LEFT JOIN
-            egreso_recaudacion ON guia.id_proceso_recuadacion = egreso_recaudacion.id_proceso_recaudacion
-        WHERE
-            guia.id_trabajador = trabajador.id_trabajador
-                AND guia.fecha_recaudacion BETWEEN '2016-12-01' AND '2016-12-31'
-                AND egreso_recaudacion.id_egreso = 12
-                AND egreso_guia.id_egreso_servicio = egreso_recaudacion.id_egreso_recaudacion AND guia.id_proceso_recuadacion NOT IN (34 , 35, 36)), 0) AS retencion,
-    @ahorro:=sum_ahorro_guia( trabajador.id_trabajador, null,  null, '2016-12-01', '2016-12-31') AS ahorro,
-    @abono:=(SELECT IFNULL(SUM(monto), 0) FROM haber_trabajador_liquidacion WHERE haber_trabajador_liquidacion.id_trabajador =  trabajador.id_trabajador AND haber_trabajador_liquidacion.fecha_inicio_haber BETWEEN '2016-12-01' AND LAST_DAY('2016-12-01')) AS Abono,
-    @total:=@ahorro+@abono AS total,
-    @totalHaberes:=(@cinco+@abono+@ahorro) AS totalHaberes,
-    @retencion:=(SELECT IFNULL(SUM(monto), 0) FROM descuento_trabajador_liquidacion WHERE descuento_trabajador_liquidacion.id_trabajador = trabajador.id_trabajador AND descuento_trabajador_liquidacion.id_descuento_trabajador = 1 AND descuento_trabajador_liquidacion.fecha_inicio_descuento BETWEEN '2016-12-01' AND LAST_DAY('2016-12-01')) AS RetencionJudicial,
-    @credito:=(SELECT IFNULL(SUM(monto), 0) FROM descuento_trabajador_liquidacion WHERE descuento_trabajador_liquidacion.id_trabajador = trabajador.id_trabajador AND descuento_trabajador_liquidacion.id_descuento_trabajador = 2 AND descuento_trabajador_liquidacion.fecha_inicio_descuento BETWEEN '2016-12-01' AND LAST_DAY('2016-12-01')) AS CreditoCaja,
-    @reconocimiento:=(SELECT IFNULL(SUM(monto), 0) FROM descuento_trabajador_liquidacion WHERE descuento_trabajador_liquidacion.id_trabajador = trabajador.id_trabajador AND descuento_trabajador_liquidacion.id_descuento_trabajador = 5 AND descuento_trabajador_liquidacion.fecha_inicio_descuento BETWEEN '2016-12-01' AND LAST_DAY('2016-12-01')) AS ReconocimientoDeuda,
-    @sindicato:=IFNULL((SELECT cuota_sindicato FROM sindicato_trabajador LEFT JOIN sindicato ON sindicato_trabajador.id_sindicato = sindicato.id_sindicato WHERE sindicato_trabajador.id_trabajador = trabajador.id_trabajador), 0) AS sindicato,
-    @saldoAnterior:=(SELECT IFNULL(SUM(monto), 0) FROM descuento_trabajador_liquidacion WHERE descuento_trabajador_liquidacion.id_trabajador = trabajador.id_trabajador AND descuento_trabajador_liquidacion.id_descuento_trabajador = 4 AND descuento_trabajador_liquidacion.fecha_inicio_descuento BETWEEN '2016-12-01' AND LAST_DAY('2016-12-01')) AS SaldoAnterior,
-    (@ahorro+@abono+@cinco)-(@retencion+@credito+@reconocimiento+@sindicato+@saldoAnterior) AS SaldoFINAL
-FROM
-    guia
-        LEFT JOIN
-    trabajador ON guia.id_trabajador = trabajador.id_trabajador     
-     
-WHERE
-    guia.fecha_recaudacion BETWEEN '2016-12-01' AND '2016-12-31'
-        AND guia.id_proceso_recuadacion IN (34 , 35, 36)
-GROUP BY trabajador.id_trabajador
-HAVING empleador IS NULL 
-ORDER BY trabajador.apellido_paterno_trabajador]]>
+		<![CDATA[CALL conductores_sin_contrato_SM_NOVIEMBRE();]]>
 	</queryString>
-	<field name="codigo_trabajador" class="java.lang.Integer"/>
-	<field name="nombreConductor" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="conductor" class="java.lang.String"/>
 	<field name="empleador" class="java.lang.String"/>
-	<field name="guias" class="java.lang.Long"/>
-	<field name="retencion" class="java.math.BigDecimal"/>
-	<field name="ahorro" class="java.lang.Long"/>
-	<field name="Abono" class="java.math.BigDecimal"/>
-	<field name="total" class="java.lang.Double"/>
-	<field name="totalHaberes" class="java.lang.Double"/>
-	<field name="RetencionJudicial" class="java.math.BigDecimal"/>
-	<field name="CreditoCaja" class="java.math.BigDecimal"/>
-	<field name="ReconocimientoDeuda" class="java.math.BigDecimal"/>
-	<field name="sindicato" class="java.lang.Long"/>
-	<field name="SaldoAnterior" class="java.math.BigDecimal"/>
-	<field name="SaldoFINAL" class="java.lang.Double"/>
+	<field name="guias" class="java.lang.Integer"/>
+	<field name="montoCinco" class="java.lang.Integer"/>
+	<field name="montoAhorro" class="java.lang.Integer"/>
+	<field name="montoAbono" class="java.lang.Integer"/>
+	<field name="montoHaberes" class="java.lang.Integer"/>
+	<field name="montoSaldoAnterior" class="java.lang.Integer"/>
+	<field name="montoReconocimiento" class="java.lang.Integer"/>
+	<field name="montoSaldo" class="java.lang.Integer"/>
 	<variable name="retencion1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{retencion}]]></variableExpression>
+		<variableExpression><![CDATA[$F{montoCinco}]]></variableExpression>
 	</variable>
 	<variable name="Abono1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{Abono}]]></variableExpression>
+		<variableExpression><![CDATA[$F{montoHaberes}]]></variableExpression>
 	</variable>
 	<variable name="SaldoAnterior1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{SaldoAnterior}]]></variableExpression>
-	</variable>
-	<variable name="sindicato1" class="java.lang.Long" calculation="Sum">
-		<variableExpression><![CDATA[$F{sindicato}]]></variableExpression>
-	</variable>
-	<variable name="RetencionJudicial1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{RetencionJudicial}]]></variableExpression>
+		<variableExpression><![CDATA[$F{montoSaldoAnterior}]]></variableExpression>
 	</variable>
 	<variable name="ReconocimientoDeuda1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{ReconocimientoDeuda}]]></variableExpression>
-	</variable>
-	<variable name="CreditoCaja1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{CreditoCaja}]]></variableExpression>
+		<variableExpression><![CDATA[$F{montoReconocimiento}]]></variableExpression>
 	</variable>
 	<variable name="SaldoFINAL1" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{SaldoFINAL}]]></variableExpression>
+		<variableExpression><![CDATA[$F{montoSaldo}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -133,19 +68,17 @@ ORDER BY trabajador.apellido_paterno_trabajador]]>
 				</textElement>
 				<text><![CDATA[Administración (Conductores)]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="59" width="180" height="15" uuid="d6a6e04a-2614-461a-80c0-9d75d93444fd">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement>
+			<textField>
+				<reportElement x="0" y="59" width="180" height="15" uuid="999cf3e5-aeb4-472d-96b0-78e10068be17"/>
+				<textElement markup="none">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DICIEMBRE 2016]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{fechaCompleta}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<textField>
 				<reportElement x="510" y="0" width="60" height="15" uuid="5552dd09-8d80-4310-9397-ed9e36926c2d"/>
 				<textElement textAlignment="Left">
@@ -214,7 +147,7 @@ ORDER BY trabajador.apellido_paterno_trabajador]]>
 				<text><![CDATA[Rec. Deuda]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="0" width="40" height="20" uuid="283fdf77-f52b-4c63-a3d1-afb91bf8cc96"/>
+				<reportElement x="458" y="0" width="40" height="20" uuid="283fdf77-f52b-4c63-a3d1-afb91bf8cc96"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
@@ -238,7 +171,7 @@ ORDER BY trabajador.apellido_paterno_trabajador]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{codigo_trabajador}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="30" y="0" width="178" height="15" uuid="f7ed651a-3195-4ff0-9fd1-5ab2f8f46915">
@@ -247,7 +180,7 @@ ORDER BY trabajador.apellido_paterno_trabajador]]>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombreConductor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{conductor}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,###.###">
 				<reportElement x="209" y="0" width="50" height="15" uuid="3a680a73-a13d-473e-b634-feffb49830b8">
@@ -256,16 +189,16 @@ ORDER BY trabajador.apellido_paterno_trabajador]]>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{retencion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{montoCinco}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,###.###">
-				<reportElement x="455" y="0" width="40" height="15" uuid="3f9b2b70-988b-4c0e-9a03-ed6a177b3b69">
+				<reportElement x="458" y="0" width="40" height="15" uuid="3f9b2b70-988b-4c0e-9a03-ed6a177b3b69">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{SaldoFINAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{montoSaldo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="510" y="0" width="70" height="15" uuid="15fd5965-949b-4448-817e-c4a2eda7ff6a"/>
@@ -280,39 +213,36 @@ ORDER BY trabajador.apellido_paterno_trabajador]]>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{SaldoAnterior}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{montoSaldoAnterior}]]></textFieldExpression>
 			</textField>
-			<textField pattern="$ #,###.###">
-				<reportElement x="349" y="0" width="40" height="15" uuid="3f59fc47-5bea-4f9f-b124-d66b97788ca2"/>
-				<textElement textAlignment="Right">
+			<staticText>
+				<reportElement x="349" y="0" width="40" height="15" uuid="8b7f4d41-a85f-4601-b062-e1be2c4305b3"/>
+				<textElement textAlignment="Right" markup="none">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sindicato}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[0]]></text>
+			</staticText>
 			<textField pattern="$ #,###.###">
 				<reportElement x="396" y="0" width="50" height="15" uuid="118c66b2-c5f6-458f-a58d-7fd9c735d4d4"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ReconocimientoDeuda}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{montoReconocimiento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,###.###">
 				<reportElement x="259" y="0" width="40" height="15" uuid="33716876-fbd5-45b9-a97e-5b1a805c9cf5"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{montoHaberes}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="34" splitType="Stretch"/>
+		<band height="32" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="45" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField pattern="$ #,###.###">
 				<reportElement x="208" y="0" width="50" height="15" uuid="b6d48866-fe37-4ea6-bdce-03f21b89635e"/>
 				<textElement textAlignment="Right">
@@ -334,13 +264,13 @@ ORDER BY trabajador.apellido_paterno_trabajador]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{SaldoAnterior1}]]></textFieldExpression>
 			</textField>
-			<textField pattern="$ #,###.###">
-				<reportElement x="349" y="0" width="40" height="14" uuid="d7db5896-1e94-449a-9b79-03bd6ac34572"/>
-				<textElement textAlignment="Right">
+			<staticText>
+				<reportElement x="349" y="0" width="40" height="14" uuid="eb6e1bdd-7ea5-4ed2-af33-a2e07936194e"/>
+				<textElement textAlignment="Right" markup="none">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{sindicato1}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[0]]></text>
+			</staticText>
 			<textField pattern="$ #,###.###">
 				<reportElement x="398" y="0" width="50" height="14" uuid="0b7baba1-d3e2-483d-a3c6-16c35b2e66bb"/>
 				<textElement textAlignment="Right">
@@ -349,7 +279,7 @@ ORDER BY trabajador.apellido_paterno_trabajador]]>
 				<textFieldExpression><![CDATA[$V{ReconocimientoDeuda1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,###.###">
-				<reportElement x="450" y="0" width="50" height="15" uuid="642d6485-bb16-4265-908b-ba422fc8eba9"/>
+				<reportElement x="455" y="0" width="50" height="15" uuid="642d6485-bb16-4265-908b-ba422fc8eba9"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>

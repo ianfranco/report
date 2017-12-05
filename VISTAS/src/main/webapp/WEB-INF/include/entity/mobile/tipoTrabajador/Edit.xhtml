@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoTrabajadorEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditTipoTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TipoTrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tipoTrabajadorController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditTipoTrabajadorLabel_idTipoTrabajador}" for="idTipoTrabajador" />
+                            <h:panelGroup>
+                                <h:outputText id="idTipoTrabajador" value="#{tipoTrabajadorController.selected.idTipoTrabajador}" />
+                                <p:tooltip for="idTipoTrabajador" value="#{tipoTrabajadorController.getComponentMessages('idTipoTrabajador', myBundle.EditTipoTrabajadorHelpText_idTipoTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTipoTrabajadorLabel_nombreTipoTrabajador}" for="nombreTipoTrabajador" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreTipoTrabajador" value="#{tipoTrabajadorController.selected.nombreTipoTrabajador}" title="#{myBundle.EditTipoTrabajadorTitle_nombreTipoTrabajador}" required="true" requiredMessage="#{myBundle.EditTipoTrabajadorRequiredMessage_nombreTipoTrabajador}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreTipoTrabajador" value="#{tipoTrabajadorController.getComponentMessages('nombreTipoTrabajador', myBundle.EditTipoTrabajadorHelpText_nombreTipoTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tipoTrabajadorController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:TipoTrabajadorListPage:TipoTrabajadorListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:TipoTrabajadorListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

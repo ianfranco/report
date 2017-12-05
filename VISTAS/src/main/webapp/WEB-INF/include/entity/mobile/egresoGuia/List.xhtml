@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EgresoGuiaListPage">
+        <pm:header title="#{myBundle.ListEgresoGuiaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":EgresoGuiaCreatePage:EgresoGuiaCreateForm" actionListener="#{egresoGuiaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:EgresoGuiaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EgresoGuiaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{egresoGuiaController.items}"
+                             var="item"
+                             rowKey="#{item.idEgresoGuia}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{egresoGuiaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{egresoGuiaController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{egresoGuiaController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('EgresoGuiaListPage:EgresoGuiaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('EgresoGuiaListPage:EgresoGuiaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('EgresoGuiaListPage:EgresoGuiaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idEgresoGuia}" filterBy="#{item.idEgresoGuia}" headerText="#{myBundle.ListEgresoGuiaTitle_idEgresoGuia}">
+                        <h:outputText value="#{item.idEgresoGuia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.monto}" filterBy="#{item.monto}" headerText="#{myBundle.ListEgresoGuiaTitle_monto}">
+                        <h:outputText value="#{item.monto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idEgresoServicio.idEgresoServicio}" filterBy="#{item.idEgresoServicio.idEgresoServicio}" headerText="#{myBundle.ListEgresoGuiaTitle_idEgresoServicio}">
+                        <h:outputText value="#{item.idEgresoServicio.idEgresoServicio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idGuia.idGuia}" filterBy="#{item.idGuia.idGuia}" headerText="#{myBundle.ListEgresoGuiaTitle_idGuia}">
+                        <h:outputText value="#{item.idGuia.idGuia}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EgresoGuiaEditPage:EgresoGuiaEditForm" disabled="#{empty egresoGuiaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:EgresoGuiaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{egresoGuiaController.delete}" update=":growl,datalist" disabled="#{empty egresoGuiaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty egresoGuiaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.EgresoGuiaHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.EgresoGuiaMenuItem_idEgresoServicio}" icon="ui-icon-search" update=":EgresoServicioEditPage:EgresoServicioEditForm" disabled="#{empty egresoGuiaController.selected.idEgresoServicio}" actionListener="#{egresoGuiaController.prepareIdEgresoServicio}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EgresoServicioEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.EgresoGuiaMenuItem_idGuia}" icon="ui-icon-search" update=":GuiaEditPage:GuiaEditForm" disabled="#{empty egresoGuiaController.selected.idGuia}" actionListener="#{egresoGuiaController.prepareIdGuia}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:GuiaEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

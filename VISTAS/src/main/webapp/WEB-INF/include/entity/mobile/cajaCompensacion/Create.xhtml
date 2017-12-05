@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CajaCompensacionCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateCajaCompensacionTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CajaCompensacionListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CajaCompensacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{cajaCompensacionController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCajaCompensacionLabel_nombreCajaCompensacion}" for="nombreCajaCompensacion" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreCajaCompensacion" value="#{cajaCompensacionController.selected.nombreCajaCompensacion}" title="#{myBundle.CreateCajaCompensacionTitle_nombreCajaCompensacion}" required="true" requiredMessage="#{myBundle.CreateCajaCompensacionRequiredMessage_nombreCajaCompensacion}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreCajaCompensacion" value="#{cajaCompensacionController.getComponentMessages('nombreCajaCompensacion', myBundle.CreateCajaCompensacionHelpText_nombreCajaCompensacion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCajaCompensacionLabel_comision}" for="comision" />
+                            <h:panelGroup>
+                                <p:inputText id="comision" value="#{cajaCompensacionController.selected.comision}" title="#{myBundle.CreateCajaCompensacionTitle_comision}"/>
+                                <p:tooltip for="comision" value="#{cajaCompensacionController.getComponentMessages('comision', myBundle.CreateCajaCompensacionHelpText_comision)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateCajaCompensacionLabel_porcentajeDescuento}" for="porcentajeDescuento" />
+                            <h:panelGroup>
+                                <p:inputText id="porcentajeDescuento" value="#{cajaCompensacionController.selected.porcentajeDescuento}" title="#{myBundle.CreateCajaCompensacionTitle_porcentajeDescuento}" required="true" requiredMessage="#{myBundle.CreateCajaCompensacionRequiredMessage_porcentajeDescuento}"/>
+                                <p:tooltip for="porcentajeDescuento" value="#{cajaCompensacionController.getComponentMessages('porcentajeDescuento', myBundle.CreateCajaCompensacionHelpText_porcentajeDescuento)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{cajaCompensacionController.saveNew}" value="#{myBundle.Save}" update="display,:CajaCompensacionListPage:CajaCompensacionListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:CajaCompensacionListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserCreateDlg" widgetVar="UserCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateUserTitle}" closeOnEscape="true">
+
+            <h:form id="UserCreateForm">
+
+                <h:panelGroup id="display" rendered="#{userController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_name}" for="name" />
+                        <h:panelGroup>
+                            <p:inputText id="name" value="#{userController.selected.name}" title="#{myBundle.CreateUserTitle_name}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_name}" size="128" maxlength="128"/>
+                            <p:tooltip for="name" value="#{userController.getComponentMessages('name', myBundle.CreateUserHelpText_name)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_email}" for="email" />
+                        <h:panelGroup>
+                            <p:inputText id="email" value="#{userController.selected.email}" title="#{myBundle.CreateUserTitle_email}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_email}" size="128" maxlength="128"/>
+                            <p:tooltip for="email" value="#{userController.getComponentMessages('email', myBundle.CreateUserHelpText_email)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_hashedPassword}" for="hashedPassword" />
+                        <h:panelGroup>
+                            <p:inputText id="hashedPassword" value="#{userController.selected.hashedPassword}" title="#{myBundle.CreateUserTitle_hashedPassword}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_hashedPassword}" size="128" maxlength="128"/>
+                            <p:tooltip for="hashedPassword" value="#{userController.getComponentMessages('hashedPassword', myBundle.CreateUserHelpText_hashedPassword)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_salt}" for="salt" />
+                        <h:panelGroup>
+                            <p:inputText id="salt" value="#{userController.selected.salt}" title="#{myBundle.CreateUserTitle_salt}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_salt}" size="128" maxlength="128"/>
+                            <p:tooltip for="salt" value="#{userController.getComponentMessages('salt', myBundle.CreateUserHelpText_salt)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_readonly}" for="readonly" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="readonly" value="#{userController.selected.readonly}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_readonly}"/>
+                            <p:tooltip for="readonly" value="#{userController.getComponentMessages('readonly', myBundle.CreateUserHelpText_readonly)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_admin}" for="admin" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="admin" value="#{userController.selected.admin}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_admin}"/>
+                            <p:tooltip for="admin" value="#{userController.getComponentMessages('admin', myBundle.CreateUserHelpText_admin)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_map}" for="map" />
+                        <h:panelGroup>
+                            <p:inputText id="map" value="#{userController.selected.map}" title="#{myBundle.CreateUserTitle_map}" size="128" maxlength="128"/>
+                            <p:tooltip for="map" value="#{userController.getComponentMessages('map', myBundle.CreateUserHelpText_map)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_language}" for="language" />
+                        <h:panelGroup>
+                            <p:inputText id="language" value="#{userController.selected.language}" title="#{myBundle.CreateUserTitle_language}" size="128" maxlength="128"/>
+                            <p:tooltip for="language" value="#{userController.getComponentMessages('language', myBundle.CreateUserHelpText_language)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_distanceUnit}" for="distanceUnit" />
+                        <h:panelGroup>
+                            <p:inputText id="distanceUnit" value="#{userController.selected.distanceUnit}" title="#{myBundle.CreateUserTitle_distanceUnit}" size="128" maxlength="128"/>
+                            <p:tooltip for="distanceUnit" value="#{userController.getComponentMessages('distanceUnit', myBundle.CreateUserHelpText_distanceUnit)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_speedUnit}" for="speedUnit" />
+                        <h:panelGroup>
+                            <p:inputText id="speedUnit" value="#{userController.selected.speedUnit}" title="#{myBundle.CreateUserTitle_speedUnit}" size="128" maxlength="128"/>
+                            <p:tooltip for="speedUnit" value="#{userController.getComponentMessages('speedUnit', myBundle.CreateUserHelpText_speedUnit)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_latitude}" for="latitude" />
+                        <h:panelGroup>
+                            <p:inputText id="latitude" value="#{userController.selected.latitude}" title="#{myBundle.CreateUserTitle_latitude}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_latitude}"/>
+                            <p:tooltip for="latitude" value="#{userController.getComponentMessages('latitude', myBundle.CreateUserHelpText_latitude)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_longitude}" for="longitude" />
+                        <h:panelGroup>
+                            <p:inputText id="longitude" value="#{userController.selected.longitude}" title="#{myBundle.CreateUserTitle_longitude}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_longitude}"/>
+                            <p:tooltip for="longitude" value="#{userController.getComponentMessages('longitude', myBundle.CreateUserHelpText_longitude)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateUserLabel_zoom}" for="zoom" />
+                        <h:panelGroup>
+                            <p:inputText id="zoom" value="#{userController.selected.zoom}" title="#{myBundle.CreateUserTitle_zoom}" required="true" requiredMessage="#{myBundle.CreateUserRequiredMessage_zoom}"/>
+                            <p:tooltip for="zoom" value="#{userController.getComponentMessages('zoom', myBundle.CreateUserHelpText_zoom)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userController.saveNew}" value="#{myBundle.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UserCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('UserCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

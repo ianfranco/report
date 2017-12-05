@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DetalleVentaBoletoListPage">
+        <pm:header title="#{myBundle.ListDetalleVentaBoletoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":DetalleVentaBoletoCreatePage:DetalleVentaBoletoCreateForm" actionListener="#{detalleVentaBoletoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DetalleVentaBoletoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DetalleVentaBoletoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{detalleVentaBoletoController.items}"
+                             var="item"
+                             rowKey="#{item.idDetalleVentaBoleto}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{detalleVentaBoletoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{detalleVentaBoletoController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{detalleVentaBoletoController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DetalleVentaBoletoListPage:DetalleVentaBoletoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DetalleVentaBoletoListPage:DetalleVentaBoletoListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('DetalleVentaBoletoListPage:DetalleVentaBoletoListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idDetalleVentaBoleto}" filterBy="#{item.idDetalleVentaBoleto}" headerText="#{myBundle.ListDetalleVentaBoletoTitle_idDetalleVentaBoleto}">
+                        <h:outputText value="#{item.idDetalleVentaBoleto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.total}" filterBy="#{item.total}" headerText="#{myBundle.ListDetalleVentaBoletoTitle_total}">
+                        <h:outputText value="#{item.total}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idInventarioInterno.idInventarioInterno}" filterBy="#{item.idInventarioInterno.idInventarioInterno}" headerText="#{myBundle.ListDetalleVentaBoletoTitle_idInventarioInterno}">
+                        <h:outputText value="#{item.idInventarioInterno.idInventarioInterno}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idVentaBoleto.idVentaBoleto}" filterBy="#{item.idVentaBoleto.idVentaBoleto}" headerText="#{myBundle.ListDetalleVentaBoletoTitle_idVentaBoleto}">
+                        <h:outputText value="#{item.idVentaBoleto.idVentaBoleto}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DetalleVentaBoletoEditPage:DetalleVentaBoletoEditForm" disabled="#{empty detalleVentaBoletoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DetalleVentaBoletoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{detalleVentaBoletoController.delete}" update=":growl,datalist" disabled="#{empty detalleVentaBoletoController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty detalleVentaBoletoController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.DetalleVentaBoletoHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.DetalleVentaBoletoMenuItem_idInventarioInterno}" icon="ui-icon-search" update=":InventarioInternoEditPage:InventarioInternoEditForm" disabled="#{empty detalleVentaBoletoController.selected.idInventarioInterno}" actionListener="#{detalleVentaBoletoController.prepareIdInventarioInterno}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:InventarioInternoEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.DetalleVentaBoletoMenuItem_idVentaBoleto}" icon="ui-icon-search" update=":VentaBoletoEditPage:VentaBoletoEditForm" disabled="#{empty detalleVentaBoletoController.selected.idVentaBoleto}" actionListener="#{detalleVentaBoletoController.prepareIdVentaBoleto}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:VentaBoletoEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

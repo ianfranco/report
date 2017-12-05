@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="BusServicioCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateBusServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:BusServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="BusServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{busServicioController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateBusServicioLabel_idBus}" for="idBus" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idBus" value="#{busServicioController.selected.idBus}" required="true" requiredMessage="#{myBundle.CreateBusServicioRequiredMessage_idBus}" converter="busConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{busController.items}"
+                                                   var="idBusItem"
+                                                   itemValue="#{idBusItem}"
+                                                   itemLabel="#{idBusItem.idBus.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idBus" value="#{busServicioController.getComponentMessages('idBus', myBundle.CreateBusServicioHelpText_idBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateBusServicioLabel_idServicio}" for="idServicio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idServicio" value="#{busServicioController.selected.idServicio}" required="true" requiredMessage="#{myBundle.CreateBusServicioRequiredMessage_idServicio}" converter="servicioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{servicioController.items}"
+                                                   var="idServicioItem"
+                                                   itemValue="#{idServicioItem}"
+                                                   itemLabel="#{idServicioItem.idServicio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idServicio" value="#{busServicioController.getComponentMessages('idServicio', myBundle.CreateBusServicioHelpText_idServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{busServicioController.saveNew}" value="#{myBundle.Save}" update="display,:BusServicioListPage:BusServicioListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:BusServicioListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

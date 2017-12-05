@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="GuiaViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewGuiaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:GuiaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="GuiaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{guiaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_idGuia}"/>
+                            <h:outputText value="#{guiaController.selected.idGuia}" title="#{myBundle.ViewGuiaTitle_idGuia}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_folio}"/>
+                            <h:outputText value="#{guiaController.selected.folio}" title="#{myBundle.ViewGuiaTitle_folio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_fechaRecaudacion}"/>
+                            <h:outputText value="#{guiaController.selected.fechaRecaudacion}" title="#{myBundle.ViewGuiaTitle_fechaRecaudacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_fecha}"/>
+                            <h:outputText value="#{guiaController.selected.fecha}" title="#{myBundle.ViewGuiaTitle_fecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_totalIngresos}"/>
+                            <h:outputText value="#{guiaController.selected.totalIngresos}" title="#{myBundle.ViewGuiaTitle_totalIngresos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_totalEgresos}"/>
+                            <h:outputText value="#{guiaController.selected.totalEgresos}" title="#{myBundle.ViewGuiaTitle_totalEgresos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_viajeEspecial}"/>
+                            <h:outputText value="#{guiaController.selected.viajeEspecial}" title="#{myBundle.ViewGuiaTitle_viajeEspecial}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_otrosIngresos}"/>
+                            <h:outputText value="#{guiaController.selected.otrosIngresos}" title="#{myBundle.ViewGuiaTitle_otrosIngresos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_saldo}"/>
+                            <h:outputText value="#{guiaController.selected.saldo}" title="#{myBundle.ViewGuiaTitle_saldo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_numeroVueltas}"/>
+                            <h:outputText value="#{guiaController.selected.numeroVueltas}" title="#{myBundle.ViewGuiaTitle_numeroVueltas}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_turno}"/>
+                            <h:outputText value="#{guiaController.selected.turno}" title="#{myBundle.ViewGuiaTitle_turno}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_observacion}"/>
+                            <h:outputText value="#{guiaController.selected.observacion}" title="#{myBundle.ViewGuiaTitle_observacion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_recaudada}"/>
+                            <h:selectBooleanCheckbox id="recaudada" value="#{guiaController.selected.recaudada}" title="#{myBundle.EditGuiaTitle_recaudada}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_idBus}"/>
+                            <h:outputText value="#{guiaController.selected.idBus.idBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_idEstado}"/>
+                            <h:outputText value="#{guiaController.selected.idEstado.idEstadoGuia}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_idServicio}"/>
+                            <h:outputText value="#{guiaController.selected.idServicio.idServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGuiaLabel_idTrabajador}"/>
+                            <h:outputText value="#{guiaController.selected.idTrabajador.idTrabajador}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

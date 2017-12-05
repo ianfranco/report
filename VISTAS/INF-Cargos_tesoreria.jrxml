@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ef531e95-7d9b-43b2-8738-ce69c7d15ffd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT 
+    cargo_bus.fecha_inicio_cargo_bus,
+    bus.numero_bus,
+    unidad_negocio.numero_unidad_negocio, 
+    (cargo_bus.monto_cargo_bus),
+    empresa.nombre_empresa, descripcion , id_cargo
+FROM
+    cargo_bus 
+    LEFT JOIN bus ON cargo_bus.id_bus = bus.id_bus 
+    LEFT JOIN unidad_negocio ON bus.id_unidad_negocio = unidad_negocio.id_unidad_negocio 
+    LEFT JOIN empresa ON bus.id_empresa = empresa.id_empresa 
+
+ORDER BY descripcion, bus.numero_bus]]>
+	</queryString>
+	<field name="fecha_inicio_cargo_bus" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_bus" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_unidad_negocio" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="monto_cargo_bus" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_empresa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_cargo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="monto_cargo_bus_1" class="java.lang.Long" resetType="Group" resetGroup="id_cargo" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_cargo_bus}]]></variableExpression>
+	</variable>
+	<variable name="monto_cargo_bus_2" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_cargo_bus}]]></variableExpression>
+	</variable>
+	<group name="id_cargo">
+		<groupExpression><![CDATA[$F{id_cargo}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="263" height="20" uuid="88596a32-135f-482c-adda-1323308b1869"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="$ #,##0">
+					<reportElement x="293" y="0" width="100" height="20" uuid="ec0c1783-857f-432a-9045-b7188a0a4ff7"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{monto_cargo_bus_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="27" width="310" height="20" uuid="569b6e2f-6e05-49e3-acc8-51ad87ffd78c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CARGOS X TRAMO: 01-09-2016 AL 30-09-2016]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="472" y="0" width="100" height="20" uuid="3f0a2e47-4732-4598-b648-e8e2545ca3f4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="034b75cb-449d-442b-8700-2ab1ef071a79"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="44" height="20" uuid="d27c3b9c-649d-40aa-8c91-d828fcd04b99"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="0" width="24" height="20" uuid="f2dfcaf3-fd8a-4b6a-accc-dd142d951835"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Bus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="68" y="0" width="25" height="20" uuid="56c52ba4-00b8-4770-8c1a-9af05b77f49f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[UN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="0" width="200" height="20" uuid="439cd4d6-b05a-488e-aead-e5d2a8aad802"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="0" width="100" height="20" uuid="c05145a9-094b-446e-9fcf-4cc7c5f6bc0e"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="44" height="20" uuid="948a823d-2096-4bb1-b6ce-3f04fac448b9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_inicio_cargo_bus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="0" width="24" height="20" uuid="8d4daca5-8d30-46f3-b8e3-2b919e67de59"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_bus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="0" width="25" height="20" uuid="0c8dd1bb-d849-40af-96ee-5b92f453a5eb"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_unidad_negocio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="0" width="200" height="20" uuid="057c07aa-766c-4fe9-ab61-30e7f784c90a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_empresa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="293" y="0" width="100" height="20" uuid="d29cb296-982c-4ba8-951d-c898a87efb04"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_cargo_bus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="452" y="0" width="80" height="20" uuid="a63400ba-1861-41c4-81a6-509f5c776715"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="0" width="40" height="20" uuid="ca3bd354-82b6-4bd7-8206-942b9c364c21"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="293" y="0" width="100" height="20" uuid="1f9669bc-34d4-4790-a3f5-8a6da29a93c5"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{monto_cargo_bus_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

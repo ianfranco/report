@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="InstitucionSaludEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditInstitucionSaludTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:InstitucionSaludListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="InstitucionSaludEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{institucionSaludController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditInstitucionSaludLabel_idInstitucionSalud}" for="idInstitucionSalud" />
+                            <h:panelGroup>
+                                <h:outputText id="idInstitucionSalud" value="#{institucionSaludController.selected.idInstitucionSalud}" />
+                                <p:tooltip for="idInstitucionSalud" value="#{institucionSaludController.getComponentMessages('idInstitucionSalud', myBundle.EditInstitucionSaludHelpText_idInstitucionSalud)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditInstitucionSaludLabel_nombreInstitucionSalud}" for="nombreInstitucionSalud" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreInstitucionSalud" value="#{institucionSaludController.selected.nombreInstitucionSalud}" title="#{myBundle.EditInstitucionSaludTitle_nombreInstitucionSalud}" required="true" requiredMessage="#{myBundle.EditInstitucionSaludRequiredMessage_nombreInstitucionSalud}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreInstitucionSalud" value="#{institucionSaludController.getComponentMessages('nombreInstitucionSalud', myBundle.EditInstitucionSaludHelpText_nombreInstitucionSalud)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditInstitucionSaludLabel_comision}" for="comision" />
+                            <h:panelGroup>
+                                <p:inputText id="comision" value="#{institucionSaludController.selected.comision}" title="#{myBundle.EditInstitucionSaludTitle_comision}"/>
+                                <p:tooltip for="comision" value="#{institucionSaludController.getComponentMessages('comision', myBundle.EditInstitucionSaludHelpText_comision)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditInstitucionSaludLabel_porcentajeDescuento}" for="porcentajeDescuento" />
+                            <h:panelGroup>
+                                <p:inputText id="porcentajeDescuento" value="#{institucionSaludController.selected.porcentajeDescuento}" title="#{myBundle.EditInstitucionSaludTitle_porcentajeDescuento}" required="true" requiredMessage="#{myBundle.EditInstitucionSaludRequiredMessage_porcentajeDescuento}"/>
+                                <p:tooltip for="porcentajeDescuento" value="#{institucionSaludController.getComponentMessages('porcentajeDescuento', myBundle.EditInstitucionSaludHelpText_porcentajeDescuento)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{institucionSaludController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:InstitucionSaludListPage:InstitucionSaludListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:InstitucionSaludListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

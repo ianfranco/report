@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoDescuentoViewDlg" widgetVar="TipoDescuentoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewTipoDescuentoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoDescuentoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{tipoDescuentoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewTipoDescuentoLabel_idTipoDescuento}"/>
+                        <h:outputText value="#{tipoDescuentoController.selected.idTipoDescuento}" title="#{myBundle.ViewTipoDescuentoTitle_idTipoDescuento}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoDescuentoLabel_nombreTipoDescuento}"/>
+                        <h:outputText value="#{tipoDescuentoController.selected.nombreTipoDescuento}" title="#{myBundle.ViewTipoDescuentoTitle_nombreTipoDescuento}"/>
+
+                        <h:outputText value="#{myBundle.ViewTipoDescuentoLabel_fechaIngreso}"/>
+                        <h:outputText value="#{tipoDescuentoController.selected.fechaIngreso}" title="#{myBundle.ViewTipoDescuentoTitle_fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewTipoDescuentoLabel_montoDefecto}"/>
+                        <h:outputText value="#{tipoDescuentoController.selected.montoDefecto}" title="#{myBundle.ViewTipoDescuentoTitle_montoDefecto}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('TipoDescuentoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

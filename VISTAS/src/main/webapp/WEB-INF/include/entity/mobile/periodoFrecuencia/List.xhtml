@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PeriodoFrecuenciaListPage">
+        <pm:header title="#{myBundle.ListPeriodoFrecuenciaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":PeriodoFrecuenciaCreatePage:PeriodoFrecuenciaCreateForm" actionListener="#{periodoFrecuenciaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:PeriodoFrecuenciaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PeriodoFrecuenciaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{periodoFrecuenciaController.items}"
+                             var="item"
+                             rowKey="#{item.idPeriodoFrecuencia}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{periodoFrecuenciaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('PeriodoFrecuenciaListPage:PeriodoFrecuenciaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('PeriodoFrecuenciaListPage:PeriodoFrecuenciaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('PeriodoFrecuenciaListPage:PeriodoFrecuenciaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idPeriodoFrecuencia}" filterBy="#{item.idPeriodoFrecuencia}" headerText="#{myBundle.ListPeriodoFrecuenciaTitle_idPeriodoFrecuencia}">
+                        <h:outputText value="#{item.idPeriodoFrecuencia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.desde}" filterBy="#{item.desde}" headerText="#{myBundle.ListPeriodoFrecuenciaTitle_desde}">
+                        <h:outputText value="#{item.desde}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.hasta}" filterBy="#{item.hasta}" headerText="#{myBundle.ListPeriodoFrecuenciaTitle_hasta}">
+                        <h:outputText value="#{item.hasta}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PeriodoFrecuenciaEditPage:PeriodoFrecuenciaEditForm" disabled="#{empty periodoFrecuenciaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:PeriodoFrecuenciaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{periodoFrecuenciaController.delete}" update=":growl,datalist" disabled="#{empty periodoFrecuenciaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty periodoFrecuenciaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.PeriodoFrecuenciaHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.PeriodoFrecuenciaMenuItem_frecuenciaServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty periodoFrecuenciaController.selected.frecuenciaServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{periodoFrecuenciaController.navigateFrecuenciaServicioList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

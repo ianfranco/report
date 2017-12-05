@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="LiquidacionSueldoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditLiquidacionSueldoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:LiquidacionSueldoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="LiquidacionSueldoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{liquidacionSueldoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_idLiquidacionSueldo}" for="idLiquidacionSueldo" />
+                            <h:panelGroup>
+                                <h:outputText id="idLiquidacionSueldo" value="#{liquidacionSueldoController.selected.idLiquidacionSueldo}" />
+                                <p:tooltip for="idLiquidacionSueldo" value="#{liquidacionSueldoController.getComponentMessages('idLiquidacionSueldo', myBundle.EditLiquidacionSueldoHelpText_idLiquidacionSueldo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_mes}" for="mes" />
+                            <h:panelGroup>
+                                <p:inputText id="mes" value="#{liquidacionSueldoController.selected.mes}" title="#{myBundle.EditLiquidacionSueldoTitle_mes}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_mes}"/>
+                                <p:tooltip for="mes" value="#{liquidacionSueldoController.getComponentMessages('mes', myBundle.EditLiquidacionSueldoHelpText_mes)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_año}" for="año" />
+                            <h:panelGroup>
+                                <p:inputText id="año" value="#{liquidacionSueldoController.selected.año}" title="#{myBundle.EditLiquidacionSueldoTitle_año}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_año}"/>
+                                <p:tooltip for="año" value="#{liquidacionSueldoController.getComponentMessages('año', myBundle.EditLiquidacionSueldoHelpText_año)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_fechaEmision}" for="fechaEmision" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaEmision" pattern="MM/dd/yyyy" value="#{liquidacionSueldoController.selected.fechaEmision}" title="#{myBundle.EditLiquidacionSueldoTitle_fechaEmision}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_fechaEmision}" showOn="button"/>
+                                <p:tooltip for="fechaEmision" value="#{liquidacionSueldoController.getComponentMessages('fechaEmision', myBundle.EditLiquidacionSueldoHelpText_fechaEmision)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_fechaPago}" for="fechaPago" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaPago" pattern="MM/dd/yyyy" value="#{liquidacionSueldoController.selected.fechaPago}" title="#{myBundle.EditLiquidacionSueldoTitle_fechaPago}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_fechaPago}" showOn="button"/>
+                                <p:tooltip for="fechaPago" value="#{liquidacionSueldoController.getComponentMessages('fechaPago', myBundle.EditLiquidacionSueldoHelpText_fechaPago)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_totalHaberesImponibles}" for="totalHaberesImponibles" />
+                            <h:panelGroup>
+                                <p:inputText id="totalHaberesImponibles" value="#{liquidacionSueldoController.selected.totalHaberesImponibles}" title="#{myBundle.EditLiquidacionSueldoTitle_totalHaberesImponibles}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_totalHaberesImponibles}"/>
+                                <p:tooltip for="totalHaberesImponibles" value="#{liquidacionSueldoController.getComponentMessages('totalHaberesImponibles', myBundle.EditLiquidacionSueldoHelpText_totalHaberesImponibles)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_totalHaberesNoImponibles}" for="totalHaberesNoImponibles" />
+                            <h:panelGroup>
+                                <p:inputText id="totalHaberesNoImponibles" value="#{liquidacionSueldoController.selected.totalHaberesNoImponibles}" title="#{myBundle.EditLiquidacionSueldoTitle_totalHaberesNoImponibles}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_totalHaberesNoImponibles}" size="45" maxlength="45"/>
+                                <p:tooltip for="totalHaberesNoImponibles" value="#{liquidacionSueldoController.getComponentMessages('totalHaberesNoImponibles', myBundle.EditLiquidacionSueldoHelpText_totalHaberesNoImponibles)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_saldoAnterior}" for="saldoAnterior" />
+                            <h:panelGroup>
+                                <p:inputText id="saldoAnterior" value="#{liquidacionSueldoController.selected.saldoAnterior}" title="#{myBundle.EditLiquidacionSueldoTitle_saldoAnterior}"/>
+                                <p:tooltip for="saldoAnterior" value="#{liquidacionSueldoController.getComponentMessages('saldoAnterior', myBundle.EditLiquidacionSueldoHelpText_saldoAnterior)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_totalDescuentos}" for="totalDescuentos" />
+                            <h:panelGroup>
+                                <p:inputText id="totalDescuentos" value="#{liquidacionSueldoController.selected.totalDescuentos}" title="#{myBundle.EditLiquidacionSueldoTitle_totalDescuentos}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_totalDescuentos}"/>
+                                <p:tooltip for="totalDescuentos" value="#{liquidacionSueldoController.getComponentMessages('totalDescuentos', myBundle.EditLiquidacionSueldoHelpText_totalDescuentos)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_montoAnticipo}" for="montoAnticipo" />
+                            <h:panelGroup>
+                                <p:inputText id="montoAnticipo" value="#{liquidacionSueldoController.selected.montoAnticipo}" title="#{myBundle.EditLiquidacionSueldoTitle_montoAnticipo}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_montoAnticipo}"/>
+                                <p:tooltip for="montoAnticipo" value="#{liquidacionSueldoController.getComponentMessages('montoAnticipo', myBundle.EditLiquidacionSueldoHelpText_montoAnticipo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_saldoMonto}" for="saldoMonto" />
+                            <h:panelGroup>
+                                <p:inputText id="saldoMonto" value="#{liquidacionSueldoController.selected.saldoMonto}" title="#{myBundle.EditLiquidacionSueldoTitle_saldoMonto}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_saldoMonto}"/>
+                                <p:tooltip for="saldoMonto" value="#{liquidacionSueldoController.getComponentMessages('saldoMonto', myBundle.EditLiquidacionSueldoHelpText_saldoMonto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_alcanceLiquido}" for="alcanceLiquido" />
+                            <h:panelGroup>
+                                <p:inputText id="alcanceLiquido" value="#{liquidacionSueldoController.selected.alcanceLiquido}" title="#{myBundle.EditLiquidacionSueldoTitle_alcanceLiquido}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_alcanceLiquido}"/>
+                                <p:tooltip for="alcanceLiquido" value="#{liquidacionSueldoController.getComponentMessages('alcanceLiquido', myBundle.EditLiquidacionSueldoHelpText_alcanceLiquido)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditLiquidacionSueldoLabel_idRelacionLaboral}" for="idRelacionLaboral" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idRelacionLaboral" value="#{liquidacionSueldoController.selected.idRelacionLaboral}" required="true" requiredMessage="#{myBundle.EditLiquidacionSueldoRequiredMessage_idRelacionLaboral}" converter="relacionLaboralConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{relacionLaboralController.items}"
+                                                   var="idRelacionLaboralItem"
+                                                   itemValue="#{idRelacionLaboralItem}"
+                                                   itemLabel="#{idRelacionLaboralItem.idRelacionLaboral.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idRelacionLaboral" value="#{liquidacionSueldoController.getComponentMessages('idRelacionLaboral', myBundle.EditLiquidacionSueldoHelpText_idRelacionLaboral)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{liquidacionSueldoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:LiquidacionSueldoListPage:LiquidacionSueldoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:LiquidacionSueldoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

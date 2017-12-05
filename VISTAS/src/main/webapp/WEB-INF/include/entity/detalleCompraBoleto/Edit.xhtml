@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DetalleCompraBoletoEditDlg" widgetVar="DetalleCompraBoletoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDetalleCompraBoletoTitle}" closeOnEscape="true">
+
+            <h:form id="DetalleCompraBoletoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{detalleCompraBoletoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditDetalleCompraBoletoLabel_idDetalleCompraBoleto}" for="idDetalleCompraBoleto" />
+                        <h:panelGroup>
+                            <h:outputText id="idDetalleCompraBoleto" value="#{detalleCompraBoletoController.selected.idDetalleCompraBoleto}" />
+                            <p:tooltip for="idDetalleCompraBoleto" value="#{detalleCompraBoletoController.getComponentMessages('idDetalleCompraBoleto', myBundle.EditDetalleCompraBoletoHelpText_idDetalleCompraBoleto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleCompraBoletoLabel_cantidadRollos}" for="cantidadRollos" />
+                        <h:panelGroup>
+                            <p:inputText id="cantidadRollos" value="#{detalleCompraBoletoController.selected.cantidadRollos}" title="#{myBundle.EditDetalleCompraBoletoTitle_cantidadRollos}" required="true" requiredMessage="#{myBundle.EditDetalleCompraBoletoRequiredMessage_cantidadRollos}"/>
+                            <p:tooltip for="cantidadRollos" value="#{detalleCompraBoletoController.getComponentMessages('cantidadRollos', myBundle.EditDetalleCompraBoletoHelpText_cantidadRollos)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleCompraBoletoLabel_serie}" for="serie" />
+                        <h:panelGroup>
+                            <p:inputText id="serie" value="#{detalleCompraBoletoController.selected.serie}" title="#{myBundle.EditDetalleCompraBoletoTitle_serie}" size="45" maxlength="45"/>
+                            <p:tooltip for="serie" value="#{detalleCompraBoletoController.getComponentMessages('serie', myBundle.EditDetalleCompraBoletoHelpText_serie)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleCompraBoletoLabel_total}" for="total" />
+                        <h:panelGroup>
+                            <p:inputText id="total" value="#{detalleCompraBoletoController.selected.total}" title="#{myBundle.EditDetalleCompraBoletoTitle_total}" required="true" requiredMessage="#{myBundle.EditDetalleCompraBoletoRequiredMessage_total}"/>
+                            <p:tooltip for="total" value="#{detalleCompraBoletoController.getComponentMessages('total', myBundle.EditDetalleCompraBoletoHelpText_total)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleCompraBoletoLabel_idBoleto}" for="idBoleto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idBoleto" value="#{detalleCompraBoletoController.selected.idBoleto}" required="true" requiredMessage="#{myBundle.EditDetalleCompraBoletoRequiredMessage_idBoleto}" converter="boletoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{boletoController.items}"
+                                               var="idBoletoItem"
+                                               itemValue="#{idBoletoItem}"
+                                               itemLabel="#{idBoletoItem.idBoleto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idBoleto" value="#{detalleCompraBoletoController.getComponentMessages('idBoleto', myBundle.EditDetalleCompraBoletoHelpText_idBoleto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleCompraBoletoLabel_idCompraBoleto}" for="idCompraBoleto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idCompraBoleto" value="#{detalleCompraBoletoController.selected.idCompraBoleto}" required="true" requiredMessage="#{myBundle.EditDetalleCompraBoletoRequiredMessage_idCompraBoleto}" converter="compraBoletoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{compraBoletoController.items}"
+                                               var="idCompraBoletoItem"
+                                               itemValue="#{idCompraBoletoItem}"
+                                               itemLabel="#{idCompraBoletoItem.idCompraBoleto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idCompraBoleto" value="#{detalleCompraBoletoController.getComponentMessages('idCompraBoleto', myBundle.EditDetalleCompraBoletoHelpText_idCompraBoleto)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleCompraBoletoController.save}" value="#{myBundle.Save}" update="display,:DetalleCompraBoletoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetalleCompraBoletoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DetalleCompraBoletoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

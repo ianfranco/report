@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ImpuestoSegundaCategoriaListPage">
+        <pm:header title="#{myBundle.ListImpuestoSegundaCategoriaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":ImpuestoSegundaCategoriaCreatePage:ImpuestoSegundaCategoriaCreateForm" actionListener="#{impuestoSegundaCategoriaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:ImpuestoSegundaCategoriaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ImpuestoSegundaCategoriaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{impuestoSegundaCategoriaController.items}"
+                             var="item"
+                             rowKey="#{item.idImpuestaSegundaCategoria}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{impuestoSegundaCategoriaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('ImpuestoSegundaCategoriaListPage:ImpuestoSegundaCategoriaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('ImpuestoSegundaCategoriaListPage:ImpuestoSegundaCategoriaListForm:editButton').click();"/>
+
+                    <p:column sortBy="#{item.idImpuestaSegundaCategoria}" filterBy="#{item.idImpuestaSegundaCategoria}" headerText="#{myBundle.ListImpuestoSegundaCategoriaTitle_idImpuestaSegundaCategoria}">
+                        <h:outputText value="#{item.idImpuestaSegundaCategoria}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.desde}" filterBy="#{item.desde}" headerText="#{myBundle.ListImpuestoSegundaCategoriaTitle_desde}">
+                        <h:outputText value="#{item.desde}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.hasta}" filterBy="#{item.hasta}" headerText="#{myBundle.ListImpuestoSegundaCategoriaTitle_hasta}">
+                        <h:outputText value="#{item.hasta}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.factor}" filterBy="#{item.factor}" headerText="#{myBundle.ListImpuestoSegundaCategoriaTitle_factor}">
+                        <h:outputText value="#{item.factor}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.rebaja}" filterBy="#{item.rebaja}" headerText="#{myBundle.ListImpuestoSegundaCategoriaTitle_rebaja}">
+                        <h:outputText value="#{item.rebaja}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ImpuestoSegundaCategoriaEditPage:ImpuestoSegundaCategoriaEditForm" disabled="#{empty impuestoSegundaCategoriaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:ImpuestoSegundaCategoriaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{impuestoSegundaCategoriaController.delete}" update=":growl,datalist" disabled="#{empty impuestoSegundaCategoriaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

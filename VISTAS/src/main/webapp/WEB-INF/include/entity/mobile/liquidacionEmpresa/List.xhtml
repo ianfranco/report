@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="LiquidacionEmpresaListPage">
+        <pm:header title="#{myBundle.ListLiquidacionEmpresaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":LiquidacionEmpresaCreatePage:LiquidacionEmpresaCreateForm" actionListener="#{liquidacionEmpresaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:LiquidacionEmpresaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="LiquidacionEmpresaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{liquidacionEmpresaController.items}"
+                             var="item"
+                             rowKey="#{item.idLiquidacionEmpresa}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{liquidacionEmpresaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{liquidacionEmpresaController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{liquidacionEmpresaController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('LiquidacionEmpresaListPage:LiquidacionEmpresaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('LiquidacionEmpresaListPage:LiquidacionEmpresaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('LiquidacionEmpresaListPage:LiquidacionEmpresaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idLiquidacionEmpresa}" filterBy="#{item.idLiquidacionEmpresa}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_idLiquidacionEmpresa}">
+                        <h:outputText value="#{item.idLiquidacionEmpresa}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.mes}" filterBy="#{item.mes}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_mes}">
+                        <h:outputText value="#{item.mes}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.año}" filterBy="#{item.año}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_año}">
+                        <h:outputText value="#{item.año}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaEmision}" filterBy="#{item.fechaEmision}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_fechaEmision}">
+                        <h:outputText value="#{item.fechaEmision}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaPago}" filterBy="#{item.fechaPago}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_fechaPago}">
+                        <h:outputText value="#{item.fechaPago}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.totalAbonos}" filterBy="#{item.totalAbonos}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_totalAbonos}">
+                        <h:outputText value="#{item.totalAbonos}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.totalCargos}" filterBy="#{item.totalCargos}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_totalCargos}">
+                                            <h:outputText value="#{item.totalCargos}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.saldo}" filterBy="#{item.saldo}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_saldo}">
+                                            <h:outputText value="#{item.saldo}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idEmpresa.idEmpresa}" filterBy="#{item.idEmpresa.idEmpresa}" headerText="#{myBundle.ListLiquidacionEmpresaTitle_idEmpresa}">
+                                            <h:outputText value="#{item.idEmpresa.idEmpresa}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":LiquidacionEmpresaEditPage:LiquidacionEmpresaEditForm" disabled="#{empty liquidacionEmpresaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:LiquidacionEmpresaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{liquidacionEmpresaController.delete}" update=":growl,datalist" disabled="#{empty liquidacionEmpresaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty liquidacionEmpresaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.LiquidacionEmpresaHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.LiquidacionEmpresaMenuItem_idEmpresa}" icon="ui-icon-search" update=":EmpresaEditPage:EmpresaEditForm" disabled="#{empty liquidacionEmpresaController.selected.idEmpresa}" actionListener="#{liquidacionEmpresaController.prepareIdEmpresa}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EmpresaEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

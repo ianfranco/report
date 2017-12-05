@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DescuentoTrabajadorListPage">
+        <pm:header title="#{myBundle.ListDescuentoTrabajadorTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":DescuentoTrabajadorCreatePage:DescuentoTrabajadorCreateForm" actionListener="#{descuentoTrabajadorController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DescuentoTrabajadorCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DescuentoTrabajadorListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{descuentoTrabajadorController.items}"
+                             var="item"
+                             rowKey="#{item.idDescuentoTrabajador}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{descuentoTrabajadorController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{descuentoTrabajadorController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{descuentoTrabajadorController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DescuentoTrabajadorListPage:DescuentoTrabajadorListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DescuentoTrabajadorListPage:DescuentoTrabajadorListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('DescuentoTrabajadorListPage:DescuentoTrabajadorListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idDescuentoTrabajador}" filterBy="#{item.idDescuentoTrabajador}" headerText="#{myBundle.ListDescuentoTrabajadorTitle_idDescuentoTrabajador}">
+                        <h:outputText value="#{item.idDescuentoTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}" headerText="#{myBundle.ListDescuentoTrabajadorTitle_fechaIngreso}">
+                        <h:outputText value="#{item.fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}" headerText="#{myBundle.ListDescuentoTrabajadorTitle_fechaInicio}">
+                        <h:outputText value="#{item.fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroCuotas}" filterBy="#{item.numeroCuotas}" headerText="#{myBundle.ListDescuentoTrabajadorTitle_numeroCuotas}">
+                        <h:outputText value="#{item.numeroCuotas}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.monto}" filterBy="#{item.monto}" headerText="#{myBundle.ListDescuentoTrabajadorTitle_monto}">
+                        <h:outputText value="#{item.monto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.activoDescuentoTrabajador}" filterBy="#{item.activoDescuentoTrabajador}" headerText="#{myBundle.ListDescuentoTrabajadorTitle_activoDescuentoTrabajador}">
+                        <h:selectBooleanCheckbox id="activoDescuentoTrabajador" value="#{item.activoDescuentoTrabajador}" title="#{myBundle.EditDescuentoTrabajadorTitle_activoDescuentoTrabajador}" required="true" requiredMessage="#{myBundle.EditDescuentoTrabajadorRequiredMessage_activoDescuentoTrabajador}" disabled="true"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.idTipoDescuento.idTipoDescuento}" filterBy="#{item.idTipoDescuento.idTipoDescuento}" headerText="#{myBundle.ListDescuentoTrabajadorTitle_idTipoDescuento}">
+                                            <h:outputText value="#{item.idTipoDescuento.idTipoDescuento}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListDescuentoTrabajadorTitle_idTrabajador}">
+                                            <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DescuentoTrabajadorEditPage:DescuentoTrabajadorEditForm" disabled="#{empty descuentoTrabajadorController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DescuentoTrabajadorEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{descuentoTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty descuentoTrabajadorController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty descuentoTrabajadorController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.DescuentoTrabajadorHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.DescuentoTrabajadorMenuItem_idTipoDescuento}" icon="ui-icon-search" update=":TipoDescuentoEditPage:TipoDescuentoEditForm" disabled="#{empty descuentoTrabajadorController.selected.idTipoDescuento}" actionListener="#{descuentoTrabajadorController.prepareIdTipoDescuento}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoDescuentoEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.DescuentoTrabajadorMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty descuentoTrabajadorController.selected.idTrabajador}" actionListener="#{descuentoTrabajadorController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

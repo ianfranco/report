@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PeriodoFrecuenciaEditDlg" widgetVar="PeriodoFrecuenciaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPeriodoFrecuenciaTitle}" closeOnEscape="true">
+
+            <h:form id="PeriodoFrecuenciaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{periodoFrecuenciaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPeriodoFrecuenciaLabel_idPeriodoFrecuencia}" for="idPeriodoFrecuencia" />
+                        <h:panelGroup>
+                            <h:outputText id="idPeriodoFrecuencia" value="#{periodoFrecuenciaController.selected.idPeriodoFrecuencia}" />
+                            <p:tooltip for="idPeriodoFrecuencia" value="#{periodoFrecuenciaController.getComponentMessages('idPeriodoFrecuencia', myBundle.EditPeriodoFrecuenciaHelpText_idPeriodoFrecuencia)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditPeriodoFrecuenciaLabel_desde}" for="desde" />
+                        <h:panelGroup>
+                            <p:calendar id="desde" pattern="HH:mm:ss" value="#{periodoFrecuenciaController.selected.desde}" title="#{myBundle.EditPeriodoFrecuenciaTitle_desde}" required="true" requiredMessage="#{myBundle.EditPeriodoFrecuenciaRequiredMessage_desde}" showOn="button"/>
+                            <p:tooltip for="desde" value="#{periodoFrecuenciaController.getComponentMessages('desde', myBundle.EditPeriodoFrecuenciaHelpText_desde)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditPeriodoFrecuenciaLabel_hasta}" for="hasta" />
+                        <h:panelGroup>
+                            <p:calendar id="hasta" pattern="HH:mm:ss" value="#{periodoFrecuenciaController.selected.hasta}" title="#{myBundle.EditPeriodoFrecuenciaTitle_hasta}" required="true" requiredMessage="#{myBundle.EditPeriodoFrecuenciaRequiredMessage_hasta}" showOn="button"/>
+                            <p:tooltip for="hasta" value="#{periodoFrecuenciaController.getComponentMessages('hasta', myBundle.EditPeriodoFrecuenciaHelpText_hasta)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{periodoFrecuenciaController.save}" value="#{myBundle.Save}" update="display,:PeriodoFrecuenciaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PeriodoFrecuenciaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PeriodoFrecuenciaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

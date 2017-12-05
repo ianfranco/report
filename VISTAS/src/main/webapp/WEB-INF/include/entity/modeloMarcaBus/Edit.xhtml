@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ModeloMarcaBusEditDlg" widgetVar="ModeloMarcaBusEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditModeloMarcaBusTitle}" closeOnEscape="true">
+
+            <h:form id="ModeloMarcaBusEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{modeloMarcaBusController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditModeloMarcaBusLabel_idModeloMarcaBus}" for="idModeloMarcaBus" />
+                        <h:panelGroup>
+                            <h:outputText id="idModeloMarcaBus" value="#{modeloMarcaBusController.selected.idModeloMarcaBus}" />
+                            <p:tooltip for="idModeloMarcaBus" value="#{modeloMarcaBusController.getComponentMessages('idModeloMarcaBus', myBundle.EditModeloMarcaBusHelpText_idModeloMarcaBus)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditModeloMarcaBusLabel_nombreModeloMarcaBus}" for="nombreModeloMarcaBus" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreModeloMarcaBus" value="#{modeloMarcaBusController.selected.nombreModeloMarcaBus}" title="#{myBundle.EditModeloMarcaBusTitle_nombreModeloMarcaBus}" required="true" requiredMessage="#{myBundle.EditModeloMarcaBusRequiredMessage_nombreModeloMarcaBus}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombreModeloMarcaBus" value="#{modeloMarcaBusController.getComponentMessages('nombreModeloMarcaBus', myBundle.EditModeloMarcaBusHelpText_nombreModeloMarcaBus)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditModeloMarcaBusLabel_idMarcaBus}" for="idMarcaBus" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idMarcaBus" value="#{modeloMarcaBusController.selected.idMarcaBus}" required="true" requiredMessage="#{myBundle.EditModeloMarcaBusRequiredMessage_idMarcaBus}" converter="marcaBusConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{marcaBusController.items}"
+                                               var="idMarcaBusItem"
+                                               itemValue="#{idMarcaBusItem}"
+                                               itemLabel="#{idMarcaBusItem.idMarcasBus.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idMarcaBus" value="#{modeloMarcaBusController.getComponentMessages('idMarcaBus', myBundle.EditModeloMarcaBusHelpText_idMarcaBus)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{modeloMarcaBusController.save}" value="#{myBundle.Save}" update="display,:ModeloMarcaBusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ModeloMarcaBusEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ModeloMarcaBusEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

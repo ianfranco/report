@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ObservacionTrabajadorListPage">
+        <pm:header title="#{myBundle.ListObservacionTrabajadorTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":ObservacionTrabajadorCreatePage:ObservacionTrabajadorCreateForm" actionListener="#{observacionTrabajadorController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:ObservacionTrabajadorCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ObservacionTrabajadorListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{observacionTrabajadorController.items}"
+                             var="item"
+                             rowKey="#{item.idObservacionTrabajador}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{observacionTrabajadorController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{observacionTrabajadorController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{observacionTrabajadorController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('ObservacionTrabajadorListPage:ObservacionTrabajadorListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('ObservacionTrabajadorListPage:ObservacionTrabajadorListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('ObservacionTrabajadorListPage:ObservacionTrabajadorListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idObservacionTrabajador}" filterBy="#{item.idObservacionTrabajador}" headerText="#{myBundle.ListObservacionTrabajadorTitle_idObservacionTrabajador}">
+                        <h:outputText value="#{item.idObservacionTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}" headerText="#{myBundle.ListObservacionTrabajadorTitle_fecha}">
+                        <h:outputText value="#{item.fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}" headerText="#{myBundle.ListObservacionTrabajadorTitle_fechaIngreso}">
+                        <h:outputText value="#{item.fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}" headerText="#{myBundle.ListObservacionTrabajadorTitle_descripcion}">
+                        <h:outputText value="#{item.descripcion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.detalle}" filterBy="#{item.detalle}" headerText="#{myBundle.ListObservacionTrabajadorTitle_detalle}">
+                        <h:outputText value="#{item.detalle}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListObservacionTrabajadorTitle_idTrabajador}">
+                        <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ObservacionTrabajadorEditPage:ObservacionTrabajadorEditForm" disabled="#{empty observacionTrabajadorController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:ObservacionTrabajadorEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{observacionTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty observacionTrabajadorController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty observacionTrabajadorController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.ObservacionTrabajadorHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.ObservacionTrabajadorMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty observacionTrabajadorController.selected.idTrabajador}" actionListener="#{observacionTrabajadorController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

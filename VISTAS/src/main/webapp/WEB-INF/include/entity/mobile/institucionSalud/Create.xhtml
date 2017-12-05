@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="InstitucionSaludCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateInstitucionSaludTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:InstitucionSaludListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="InstitucionSaludCreateForm">
+
+                <h:panelGroup id="display" rendered="#{institucionSaludController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateInstitucionSaludLabel_nombreInstitucionSalud}" for="nombreInstitucionSalud" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreInstitucionSalud" value="#{institucionSaludController.selected.nombreInstitucionSalud}" title="#{myBundle.CreateInstitucionSaludTitle_nombreInstitucionSalud}" required="true" requiredMessage="#{myBundle.CreateInstitucionSaludRequiredMessage_nombreInstitucionSalud}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreInstitucionSalud" value="#{institucionSaludController.getComponentMessages('nombreInstitucionSalud', myBundle.CreateInstitucionSaludHelpText_nombreInstitucionSalud)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateInstitucionSaludLabel_comision}" for="comision" />
+                            <h:panelGroup>
+                                <p:inputText id="comision" value="#{institucionSaludController.selected.comision}" title="#{myBundle.CreateInstitucionSaludTitle_comision}"/>
+                                <p:tooltip for="comision" value="#{institucionSaludController.getComponentMessages('comision', myBundle.CreateInstitucionSaludHelpText_comision)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateInstitucionSaludLabel_porcentajeDescuento}" for="porcentajeDescuento" />
+                            <h:panelGroup>
+                                <p:inputText id="porcentajeDescuento" value="#{institucionSaludController.selected.porcentajeDescuento}" title="#{myBundle.CreateInstitucionSaludTitle_porcentajeDescuento}" required="true" requiredMessage="#{myBundle.CreateInstitucionSaludRequiredMessage_porcentajeDescuento}"/>
+                                <p:tooltip for="porcentajeDescuento" value="#{institucionSaludController.getComponentMessages('porcentajeDescuento', myBundle.CreateInstitucionSaludHelpText_porcentajeDescuento)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{institucionSaludController.saveNew}" value="#{myBundle.Save}" update="display,:InstitucionSaludListPage:InstitucionSaludListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:InstitucionSaludListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

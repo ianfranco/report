@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DetalleCompraBoletoViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewDetalleCompraBoletoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DetalleCompraBoletoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DetalleCompraBoletoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{detalleCompraBoletoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_idDetalleCompraBoleto}"/>
+                            <h:outputText value="#{detalleCompraBoletoController.selected.idDetalleCompraBoleto}" title="#{myBundle.ViewDetalleCompraBoletoTitle_idDetalleCompraBoleto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_cantidadRollos}"/>
+                            <h:outputText value="#{detalleCompraBoletoController.selected.cantidadRollos}" title="#{myBundle.ViewDetalleCompraBoletoTitle_cantidadRollos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_serie}"/>
+                            <h:outputText value="#{detalleCompraBoletoController.selected.serie}" title="#{myBundle.ViewDetalleCompraBoletoTitle_serie}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_total}"/>
+                            <h:outputText value="#{detalleCompraBoletoController.selected.total}" title="#{myBundle.ViewDetalleCompraBoletoTitle_total}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_idBoleto}"/>
+                            <h:outputText value="#{detalleCompraBoletoController.selected.idBoleto.idBoleto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewDetalleCompraBoletoLabel_idCompraBoleto}"/>
+                            <h:outputText value="#{detalleCompraBoletoController.selected.idCompraBoleto.idCompraBoleto}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

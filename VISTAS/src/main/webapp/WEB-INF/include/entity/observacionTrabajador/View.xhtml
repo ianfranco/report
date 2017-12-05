@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ObservacionTrabajadorViewDlg" widgetVar="ObservacionTrabajadorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewObservacionTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="ObservacionTrabajadorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{observacionTrabajadorController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewObservacionTrabajadorLabel_idObservacionTrabajador}"/>
+                        <h:outputText value="#{observacionTrabajadorController.selected.idObservacionTrabajador}" title="#{myBundle.ViewObservacionTrabajadorTitle_idObservacionTrabajador}"/>
+
+                        <h:outputText value="#{myBundle.ViewObservacionTrabajadorLabel_fecha}"/>
+                        <h:outputText value="#{observacionTrabajadorController.selected.fecha}" title="#{myBundle.ViewObservacionTrabajadorTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewObservacionTrabajadorLabel_fechaIngreso}"/>
+                        <h:outputText value="#{observacionTrabajadorController.selected.fechaIngreso}" title="#{myBundle.ViewObservacionTrabajadorTitle_fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewObservacionTrabajadorLabel_descripcion}"/>
+                        <h:outputText value="#{observacionTrabajadorController.selected.descripcion}" title="#{myBundle.ViewObservacionTrabajadorTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewObservacionTrabajadorLabel_detalle}"/>
+                        <h:outputText value="#{observacionTrabajadorController.selected.detalle}" title="#{myBundle.ViewObservacionTrabajadorTitle_detalle}"/>
+
+                        <h:outputText value="#{myBundle.ViewObservacionTrabajadorLabel_idTrabajador}"/>
+                        <h:outputText value="#{observacionTrabajadorController.selected.idTrabajador.idTrabajador}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ObservacionTrabajadorViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

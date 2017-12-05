@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CargoBusViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewCargoBusTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CargoBusListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CargoBusViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{cargoBusController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargoBusLabel_idCargoBus}"/>
+                            <h:outputText value="#{cargoBusController.selected.idCargoBus}" title="#{myBundle.ViewCargoBusTitle_idCargoBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargoBusLabel_fechaIngresoCargoBus}"/>
+                            <h:outputText value="#{cargoBusController.selected.fechaIngresoCargoBus}" title="#{myBundle.ViewCargoBusTitle_fechaIngresoCargoBus}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargoBusLabel_fechaInicioCargoBus}"/>
+                            <h:outputText value="#{cargoBusController.selected.fechaInicioCargoBus}" title="#{myBundle.ViewCargoBusTitle_fechaInicioCargoBus}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargoBusLabel_numeroCuotasCargoBus}"/>
+                            <h:outputText value="#{cargoBusController.selected.numeroCuotasCargoBus}" title="#{myBundle.ViewCargoBusTitle_numeroCuotasCargoBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargoBusLabel_montoCargoBus}"/>
+                            <h:outputText value="#{cargoBusController.selected.montoCargoBus}" title="#{myBundle.ViewCargoBusTitle_montoCargoBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargoBusLabel_activoCargoBus}"/>
+                            <h:selectBooleanCheckbox id="activoCargoBus" value="#{cargoBusController.selected.activoCargoBus}" title="#{myBundle.EditCargoBusTitle_activoCargoBus}" required="true" requiredMessage="#{myBundle.EditCargoBusRequiredMessage_activoCargoBus}" disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargoBusLabel_idBus}"/>
+                            <h:outputText value="#{cargoBusController.selected.idBus.idBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCargoBusLabel_idTipoCargo}"/>
+                            <h:outputText value="#{cargoBusController.selected.idTipoCargo.idTipoCargo}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

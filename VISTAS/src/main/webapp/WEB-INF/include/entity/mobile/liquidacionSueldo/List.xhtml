@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="LiquidacionSueldoListPage">
+        <pm:header title="#{myBundle.ListLiquidacionSueldoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":LiquidacionSueldoCreatePage:LiquidacionSueldoCreateForm" actionListener="#{liquidacionSueldoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:LiquidacionSueldoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="LiquidacionSueldoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{liquidacionSueldoController.items}"
+                             var="item"
+                             rowKey="#{item.idLiquidacionSueldo}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{liquidacionSueldoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{liquidacionSueldoController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{liquidacionSueldoController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('LiquidacionSueldoListPage:LiquidacionSueldoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('LiquidacionSueldoListPage:LiquidacionSueldoListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('LiquidacionSueldoListPage:LiquidacionSueldoListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idLiquidacionSueldo}" filterBy="#{item.idLiquidacionSueldo}" headerText="#{myBundle.ListLiquidacionSueldoTitle_idLiquidacionSueldo}">
+                        <h:outputText value="#{item.idLiquidacionSueldo}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.mes}" filterBy="#{item.mes}" headerText="#{myBundle.ListLiquidacionSueldoTitle_mes}">
+                        <h:outputText value="#{item.mes}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.año}" filterBy="#{item.año}" headerText="#{myBundle.ListLiquidacionSueldoTitle_año}">
+                        <h:outputText value="#{item.año}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaEmision}" filterBy="#{item.fechaEmision}" headerText="#{myBundle.ListLiquidacionSueldoTitle_fechaEmision}">
+                        <h:outputText value="#{item.fechaEmision}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaPago}" filterBy="#{item.fechaPago}" headerText="#{myBundle.ListLiquidacionSueldoTitle_fechaPago}">
+                        <h:outputText value="#{item.fechaPago}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.totalHaberesImponibles}" filterBy="#{item.totalHaberesImponibles}" headerText="#{myBundle.ListLiquidacionSueldoTitle_totalHaberesImponibles}">
+                        <h:outputText value="#{item.totalHaberesImponibles}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.totalHaberesNoImponibles}" filterBy="#{item.totalHaberesNoImponibles}" headerText="#{myBundle.ListLiquidacionSueldoTitle_totalHaberesNoImponibles}">
+                                            <h:outputText value="#{item.totalHaberesNoImponibles}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.saldoAnterior}" filterBy="#{item.saldoAnterior}" headerText="#{myBundle.ListLiquidacionSueldoTitle_saldoAnterior}">
+                                            <h:outputText value="#{item.saldoAnterior}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.totalDescuentos}" filterBy="#{item.totalDescuentos}" headerText="#{myBundle.ListLiquidacionSueldoTitle_totalDescuentos}">
+                                            <h:outputText value="#{item.totalDescuentos}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.montoAnticipo}" filterBy="#{item.montoAnticipo}" headerText="#{myBundle.ListLiquidacionSueldoTitle_montoAnticipo}">
+                                            <h:outputText value="#{item.montoAnticipo}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.saldoMonto}" filterBy="#{item.saldoMonto}" headerText="#{myBundle.ListLiquidacionSueldoTitle_saldoMonto}">
+                                            <h:outputText value="#{item.saldoMonto}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.alcanceLiquido}" filterBy="#{item.alcanceLiquido}" headerText="#{myBundle.ListLiquidacionSueldoTitle_alcanceLiquido}">
+                                            <h:outputText value="#{item.alcanceLiquido}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idRelacionLaboral.idRelacionLaboral}" filterBy="#{item.idRelacionLaboral.idRelacionLaboral}" headerText="#{myBundle.ListLiquidacionSueldoTitle_idRelacionLaboral}">
+                                            <h:outputText value="#{item.idRelacionLaboral.idRelacionLaboral}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":LiquidacionSueldoEditPage:LiquidacionSueldoEditForm" disabled="#{empty liquidacionSueldoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:LiquidacionSueldoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{liquidacionSueldoController.delete}" update=":growl,datalist" disabled="#{empty liquidacionSueldoController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty liquidacionSueldoController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.LiquidacionSueldoHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.LiquidacionSueldoMenuItem_idRelacionLaboral}" icon="ui-icon-search" update=":RelacionLaboralEditPage:RelacionLaboralEditForm" disabled="#{empty liquidacionSueldoController.selected.idRelacionLaboral}" actionListener="#{liquidacionSueldoController.prepareIdRelacionLaboral}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:RelacionLaboralEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

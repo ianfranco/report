@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SindicatoTrabajadorEditDlg" widgetVar="SindicatoTrabajadorEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditSindicatoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="SindicatoTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{sindicatoTrabajadorController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditSindicatoTrabajadorLabel_idSindicatoTrabajador}" for="idSindicatoTrabajador" />
+                        <h:panelGroup>
+                            <h:outputText id="idSindicatoTrabajador" value="#{sindicatoTrabajadorController.selected.idSindicatoTrabajador}" />
+                            <p:tooltip for="idSindicatoTrabajador" value="#{sindicatoTrabajadorController.getComponentMessages('idSindicatoTrabajador', myBundle.EditSindicatoTrabajadorHelpText_idSindicatoTrabajador)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditSindicatoTrabajadorLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{sindicatoTrabajadorController.selected.fechaIngreso}" title="#{myBundle.EditSindicatoTrabajadorTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.EditSindicatoTrabajadorRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{sindicatoTrabajadorController.getComponentMessages('fechaIngreso', myBundle.EditSindicatoTrabajadorHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditSindicatoTrabajadorLabel_idSindicato}" for="idSindicato" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idSindicato" value="#{sindicatoTrabajadorController.selected.idSindicato}" required="true" requiredMessage="#{myBundle.EditSindicatoTrabajadorRequiredMessage_idSindicato}" converter="sindicatoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{sindicatoController.items}"
+                                               var="idSindicatoItem"
+                                               itemValue="#{idSindicatoItem}"
+                                               itemLabel="#{idSindicatoItem.idSindicato.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idSindicato" value="#{sindicatoTrabajadorController.getComponentMessages('idSindicato', myBundle.EditSindicatoTrabajadorHelpText_idSindicato)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditSindicatoTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{sindicatoTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.EditSindicatoTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{sindicatoTrabajadorController.getComponentMessages('idTrabajador', myBundle.EditSindicatoTrabajadorHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sindicatoTrabajadorController.save}" value="#{myBundle.Save}" update="display,:SindicatoTrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SindicatoTrabajadorEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('SindicatoTrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

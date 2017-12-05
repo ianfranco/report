@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="SindicatoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditSindicatoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:SindicatoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="SindicatoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{sindicatoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditSindicatoLabel_idSindicato}" for="idSindicato" />
+                            <h:panelGroup>
+                                <h:outputText id="idSindicato" value="#{sindicatoController.selected.idSindicato}" />
+                                <p:tooltip for="idSindicato" value="#{sindicatoController.getComponentMessages('idSindicato', myBundle.EditSindicatoHelpText_idSindicato)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditSindicatoLabel_nombreSindicato}" for="nombreSindicato" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreSindicato" value="#{sindicatoController.selected.nombreSindicato}" title="#{myBundle.EditSindicatoTitle_nombreSindicato}" required="true" requiredMessage="#{myBundle.EditSindicatoRequiredMessage_nombreSindicato}" size="100" maxlength="100"/>
+                                <p:tooltip for="nombreSindicato" value="#{sindicatoController.getComponentMessages('nombreSindicato', myBundle.EditSindicatoHelpText_nombreSindicato)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditSindicatoLabel_cuotaSindicato}" for="cuotaSindicato" />
+                            <h:panelGroup>
+                                <p:inputText id="cuotaSindicato" value="#{sindicatoController.selected.cuotaSindicato}" title="#{myBundle.EditSindicatoTitle_cuotaSindicato}" required="true" requiredMessage="#{myBundle.EditSindicatoRequiredMessage_cuotaSindicato}"/>
+                                <p:tooltip for="cuotaSindicato" value="#{sindicatoController.getComponentMessages('cuotaSindicato', myBundle.EditSindicatoHelpText_cuotaSindicato)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{sindicatoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:SindicatoListPage:SindicatoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:SindicatoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

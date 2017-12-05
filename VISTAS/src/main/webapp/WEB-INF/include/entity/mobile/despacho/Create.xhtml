@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DespachoCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateDespachoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DespachoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DespachoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{despachoController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDespachoLabel_fecha}" for="fecha" />
+                            <h:panelGroup>
+                                <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{despachoController.selected.fecha}" title="#{myBundle.CreateDespachoTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateDespachoRequiredMessage_fecha}" showOn="button"/>
+                                <p:tooltip for="fecha" value="#{despachoController.getComponentMessages('fecha', myBundle.CreateDespachoHelpText_fecha)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDespachoLabel_horario}" for="horario" />
+                            <h:panelGroup>
+                                <p:calendar id="horario" pattern="HH:mm:ss" value="#{despachoController.selected.horario}" title="#{myBundle.CreateDespachoTitle_horario}" required="true" requiredMessage="#{myBundle.CreateDespachoRequiredMessage_horario}" showOn="button"/>
+                                <p:tooltip for="horario" value="#{despachoController.getComponentMessages('horario', myBundle.CreateDespachoHelpText_horario)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDespachoLabel_idBus}" for="idBus" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idBus" value="#{despachoController.selected.idBus}" required="true" requiredMessage="#{myBundle.CreateDespachoRequiredMessage_idBus}" converter="busConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{busController.items}"
+                                                   var="idBusItem"
+                                                   itemValue="#{idBusItem}"
+                                                   itemLabel="#{idBusItem.idBus.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idBus" value="#{despachoController.getComponentMessages('idBus', myBundle.CreateDespachoHelpText_idBus)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDespachoLabel_idTrabajador}" for="idTrabajador" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTrabajador" value="#{despachoController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.CreateDespachoRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{trabajadorController.items}"
+                                                   var="idTrabajadorItem"
+                                                   itemValue="#{idTrabajadorItem}"
+                                                   itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTrabajador" value="#{despachoController.getComponentMessages('idTrabajador', myBundle.CreateDespachoHelpText_idTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDespachoLabel_idInspector}" for="idInspector" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idInspector" value="#{despachoController.selected.idInspector}" required="true" requiredMessage="#{myBundle.CreateDespachoRequiredMessage_idInspector}" converter="usuarioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{usuarioController.items}"
+                                                   var="idInspectorItem"
+                                                   itemValue="#{idInspectorItem}"
+                                                   itemLabel="#{idInspectorItem.idUsario.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idInspector" value="#{despachoController.getComponentMessages('idInspector', myBundle.CreateDespachoHelpText_idInspector)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDespachoLabel_idServicio}" for="idServicio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idServicio" value="#{despachoController.selected.idServicio}" required="true" requiredMessage="#{myBundle.CreateDespachoRequiredMessage_idServicio}" converter="servicioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{servicioController.items}"
+                                                   var="idServicioItem"
+                                                   itemValue="#{idServicioItem}"
+                                                   itemLabel="#{idServicioItem.idServicio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idServicio" value="#{despachoController.getComponentMessages('idServicio', myBundle.CreateDespachoHelpText_idServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{despachoController.saveNew}" value="#{myBundle.Save}" update="display,:DespachoListPage:DespachoListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:DespachoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

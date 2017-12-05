@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="HorarioServicioViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewHorarioServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:HorarioServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="HorarioServicioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{horarioServicioController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_idHorarioServicio}"/>
+                            <h:outputText value="#{horarioServicioController.selected.idHorarioServicio}" title="#{myBundle.ViewHorarioServicioTitle_idHorarioServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_nombre}"/>
+                            <h:outputText value="#{horarioServicioController.selected.nombre}" title="#{myBundle.ViewHorarioServicioTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_desde}"/>
+                            <h:outputText value="#{horarioServicioController.selected.desde}" title="#{myBundle.ViewHorarioServicioTitle_desde}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_hasta}"/>
+                            <h:outputText value="#{horarioServicioController.selected.hasta}" title="#{myBundle.ViewHorarioServicioTitle_hasta}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_lunes}"/>
+                            <h:selectBooleanCheckbox id="lunes" value="#{horarioServicioController.selected.lunes}" title="#{myBundle.EditHorarioServicioTitle_lunes}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_martes}"/>
+                            <h:selectBooleanCheckbox id="martes" value="#{horarioServicioController.selected.martes}" title="#{myBundle.EditHorarioServicioTitle_martes}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_miercoles}"/>
+                            <h:selectBooleanCheckbox id="miercoles" value="#{horarioServicioController.selected.miercoles}" title="#{myBundle.EditHorarioServicioTitle_miercoles}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_jueves}"/>
+                            <h:selectBooleanCheckbox id="jueves" value="#{horarioServicioController.selected.jueves}" title="#{myBundle.EditHorarioServicioTitle_jueves}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_viernes}"/>
+                            <h:selectBooleanCheckbox id="viernes" value="#{horarioServicioController.selected.viernes}" title="#{myBundle.EditHorarioServicioTitle_viernes}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_sabado}"/>
+                            <h:selectBooleanCheckbox id="sabado" value="#{horarioServicioController.selected.sabado}" title="#{myBundle.EditHorarioServicioTitle_sabado}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_domingo}"/>
+                            <h:selectBooleanCheckbox id="domingo" value="#{horarioServicioController.selected.domingo}" title="#{myBundle.EditHorarioServicioTitle_domingo}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_idServicio}"/>
+                            <h:outputText value="#{horarioServicioController.selected.idServicio.idServicio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewHorarioServicioLabel_idTipoEstacionalidad}"/>
+                            <h:outputText value="#{horarioServicioController.selected.idTipoEstacionalidad.idTipoEstacionalidad}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

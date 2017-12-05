@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DeviceEditDlg" widgetVar="DeviceEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDeviceTitle}" closeOnEscape="true">
+
+            <h:form id="DeviceEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{deviceController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditDeviceLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{deviceController.selected.id}" />
+                            <p:tooltip for="id" value="#{deviceController.getComponentMessages('id', myBundle.EditDeviceHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDeviceLabel_name}" for="name" />
+                        <h:panelGroup>
+                            <p:inputText id="name" value="#{deviceController.selected.name}" title="#{myBundle.EditDeviceTitle_name}" required="true" requiredMessage="#{myBundle.EditDeviceRequiredMessage_name}" size="128" maxlength="128"/>
+                            <p:tooltip for="name" value="#{deviceController.getComponentMessages('name', myBundle.EditDeviceHelpText_name)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDeviceLabel_uniqueId}" for="uniqueId" />
+                        <h:panelGroup>
+                            <p:inputText id="uniqueId" value="#{deviceController.selected.uniqueId}" title="#{myBundle.EditDeviceTitle_uniqueId}" required="true" requiredMessage="#{myBundle.EditDeviceRequiredMessage_uniqueId}" size="128" maxlength="128"/>
+                            <p:tooltip for="uniqueId" value="#{deviceController.getComponentMessages('uniqueId', myBundle.EditDeviceHelpText_uniqueId)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDeviceLabel_status}" for="status" />
+                        <h:panelGroup>
+                            <p:inputText id="status" value="#{deviceController.selected.status}" title="#{myBundle.EditDeviceTitle_status}" size="128" maxlength="128"/>
+                            <p:tooltip for="status" value="#{deviceController.getComponentMessages('status', myBundle.EditDeviceHelpText_status)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDeviceLabel_lastUpdate}" for="lastUpdate" />
+                        <h:panelGroup>
+                            <p:calendar id="lastUpdate" pattern="MM/dd/yyyy HH:mm:ss" value="#{deviceController.selected.lastUpdate}" title="#{myBundle.EditDeviceTitle_lastUpdate}" required="true" requiredMessage="#{myBundle.EditDeviceRequiredMessage_lastUpdate}" showOn="button"/>
+                            <p:tooltip for="lastUpdate" value="#{deviceController.getComponentMessages('lastUpdate', myBundle.EditDeviceHelpText_lastUpdate)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditDeviceLabel_positionId}" for="positionId" />
+                        <h:panelGroup>
+                            <p:inputText id="positionId" value="#{deviceController.selected.positionId}" title="#{myBundle.EditDeviceTitle_positionId}"/>
+                            <p:tooltip for="positionId" value="#{deviceController.getComponentMessages('positionId', myBundle.EditDeviceHelpText_positionId)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{deviceController.save}" value="#{myBundle.Save}" update="display,:DeviceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DeviceEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DeviceEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

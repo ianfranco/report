@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ValorRolloUnidadEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditValorRolloUnidadTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ValorRolloUnidadListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ValorRolloUnidadEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{valorRolloUnidadController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditValorRolloUnidadLabel_idValorRolloUnidad}" for="idValorRolloUnidad" />
+                            <h:panelGroup>
+                                <h:outputText id="idValorRolloUnidad" value="#{valorRolloUnidadController.selected.idValorRolloUnidad}" />
+                                <p:tooltip for="idValorRolloUnidad" value="#{valorRolloUnidadController.getComponentMessages('idValorRolloUnidad', myBundle.EditValorRolloUnidadHelpText_idValorRolloUnidad)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditValorRolloUnidadLabel_compra}" for="compra" />
+                            <h:panelGroup>
+                                <p:inputText id="compra" value="#{valorRolloUnidadController.selected.compra}" title="#{myBundle.EditValorRolloUnidadTitle_compra}" required="true" requiredMessage="#{myBundle.EditValorRolloUnidadRequiredMessage_compra}"/>
+                                <p:tooltip for="compra" value="#{valorRolloUnidadController.getComponentMessages('compra', myBundle.EditValorRolloUnidadHelpText_compra)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditValorRolloUnidadLabel_venta}" for="venta" />
+                            <h:panelGroup>
+                                <p:inputText id="venta" value="#{valorRolloUnidadController.selected.venta}" title="#{myBundle.EditValorRolloUnidadTitle_venta}" required="true" requiredMessage="#{myBundle.EditValorRolloUnidadRequiredMessage_venta}"/>
+                                <p:tooltip for="venta" value="#{valorRolloUnidadController.getComponentMessages('venta', myBundle.EditValorRolloUnidadHelpText_venta)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditValorRolloUnidadLabel_idUnidad}" for="idUnidad" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idUnidad" value="#{valorRolloUnidadController.selected.idUnidad}" required="true" requiredMessage="#{myBundle.EditValorRolloUnidadRequiredMessage_idUnidad}" converter="unidadNegocioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{unidadNegocioController.items}"
+                                                   var="idUnidadItem"
+                                                   itemValue="#{idUnidadItem}"
+                                                   itemLabel="#{idUnidadItem.idUnidadNegocio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idUnidad" value="#{valorRolloUnidadController.getComponentMessages('idUnidad', myBundle.EditValorRolloUnidadHelpText_idUnidad)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{valorRolloUnidadController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:ValorRolloUnidadListPage:ValorRolloUnidadListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:ValorRolloUnidadListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="InventarioTerminalViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewInventarioTerminalTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:InventarioTerminalListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="InventarioTerminalViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{inventarioTerminalController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioTerminalLabel_idInventarioTerminal}"/>
+                            <h:outputText value="#{inventarioTerminalController.selected.idInventarioTerminal}" title="#{myBundle.ViewInventarioTerminalTitle_idInventarioTerminal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioTerminalLabel_estado}"/>
+                            <h:selectBooleanCheckbox id="estado" value="#{inventarioTerminalController.selected.estado}" title="#{myBundle.EditInventarioTerminalTitle_estado}"  disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioTerminalLabel_serie}"/>
+                            <h:outputText value="#{inventarioTerminalController.selected.serie}" title="#{myBundle.ViewInventarioTerminalTitle_serie}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioTerminalLabel_identificador}"/>
+                            <h:outputText value="#{inventarioTerminalController.selected.identificador}" title="#{myBundle.ViewInventarioTerminalTitle_identificador}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioTerminalLabel_idBoleto}"/>
+                            <h:outputText value="#{inventarioTerminalController.selected.idBoleto.idBoleto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInventarioTerminalLabel_idTerminal}"/>
+                            <h:outputText value="#{inventarioTerminalController.selected.idTerminal.idTerminal}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

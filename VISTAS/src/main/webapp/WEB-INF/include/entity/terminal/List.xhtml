@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TerminalListForm">
+
+        <p:panel header="#{myBundle.ListTerminalTitle}">
+            <p:contextMenu id="TerminalDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TerminalListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TerminalListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TerminalListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TerminalListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.TerminalMenuItem_inventarioTerminalList}" icon="ui-icon-search"  action="#{terminalController.navigateInventarioTerminalList}" disabled="#{empty terminalController.selected.inventarioTerminalList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.TerminalMenuItem_ventaBoletoList}" icon="ui-icon-search"  action="#{terminalController.navigateVentaBoletoList}" disabled="#{empty terminalController.selected.ventaBoletoList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.TerminalMenuItem_usuarioList}" icon="ui-icon-search"  action="#{terminalController.navigateUsuarioList}" disabled="#{empty terminalController.selected.usuarioList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.TerminalMenuItem_busList}" icon="ui-icon-search"  action="#{terminalController.navigateBusList}" disabled="#{empty terminalController.selected.busList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.TerminalMenuItem_servicioList}" icon="ui-icon-search"  action="#{terminalController.navigateServicioList}" disabled="#{empty terminalController.selected.servicioList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.TerminalMenuItem_trabajadorTerminalList}" icon="ui-icon-search"  action="#{terminalController.navigateTrabajadorTerminalList}" disabled="#{empty terminalController.selected.trabajadorTerminalList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{terminalController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{terminalController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{terminalController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idTerminal}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TerminalDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TerminalDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TerminalListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idTerminal}" filterBy="#{item.idTerminal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTerminalTitle_idTerminal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTerminal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreTerminal}" filterBy="#{item.nombreTerminal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTerminalTitle_nombreTerminal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreTerminal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccionTerminal}" filterBy="#{item.direccionTerminal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTerminalTitle_direccionTerminal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccionTerminal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.superficie}" filterBy="#{item.superficie}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTerminalTitle_superficie}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.superficie}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telefonoTerminal}" filterBy="#{item.telefonoTerminal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTerminalTitle_telefonoTerminal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefonoTerminal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.emailTerminal}" filterBy="#{item.emailTerminal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTerminalTitle_emailTerminal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.emailTerminal}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.ubicacionLongitud}" filterBy="#{item.ubicacionLongitud}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListTerminalTitle_ubicacionLongitud}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ubicacionLongitud}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.ubicacionLatitud}" filterBy="#{item.ubicacionLatitud}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListTerminalTitle_ubicacionLatitud}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ubicacionLatitud}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{terminalController.prepareCreate}" update=":TerminalCreateForm" oncomplete="PF('TerminalCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TerminalViewForm" oncomplete="PF('TerminalViewDialog').show()" disabled="#{empty terminalController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TerminalEditForm" oncomplete="PF('TerminalEditDialog').show()" disabled="#{empty terminalController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{terminalController.delete}" update=":growl,datalist" disabled="#{empty terminalController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

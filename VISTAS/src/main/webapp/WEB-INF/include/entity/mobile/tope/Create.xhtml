@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TopeCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateTopeTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TopeListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TopeCreateForm">
+
+                <h:panelGroup id="display" rendered="#{topeController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTopeLabel_nombreTope}" for="nombreTope" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreTope" value="#{topeController.selected.nombreTope}" title="#{myBundle.CreateTopeTitle_nombreTope}" required="true" requiredMessage="#{myBundle.CreateTopeRequiredMessage_nombreTope}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreTope" value="#{topeController.getComponentMessages('nombreTope', myBundle.CreateTopeHelpText_nombreTope)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateTopeLabel_montoUf}" for="montoUf" />
+                            <h:panelGroup>
+                                <p:inputText id="montoUf" value="#{topeController.selected.montoUf}" title="#{myBundle.CreateTopeTitle_montoUf}" required="true" requiredMessage="#{myBundle.CreateTopeRequiredMessage_montoUf}"/>
+                                <p:tooltip for="montoUf" value="#{topeController.getComponentMessages('montoUf', myBundle.CreateTopeHelpText_montoUf)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{topeController.saveNew}" value="#{myBundle.Save}" update="display,:TopeListPage:TopeListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:TopeListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

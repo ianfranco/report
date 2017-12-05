@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="BoletoListForm">
+
+        <p:panel header="#{myBundle.ListBoletoTitle}">
+            <p:contextMenu id="BoletoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('BoletoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('BoletoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('BoletoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('BoletoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.BoletoMenuItem_inventarioTerminalList}" icon="ui-icon-search"  action="#{boletoController.navigateInventarioTerminalList}" disabled="#{empty boletoController.selected.inventarioTerminalList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BoletoMenuItem_serieBoletoGuiaList}" icon="ui-icon-search"  action="#{boletoController.navigateSerieBoletoGuiaList}" disabled="#{empty boletoController.selected.serieBoletoGuiaList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BoletoMenuItem_inventarioInternoList}" icon="ui-icon-search"  action="#{boletoController.navigateInventarioInternoList}" disabled="#{empty boletoController.selected.inventarioInternoList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BoletoMenuItem_detalleCompraBoletoList}" icon="ui-icon-search"  action="#{boletoController.navigateDetalleCompraBoletoList}" disabled="#{empty boletoController.selected.detalleCompraBoletoList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.BoletoMenuItem_tarifaServicioList}" icon="ui-icon-search"  action="#{boletoController.navigateTarifaServicioList}" disabled="#{empty boletoController.selected.tarifaServicioList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{boletoController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{boletoController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{boletoController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idBoleto}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BoletoDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BoletoDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('BoletoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idBoleto}" filterBy="#{item.idBoleto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBoletoTitle_idBoleto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idBoleto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombreBoleto}" filterBy="#{item.nombreBoleto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBoletoTitle_nombreBoleto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombreBoleto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.activo}" filterBy="#{item.activo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListBoletoTitle_activo}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="activo" value="#{item.activo}" title="#{myBundle.EditBoletoTitle_activo}" required="true" requiredMessage="#{myBundle.EditBoletoRequiredMessage_activo}" disabled="true"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{boletoController.prepareCreate}" update=":BoletoCreateForm" oncomplete="PF('BoletoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":BoletoViewForm" oncomplete="PF('BoletoViewDialog').show()" disabled="#{empty boletoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":BoletoEditForm" oncomplete="PF('BoletoEditDialog').show()" disabled="#{empty boletoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{boletoController.delete}" update=":growl,datalist" disabled="#{empty boletoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

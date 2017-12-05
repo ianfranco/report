@@ -21,14 +21,14 @@
     terminal.nombre_terminal,
     unidad_negocio.numero_unidad_negocio,
     flota.nombre_flota,
-    @administracion:=SUM_EGRESO(bus.id_bus, '2017-05-01', 1) AS administracion,
-    @licitacion:=SUM_EGRESO(bus.id_bus, '2017-05-01', 7) AS licitacion,
-    @total:=SUM_SALDOS(bus.id_bus, '2017-05-01') AS ingresos,
-    @cargos:=CARGOS_BUS(bus.id_bus, '2017-05-01') AS cargos,
-    @abonos:=ABONOS_BUS(bus.id_bus, '2017-05-01') AS abonos,
-    @taller:=SUM_EGRESO(bus.id_bus, '2017-05-01', 4) AS taller,
+    @administracion:=SUM_EGRESO(bus.id_bus, '2017-10-01', 1) AS administracion,
+    @licitacion:=SUM_EGRESO(bus.id_bus, '2017-10-01', 7) AS licitacion,
+    @total:=SUM_SALDOS(bus.id_bus, '2017-10-01') AS ingresos,
+    @cargos:=CARGOS_BUS(bus.id_bus, '2017-10-01') AS cargos,
+    @abonos:=ABONOS_BUS(bus.id_bus, '2017-10-01') AS abonos,
+    @taller:=SUM_EGRESO(bus.id_bus, '2017-10-01', 4) AS taller,
     @saldo:=(@administracion + @licitacion + @taller) AS saldo,
-    @aseo:=SUM_EGRESO(bus.id_bus, '2017-05-01', 8) AS aseo, 
+    @aseo:=SUM_EGRESO(bus.id_bus, '2017-10-01', 8) AS aseo, 
     (SELECT 
     CONCAT(trabajador.apellido_paterno_trabajador,
             ' ',
@@ -41,8 +41,8 @@ FROM
     trabajador ON guia.id_trabajador = trabajador.id_trabajador
 WHERE
     guia.id_bus = bus.id_bus
-        AND guia.fecha_recaudacion BETWEEN  '2017-05-01' AND  LAST_DAY('2017-05-01') GROUP BY guia.id_trabajador ORDER BY COUNT(guia.folio) DESC LIMIT 0,1) AS nombreConductor, 
-        IF(@saldo>2000000, 200000,IF(@saldo>1800000, 180000, IF(@saldo>1600000, 150000, IF(@saldo>1500000, 120000, IF(@saldo>1400000, 100000, 0 ))))) as premio
+        AND guia.fecha_recaudacion BETWEEN  '2017-10-01' AND  LAST_DAY('2017-10-01') GROUP BY guia.id_trabajador ORDER BY COUNT(guia.folio) DESC LIMIT 0,1) AS nombreConductor, 
+        IF(@saldo>2000000, 200000,IF(@saldo>1900000, 180000, IF(@saldo>1800000, 150000, IF(@saldo>1700000, 120000, IF(@saldo>1600000, 100000, 0 ))))) as premio
 FROM
     bus
         LEFT JOIN
@@ -56,9 +56,9 @@ FROM
         LEFT JOIN
     terminal ON bus.id_terminal = terminal.id_terminal
 WHERE
-    flota.id_flota = 1 and bus.id_unidad_negocio <> 3
+    flota.id_flota = 1 and bus.id_unidad_negocio = 3
 GROUP BY bus.id_bus
-HAVING SALDO > 1400000
+HAVING SALDO > 1600000
 ORDER BY flota.id_flota , numero_unidad_negocio , numero_bus]]>
 	</queryString>
 	<field name="id_bus" class="java.lang.Long"/>
@@ -157,7 +157,7 @@ ORDER BY flota.id_flota , numero_unidad_negocio , numero_bus]]>
 					<textFieldExpression><![CDATA[$V{licitacion2}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###">
-					<reportElement x="207" y="0" width="38" height="15" uuid="162c4557-dc6a-4714-b1d4-402b260a0060">
+					<reportElement x="207" y="0" width="44" height="15" uuid="162c4557-dc6a-4714-b1d4-402b260a0060">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
@@ -183,7 +183,7 @@ ORDER BY flota.id_flota , numero_unidad_negocio , numero_bus]]>
 					<textFieldExpression><![CDATA[$V{taller2}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###.###">
-					<reportElement x="450" y="0" width="30" height="14" uuid="a1c866b7-ab6e-441d-84d0-dbf3c18923ce"/>
+					<reportElement x="434" y="0" width="46" height="14" uuid="a1c866b7-ab6e-441d-84d0-dbf3c18923ce"/>
 					<textElement textAlignment="Right">
 						<font size="8" isBold="false"/>
 					</textElement>
@@ -316,7 +316,7 @@ ORDER BY flota.id_flota , numero_unidad_negocio , numero_bus]]>
 					<textFieldExpression><![CDATA[$V{licitacion1}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###">
-					<reportElement x="207" y="0" width="38" height="15" uuid="b67b097a-bbf8-4cfe-a0fb-9cd8bb0a199e">
+					<reportElement x="207" y="0" width="44" height="15" uuid="b67b097a-bbf8-4cfe-a0fb-9cd8bb0a199e">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
@@ -342,7 +342,7 @@ ORDER BY flota.id_flota , numero_unidad_negocio , numero_bus]]>
 					<textFieldExpression><![CDATA[$V{taller1}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.###">
-					<reportElement x="450" y="0" width="30" height="14" uuid="6c0e1c5d-da1b-47d9-9f07-62eb7972b267"/>
+					<reportElement x="434" y="0" width="46" height="14" uuid="6c0e1c5d-da1b-47d9-9f07-62eb7972b267"/>
 					<textElement textAlignment="Right">
 						<font size="8" isBold="false"/>
 					</textElement>

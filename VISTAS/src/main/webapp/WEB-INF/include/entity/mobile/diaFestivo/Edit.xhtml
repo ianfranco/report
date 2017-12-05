@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DiaFestivoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditDiaFestivoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DiaFestivoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DiaFestivoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{diaFestivoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditDiaFestivoLabel_idDiaFestivo}" for="idDiaFestivo" />
+                            <h:panelGroup>
+                                <h:outputText id="idDiaFestivo" value="#{diaFestivoController.selected.idDiaFestivo}" />
+                                <p:tooltip for="idDiaFestivo" value="#{diaFestivoController.getComponentMessages('idDiaFestivo', myBundle.EditDiaFestivoHelpText_idDiaFestivo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditDiaFestivoLabel_nombreDiaFestivo}" for="nombreDiaFestivo" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreDiaFestivo" value="#{diaFestivoController.selected.nombreDiaFestivo}" title="#{myBundle.EditDiaFestivoTitle_nombreDiaFestivo}" required="true" requiredMessage="#{myBundle.EditDiaFestivoRequiredMessage_nombreDiaFestivo}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreDiaFestivo" value="#{diaFestivoController.getComponentMessages('nombreDiaFestivo', myBundle.EditDiaFestivoHelpText_nombreDiaFestivo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditDiaFestivoLabel_fecha}" for="fecha" />
+                            <h:panelGroup>
+                                <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{diaFestivoController.selected.fecha}" title="#{myBundle.EditDiaFestivoTitle_fecha}" required="true" requiredMessage="#{myBundle.EditDiaFestivoRequiredMessage_fecha}" showOn="button"/>
+                                <p:tooltip for="fecha" value="#{diaFestivoController.getComponentMessages('fecha', myBundle.EditDiaFestivoHelpText_fecha)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{diaFestivoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:DiaFestivoListPage:DiaFestivoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:DiaFestivoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

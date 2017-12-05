@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RepresentanteEmpresaCreateDlg" widgetVar="RepresentanteEmpresaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateRepresentanteEmpresaTitle}" closeOnEscape="true">
+
+            <h:form id="RepresentanteEmpresaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{representanteEmpresaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateRepresentanteEmpresaLabel_idEmpresa}" for="idEmpresa" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idEmpresa" value="#{representanteEmpresaController.selected.idEmpresa}" required="true" requiredMessage="#{myBundle.CreateRepresentanteEmpresaRequiredMessage_idEmpresa}" converter="empresaConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{empresaController.items}"
+                                               var="idEmpresaItem"
+                                               itemValue="#{idEmpresaItem}"
+                                               itemLabel="#{idEmpresaItem.idEmpresa.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idEmpresa" value="#{representanteEmpresaController.getComponentMessages('idEmpresa', myBundle.CreateRepresentanteEmpresaHelpText_idEmpresa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateRepresentanteEmpresaLabel_idRepresentanteLegal}" for="idRepresentanteLegal" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idRepresentanteLegal" value="#{representanteEmpresaController.selected.idRepresentanteLegal}" required="true" requiredMessage="#{myBundle.CreateRepresentanteEmpresaRequiredMessage_idRepresentanteLegal}" converter="representanteLegalConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{representanteLegalController.items}"
+                                               var="idRepresentanteLegalItem"
+                                               itemValue="#{idRepresentanteLegalItem}"
+                                               itemLabel="#{idRepresentanteLegalItem.idRepresentanteLegal.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idRepresentanteLegal" value="#{representanteEmpresaController.getComponentMessages('idRepresentanteLegal', myBundle.CreateRepresentanteEmpresaHelpText_idRepresentanteLegal)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{representanteEmpresaController.saveNew}" value="#{myBundle.Save}" update="display,:RepresentanteEmpresaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RepresentanteEmpresaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RepresentanteEmpresaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoDescuentoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditTipoDescuentoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TipoDescuentoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoDescuentoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tipoDescuentoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditTipoDescuentoLabel_idTipoDescuento}" for="idTipoDescuento" />
+                            <h:panelGroup>
+                                <h:outputText id="idTipoDescuento" value="#{tipoDescuentoController.selected.idTipoDescuento}" />
+                                <p:tooltip for="idTipoDescuento" value="#{tipoDescuentoController.getComponentMessages('idTipoDescuento', myBundle.EditTipoDescuentoHelpText_idTipoDescuento)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTipoDescuentoLabel_nombreTipoDescuento}" for="nombreTipoDescuento" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreTipoDescuento" value="#{tipoDescuentoController.selected.nombreTipoDescuento}" title="#{myBundle.EditTipoDescuentoTitle_nombreTipoDescuento}" required="true" requiredMessage="#{myBundle.EditTipoDescuentoRequiredMessage_nombreTipoDescuento}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreTipoDescuento" value="#{tipoDescuentoController.getComponentMessages('nombreTipoDescuento', myBundle.EditTipoDescuentoHelpText_nombreTipoDescuento)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTipoDescuentoLabel_fechaIngreso}" for="fechaIngreso" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{tipoDescuentoController.selected.fechaIngreso}" title="#{myBundle.EditTipoDescuentoTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.EditTipoDescuentoRequiredMessage_fechaIngreso}" showOn="button"/>
+                                <p:tooltip for="fechaIngreso" value="#{tipoDescuentoController.getComponentMessages('fechaIngreso', myBundle.EditTipoDescuentoHelpText_fechaIngreso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditTipoDescuentoLabel_montoDefecto}" for="montoDefecto" />
+                            <h:panelGroup>
+                                <p:inputText id="montoDefecto" value="#{tipoDescuentoController.selected.montoDefecto}" title="#{myBundle.EditTipoDescuentoTitle_montoDefecto}"/>
+                                <p:tooltip for="montoDefecto" value="#{tipoDescuentoController.getComponentMessages('montoDefecto', myBundle.EditTipoDescuentoHelpText_montoDefecto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{tipoDescuentoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:TipoDescuentoListPage:TipoDescuentoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:TipoDescuentoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

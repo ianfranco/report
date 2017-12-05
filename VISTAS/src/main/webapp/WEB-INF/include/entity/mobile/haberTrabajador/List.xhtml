@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="HaberTrabajadorListPage">
+        <pm:header title="#{myBundle.ListHaberTrabajadorTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":HaberTrabajadorCreatePage:HaberTrabajadorCreateForm" actionListener="#{haberTrabajadorController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:HaberTrabajadorCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="HaberTrabajadorListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{haberTrabajadorController.items}"
+                             var="item"
+                             rowKey="#{item.idHaberTrabajador}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{haberTrabajadorController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{haberTrabajadorController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{haberTrabajadorController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('HaberTrabajadorListPage:HaberTrabajadorListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('HaberTrabajadorListPage:HaberTrabajadorListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('HaberTrabajadorListPage:HaberTrabajadorListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idHaberTrabajador}" filterBy="#{item.idHaberTrabajador}" headerText="#{myBundle.ListHaberTrabajadorTitle_idHaberTrabajador}">
+                        <h:outputText value="#{item.idHaberTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}" headerText="#{myBundle.ListHaberTrabajadorTitle_fechaIngreso}">
+                        <h:outputText value="#{item.fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}" headerText="#{myBundle.ListHaberTrabajadorTitle_fechaInicio}">
+                        <h:outputText value="#{item.fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.numeroCuotas}" filterBy="#{item.numeroCuotas}" headerText="#{myBundle.ListHaberTrabajadorTitle_numeroCuotas}">
+                        <h:outputText value="#{item.numeroCuotas}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.monto}" filterBy="#{item.monto}" headerText="#{myBundle.ListHaberTrabajadorTitle_monto}">
+                        <h:outputText value="#{item.monto}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.activoHaberTrabajador}" filterBy="#{item.activoHaberTrabajador}" headerText="#{myBundle.ListHaberTrabajadorTitle_activoHaberTrabajador}">
+                        <h:selectBooleanCheckbox id="activoHaberTrabajador" value="#{item.activoHaberTrabajador}" title="#{myBundle.EditHaberTrabajadorTitle_activoHaberTrabajador}" required="true" requiredMessage="#{myBundle.EditHaberTrabajadorRequiredMessage_activoHaberTrabajador}" disabled="true"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.idTipoHaber.idTipoHaber}" filterBy="#{item.idTipoHaber.idTipoHaber}" headerText="#{myBundle.ListHaberTrabajadorTitle_idTipoHaber}">
+                                            <h:outputText value="#{item.idTipoHaber.idTipoHaber}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListHaberTrabajadorTitle_idTrabajador}">
+                                            <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":HaberTrabajadorEditPage:HaberTrabajadorEditForm" disabled="#{empty haberTrabajadorController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:HaberTrabajadorEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{haberTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty haberTrabajadorController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty haberTrabajadorController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.HaberTrabajadorHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.HaberTrabajadorMenuItem_idTipoHaber}" icon="ui-icon-search" update=":TipoHaberEditPage:TipoHaberEditForm" disabled="#{empty haberTrabajadorController.selected.idTipoHaber}" actionListener="#{haberTrabajadorController.prepareIdTipoHaber}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoHaberEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.HaberTrabajadorMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty haberTrabajadorController.selected.idTrabajador}" actionListener="#{haberTrabajadorController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="RepresentanteLegalViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewRepresentanteLegalTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:RepresentanteLegalListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="RepresentanteLegalViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{representanteLegalController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewRepresentanteLegalLabel_idRepresentanteLegal}"/>
+                            <h:outputText value="#{representanteLegalController.selected.idRepresentanteLegal}" title="#{myBundle.ViewRepresentanteLegalTitle_idRepresentanteLegal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewRepresentanteLegalLabel_nombreRepresentanteLegal}"/>
+                            <h:outputText value="#{representanteLegalController.selected.nombreRepresentanteLegal}" title="#{myBundle.ViewRepresentanteLegalTitle_nombreRepresentanteLegal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewRepresentanteLegalLabel_rutRepresentanteLegal}"/>
+                            <h:outputText value="#{representanteLegalController.selected.rutRepresentanteLegal}" title="#{myBundle.ViewRepresentanteLegalTitle_rutRepresentanteLegal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewRepresentanteLegalLabel_direccionRepresentanteLegal}"/>
+                            <h:outputText value="#{representanteLegalController.selected.direccionRepresentanteLegal}" title="#{myBundle.ViewRepresentanteLegalTitle_direccionRepresentanteLegal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewRepresentanteLegalLabel_telefonoRepresentanteLegal}"/>
+                            <h:outputText value="#{representanteLegalController.selected.telefonoRepresentanteLegal}" title="#{myBundle.ViewRepresentanteLegalTitle_telefonoRepresentanteLegal}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewRepresentanteLegalLabel_emailRepresentanteLegal}"/>
+                            <h:outputText value="#{representanteLegalController.selected.emailRepresentanteLegal}" title="#{myBundle.ViewRepresentanteLegalTitle_emailRepresentanteLegal}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoHaberViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewTipoHaberTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:TipoHaberListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoHaberViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{tipoHaberController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoHaberLabel_idTipoHaber}"/>
+                            <h:outputText value="#{tipoHaberController.selected.idTipoHaber}" title="#{myBundle.ViewTipoHaberTitle_idTipoHaber}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoHaberLabel_nombreTipoHaber}"/>
+                            <h:outputText value="#{tipoHaberController.selected.nombreTipoHaber}" title="#{myBundle.ViewTipoHaberTitle_nombreTipoHaber}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoHaberLabel_fechaIngreso}"/>
+                            <h:outputText value="#{tipoHaberController.selected.fechaIngreso}" title="#{myBundle.ViewTipoHaberTitle_fechaIngreso}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoHaberLabel_montoDefecto}"/>
+                            <h:outputText value="#{tipoHaberController.selected.montoDefecto}" title="#{myBundle.ViewTipoHaberTitle_montoDefecto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewTipoHaberLabel_imponible}"/>
+                            <h:selectBooleanCheckbox id="imponible" value="#{tipoHaberController.selected.imponible}" title="#{myBundle.EditTipoHaberTitle_imponible}" required="true" requiredMessage="#{myBundle.EditTipoHaberRequiredMessage_imponible}" disabled="true"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

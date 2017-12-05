@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="InstitucionApvViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewInstitucionApvTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:InstitucionApvListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="InstitucionApvViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{institucionApvController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInstitucionApvLabel_idInstitucionApv}"/>
+                            <h:outputText value="#{institucionApvController.selected.idInstitucionApv}" title="#{myBundle.ViewInstitucionApvTitle_idInstitucionApv}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewInstitucionApvLabel_nombreInstitucionApv}"/>
+                            <h:outputText value="#{institucionApvController.selected.nombreInstitucionApv}" title="#{myBundle.ViewInstitucionApvTitle_nombreInstitucionApv}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

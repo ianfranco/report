@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ValorRolloUnidadCreateDlg" widgetVar="ValorRolloUnidadCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateValorRolloUnidadTitle}" closeOnEscape="true">
+
+            <h:form id="ValorRolloUnidadCreateForm">
+
+                <h:panelGroup id="display" rendered="#{valorRolloUnidadController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateValorRolloUnidadLabel_compra}" for="compra" />
+                        <h:panelGroup>
+                            <p:inputText id="compra" value="#{valorRolloUnidadController.selected.compra}" title="#{myBundle.CreateValorRolloUnidadTitle_compra}" required="true" requiredMessage="#{myBundle.CreateValorRolloUnidadRequiredMessage_compra}"/>
+                            <p:tooltip for="compra" value="#{valorRolloUnidadController.getComponentMessages('compra', myBundle.CreateValorRolloUnidadHelpText_compra)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateValorRolloUnidadLabel_venta}" for="venta" />
+                        <h:panelGroup>
+                            <p:inputText id="venta" value="#{valorRolloUnidadController.selected.venta}" title="#{myBundle.CreateValorRolloUnidadTitle_venta}" required="true" requiredMessage="#{myBundle.CreateValorRolloUnidadRequiredMessage_venta}"/>
+                            <p:tooltip for="venta" value="#{valorRolloUnidadController.getComponentMessages('venta', myBundle.CreateValorRolloUnidadHelpText_venta)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateValorRolloUnidadLabel_idUnidad}" for="idUnidad" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idUnidad" value="#{valorRolloUnidadController.selected.idUnidad}" required="true" requiredMessage="#{myBundle.CreateValorRolloUnidadRequiredMessage_idUnidad}" converter="unidadNegocioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{unidadNegocioController.items}"
+                                               var="idUnidadItem"
+                                               itemValue="#{idUnidadItem}"
+                                               itemLabel="#{idUnidadItem.idUnidadNegocio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idUnidad" value="#{valorRolloUnidadController.getComponentMessages('idUnidad', myBundle.CreateValorRolloUnidadHelpText_idUnidad)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{valorRolloUnidadController.saveNew}" value="#{myBundle.Save}" update="display,:ValorRolloUnidadListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ValorRolloUnidadCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ValorRolloUnidadCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

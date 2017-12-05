@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PositionEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditPositionTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:PositionListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PositionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{positionController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditPositionLabel_id}" for="id" />
+                            <h:panelGroup>
+                                <h:outputText id="id" value="#{positionController.selected.id}" />
+                                <p:tooltip for="id" value="#{positionController.getComponentMessages('id', myBundle.EditPositionHelpText_id)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_protocol}" for="protocol" />
+                            <h:panelGroup>
+                                <p:inputText id="protocol" value="#{positionController.selected.protocol}" title="#{myBundle.EditPositionTitle_protocol}" size="128" maxlength="128"/>
+                                <p:tooltip for="protocol" value="#{positionController.getComponentMessages('protocol', myBundle.EditPositionHelpText_protocol)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_serverTime}" for="serverTime" />
+                            <h:panelGroup>
+                                <p:calendar id="serverTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{positionController.selected.serverTime}" title="#{myBundle.EditPositionTitle_serverTime}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_serverTime}" showOn="button"/>
+                                <p:tooltip for="serverTime" value="#{positionController.getComponentMessages('serverTime', myBundle.EditPositionHelpText_serverTime)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_deviceTime}" for="deviceTime" />
+                            <h:panelGroup>
+                                <p:calendar id="deviceTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{positionController.selected.deviceTime}" title="#{myBundle.EditPositionTitle_deviceTime}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_deviceTime}" showOn="button"/>
+                                <p:tooltip for="deviceTime" value="#{positionController.getComponentMessages('deviceTime', myBundle.EditPositionHelpText_deviceTime)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_fixTime}" for="fixTime" />
+                            <h:panelGroup>
+                                <p:calendar id="fixTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{positionController.selected.fixTime}" title="#{myBundle.EditPositionTitle_fixTime}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_fixTime}" showOn="button"/>
+                                <p:tooltip for="fixTime" value="#{positionController.getComponentMessages('fixTime', myBundle.EditPositionHelpText_fixTime)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_valid}" for="valid" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="valid" value="#{positionController.selected.valid}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_valid}"/>
+                                <p:tooltip for="valid" value="#{positionController.getComponentMessages('valid', myBundle.EditPositionHelpText_valid)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_latitude}" for="latitude" />
+                            <h:panelGroup>
+                                <p:inputText id="latitude" value="#{positionController.selected.latitude}" title="#{myBundle.EditPositionTitle_latitude}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_latitude}"/>
+                                <p:tooltip for="latitude" value="#{positionController.getComponentMessages('latitude', myBundle.EditPositionHelpText_latitude)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_longitude}" for="longitude" />
+                            <h:panelGroup>
+                                <p:inputText id="longitude" value="#{positionController.selected.longitude}" title="#{myBundle.EditPositionTitle_longitude}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_longitude}"/>
+                                <p:tooltip for="longitude" value="#{positionController.getComponentMessages('longitude', myBundle.EditPositionHelpText_longitude)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_altitude}" for="altitude" />
+                            <h:panelGroup>
+                                <p:inputText id="altitude" value="#{positionController.selected.altitude}" title="#{myBundle.EditPositionTitle_altitude}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_altitude}"/>
+                                <p:tooltip for="altitude" value="#{positionController.getComponentMessages('altitude', myBundle.EditPositionHelpText_altitude)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_speed}" for="speed" />
+                            <h:panelGroup>
+                                <p:inputText id="speed" value="#{positionController.selected.speed}" title="#{myBundle.EditPositionTitle_speed}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_speed}"/>
+                                <p:tooltip for="speed" value="#{positionController.getComponentMessages('speed', myBundle.EditPositionHelpText_speed)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_course}" for="course" />
+                            <h:panelGroup>
+                                <p:inputText id="course" value="#{positionController.selected.course}" title="#{myBundle.EditPositionTitle_course}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_course}"/>
+                                <p:tooltip for="course" value="#{positionController.getComponentMessages('course', myBundle.EditPositionHelpText_course)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_address}" for="address" />
+                            <h:panelGroup>
+                                <p:inputTextarea rows="4" cols="30" id="address" value="#{positionController.selected.address}" title="#{myBundle.EditPositionTitle_address}" />
+                                <p:tooltip for="address" value="#{positionController.getComponentMessages('address', myBundle.EditPositionHelpText_address)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_attributes}" for="attributes" />
+                            <h:panelGroup>
+                                <p:inputTextarea rows="4" cols="30" id="attributes" value="#{positionController.selected.attributes}" title="#{myBundle.EditPositionTitle_attributes}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_attributes}"/>
+                                <p:tooltip for="attributes" value="#{positionController.getComponentMessages('attributes', myBundle.EditPositionHelpText_attributes)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditPositionLabel_deviceId}" for="deviceId" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="deviceId" value="#{positionController.selected.deviceId}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_deviceId}" converter="deviceConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{deviceController.items}"
+                                                   var="deviceIdItem"
+                                                   itemValue="#{deviceIdItem}"
+                                                   itemLabel="#{deviceIdItem.name.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="deviceId" value="#{positionController.getComponentMessages('deviceId', myBundle.EditPositionHelpText_deviceId)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{positionController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:PositionListPage:PositionListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:PositionListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

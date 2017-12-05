@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ModeloMarcaBusViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewModeloMarcaBusTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ModeloMarcaBusListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ModeloMarcaBusViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{modeloMarcaBusController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewModeloMarcaBusLabel_idModeloMarcaBus}"/>
+                            <h:outputText value="#{modeloMarcaBusController.selected.idModeloMarcaBus}" title="#{myBundle.ViewModeloMarcaBusTitle_idModeloMarcaBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewModeloMarcaBusLabel_nombreModeloMarcaBus}"/>
+                            <h:outputText value="#{modeloMarcaBusController.selected.nombreModeloMarcaBus}" title="#{myBundle.ViewModeloMarcaBusTitle_nombreModeloMarcaBus}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewModeloMarcaBusLabel_idMarcaBus}"/>
+                            <h:outputText value="#{modeloMarcaBusController.selected.idMarcaBus.idMarcasBus}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

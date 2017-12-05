@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LiquidacionReport" language="groovy" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d9c03d4e-4891-4120-8cd6-0850e99e574b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="718"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString>
+		<![CDATA[SELECT DAY(Guias.Fecha) AS Fecha, Guias.Folio, Guias.IdBus, CONCAT(Conductores.Apellidos," ", LEFT(Conductores.Nombres, 1), ".") AS Conductor, Guias.TotalIngresos, EgresosXGuias.Administracion AS Admin, EgresosXGuias.Licitacion AS "Licitación", EgresosXGuias.Repuestos, EgresosXGuias.Combustible, EgresosXGuias.Boletos, EgresosXGuias.Aseo, (EgresosXGuias.Administracion+EgresosXGuias.Licitacion) AS Liquido, Guias.NumVueltas FROM Guias, EgresosXGuias, Conductores WHERE Guias.Fecha BETWEEN ('2013-05-01') AND ('2013-05-31') AND Guias.IdBus IN (1652, 1662, 4252, 1984, 1994, 2004, 793, 933) AND Guias.Folio = EgresosXGuias.IdGuia AND Guias.IdConductor = Conductores.Codigo
+ORDER BY Guias.IdBus, Guias.Fecha ASC]]>
+	</queryString>
+	<field name="Fecha" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Folio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IdBus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Conductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalIngresos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Admin" class="java.lang.Integer"/>
+	<field name="Licitación" class="java.lang.Integer"/>
+	<field name="Repuestos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Combustible" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Boletos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Aseo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Liquido" class="java.lang.Long"/>
+	<field name="NumVueltas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TotalIngresos_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalIngresos}]]></variableExpression>
+	</variable>
+	<variable name="TotalIngresos_2" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalIngresos}]]></variableExpression>
+	</variable>
+	<variable name="Admin_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Admin}]]></variableExpression>
+	</variable>
+	<variable name="Licitación_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Licitación}]]></variableExpression>
+	</variable>
+	<variable name="Repuestos_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Repuestos}]]></variableExpression>
+	</variable>
+	<variable name="Combustible_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Combustible}]]></variableExpression>
+	</variable>
+	<variable name="Boletos_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Boletos}]]></variableExpression>
+	</variable>
+	<variable name="Aseo_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Aseo}]]></variableExpression>
+	</variable>
+	<variable name="Liquido_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Liquido}]]></variableExpression>
+	</variable>
+	<group name="IdBus" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{IdBus}]]></groupExpression>
+		<groupHeader>
+			<band height="79">
+				<textField>
+					<reportElement uuid="45974ffd-cf88-4a8f-b60c-62e41ea11873" style="SubTitle" x="0" y="43" width="506" height="20" forecolor="#333333"/>
+					<textElement>
+						<font size="15" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{IdBus}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="674b00fd-1a47-449b-bb7f-3e89ee3d518f" style="Column header" x="0" y="63" width="29" height="15"/>
+					<textElement/>
+					<text><![CDATA[Día]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="14facc9b-3ff0-41dd-98cd-a9ab15e2ddbc" style="Column header" x="31" y="63" width="51" height="15"/>
+					<textElement/>
+					<text><![CDATA[Folio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="2b1a6fde-2e04-4d85-8863-19b1561578b6" style="Column header" x="128" y="63" width="69" height="15"/>
+					<textElement/>
+					<text><![CDATA[Conductor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="20c0cec6-ceb5-4418-beb0-b7cf07ffd62f" style="Column header" x="197" y="63" width="69" height="15"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Ingresos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6739c8e8-3a4e-4239-aa54-5cdb176ae506" style="Column header" x="266" y="63" width="69" height="15"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Admin.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="cacf5ce8-c6b5-49b4-945c-e3b3ff500621" style="Column header" x="335" y="63" width="69" height="15"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Licitación]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ec089a66-5f6b-4a6c-9701-47b347f4cd35" style="Column header" x="404" y="63" width="69" height="15"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Otros]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="1a12b099-9e09-457a-b098-e6b96cba1fd2" style="Column header" x="473" y="63" width="69" height="15"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Comb.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="77dd39e7-dd88-42be-85db-9ef8076e570d" style="Title" x="0" y="0" width="263" height="21" forecolor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[INFORME PRODUCCIÓN - MAYO 2013]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="60d27234-0194-4641-a68d-918fb21f60fe" style="SubTitle" x="0" y="21" width="263" height="22" forecolor="#000000"/>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Francisco Montenegro Vidal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4b3ed3b0-5dfb-4fec-b5da-ea738d586ebf" style="Column header" x="542" y="63" width="69" height="15"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Boletos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="f8a62a36-58dc-4bf1-a8d0-b7e4434488ad" style="Column header" x="611" y="63" width="69" height="15"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Aseo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="32947caf-32b0-4f06-b601-a66700f280e9" style="Column header" x="680" y="63" width="69" height="15"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Líquido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="bb239b35-c1ba-4a84-adee-5987a977d48a" style="Column header" x="82" y="64" width="46" height="15"/>
+					<textElement/>
+					<text><![CDATA[N° V.]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement uuid="907f6f87-9196-4d36-a31d-371cf37ef67c" style="Detail" x="0" y="0" width="29" height="15"/>
+				<box rightPadding="7"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="db17b197-a031-4dd8-bca3-25bb7a09422d" style="Detail" x="29" y="0" width="53" height="15"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Folio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="be1598c7-f38a-4508-8035-b71789111e25" style="Detail" x="128" y="0" width="69" height="15"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Conductor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="70a331e4-daa8-429e-91a6-eb614ffac706" style="Detail" x="197" y="0" width="69" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalIngresos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="7c92cbcc-3bf9-494e-87d2-eba6599080ce" style="Detail" x="266" y="0" width="69" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Admin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="3673690d-4abe-4e97-b830-6380be7d679f" style="Detail" x="335" y="0" width="69" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Licitación}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="003b7e08-84ea-4065-a7b4-a237b77acb8a" style="Detail" x="404" y="0" width="69" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Repuestos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="f593a07c-ae98-4e9a-b24b-3ddd72e97862" style="Detail" x="473" y="0" width="69" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Combustible}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="b764b3bc-ae35-4581-afe0-af791dcd996e" x="541" y="0" width="70" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Boletos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="53d2d920-3241-4839-aa29-0faf6f938b6b" x="611" y="0" width="69" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Aseo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="191e4281-65b0-4b09-a85f-522c74f3c708" x="681" y="0" width="68" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Liquido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="347a238b-ccee-4c9f-8298-f2035b5d0292" x="82" y="0" width="47" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NumVueltas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement uuid="f43de42a-1ecf-455b-a6d2-05a169e0ced9" positionType="FixRelativeToBottom" x="0" y="3" width="749" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<break>
+				<reportElement uuid="019c0994-3eb4-4312-bca1-6781477f26bb" x="0" y="24" width="100" height="1"/>
+			</break>
+			<textField pattern="$ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="6c04aa49-3973-4181-a38a-e2e2b52ece37" x="197" y="5" width="69" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalIngresos_2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="30ae1508-277f-463a-ab09-e221706db728" x="266" y="5" width="69" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Admin_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="e6f27078-dd9f-4c24-b3be-487120b0eeae" x="335" y="5" width="69" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Licitación_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="f713c5f5-e061-4fa6-8f29-50cd29f1a655" x="404" y="5" width="69" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Repuestos_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="0667012c-1119-480a-a967-b99e47a2cad7" x="473" y="5" width="69" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Combustible_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="7955a22e-10a9-41f1-b229-38246b6bab85" x="542" y="5" width="69" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Boletos_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="44e10ed7-fa06-4f00-8655-1d6231b04ea5" x="611" y="5" width="69" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Aseo_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement uuid="65afebf3-2cff-49f0-b12e-959ddda89c0d" x="681" y="5" width="68" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Liquido_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="78af0a8a-7a4c-4906-8f1d-0f6196f36d8a" style="Column header" x="846" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="fbd2b9d4-0077-4693-9b0f-c5e2e2e67233" style="Column header" x="926" y="0" width="40" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="d91b09a5-535a-488e-a17b-4a976afa003f" style="Column header" x="0" y="0" width="197" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

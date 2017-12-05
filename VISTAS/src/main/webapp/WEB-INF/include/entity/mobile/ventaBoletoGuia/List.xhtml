@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="VentaBoletoGuiaListPage">
+        <pm:header title="#{myBundle.ListVentaBoletoGuiaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":VentaBoletoGuiaCreatePage:VentaBoletoGuiaCreateForm" actionListener="#{ventaBoletoGuiaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:VentaBoletoGuiaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="VentaBoletoGuiaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{ventaBoletoGuiaController.items}"
+                             var="item"
+                             rowKey="#{item.idVentaBoletoGuia}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{ventaBoletoGuiaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{ventaBoletoGuiaController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{ventaBoletoGuiaController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('VentaBoletoGuiaListPage:VentaBoletoGuiaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('VentaBoletoGuiaListPage:VentaBoletoGuiaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('VentaBoletoGuiaListPage:VentaBoletoGuiaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idVentaBoletoGuia}" filterBy="#{item.idVentaBoletoGuia}" headerText="#{myBundle.ListVentaBoletoGuiaTitle_idVentaBoletoGuia}">
+                        <h:outputText value="#{item.idVentaBoletoGuia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.valor}" filterBy="#{item.valor}" headerText="#{myBundle.ListVentaBoletoGuiaTitle_valor}">
+                        <h:outputText value="#{item.valor}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.recaudado}" filterBy="#{item.recaudado}" headerText="#{myBundle.ListVentaBoletoGuiaTitle_recaudado}">
+                        <h:selectBooleanCheckbox id="recaudado" value="#{item.recaudado}" title="#{myBundle.EditVentaBoletoGuiaTitle_recaudado}"  disabled="true"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idGuia.idGuia}" filterBy="#{item.idGuia.idGuia}" headerText="#{myBundle.ListVentaBoletoGuiaTitle_idGuia}">
+                        <h:outputText value="#{item.idGuia.idGuia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idInventarioTerminal.idInventarioTerminal}" filterBy="#{item.idInventarioTerminal.idInventarioTerminal}" headerText="#{myBundle.ListVentaBoletoGuiaTitle_idInventarioTerminal}">
+                        <h:outputText value="#{item.idInventarioTerminal.idInventarioTerminal}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":VentaBoletoGuiaEditPage:VentaBoletoGuiaEditForm" disabled="#{empty ventaBoletoGuiaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:VentaBoletoGuiaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{ventaBoletoGuiaController.delete}" update=":growl,datalist" disabled="#{empty ventaBoletoGuiaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty ventaBoletoGuiaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.VentaBoletoGuiaHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.VentaBoletoGuiaMenuItem_idGuia}" icon="ui-icon-search" update=":GuiaEditPage:GuiaEditForm" disabled="#{empty ventaBoletoGuiaController.selected.idGuia}" actionListener="#{ventaBoletoGuiaController.prepareIdGuia}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:GuiaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.VentaBoletoGuiaMenuItem_idInventarioTerminal}" icon="ui-icon-search" update=":InventarioTerminalEditPage:InventarioTerminalEditForm" disabled="#{empty ventaBoletoGuiaController.selected.idInventarioTerminal}" actionListener="#{ventaBoletoGuiaController.prepareIdInventarioTerminal}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:InventarioTerminalEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

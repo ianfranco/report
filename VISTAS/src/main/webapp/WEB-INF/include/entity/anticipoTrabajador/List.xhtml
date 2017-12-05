@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="AnticipoTrabajadorListForm">
+
+        <p:panel header="#{myBundle.ListAnticipoTrabajadorTitle}">
+            <p:contextMenu id="AnticipoTrabajadorDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('AnticipoTrabajadorListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('AnticipoTrabajadorListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('AnticipoTrabajadorListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('AnticipoTrabajadorListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.AnticipoTrabajadorMenuItem_idTrabajador}" icon="ui-icon-search"  actionListener="#{anticipoTrabajadorController.prepareIdTrabajador}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty anticipoTrabajadorController.selected.idTrabajador}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{anticipoTrabajadorController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{anticipoTrabajadorController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{anticipoTrabajadorController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idAnticipoTrabajador}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AnticipoTrabajadorDataTableContextMenu" listener="#{anticipoTrabajadorController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AnticipoTrabajadorDataTableContextMenu" listener="#{anticipoTrabajadorController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{anticipoTrabajadorController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AnticipoTrabajadorListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idAnticipoTrabajador}" filterBy="#{item.idAnticipoTrabajador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAnticipoTrabajadorTitle_idAnticipoTrabajador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idAnticipoTrabajador}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.mes}" filterBy="#{item.mes}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAnticipoTrabajadorTitle_mes}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.mes}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.año}" filterBy="#{item.año}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAnticipoTrabajadorTitle_año}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.año}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.monto}" filterBy="#{item.monto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAnticipoTrabajadorTitle_monto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.monto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListAnticipoTrabajadorTitle_idTrabajador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{anticipoTrabajadorController.prepareCreate}" update=":AnticipoTrabajadorCreateForm" oncomplete="PF('AnticipoTrabajadorCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":AnticipoTrabajadorViewForm" oncomplete="PF('AnticipoTrabajadorViewDialog').show()" disabled="#{empty anticipoTrabajadorController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":AnticipoTrabajadorEditForm" oncomplete="PF('AnticipoTrabajadorEditDialog').show()" disabled="#{empty anticipoTrabajadorController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{anticipoTrabajadorController.delete}" update=":growl,datalist" disabled="#{empty anticipoTrabajadorController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

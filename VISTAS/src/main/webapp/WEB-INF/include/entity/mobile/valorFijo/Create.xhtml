@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ValorFijoCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateValorFijoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ValorFijoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ValorFijoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{valorFijoController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateValorFijoLabel_nombreValor}" for="nombreValor" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreValor" value="#{valorFijoController.selected.nombreValor}" title="#{myBundle.CreateValorFijoTitle_nombreValor}" required="true" requiredMessage="#{myBundle.CreateValorFijoRequiredMessage_nombreValor}" size="255" maxlength="255"/>
+                                <p:tooltip for="nombreValor" value="#{valorFijoController.getComponentMessages('nombreValor', myBundle.CreateValorFijoHelpText_nombreValor)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateValorFijoLabel_monto}" for="monto" />
+                            <h:panelGroup>
+                                <p:inputText id="monto" value="#{valorFijoController.selected.monto}" title="#{myBundle.CreateValorFijoTitle_monto}"/>
+                                <p:tooltip for="monto" value="#{valorFijoController.getComponentMessages('monto', myBundle.CreateValorFijoHelpText_monto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{valorFijoController.saveNew}" value="#{myBundle.Save}" update="display,:ValorFijoListPage:ValorFijoListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:ValorFijoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="VentaBoletoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditVentaBoletoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:VentaBoletoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="VentaBoletoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{ventaBoletoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditVentaBoletoLabel_idVentaBoleto}" for="idVentaBoleto" />
+                            <h:panelGroup>
+                                <h:outputText id="idVentaBoleto" value="#{ventaBoletoController.selected.idVentaBoleto}" />
+                                <p:tooltip for="idVentaBoleto" value="#{ventaBoletoController.getComponentMessages('idVentaBoleto', myBundle.EditVentaBoletoHelpText_idVentaBoleto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentaBoletoLabel_fechaVenta}" for="fechaVenta" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaVenta" pattern="MM/dd/yyyy" value="#{ventaBoletoController.selected.fechaVenta}" title="#{myBundle.EditVentaBoletoTitle_fechaVenta}" required="true" requiredMessage="#{myBundle.EditVentaBoletoRequiredMessage_fechaVenta}" showOn="button"/>
+                                <p:tooltip for="fechaVenta" value="#{ventaBoletoController.getComponentMessages('fechaVenta', myBundle.EditVentaBoletoHelpText_fechaVenta)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentaBoletoLabel_nombreComprador}" for="nombreComprador" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreComprador" value="#{ventaBoletoController.selected.nombreComprador}" title="#{myBundle.EditVentaBoletoTitle_nombreComprador}" required="true" requiredMessage="#{myBundle.EditVentaBoletoRequiredMessage_nombreComprador}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreComprador" value="#{ventaBoletoController.getComponentMessages('nombreComprador', myBundle.EditVentaBoletoHelpText_nombreComprador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentaBoletoLabel_totalCompra}" for="totalCompra" />
+                            <h:panelGroup>
+                                <p:inputText id="totalCompra" value="#{ventaBoletoController.selected.totalCompra}" title="#{myBundle.EditVentaBoletoTitle_totalCompra}" required="true" requiredMessage="#{myBundle.EditVentaBoletoRequiredMessage_totalCompra}"/>
+                                <p:tooltip for="totalCompra" value="#{ventaBoletoController.getComponentMessages('totalCompra', myBundle.EditVentaBoletoHelpText_totalCompra)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditVentaBoletoLabel_idTerminal}" for="idTerminal" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTerminal" value="#{ventaBoletoController.selected.idTerminal}" required="true" requiredMessage="#{myBundle.EditVentaBoletoRequiredMessage_idTerminal}" converter="terminalConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{terminalController.items}"
+                                                   var="idTerminalItem"
+                                                   itemValue="#{idTerminalItem}"
+                                                   itemLabel="#{idTerminalItem.idTerminal.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTerminal" value="#{ventaBoletoController.getComponentMessages('idTerminal', myBundle.EditVentaBoletoHelpText_idTerminal)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{ventaBoletoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:VentaBoletoListPage:VentaBoletoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:VentaBoletoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

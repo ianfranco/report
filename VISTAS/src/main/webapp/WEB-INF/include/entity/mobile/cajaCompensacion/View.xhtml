@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CajaCompensacionViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewCajaCompensacionTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CajaCompensacionListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CajaCompensacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{cajaCompensacionController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCajaCompensacionLabel_idCajaCompensacion}"/>
+                            <h:outputText value="#{cajaCompensacionController.selected.idCajaCompensacion}" title="#{myBundle.ViewCajaCompensacionTitle_idCajaCompensacion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCajaCompensacionLabel_nombreCajaCompensacion}"/>
+                            <h:outputText value="#{cajaCompensacionController.selected.nombreCajaCompensacion}" title="#{myBundle.ViewCajaCompensacionTitle_nombreCajaCompensacion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCajaCompensacionLabel_comision}"/>
+                            <h:outputText value="#{cajaCompensacionController.selected.comision}" title="#{myBundle.ViewCajaCompensacionTitle_comision}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewCajaCompensacionLabel_porcentajeDescuento}"/>
+                            <h:outputText value="#{cajaCompensacionController.selected.porcentajeDescuento}" title="#{myBundle.ViewCajaCompensacionTitle_porcentajeDescuento}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PrivilegioListPage">
+        <pm:header title="#{myBundle.ListPrivilegioTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":PrivilegioCreatePage:PrivilegioCreateForm" actionListener="#{privilegioController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:PrivilegioCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PrivilegioListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{privilegioController.items}"
+                             var="item"
+                             rowKey="#{item.idPrivilegio}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{privilegioController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{privilegioController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{privilegioController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('PrivilegioListPage:PrivilegioListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('PrivilegioListPage:PrivilegioListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('PrivilegioListPage:PrivilegioListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idPrivilegio}" filterBy="#{item.idPrivilegio}" headerText="#{myBundle.ListPrivilegioTitle_idPrivilegio}">
+                        <h:outputText value="#{item.idPrivilegio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombrePrivilegio}" filterBy="#{item.nombrePrivilegio}" headerText="#{myBundle.ListPrivilegioTitle_nombrePrivilegio}">
+                        <h:outputText value="#{item.nombrePrivilegio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}" headerText="#{myBundle.ListPrivilegioTitle_descripcion}">
+                        <h:outputText value="#{item.descripcion}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idRol.descripcion}" filterBy="#{item.idRol.descripcion}" headerText="#{myBundle.ListPrivilegioTitle_idRol}">
+                        <h:outputText value="#{item.idRol.descripcion}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PrivilegioEditPage:PrivilegioEditForm" disabled="#{empty privilegioController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:PrivilegioEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{privilegioController.delete}" update=":growl,datalist" disabled="#{empty privilegioController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty privilegioController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.PrivilegioHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.PrivilegioMenuItem_idRol}" icon="ui-icon-search" update=":RolEditPage:RolEditForm" disabled="#{empty privilegioController.selected.idRol}" actionListener="#{privilegioController.prepareIdRol}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:RolEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

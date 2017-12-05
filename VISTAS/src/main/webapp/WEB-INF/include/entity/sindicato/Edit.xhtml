@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SindicatoEditDlg" widgetVar="SindicatoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditSindicatoTitle}" closeOnEscape="true">
+
+            <h:form id="SindicatoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{sindicatoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditSindicatoLabel_idSindicato}" for="idSindicato" />
+                        <h:panelGroup>
+                            <h:outputText id="idSindicato" value="#{sindicatoController.selected.idSindicato}" />
+                            <p:tooltip for="idSindicato" value="#{sindicatoController.getComponentMessages('idSindicato', myBundle.EditSindicatoHelpText_idSindicato)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditSindicatoLabel_nombreSindicato}" for="nombreSindicato" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreSindicato" value="#{sindicatoController.selected.nombreSindicato}" title="#{myBundle.EditSindicatoTitle_nombreSindicato}" required="true" requiredMessage="#{myBundle.EditSindicatoRequiredMessage_nombreSindicato}" size="100" maxlength="100"/>
+                            <p:tooltip for="nombreSindicato" value="#{sindicatoController.getComponentMessages('nombreSindicato', myBundle.EditSindicatoHelpText_nombreSindicato)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditSindicatoLabel_cuotaSindicato}" for="cuotaSindicato" />
+                        <h:panelGroup>
+                            <p:inputText id="cuotaSindicato" value="#{sindicatoController.selected.cuotaSindicato}" title="#{myBundle.EditSindicatoTitle_cuotaSindicato}" required="true" requiredMessage="#{myBundle.EditSindicatoRequiredMessage_cuotaSindicato}"/>
+                            <p:tooltip for="cuotaSindicato" value="#{sindicatoController.getComponentMessages('cuotaSindicato', myBundle.EditSindicatoHelpText_cuotaSindicato)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sindicatoController.save}" value="#{myBundle.Save}" update="display,:SindicatoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SindicatoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('SindicatoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PeriodoFrecuenciaListForm">
+
+        <p:panel header="#{myBundle.ListPeriodoFrecuenciaTitle}">
+            <p:contextMenu id="PeriodoFrecuenciaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('PeriodoFrecuenciaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('PeriodoFrecuenciaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('PeriodoFrecuenciaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('PeriodoFrecuenciaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.PeriodoFrecuenciaMenuItem_frecuenciaServicioList}" icon="ui-icon-search"  action="#{periodoFrecuenciaController.navigateFrecuenciaServicioList}" disabled="#{empty periodoFrecuenciaController.selected.frecuenciaServicioList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{periodoFrecuenciaController.lazyItems}"
+                         lazy="true"
+                         var="item"
+                         paginator="true"
+                         rows="100"
+                         rowsPerPageTemplate="50,100,200"
+                         selectionMode="single"
+                         selection="#{periodoFrecuenciaController.selected}">
+                <!--
+                         To disable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{periodoFrecuenciaController.items}"
+                         lazy="false"
+                         rowKey="HASH{item.idPeriodoFrecuencia}"
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PeriodoFrecuenciaDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PeriodoFrecuenciaDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PeriodoFrecuenciaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idPeriodoFrecuencia}" filterBy="#{item.idPeriodoFrecuencia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPeriodoFrecuenciaTitle_idPeriodoFrecuencia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idPeriodoFrecuencia}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.desde}" filterBy="#{item.desde}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPeriodoFrecuenciaTitle_desde}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.desde}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.hasta}" filterBy="#{item.hasta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPeriodoFrecuenciaTitle_hasta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.hasta}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{periodoFrecuenciaController.prepareCreate}" update=":PeriodoFrecuenciaCreateForm" oncomplete="PF('PeriodoFrecuenciaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":PeriodoFrecuenciaViewForm" oncomplete="PF('PeriodoFrecuenciaViewDialog').show()" disabled="#{empty periodoFrecuenciaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PeriodoFrecuenciaEditForm" oncomplete="PF('PeriodoFrecuenciaEditDialog').show()" disabled="#{empty periodoFrecuenciaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{periodoFrecuenciaController.delete}" update=":growl,datalist" disabled="#{empty periodoFrecuenciaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

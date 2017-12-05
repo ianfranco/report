@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="SerieBoletoGuiaViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewSerieBoletoGuiaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:SerieBoletoGuiaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="SerieBoletoGuiaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{serieBoletoGuiaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_idSerieBoletoGuia}"/>
+                            <h:outputText value="#{serieBoletoGuiaController.selected.idSerieBoletoGuia}" title="#{myBundle.ViewSerieBoletoGuiaTitle_idSerieBoletoGuia}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_valor}"/>
+                            <h:outputText value="#{serieBoletoGuiaController.selected.valor}" title="#{myBundle.ViewSerieBoletoGuiaTitle_valor}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_serie}"/>
+                            <h:outputText value="#{serieBoletoGuiaController.selected.serie}" title="#{myBundle.ViewSerieBoletoGuiaTitle_serie}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_termino}"/>
+                            <h:outputText value="#{serieBoletoGuiaController.selected.termino}" title="#{myBundle.ViewSerieBoletoGuiaTitle_termino}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_cantidad}"/>
+                            <h:outputText value="#{serieBoletoGuiaController.selected.cantidad}" title="#{myBundle.ViewSerieBoletoGuiaTitle_cantidad}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_total}"/>
+                            <h:outputText value="#{serieBoletoGuiaController.selected.total}" title="#{myBundle.ViewSerieBoletoGuiaTitle_total}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_nuevo}"/>
+                            <h:selectBooleanCheckbox id="nuevo" value="#{serieBoletoGuiaController.selected.nuevo}" title="#{myBundle.EditSerieBoletoGuiaTitle_nuevo}" required="true" requiredMessage="#{myBundle.EditSerieBoletoGuiaRequiredMessage_nuevo}" disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_idBoleto}"/>
+                            <h:outputText value="#{serieBoletoGuiaController.selected.idBoleto.idBoleto}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSerieBoletoGuiaLabel_idGuia}"/>
+                            <h:outputText value="#{serieBoletoGuiaController.selected.idGuia.idGuia}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

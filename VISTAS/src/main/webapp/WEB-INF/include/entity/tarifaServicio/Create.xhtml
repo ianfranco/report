@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TarifaServicioCreateDlg" widgetVar="TarifaServicioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTarifaServicioTitle}" closeOnEscape="true">
+
+            <h:form id="TarifaServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tarifaServicioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaServicioLabel_valorTarifa}" for="valorTarifa" />
+                        <h:panelGroup>
+                            <p:inputText id="valorTarifa" value="#{tarifaServicioController.selected.valorTarifa}" title="#{myBundle.CreateTarifaServicioTitle_valorTarifa}" required="true" requiredMessage="#{myBundle.CreateTarifaServicioRequiredMessage_valorTarifa}"/>
+                            <p:tooltip for="valorTarifa" value="#{tarifaServicioController.getComponentMessages('valorTarifa', myBundle.CreateTarifaServicioHelpText_valorTarifa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaServicioLabel_mes}" for="mes" />
+                        <h:panelGroup>
+                            <p:inputText id="mes" value="#{tarifaServicioController.selected.mes}" title="#{myBundle.CreateTarifaServicioTitle_mes}" required="true" requiredMessage="#{myBundle.CreateTarifaServicioRequiredMessage_mes}"/>
+                            <p:tooltip for="mes" value="#{tarifaServicioController.getComponentMessages('mes', myBundle.CreateTarifaServicioHelpText_mes)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaServicioLabel_año}" for="año" />
+                        <h:panelGroup>
+                            <p:inputText id="año" value="#{tarifaServicioController.selected.año}" title="#{myBundle.CreateTarifaServicioTitle_año}" required="true" requiredMessage="#{myBundle.CreateTarifaServicioRequiredMessage_año}"/>
+                            <p:tooltip for="año" value="#{tarifaServicioController.getComponentMessages('año', myBundle.CreateTarifaServicioHelpText_año)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaServicioLabel_activa}" for="activa" />
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox id="activa" value="#{tarifaServicioController.selected.activa}" required="true" requiredMessage="#{myBundle.CreateTarifaServicioRequiredMessage_activa}"/>
+                            <p:tooltip for="activa" value="#{tarifaServicioController.getComponentMessages('activa', myBundle.CreateTarifaServicioHelpText_activa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaServicioLabel_idBoleto}" for="idBoleto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idBoleto" value="#{tarifaServicioController.selected.idBoleto}" required="true" requiredMessage="#{myBundle.CreateTarifaServicioRequiredMessage_idBoleto}" converter="boletoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{boletoController.items}"
+                                               var="idBoletoItem"
+                                               itemValue="#{idBoletoItem}"
+                                               itemLabel="#{idBoletoItem.idBoleto.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idBoleto" value="#{tarifaServicioController.getComponentMessages('idBoleto', myBundle.CreateTarifaServicioHelpText_idBoleto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateTarifaServicioLabel_idServicio}" for="idServicio" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idServicio" value="#{tarifaServicioController.selected.idServicio}" required="true" requiredMessage="#{myBundle.CreateTarifaServicioRequiredMessage_idServicio}" converter="servicioConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{servicioController.items}"
+                                               var="idServicioItem"
+                                               itemValue="#{idServicioItem}"
+                                               itemLabel="#{idServicioItem.idServicio.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idServicio" value="#{tarifaServicioController.getComponentMessages('idServicio', myBundle.CreateTarifaServicioHelpText_idServicio)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tarifaServicioController.saveNew}" value="#{myBundle.Save}" update="display,:TarifaServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TarifaServicioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TarifaServicioCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

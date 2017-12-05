@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <h:form id="menuForm">
+        <p:menu>
+            <p:submenu label="#{myBundle.Maintenance}">
+                <p:menuitem value="#{myBundle.AbonoBusHeading}..." outcome="/mobile/abonoBus/index" />
+                <p:menuitem value="#{myBundle.AdministracionMensualHeading}..." outcome="/mobile/administracionMensual/index" />
+                <p:menuitem value="#{myBundle.AnticipoTrabajadorHeading}..." outcome="/mobile/anticipoTrabajador/index" />
+                <p:menuitem value="#{myBundle.AsignacionFamiliarHeading}..." outcome="/mobile/asignacionFamiliar/index" />
+                <p:menuitem value="#{myBundle.BoletoHeading}..." outcome="/mobile/boleto/index" />
+                <p:menuitem value="#{myBundle.BusHeading}..." outcome="/mobile/bus/index" />
+                <p:menuitem value="#{myBundle.BusDeviceHeading}..." outcome="/mobile/busDevice/index" />
+                <p:menuitem value="#{myBundle.BusServicioHeading}..." outcome="/mobile/busServicio/index" />
+                <p:menuitem value="#{myBundle.CajaCompensacionHeading}..." outcome="/mobile/cajaCompensacion/index" />
+                <p:menuitem value="#{myBundle.CalleHeading}..." outcome="/mobile/calle/index" />
+                <p:menuitem value="#{myBundle.CalleServicioHeading}..." outcome="/mobile/calleServicio/index" />
+                <p:menuitem value="#{myBundle.CargaRetroactivaHeading}..." outcome="/mobile/cargaRetroactiva/index" />
+                <p:menuitem value="#{myBundle.CargasTrabajadorHeading}..." outcome="/mobile/cargasTrabajador/index" />
+                <p:menuitem value="#{myBundle.CargoBusHeading}..." outcome="/mobile/cargoBus/index" />
+                <p:menuitem value="#{myBundle.CausalFiniquitoHeading}..." outcome="/mobile/causalFiniquito/index" />
+                <p:menuitem value="#{myBundle.CentroCostoHeading}..." outcome="/mobile/centroCosto/index" />
+                <p:menuitem value="#{myBundle.CentroCostoTrabajadorHeading}..." outcome="/mobile/centroCostoTrabajador/index" />
+                <p:menuitem value="#{myBundle.CompraBoletoHeading}..." outcome="/mobile/compraBoleto/index" />
+                <p:menuitem value="#{myBundle.ComunaHeading}..." outcome="/mobile/comuna/index" />
+                <p:menuitem value="#{myBundle.ContratoUnidadHeading}..." outcome="/mobile/contratoUnidad/index" />
+                <p:menuitem value="#{myBundle.ControlHeading}..." outcome="/mobile/control/index" />
+                <p:menuitem value="#{myBundle.ControlHorarioServicioHeading}..." outcome="/mobile/controlHorarioServicio/index" />
+                <p:menuitem value="#{myBundle.ControlServicioHeading}..." outcome="/mobile/controlServicio/index" />
+                <p:menuitem value="#{myBundle.DepartamentoHeading}..." outcome="/mobile/departamento/index" />
+                <p:menuitem value="#{myBundle.DescuentoTrabajadorHeading}..." outcome="/mobile/descuentoTrabajador/index" />
+                <p:menuitem value="#{myBundle.DespachoHeading}..." outcome="/mobile/despacho/index" />
+                <p:menuitem value="#{myBundle.DetalleCompraBoletoHeading}..." outcome="/mobile/detalleCompraBoleto/index" />
+                <p:menuitem value="#{myBundle.DetalleIntervalosMensualHeading}..." outcome="/mobile/detalleIntervalosMensual/index" />
+                <p:menuitem value="#{myBundle.DetalleVentaBoletoHeading}..." outcome="/mobile/detalleVentaBoleto/index" />
+                <p:menuitem value="#{myBundle.DeviceHeading}..." outcome="/mobile/device/index" />
+                <p:menuitem value="#{myBundle.DiaFestivoHeading}..." outcome="/mobile/diaFestivo/index" />
+                <p:menuitem value="#{myBundle.DiaTrabajadorHeading}..." outcome="/mobile/diaTrabajador/index" />
+                <p:menuitem value="#{myBundle.EgresoHeading}..." outcome="/mobile/egreso/index" />
+                <p:menuitem value="#{myBundle.EgresoGuiaHeading}..." outcome="/mobile/egresoGuia/index" />
+                <p:menuitem value="#{myBundle.EgresoServicioHeading}..." outcome="/mobile/egresoServicio/index" />
+                <p:menuitem value="#{myBundle.EmpresaHeading}..." outcome="/mobile/empresa/index" />
+                <p:menuitem value="#{myBundle.EstadoGuiaHeading}..." outcome="/mobile/estadoGuia/index" />
+                <p:menuitem value="#{myBundle.FiniquitoRelacionLaboralHeading}..." outcome="/mobile/finiquitoRelacionLaboral/index" />
+                <p:menuitem value="#{myBundle.FlotaHeading}..." outcome="/mobile/flota/index" />
+                <p:menuitem value="#{myBundle.FrecuenciaServicioHeading}..." outcome="/mobile/frecuenciaServicio/index" />
+                <p:menuitem value="#{myBundle.GastosAdministracionMensualHeading}..." outcome="/mobile/gastosAdministracionMensual/index" />
+                <p:menuitem value="#{myBundle.GuiaHeading}..." outcome="/mobile/guia/index" />
+                <p:menuitem value="#{myBundle.HaberTrabajadorHeading}..." outcome="/mobile/haberTrabajador/index" />
+                <p:menuitem value="#{myBundle.HoraExtraTrabajadorHeading}..." outcome="/mobile/horaExtraTrabajador/index" />
+                <p:menuitem value="#{myBundle.HorarioServicioHeading}..." outcome="/mobile/horarioServicio/index" />
+                <p:menuitem value="#{myBundle.ImpuestoSegundaCategoriaHeading}..." outcome="/mobile/impuestoSegundaCategoria/index" />
+                <p:menuitem value="#{myBundle.InstitucionApvHeading}..." outcome="/mobile/institucionApv/index" />
+                <p:menuitem value="#{myBundle.InstitucionPrevisionHeading}..." outcome="/mobile/institucionPrevision/index" />
+                <p:menuitem value="#{myBundle.InstitucionSaludHeading}..." outcome="/mobile/institucionSalud/index" />
+                <p:menuitem value="#{myBundle.IntervalosAdministracionHeading}..." outcome="/mobile/intervalosAdministracion/index" />
+                <p:menuitem value="#{myBundle.InventarioInternoHeading}..." outcome="/mobile/inventarioInterno/index" />
+                <p:menuitem value="#{myBundle.InventarioTerminalHeading}..." outcome="/mobile/inventarioTerminal/index" />
+                <p:menuitem value="#{myBundle.LiquidacionEmpresaHeading}..." outcome="/mobile/liquidacionEmpresa/index" />
+                <p:menuitem value="#{myBundle.LiquidacionSueldoHeading}..." outcome="/mobile/liquidacionSueldo/index" />
+                <p:menuitem value="#{myBundle.MarcaBusHeading}..." outcome="/mobile/marcaBus/index" />
+                <p:menuitem value="#{myBundle.ModeloMarcaBusHeading}..." outcome="/mobile/modeloMarcaBus/index" />
+                <p:menuitem value="#{myBundle.MonedaPactadaInstitucionSaludHeading}..." outcome="/mobile/monedaPactadaInstitucionSalud/index" />
+                <p:menuitem value="#{myBundle.MontoSindicatoTrabajadorHeading}..." outcome="/mobile/montoSindicatoTrabajador/index" />
+                <p:menuitem value="#{myBundle.MutualHeading}..." outcome="/mobile/mutual/index" />
+                <p:menuitem value="#{myBundle.ObservacionTrabajadorHeading}..." outcome="/mobile/observacionTrabajador/index" />
+                <p:menuitem value="#{myBundle.OperadorTransporteHeading}..." outcome="/mobile/operadorTransporte/index" />
+                <p:menuitem value="#{myBundle.ParametroCesantiaHeading}..." outcome="/mobile/parametroCesantia/index" />
+                <p:menuitem value="#{myBundle.ParametroInterpolacionHeading}..." outcome="/mobile/parametroInterpolacion/index" />
+                <p:menuitem value="#{myBundle.ParentescoCargaHeading}..." outcome="/mobile/parentescoCarga/index" />
+                <p:menuitem value="#{myBundle.PeriodoFrecuenciaHeading}..." outcome="/mobile/periodoFrecuencia/index" />
+                <p:menuitem value="#{myBundle.PositionHeading}..." outcome="/mobile/position/index" />
+                <p:menuitem value="#{myBundle.PrivilegioHeading}..." outcome="/mobile/privilegio/index" />
+                <p:menuitem value="#{myBundle.RegionHeading}..." outcome="/mobile/region/index" />
+                <p:menuitem value="#{myBundle.RelacionLaboralHeading}..." outcome="/mobile/relacionLaboral/index" />
+                <p:menuitem value="#{myBundle.RepresentanteEmpresaHeading}..." outcome="/mobile/representanteEmpresa/index" />
+                <p:menuitem value="#{myBundle.RepresentanteLegalHeading}..." outcome="/mobile/representanteLegal/index" />
+                <p:menuitem value="#{myBundle.RolHeading}..." outcome="/mobile/rol/index" />
+                <p:menuitem value="#{myBundle.SerieBoletoGuiaHeading}..." outcome="/mobile/serieBoletoGuia/index" />
+                <p:menuitem value="#{myBundle.ServerHeading}..." outcome="/mobile/server/index" />
+                <p:menuitem value="#{myBundle.ServicioHeading}..." outcome="/mobile/servicio/index" />
+                <p:menuitem value="#{myBundle.SindicatoHeading}..." outcome="/mobile/sindicato/index" />
+                <p:menuitem value="#{myBundle.SindicatoTrabajadorHeading}..." outcome="/mobile/sindicatoTrabajador/index" />
+                <p:menuitem value="#{myBundle.TarifaServicioHeading}..." outcome="/mobile/tarifaServicio/index" />
+                <p:menuitem value="#{myBundle.TerminalHeading}..." outcome="/mobile/terminal/index" />
+                <p:menuitem value="#{myBundle.TipoAbonoHeading}..." outcome="/mobile/tipoAbono/index" />
+                <p:menuitem value="#{myBundle.TipoCargaHeading}..." outcome="/mobile/tipoCarga/index" />
+                <p:menuitem value="#{myBundle.TipoCargoHeading}..." outcome="/mobile/tipoCargo/index" />
+                <p:menuitem value="#{myBundle.TipoContratoHeading}..." outcome="/mobile/tipoContrato/index" />
+                <p:menuitem value="#{myBundle.TipoControlHeading}..." outcome="/mobile/tipoControl/index" />
+                <p:menuitem value="#{myBundle.TipoCotizacionTrabajadorHeading}..." outcome="/mobile/tipoCotizacionTrabajador/index" />
+                <p:menuitem value="#{myBundle.TipoDemandaHeading}..." outcome="/mobile/tipoDemanda/index" />
+                <p:menuitem value="#{myBundle.TipoDescuentoHeading}..." outcome="/mobile/tipoDescuento/index" />
+                <p:menuitem value="#{myBundle.TipoDiaFrecuenciaHeading}..." outcome="/mobile/tipoDiaFrecuencia/index" />
+                <p:menuitem value="#{myBundle.TipoDiaTrabajadorHeading}..." outcome="/mobile/tipoDiaTrabajador/index" />
+                <p:menuitem value="#{myBundle.TipoEstacionalidadHeading}..." outcome="/mobile/tipoEstacionalidad/index" />
+                <p:menuitem value="#{myBundle.TipoHaberHeading}..." outcome="/mobile/tipoHaber/index" />
+                <p:menuitem value="#{myBundle.TipoMovimientoPersonalHeading}..." outcome="/mobile/tipoMovimientoPersonal/index" />
+                <p:menuitem value="#{myBundle.TipoNominaHeading}..." outcome="/mobile/tipoNomina/index" />
+                <p:menuitem value="#{myBundle.TipoTrabajadorHeading}..." outcome="/mobile/tipoTrabajador/index" />
+                <p:menuitem value="#{myBundle.TopeHeading}..." outcome="/mobile/tope/index" />
+                <p:menuitem value="#{myBundle.TrabajadorHeading}..." outcome="/mobile/trabajador/index" />
+                <p:menuitem value="#{myBundle.TrabajadorTerminalHeading}..." outcome="/mobile/trabajadorTerminal/index" />
+                <p:menuitem value="#{myBundle.TraccarHeading}..." outcome="/mobile/traccar/index" />
+                <p:menuitem value="#{myBundle.UnidadNegocioHeading}..." outcome="/mobile/unidadNegocio/index" />
+                <p:menuitem value="#{myBundle.UserHeading}..." outcome="/mobile/user/index" />
+                <p:menuitem value="#{myBundle.UserDeviceHeading}..." outcome="/mobile/userDevice/index" />
+                <p:menuitem value="#{myBundle.UsuarioHeading}..." outcome="/mobile/usuario/index" />
+                <p:menuitem value="#{myBundle.ValorFijoHeading}..." outcome="/mobile/valorFijo/index" />
+                <p:menuitem value="#{myBundle.ValorRolloUnidadHeading}..." outcome="/mobile/valorRolloUnidad/index" />
+                <p:menuitem value="#{myBundle.VentaBoletoHeading}..." outcome="/mobile/ventaBoleto/index" />
+                <p:menuitem value="#{myBundle.VentaBoletoGuiaHeading}..." outcome="/mobile/ventaBoletoGuia/index" />
+            </p:submenu>
+            <p:menuitem value="#{myBundle.FullApp}" outcome="/index" icon="ui-icon-home"/>
+        </p:menu>
+    </h:form>
+</ui:composition>

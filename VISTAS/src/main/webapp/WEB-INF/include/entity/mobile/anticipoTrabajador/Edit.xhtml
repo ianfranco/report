@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AnticipoTrabajadorEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditAnticipoTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:AnticipoTrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AnticipoTrabajadorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{anticipoTrabajadorController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditAnticipoTrabajadorLabel_idAnticipoTrabajador}" for="idAnticipoTrabajador" />
+                            <h:panelGroup>
+                                <h:outputText id="idAnticipoTrabajador" value="#{anticipoTrabajadorController.selected.idAnticipoTrabajador}" />
+                                <p:tooltip for="idAnticipoTrabajador" value="#{anticipoTrabajadorController.getComponentMessages('idAnticipoTrabajador', myBundle.EditAnticipoTrabajadorHelpText_idAnticipoTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAnticipoTrabajadorLabel_mes}" for="mes" />
+                            <h:panelGroup>
+                                <p:inputText id="mes" value="#{anticipoTrabajadorController.selected.mes}" title="#{myBundle.EditAnticipoTrabajadorTitle_mes}" required="true" requiredMessage="#{myBundle.EditAnticipoTrabajadorRequiredMessage_mes}"/>
+                                <p:tooltip for="mes" value="#{anticipoTrabajadorController.getComponentMessages('mes', myBundle.EditAnticipoTrabajadorHelpText_mes)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAnticipoTrabajadorLabel_año}" for="año" />
+                            <h:panelGroup>
+                                <p:inputText id="año" value="#{anticipoTrabajadorController.selected.año}" title="#{myBundle.EditAnticipoTrabajadorTitle_año}" required="true" requiredMessage="#{myBundle.EditAnticipoTrabajadorRequiredMessage_año}"/>
+                                <p:tooltip for="año" value="#{anticipoTrabajadorController.getComponentMessages('año', myBundle.EditAnticipoTrabajadorHelpText_año)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAnticipoTrabajadorLabel_monto}" for="monto" />
+                            <h:panelGroup>
+                                <p:inputText id="monto" value="#{anticipoTrabajadorController.selected.monto}" title="#{myBundle.EditAnticipoTrabajadorTitle_monto}" required="true" requiredMessage="#{myBundle.EditAnticipoTrabajadorRequiredMessage_monto}"/>
+                                <p:tooltip for="monto" value="#{anticipoTrabajadorController.getComponentMessages('monto', myBundle.EditAnticipoTrabajadorHelpText_monto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAnticipoTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTrabajador" value="#{anticipoTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.EditAnticipoTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{trabajadorController.items}"
+                                                   var="idTrabajadorItem"
+                                                   itemValue="#{idTrabajadorItem}"
+                                                   itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTrabajador" value="#{anticipoTrabajadorController.getComponentMessages('idTrabajador', myBundle.EditAnticipoTrabajadorHelpText_idTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{anticipoTrabajadorController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:AnticipoTrabajadorListPage:AnticipoTrabajadorListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:AnticipoTrabajadorListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

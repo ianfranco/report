@@ -5,7 +5,7 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="782"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="168"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
@@ -13,21 +13,22 @@
 	<queryString>
 		<![CDATA[CALL final_memo_cargas($P{idOperador},$P{fecha});]]>
 	</queryString>
-	<field name="contador" class="java.lang.Long"/>
 	<field name="codigoTrabajador" class="java.lang.Integer"/>
 	<field name="rutTrabajador" class="java.lang.String"/>
 	<field name="nombreTrabajador" class="java.lang.String"/>
 	<field name="NombreEmpresario" class="java.lang.String"/>
 	<field name="numeroCargas" class="java.lang.Integer"/>
-	<field name="retroactivos" class="java.lang.Integer"/>
+	<field name="montoRetroactivo" class="java.lang.Integer"/>
 	<field name="montoCargas" class="java.lang.Integer"/>
+	<field name="nombreTerminal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="totalCargas" class="java.lang.Long"/>
-	<field name="nombreTerminal" class="java.lang.String"/>
 	<variable name="montoCargas_1" class="java.lang.Integer" resetType="Group" resetGroup="nombre_terminal" calculation="Sum">
 		<variableExpression><![CDATA[$F{montoCargas}]]></variableExpression>
 	</variable>
 	<variable name="retroactivos_1" class="java.lang.Integer" resetType="Group" resetGroup="nombre_terminal" calculation="Sum">
-		<variableExpression><![CDATA[$F{retroactivos}]]></variableExpression>
+		<variableExpression><![CDATA[$F{montoRetroactivo}]]></variableExpression>
 	</variable>
 	<variable name="totalCargas_1" class="java.lang.Long" resetType="Group" resetGroup="nombre_terminal" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalCargas}]]></variableExpression>
@@ -198,7 +199,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{retroactivos}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{montoRetroactivo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.###">
 				<reportElement x="522" y="0" width="44" height="15" uuid="a87072ef-7b79-4d30-8e64-88271a902a40"/>

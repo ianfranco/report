@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="RepresentanteEmpresaCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateRepresentanteEmpresaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:RepresentanteEmpresaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="RepresentanteEmpresaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{representanteEmpresaController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateRepresentanteEmpresaLabel_idEmpresa}" for="idEmpresa" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idEmpresa" value="#{representanteEmpresaController.selected.idEmpresa}" required="true" requiredMessage="#{myBundle.CreateRepresentanteEmpresaRequiredMessage_idEmpresa}" converter="empresaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{empresaController.items}"
+                                                   var="idEmpresaItem"
+                                                   itemValue="#{idEmpresaItem}"
+                                                   itemLabel="#{idEmpresaItem.idEmpresa.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idEmpresa" value="#{representanteEmpresaController.getComponentMessages('idEmpresa', myBundle.CreateRepresentanteEmpresaHelpText_idEmpresa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateRepresentanteEmpresaLabel_idRepresentanteLegal}" for="idRepresentanteLegal" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idRepresentanteLegal" value="#{representanteEmpresaController.selected.idRepresentanteLegal}" required="true" requiredMessage="#{myBundle.CreateRepresentanteEmpresaRequiredMessage_idRepresentanteLegal}" converter="representanteLegalConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{representanteLegalController.items}"
+                                                   var="idRepresentanteLegalItem"
+                                                   itemValue="#{idRepresentanteLegalItem}"
+                                                   itemLabel="#{idRepresentanteLegalItem.idRepresentanteLegal.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idRepresentanteLegal" value="#{representanteEmpresaController.getComponentMessages('idRepresentanteLegal', myBundle.CreateRepresentanteEmpresaHelpText_idRepresentanteLegal)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{representanteEmpresaController.saveNew}" value="#{myBundle.Save}" update="display,:RepresentanteEmpresaListPage:RepresentanteEmpresaListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:RepresentanteEmpresaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

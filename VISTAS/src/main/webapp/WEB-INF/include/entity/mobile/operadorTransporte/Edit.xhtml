@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="OperadorTransporteEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditOperadorTransporteTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:OperadorTransporteListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="OperadorTransporteEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{operadorTransporteController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditOperadorTransporteLabel_idOperadorTransporte}" for="idOperadorTransporte" />
+                            <h:panelGroup>
+                                <h:outputText id="idOperadorTransporte" value="#{operadorTransporteController.selected.idOperadorTransporte}" />
+                                <p:tooltip for="idOperadorTransporte" value="#{operadorTransporteController.getComponentMessages('idOperadorTransporte', myBundle.EditOperadorTransporteHelpText_idOperadorTransporte)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditOperadorTransporteLabel_rutOperador}" for="rutOperador" />
+                            <h:panelGroup>
+                                <p:inputText id="rutOperador" value="#{operadorTransporteController.selected.rutOperador}" title="#{myBundle.EditOperadorTransporteTitle_rutOperador}" required="true" requiredMessage="#{myBundle.EditOperadorTransporteRequiredMessage_rutOperador}" size="9" maxlength="9"/>
+                                <p:tooltip for="rutOperador" value="#{operadorTransporteController.getComponentMessages('rutOperador', myBundle.EditOperadorTransporteHelpText_rutOperador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditOperadorTransporteLabel_nombreOperador}" for="nombreOperador" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreOperador" value="#{operadorTransporteController.selected.nombreOperador}" title="#{myBundle.EditOperadorTransporteTitle_nombreOperador}" required="true" requiredMessage="#{myBundle.EditOperadorTransporteRequiredMessage_nombreOperador}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreOperador" value="#{operadorTransporteController.getComponentMessages('nombreOperador', myBundle.EditOperadorTransporteHelpText_nombreOperador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{operadorTransporteController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:OperadorTransporteListPage:OperadorTransporteListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:OperadorTransporteListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

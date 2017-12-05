@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="RelacionLaboralEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditRelacionLaboralTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:RelacionLaboralListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="RelacionLaboralEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{relacionLaboralController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditRelacionLaboralLabel_idRelacionLaboral}" for="idRelacionLaboral" />
+                            <h:panelGroup>
+                                <h:outputText id="idRelacionLaboral" value="#{relacionLaboralController.selected.idRelacionLaboral}" />
+                                <p:tooltip for="idRelacionLaboral" value="#{relacionLaboralController.getComponentMessages('idRelacionLaboral', myBundle.EditRelacionLaboralHelpText_idRelacionLaboral)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_fechaInicio}" for="fechaInicio" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{relacionLaboralController.selected.fechaInicio}" title="#{myBundle.EditRelacionLaboralTitle_fechaInicio}"  showOn="button"/>
+                                <p:tooltip for="fechaInicio" value="#{relacionLaboralController.getComponentMessages('fechaInicio', myBundle.EditRelacionLaboralHelpText_fechaInicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_fechaFin}" for="fechaFin" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{relacionLaboralController.selected.fechaFin}" title="#{myBundle.EditRelacionLaboralTitle_fechaFin}"  showOn="button"/>
+                                <p:tooltip for="fechaFin" value="#{relacionLaboralController.getComponentMessages('fechaFin', myBundle.EditRelacionLaboralHelpText_fechaFin)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_tipoContrato}" for="tipoContrato" />
+                            <h:panelGroup>
+                                <p:inputText id="tipoContrato" value="#{relacionLaboralController.selected.tipoContrato}" title="#{myBundle.EditRelacionLaboralTitle_tipoContrato}" size="255" maxlength="255"/>
+                                <p:tooltip for="tipoContrato" value="#{relacionLaboralController.getComponentMessages('tipoContrato', myBundle.EditRelacionLaboralHelpText_tipoContrato)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_sueldoBase}" for="sueldoBase" />
+                            <h:panelGroup>
+                                <p:inputText id="sueldoBase" value="#{relacionLaboralController.selected.sueldoBase}" title="#{myBundle.EditRelacionLaboralTitle_sueldoBase}"/>
+                                <p:tooltip for="sueldoBase" value="#{relacionLaboralController.getComponentMessages('sueldoBase', myBundle.EditRelacionLaboralHelpText_sueldoBase)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_rutaArchivoRespaldo}" for="rutaArchivoRespaldo" />
+                            <h:panelGroup>
+                                <p:inputText id="rutaArchivoRespaldo" value="#{relacionLaboralController.selected.rutaArchivoRespaldo}" title="#{myBundle.EditRelacionLaboralTitle_rutaArchivoRespaldo}" size="255" maxlength="255"/>
+                                <p:tooltip for="rutaArchivoRespaldo" value="#{relacionLaboralController.getComponentMessages('rutaArchivoRespaldo', myBundle.EditRelacionLaboralHelpText_rutaArchivoRespaldo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="estado" value="#{relacionLaboralController.selected.estado}" />
+                                <p:tooltip for="estado" value="#{relacionLaboralController.getComponentMessages('estado', myBundle.EditRelacionLaboralHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_idTipoContrato}" for="idTipoContrato" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTipoContrato" value="#{relacionLaboralController.selected.idTipoContrato}" required="true" requiredMessage="#{myBundle.EditRelacionLaboralRequiredMessage_idTipoContrato}" converter="tipoContratoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoContratoController.items}"
+                                                   var="idTipoContratoItem"
+                                                   itemValue="#{idTipoContratoItem}"
+                                                   itemLabel="#{idTipoContratoItem.idTipoContrato.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTipoContrato" value="#{relacionLaboralController.getComponentMessages('idTipoContrato', myBundle.EditRelacionLaboralHelpText_idTipoContrato)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_idTipoTrabajador}" for="idTipoTrabajador" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTipoTrabajador" value="#{relacionLaboralController.selected.idTipoTrabajador}" required="true" requiredMessage="#{myBundle.EditRelacionLaboralRequiredMessage_idTipoTrabajador}" converter="tipoTrabajadorConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoTrabajadorController.items}"
+                                                   var="idTipoTrabajadorItem"
+                                                   itemValue="#{idTipoTrabajadorItem}"
+                                                   itemLabel="#{idTipoTrabajadorItem.idTipoTrabajador.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTipoTrabajador" value="#{relacionLaboralController.getComponentMessages('idTipoTrabajador', myBundle.EditRelacionLaboralHelpText_idTipoTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_idEmpresa}" for="idEmpresa" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idEmpresa" value="#{relacionLaboralController.selected.idEmpresa}" required="true" requiredMessage="#{myBundle.EditRelacionLaboralRequiredMessage_idEmpresa}" converter="empresaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{empresaController.items}"
+                                                   var="idEmpresaItem"
+                                                   itemValue="#{idEmpresaItem}"
+                                                   itemLabel="#{idEmpresaItem.idEmpresa.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idEmpresa" value="#{relacionLaboralController.getComponentMessages('idEmpresa', myBundle.EditRelacionLaboralHelpText_idEmpresa)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRelacionLaboralLabel_idTrabajador}" for="idTrabajador" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTrabajador" value="#{relacionLaboralController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.EditRelacionLaboralRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{trabajadorController.items}"
+                                                   var="idTrabajadorItem"
+                                                   itemValue="#{idTrabajadorItem}"
+                                                   itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTrabajador" value="#{relacionLaboralController.getComponentMessages('idTrabajador', myBundle.EditRelacionLaboralHelpText_idTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{relacionLaboralController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:RelacionLaboralListPage:RelacionLaboralListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:RelacionLaboralListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

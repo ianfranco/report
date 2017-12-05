@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="GuiaListPage">
+        <pm:header title="#{myBundle.ListGuiaTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":GuiaCreatePage:GuiaCreateForm" actionListener="#{guiaController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:GuiaCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="GuiaListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{guiaController.items}"
+                             var="item"
+                             rowKey="#{item.idGuia}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{guiaController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{guiaController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{guiaController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('GuiaListPage:GuiaListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('GuiaListPage:GuiaListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('GuiaListPage:GuiaListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idGuia}" filterBy="#{item.idGuia}" headerText="#{myBundle.ListGuiaTitle_idGuia}">
+                        <h:outputText value="#{item.idGuia}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.folio}" filterBy="#{item.folio}" headerText="#{myBundle.ListGuiaTitle_folio}">
+                        <h:outputText value="#{item.folio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaRecaudacion}" filterBy="#{item.fechaRecaudacion}" headerText="#{myBundle.ListGuiaTitle_fechaRecaudacion}">
+                        <h:outputText value="#{item.fechaRecaudacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}" headerText="#{myBundle.ListGuiaTitle_fecha}">
+                        <h:outputText value="#{item.fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.totalIngresos}" filterBy="#{item.totalIngresos}" headerText="#{myBundle.ListGuiaTitle_totalIngresos}">
+                        <h:outputText value="#{item.totalIngresos}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.totalEgresos}" filterBy="#{item.totalEgresos}" headerText="#{myBundle.ListGuiaTitle_totalEgresos}">
+                        <h:outputText value="#{item.totalEgresos}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.viajeEspecial}" filterBy="#{item.viajeEspecial}" headerText="#{myBundle.ListGuiaTitle_viajeEspecial}">
+                                            <h:outputText value="#{item.viajeEspecial}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.otrosIngresos}" filterBy="#{item.otrosIngresos}" headerText="#{myBundle.ListGuiaTitle_otrosIngresos}">
+                                            <h:outputText value="#{item.otrosIngresos}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.saldo}" filterBy="#{item.saldo}" headerText="#{myBundle.ListGuiaTitle_saldo}">
+                                            <h:outputText value="#{item.saldo}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.numeroVueltas}" filterBy="#{item.numeroVueltas}" headerText="#{myBundle.ListGuiaTitle_numeroVueltas}">
+                                            <h:outputText value="#{item.numeroVueltas}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.turno}" filterBy="#{item.turno}" headerText="#{myBundle.ListGuiaTitle_turno}">
+                                            <h:outputText value="#{item.turno}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.observacion}" filterBy="#{item.observacion}" headerText="#{myBundle.ListGuiaTitle_observacion}">
+                                            <h:outputText value="#{item.observacion}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.recaudada}" filterBy="#{item.recaudada}" headerText="#{myBundle.ListGuiaTitle_recaudada}">
+                                            <h:selectBooleanCheckbox id="recaudada" value="#{item.recaudada}" title="#{myBundle.EditGuiaTitle_recaudada}"  disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idBus.idBus}" filterBy="#{item.idBus.idBus}" headerText="#{myBundle.ListGuiaTitle_idBus}">
+                                            <h:outputText value="#{item.idBus.idBus}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idEstado.idEstadoGuia}" filterBy="#{item.idEstado.idEstadoGuia}" headerText="#{myBundle.ListGuiaTitle_idEstado}">
+                                            <h:outputText value="#{item.idEstado.idEstadoGuia}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idServicio.idServicio}" filterBy="#{item.idServicio.idServicio}" headerText="#{myBundle.ListGuiaTitle_idServicio}">
+                                            <h:outputText value="#{item.idServicio.idServicio}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListGuiaTitle_idTrabajador}">
+                                            <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":GuiaEditPage:GuiaEditForm" disabled="#{empty guiaController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:GuiaEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{guiaController.delete}" update=":growl,datalist" disabled="#{empty guiaController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty guiaController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.GuiaHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.GuiaMenuItem_serieBoletoGuiaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty guiaController.selected.serieBoletoGuiaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{guiaController.navigateSerieBoletoGuiaList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.GuiaMenuItem_ventaBoletoGuiaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty guiaController.selected.ventaBoletoGuiaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{guiaController.navigateVentaBoletoGuiaList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.GuiaMenuItem_idBus}" icon="ui-icon-search" update=":BusEditPage:BusEditForm" disabled="#{empty guiaController.selected.idBus}" actionListener="#{guiaController.prepareIdBus}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:BusEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.GuiaMenuItem_idEstado}" icon="ui-icon-search" update=":EstadoGuiaEditPage:EstadoGuiaEditForm" disabled="#{empty guiaController.selected.idEstado}" actionListener="#{guiaController.prepareIdEstado}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EstadoGuiaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.GuiaMenuItem_idServicio}" icon="ui-icon-search" update=":ServicioEditPage:ServicioEditForm" disabled="#{empty guiaController.selected.idServicio}" actionListener="#{guiaController.prepareIdServicio}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:ServicioEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.GuiaMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty guiaController.selected.idTrabajador}" actionListener="#{guiaController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.GuiaMenuItem_egresoGuiaList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty guiaController.selected.egresoGuiaList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{guiaController.navigateEgresoGuiaList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

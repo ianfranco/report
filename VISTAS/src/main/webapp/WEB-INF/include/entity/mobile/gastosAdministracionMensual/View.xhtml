@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="GastosAdministracionMensualViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewGastosAdministracionMensualTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:GastosAdministracionMensualListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="GastosAdministracionMensualViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{gastosAdministracionMensualController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_idGastosAdministracionMensual}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.idGastosAdministracionMensual}" title="#{myBundle.ViewGastosAdministracionMensualTitle_idGastosAdministracionMensual}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_mes}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.mes}" title="#{myBundle.ViewGastosAdministracionMensualTitle_mes}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_año}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.año}" title="#{myBundle.ViewGastosAdministracionMensualTitle_año}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_numeroFolio}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.numeroFolio}" title="#{myBundle.ViewGastosAdministracionMensualTitle_numeroFolio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_nombreGastoAdministracion}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.nombreGastoAdministracion}" title="#{myBundle.ViewGastosAdministracionMensualTitle_nombreGastoAdministracion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_fechaGastoAdministracion}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.fechaGastoAdministracion}" title="#{myBundle.ViewGastosAdministracionMensualTitle_fechaGastoAdministracion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_fechaIngreso}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.fechaIngreso}" title="#{myBundle.ViewGastosAdministracionMensualTitle_fechaIngreso}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_valor}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.valor}" title="#{myBundle.ViewGastosAdministracionMensualTitle_valor}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_observacion}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.observacion}" title="#{myBundle.ViewGastosAdministracionMensualTitle_observacion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewGastosAdministracionMensualLabel_idDepartamento}"/>
+                            <h:outputText value="#{gastosAdministracionMensualController.selected.idDepartamento.idDepartamento}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

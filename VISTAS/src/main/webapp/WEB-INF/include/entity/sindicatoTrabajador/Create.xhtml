@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SindicatoTrabajadorCreateDlg" widgetVar="SindicatoTrabajadorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateSindicatoTrabajadorTitle}" closeOnEscape="true">
+
+            <h:form id="SindicatoTrabajadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{sindicatoTrabajadorController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateSindicatoTrabajadorLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{sindicatoTrabajadorController.selected.fechaIngreso}" title="#{myBundle.CreateSindicatoTrabajadorTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.CreateSindicatoTrabajadorRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{sindicatoTrabajadorController.getComponentMessages('fechaIngreso', myBundle.CreateSindicatoTrabajadorHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateSindicatoTrabajadorLabel_idSindicato}" for="idSindicato" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idSindicato" value="#{sindicatoTrabajadorController.selected.idSindicato}" required="true" requiredMessage="#{myBundle.CreateSindicatoTrabajadorRequiredMessage_idSindicato}" converter="sindicatoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{sindicatoController.items}"
+                                               var="idSindicatoItem"
+                                               itemValue="#{idSindicatoItem}"
+                                               itemLabel="#{idSindicatoItem.idSindicato.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idSindicato" value="#{sindicatoTrabajadorController.getComponentMessages('idSindicato', myBundle.CreateSindicatoTrabajadorHelpText_idSindicato)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateSindicatoTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idTrabajador" value="#{sindicatoTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.CreateSindicatoTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{trabajadorController.items}"
+                                               var="idTrabajadorItem"
+                                               itemValue="#{idTrabajadorItem}"
+                                               itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idTrabajador" value="#{sindicatoTrabajadorController.getComponentMessages('idTrabajador', myBundle.CreateSindicatoTrabajadorHelpText_idTrabajador)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sindicatoTrabajadorController.saveNew}" value="#{myBundle.Save}" update="display,:SindicatoTrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SindicatoTrabajadorCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('SindicatoTrabajadorCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

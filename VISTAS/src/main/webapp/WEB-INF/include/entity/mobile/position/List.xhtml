@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PositionListPage">
+        <pm:header title="#{myBundle.ListPositionTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":PositionCreatePage:PositionCreateForm" actionListener="#{positionController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:PositionCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PositionListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{positionController.items}"
+                             var="item"
+                             rowKey="#{item.id}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{positionController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{positionController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{positionController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('PositionListPage:PositionListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('PositionListPage:PositionListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('PositionListPage:PositionListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.id}" filterBy="#{item.id}" headerText="#{myBundle.ListPositionTitle_id}">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.protocol}" filterBy="#{item.protocol}" headerText="#{myBundle.ListPositionTitle_protocol}">
+                        <h:outputText value="#{item.protocol}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.serverTime}" filterBy="#{item.serverTime}" headerText="#{myBundle.ListPositionTitle_serverTime}">
+                        <h:outputText value="#{item.serverTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.deviceTime}" filterBy="#{item.deviceTime}" headerText="#{myBundle.ListPositionTitle_deviceTime}">
+                        <h:outputText value="#{item.deviceTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fixTime}" filterBy="#{item.fixTime}" headerText="#{myBundle.ListPositionTitle_fixTime}">
+                        <h:outputText value="#{item.fixTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.valid}" filterBy="#{item.valid}" headerText="#{myBundle.ListPositionTitle_valid}">
+                        <h:selectBooleanCheckbox id="valid" value="#{item.valid}" title="#{myBundle.EditPositionTitle_valid}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_valid}" disabled="true"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.latitude}" filterBy="#{item.latitude}" headerText="#{myBundle.ListPositionTitle_latitude}">
+                                            <h:outputText value="#{item.latitude}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.longitude}" filterBy="#{item.longitude}" headerText="#{myBundle.ListPositionTitle_longitude}">
+                                            <h:outputText value="#{item.longitude}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.altitude}" filterBy="#{item.altitude}" headerText="#{myBundle.ListPositionTitle_altitude}">
+                                            <h:outputText value="#{item.altitude}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.speed}" filterBy="#{item.speed}" headerText="#{myBundle.ListPositionTitle_speed}">
+                                            <h:outputText value="#{item.speed}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.course}" filterBy="#{item.course}" headerText="#{myBundle.ListPositionTitle_course}">
+                                            <h:outputText value="#{item.course}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.address}" filterBy="#{item.address}" headerText="#{myBundle.ListPositionTitle_address}">
+                                            <h:outputText value="#{item.address}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.attributes}" filterBy="#{item.attributes}" headerText="#{myBundle.ListPositionTitle_attributes}">
+                                            <h:outputText value="#{item.attributes}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.deviceId.name}" filterBy="#{item.deviceId.name}" headerText="#{myBundle.ListPositionTitle_deviceId}">
+                                            <h:outputText value="#{item.deviceId.name}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PositionEditPage:PositionEditForm" disabled="#{empty positionController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:PositionEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{positionController.delete}" update=":growl,datalist" disabled="#{empty positionController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty positionController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.PositionHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.PositionMenuItem_deviceId}" icon="ui-icon-search" update=":DeviceEditPage:DeviceEditForm" disabled="#{empty positionController.selected.deviceId}" actionListener="#{positionController.prepareDeviceId}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:DeviceEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

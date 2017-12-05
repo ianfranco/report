@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="MontoSindicatoTrabajadorCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateMontoSindicatoTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:MontoSindicatoTrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="MontoSindicatoTrabajadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{montoSindicatoTrabajadorController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateMontoSindicatoTrabajadorLabel_montoSindicatoTrabajador}" for="montoSindicatoTrabajador" />
+                            <h:panelGroup>
+                                <p:inputText id="montoSindicatoTrabajador" value="#{montoSindicatoTrabajadorController.selected.montoSindicatoTrabajador}" title="#{myBundle.CreateMontoSindicatoTrabajadorTitle_montoSindicatoTrabajador}" required="true" requiredMessage="#{myBundle.CreateMontoSindicatoTrabajadorRequiredMessage_montoSindicatoTrabajador}"/>
+                                <p:tooltip for="montoSindicatoTrabajador" value="#{montoSindicatoTrabajadorController.getComponentMessages('montoSindicatoTrabajador', myBundle.CreateMontoSindicatoTrabajadorHelpText_montoSindicatoTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateMontoSindicatoTrabajadorLabel_mesLiquidacion}" for="mesLiquidacion" />
+                            <h:panelGroup>
+                                <p:inputText id="mesLiquidacion" value="#{montoSindicatoTrabajadorController.selected.mesLiquidacion}" title="#{myBundle.CreateMontoSindicatoTrabajadorTitle_mesLiquidacion}" required="true" requiredMessage="#{myBundle.CreateMontoSindicatoTrabajadorRequiredMessage_mesLiquidacion}"/>
+                                <p:tooltip for="mesLiquidacion" value="#{montoSindicatoTrabajadorController.getComponentMessages('mesLiquidacion', myBundle.CreateMontoSindicatoTrabajadorHelpText_mesLiquidacion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateMontoSindicatoTrabajadorLabel_añoLiquidacion}" for="añoLiquidacion" />
+                            <h:panelGroup>
+                                <p:inputText id="añoLiquidacion" value="#{montoSindicatoTrabajadorController.selected.añoLiquidacion}" title="#{myBundle.CreateMontoSindicatoTrabajadorTitle_añoLiquidacion}" required="true" requiredMessage="#{myBundle.CreateMontoSindicatoTrabajadorRequiredMessage_añoLiquidacion}"/>
+                                <p:tooltip for="añoLiquidacion" value="#{montoSindicatoTrabajadorController.getComponentMessages('añoLiquidacion', myBundle.CreateMontoSindicatoTrabajadorHelpText_añoLiquidacion)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateMontoSindicatoTrabajadorLabel_idSindicatoTrabajador}" for="idSindicatoTrabajador" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idSindicatoTrabajador" value="#{montoSindicatoTrabajadorController.selected.idSindicatoTrabajador}" required="true" requiredMessage="#{myBundle.CreateMontoSindicatoTrabajadorRequiredMessage_idSindicatoTrabajador}" converter="sindicatoTrabajadorConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{sindicatoTrabajadorController.items}"
+                                                   var="idSindicatoTrabajadorItem"
+                                                   itemValue="#{idSindicatoTrabajadorItem}"
+                                                   itemLabel="#{idSindicatoTrabajadorItem.idSindicatoTrabajador.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idSindicatoTrabajador" value="#{montoSindicatoTrabajadorController.getComponentMessages('idSindicatoTrabajador', myBundle.CreateMontoSindicatoTrabajadorHelpText_idSindicatoTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{montoSindicatoTrabajadorController.saveNew}" value="#{myBundle.Save}" update="display,:MontoSindicatoTrabajadorListPage:MontoSindicatoTrabajadorListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:MontoSindicatoTrabajadorListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

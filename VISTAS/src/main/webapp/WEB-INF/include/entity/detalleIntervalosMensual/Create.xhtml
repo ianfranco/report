@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleIntervalosMensualCreateDlg" widgetVar="DetalleIntervalosMensualCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateDetalleIntervalosMensualTitle}" closeOnEscape="true">
+
+            <h:form id="DetalleIntervalosMensualCreateForm">
+
+                <h:panelGroup id="display" rendered="#{detalleIntervalosMensualController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleIntervalosMensualLabel_numeroBuses}" for="numeroBuses" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroBuses" value="#{detalleIntervalosMensualController.selected.numeroBuses}" title="#{myBundle.CreateDetalleIntervalosMensualTitle_numeroBuses}" required="true" requiredMessage="#{myBundle.CreateDetalleIntervalosMensualRequiredMessage_numeroBuses}"/>
+                            <p:tooltip for="numeroBuses" value="#{detalleIntervalosMensualController.getComponentMessages('numeroBuses', myBundle.CreateDetalleIntervalosMensualHelpText_numeroBuses)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleIntervalosMensualLabel_idAdministracionMensual}" for="idAdministracionMensual" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idAdministracionMensual" value="#{detalleIntervalosMensualController.selected.idAdministracionMensual}" required="true" requiredMessage="#{myBundle.CreateDetalleIntervalosMensualRequiredMessage_idAdministracionMensual}" converter="administracionMensualConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{administracionMensualController.items}"
+                                               var="idAdministracionMensualItem"
+                                               itemValue="#{idAdministracionMensualItem}"
+                                               itemLabel="#{idAdministracionMensualItem.idAdministracionMensual.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idAdministracionMensual" value="#{detalleIntervalosMensualController.getComponentMessages('idAdministracionMensual', myBundle.CreateDetalleIntervalosMensualHelpText_idAdministracionMensual)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleIntervalosMensualLabel_idIntervaloAdministracion}" for="idIntervaloAdministracion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idIntervaloAdministracion" value="#{detalleIntervalosMensualController.selected.idIntervaloAdministracion}" required="true" requiredMessage="#{myBundle.CreateDetalleIntervalosMensualRequiredMessage_idIntervaloAdministracion}" converter="intervalosAdministracionConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{intervalosAdministracionController.items}"
+                                               var="idIntervaloAdministracionItem"
+                                               itemValue="#{idIntervaloAdministracionItem}"
+                                               itemLabel="#{idIntervaloAdministracionItem.idIntervalosAdministracion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idIntervaloAdministracion" value="#{detalleIntervalosMensualController.getComponentMessages('idIntervaloAdministracion', myBundle.CreateDetalleIntervalosMensualHelpText_idIntervaloAdministracion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleIntervalosMensualController.saveNew}" value="#{myBundle.Save}" update="display,:DetalleIntervalosMensualListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetalleIntervalosMensualCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('DetalleIntervalosMensualCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="c3a17574-9727-49d5-92b9-bf67c14af565">
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+    buses.`Id` AS buses_Id,
+     buses.`Codigo` AS buses_Codigo,
+     buses.`Patente` AS buses_Patente,
+     buses.`Anio` AS buses_Anio, 
+     COUNT(DISTINCT Guias.Fecha) AS Dias,
+     SUM(EgresosXGuias.Administracion) AS 'Admin.',
+     SUM(EgresosXGuias.Licitacion) AS Licitacion,
+     SUM(EgresosXGuias.Taller) AS Taller,
+     SUM(EgresosXGuias.Combustible) AS Combustible,
+     SUM(EgresosXGuias.Aseo) AS Aseo,
+     SUM(Guias.Saldo) AS Saldo,
+     SUM(Guias.NumVueltas) AS 'Vueltas', 
+        CASE month('2012-12-01') when "01" then "ENERO"
+	when "02" then "FEBRERO"
+	when "03" then "MARZO"
+	when "04" then "ABRIL"
+	when "05" then "MAYO"
+	when "06" then "JUNIO"
+	when "07" then "JULIO"
+	when "08" then "AGOSTO"
+	when "09" then "SEPTIEMBRE"
+	when "10" then "OCTUBRE"
+	when "11" then "NOVIEMBRE"
+	when "12" then "DICIEMBRE"
+	END AS NombreMes, year('2012-12-01') AS Anio
+   FROM Guias, EgresosXGuias, Buses 
+   WHERE Guias.Fecha BETWEEN '2012-12-01' AND '2012-12-01' AND  
+   Guias.Folio = EgresosXGuias.IdGuia AND 
+   Guias.IdBus = Buses.Codigo AND 
+   Buses.IdEmpresario= 6
+   GROUP BY IdBus
+   ORDER BY Guias.IdBus]]>
+	</queryString>
+	<field name="buses_Codigo" class="java.lang.Integer"/>
+	<field name="buses_Patente" class="java.lang.String"/>
+	<field name="buses_Anio" class="java.lang.Integer"/>
+	<field name="Dias" class="java.lang.Long"/>
+	<field name="Admin." class="java.math.BigDecimal"/>
+	<field name="Licitacion" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Taller" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Combustible" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Aseo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Saldo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Vueltas" class="java.math.BigDecimal"/>
+	<background>
+		<band height="575" splitType="Stretch">
+			<image vAlign="Bottom">
+				<reportElement uuid="2e112988-db75-459e-a31b-66d4c900260a" mode="Opaque" x="0" y="234" width="85" height="241" backcolor="#000000"/>
+				<imageExpression><![CDATA["silhouette2.jpg"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement uuid="e60e5579-d214-4bad-a211-0bed91661ccf" x="-20" y="234" width="20" height="241" backcolor="#000000"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<frame>
+				<reportElement uuid="67317282-3b7c-4d29-984f-5a3745df6958" mode="Opaque" x="-20" y="475" width="105" height="100" backcolor="#666666"/>
+				<textField>
+					<reportElement uuid="c5f8e694-a73f-46da-97c5-5fb0106bdc66" style="Column header" x="0" y="0" width="104" height="73" forecolor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="58" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report">
+					<reportElement uuid="53cfefbd-122c-4a30-99ee-ff303f68b54a" style="Column header" x="0" y="77" width="104" height="20" forecolor="#000000"/>
+					<box leftPadding="4" rightPadding="4"/>
+					<textElement textAlignment="Center">
+						<font size="16" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="0491c927-fb87-4682-b4c5-3add7bfd81d2" mode="Transparent" x="42" y="73" width="20" height="1" backcolor="#FFFFFF"/>
+				</line>
+			</frame>
+		</band>
+	</background>
+	<title>
+		<band height="104" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d34335a5-b783-4b94-af00-0d6a12264745" style="Title" x="0" y="0" width="802" height="67"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="54" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[SILHOUETTE TITLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f388bb2-c863-4791-ad45-468d0b0021e5" style="SubTitle" x="232" y="67" width="568" height="37"/>
+				<textElement textAlignment="Right">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Silhouette SubTitle]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement uuid="b0b3b2db-20c3-4348-83f8-699c10767f38" mode="Opaque" x="97" y="5" width="705" height="20" backcolor="#666666"/>
+				<staticText>
+					<reportElement uuid="08ea11e2-cf8d-47cd-94e2-67682401dd62" style="Column header" x="0" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[buses_Codigo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="96dbfa5e-a510-4574-8b35-5a7ab212ecf8" style="Column header" x="64" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[buses_Patente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4bfb7b75-d5ad-4f40-9fab-5a19e8bc8a4e" style="Column header" x="128" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[buses_Anio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="68282073-af79-4de5-a95a-12b12f462dfb" style="Column header" x="192" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[Dias]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ee40221e-6a50-43fd-92e1-61ff936c9d6b" style="Column header" x="256" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[Admin.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4fbe973a-64f5-43d4-9929-2f54fd2e69cb" style="Column header" x="320" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[Licitacion]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="873b50bf-ffd7-44e3-8dac-a14616d3c2d4" style="Column header" x="384" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[Taller]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3b5eb544-1029-4c25-8dec-cdce8b2b9600" style="Column header" x="448" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[Combustible]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4070f131-207f-499c-8e0d-48a4d79a73c4" style="Column header" x="512" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[Aseo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="39f7c91e-da3e-4a58-8931-e8d583cd91bc" style="Column header" x="576" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[Saldo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="607af548-333c-4a81-9042-cccceae85883" style="Column header" x="640" y="0" width="64" height="15"/>
+					<textElement/>
+					<text><![CDATA[Vueltas]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<frame>
+				<reportElement uuid="ebb76b4f-32be-47c5-baf2-60cc8cd4aa14" x="97" y="1" width="705" height="15"/>
+				<textField>
+					<reportElement uuid="b224c460-cdb1-4ea1-bb9f-dab3f965111f" style="Detail" x="0" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{buses_Codigo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="357fed7d-3086-4086-b414-04b91544c2f3" style="Detail" x="64" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{buses_Patente}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="475e643d-6950-4507-bd63-a8e00c5ce17c" style="Detail" x="128" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{buses_Anio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="2455b483-a712-4a57-81e3-96436e5f1380" style="Detail" x="192" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Dias}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="b742c3e1-1c99-4927-9a1e-71fe84527e33" style="Detail" x="256" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Admin.}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="0068a71b-db03-447f-8192-15b016fdc78d" style="Detail" x="320" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Licitacion}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="434e1812-6a00-4cad-8a2b-974fdd38ca6c" style="Detail" x="384" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Taller}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="2ff631a5-109b-4d9a-a711-22c5ead431a6" style="Detail" x="448" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Combustible}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="f9dc7eaa-d96b-46b2-ae23-d2da9b50f5ba" style="Detail" x="512" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Aseo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="3b1a772b-5760-41fe-b175-3bfd97177033" style="Detail" x="576" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Saldo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="5af47828-6f3e-4ab9-8881-9e0591afd0fa" style="Detail" x="640" y="0" width="64" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Vueltas}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line>
+				<reportElement uuid="1f8ae311-6a27-4d18-9e12-87ef4049a78d" positionType="FixRelativeToBottom" x="97" y="16" width="705" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="39" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="d3d7340a-bc87-4c91-a81a-d9bd4283c6b8" style="Column header" x="671" y="0" width="131" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="35970f18-fe65-45fa-bbea-dc0b993c8fe3" x="96" y="0" width="267" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Silhouette Title Report]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

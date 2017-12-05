@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="InventarioInternoEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditInventarioInternoTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:InventarioInternoListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="InventarioInternoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{inventarioInternoController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditInventarioInternoLabel_idInventarioInterno}" for="idInventarioInterno" />
+                            <h:panelGroup>
+                                <h:outputText id="idInventarioInterno" value="#{inventarioInternoController.selected.idInventarioInterno}" />
+                                <p:tooltip for="idInventarioInterno" value="#{inventarioInternoController.getComponentMessages('idInventarioInterno', myBundle.EditInventarioInternoHelpText_idInventarioInterno)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_serie}" for="serie" />
+                            <h:panelGroup>
+                                <p:inputText id="serie" value="#{inventarioInternoController.selected.serie}" title="#{myBundle.EditInventarioInternoTitle_serie}" required="true" requiredMessage="#{myBundle.EditInventarioInternoRequiredMessage_serie}"/>
+                                <p:tooltip for="serie" value="#{inventarioInternoController.getComponentMessages('serie', myBundle.EditInventarioInternoHelpText_serie)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_identificador}" for="identificador" />
+                            <h:panelGroup>
+                                <p:inputText id="identificador" value="#{inventarioInternoController.selected.identificador}" title="#{myBundle.EditInventarioInternoTitle_identificador}" size="45" maxlength="45"/>
+                                <p:tooltip for="identificador" value="#{inventarioInternoController.getComponentMessages('identificador', myBundle.EditInventarioInternoHelpText_identificador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_cantidadRollos}" for="cantidadRollos" />
+                            <h:panelGroup>
+                                <p:inputText id="cantidadRollos" value="#{inventarioInternoController.selected.cantidadRollos}" title="#{myBundle.EditInventarioInternoTitle_cantidadRollos}" required="true" requiredMessage="#{myBundle.EditInventarioInternoRequiredMessage_cantidadRollos}"/>
+                                <p:tooltip for="cantidadRollos" value="#{inventarioInternoController.getComponentMessages('cantidadRollos', myBundle.EditInventarioInternoHelpText_cantidadRollos)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_estado}" for="estado" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="estado" value="#{inventarioInternoController.selected.estado}" />
+                                <p:tooltip for="estado" value="#{inventarioInternoController.getComponentMessages('estado', myBundle.EditInventarioInternoHelpText_estado)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditInventarioInternoLabel_idBoleto}" for="idBoleto" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idBoleto" value="#{inventarioInternoController.selected.idBoleto}" required="true" requiredMessage="#{myBundle.EditInventarioInternoRequiredMessage_idBoleto}" converter="boletoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{boletoController.items}"
+                                                   var="idBoletoItem"
+                                                   itemValue="#{idBoletoItem}"
+                                                   itemLabel="#{idBoletoItem.idBoleto.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idBoleto" value="#{inventarioInternoController.getComponentMessages('idBoleto', myBundle.EditInventarioInternoHelpText_idBoleto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{inventarioInternoController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:InventarioInternoListPage:InventarioInternoListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:InventarioInternoListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="574" leftMargin="19" rightMargin="19" topMargin="19" bottomMargin="19" scriptletClass="webguide2.n2t">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="emp" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="name" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Herman Rauter Jorquera"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rut" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["11.111.111-1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hasta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+Conductores.Codigo,
+CONCAT(Conductores.Apellidos, " ",Conductores.Nombres ) As 'Conductor',
+Conductores.Rut,
+Empresarios.Nombre As NombreEmpresario,
+Empresarios.Rut As RutEmpresario,
+COUNT(DISTINCT Fecha) As 'DT',
+dias_conductores.Trabajados,
+DATEDIFF($P{hasta},$P{desde})+1 AS TotalDias,
+COUNT(DISTINCT Fecha) As 'DT',
+dias_conductores.Trabajados,
+(DATEDIFF($P{hasta},$P{desde})+1)-(COUNT(DISTINCT Fecha)+dias_conductores.Vacaciones+dias_conductores.Licencias+dias_conductores.Permisos) As Descansos,
+dias_conductores.Vacaciones,
+dias_conductores.Licencias,
+dias_conductores.Permisos,
+FLOOR((SUM(Guias.TotalIngresos) *0.22)) AS Imponible,
+FLOOR((SUM(Guias.TotalIngresos) *0.22)) AS Sueldo,
+FLOOR((SUM(Guias.TotalIngresos) *0)) AS SeptimoDia,
+CASE haberes_Conductores.Grupo WHEN 1 THEN haberes_Conductores.NumeroCargas*7170
+WHEN 2 THEN haberes_Conductores.NumeroCargas*5064
+WHEN 3 THEN haberes_Conductores.NumeroCargas*1650
+END AS 'T.Cargas',
+haberes_Conductores.NumeroCargas As 'N°Cargas',
+haberes_Conductores.RetroActivas As 'Retroactivos',
+FLOOR((SUM(Guias.TotalIngresos) *0)) As Colacion,
+FLOOR((SUM(Guias.TotalIngresos) *0)) As Movilizacion,
+FLOOR((SUM(Guias.TotalIngresos) *0)) As AsignacionCaja,
+FLOOR((SUM(Guias.TotalIngresos) *0.0)) As Subsidio,
+FLOOR((SUM(Guias.TotalIngresos) *0)) AS AnticipoSueldo,
+(FLOOR((SUM(Guias.TotalIngresos) *0.22))+haberes_Conductores.RetroActivas) AS Liquido,
+Afp.Nombre As Afp,
+Afp.Porcentaje AS '% Afp',
+FLOOR(((SUM(Guias.TotalIngresos) *0.22))*(Afp.Porcentaje/100)) As ValorAfp,
+Salud.Nombre As Salud,
+descuentos_conductores.PorcentajeSalud AS '% Salud',
+FLOOR(((SUM(Guias.TotalIngresos) *0.22))*(descuentos_conductores.PorcentajeSalud/100)) AS ValorSalud,
+FLOOR(IF(contratos_conductores.TipoContrato=1, ((SUM(Guias.TotalIngresos) *0.22))*0.006, 0)) As Cesantia,
+descuentos_conductores.ValorExtraA,
+descuentos_conductores.ValorExtraB,
+descuentos_conductores.Adicional AS PorAd,
+IF(FLOOR(descuentos_conductores.Adicional*20942.88)-FLOOR(((SUM(Guias.TotalIngresos) *0.22))*(descuentos_conductores.PorcentajeSalud/100))<0, 0, FLOOR(descuentos_conductores.Adicional*20942.88)-FLOOR(((SUM(Guias.TotalIngresos) *0.22))*(descuentos_conductores.PorcentajeSalud/100))) AS Adicional1,
+
+FLOOR(FLOOR(((SUM(Guias.TotalIngresos) *0.22))*(descuentos_conductores.PorcentajeSalud/100))+
+
+FLOOR(((SUM(Guias.TotalIngresos) *0.22))*(Afp.Porcentaje/100))+IF(FLOOR(descuentos_conductores.Adicional*20942.88)-FLOOR(((SUM(Guias.TotalIngresos) *0.22))*(descuentos_conductores.PorcentajeSalud/100))<0,0,FLOOR(descuentos_conductores.Adicional*20942.88)-FLOOR(((SUM(Guias.TotalIngresos) *0.22))*(descuentos_conductores.PorcentajeSalud/100))
+)+
+FLOOR(IF(contratos_conductores.TipoContrato=1, (((SUM(Guias.TotalIngresos)) *0.22))*0.006, 0))+descuentos_conductores.ValorExtraA+descuentos_conductores.ValorExtraB) AS Descuentos,
+
+CASE month(Curdate()) when "01" then " - Enero"
+when "02" then " - Febrero"
+when "03" then " - Marzo"
+when "04" then " - Abril"
+when "05" then " - Mayo"
+when "06" then " - Junio"
+when "07" then " - Julio"
+when "08" then " - Agosto"
+when "09" then " - Septiembre"
+when "10" then " - Octubre"
+when "11" then " - Noviembre"
+when "12" then " - Diciembre"
+END AS NombreMes, year(Curdate()) AS Anio
+
+FROM Guias, Conductores,haberes_Conductores, descuentos_conductores, Afp, Salud, contratos_conductores, dias_conductores, Empresarios
+WHERE Conductores.Codigo = $P{emp} AND
+Guias.Fecha BETWEEN $P{desde} AND $P{hasta} AND Conductores.OldCod = haberes_Conductores.IdConductor AND Conductores.OldCod =
+descuentos_conductores.IdConductor AND descuentos_conductores.IdAfp = Afp.Codigo AND descuentos_conductores.IdSalud = Salud.Contador AND
+Guias.IdConductor = Conductores.Codigo AND Conductores.OldCod = contratos_conductores.IdConductor AND
+Conductores.OldCod = dias_conductores.IdConductor AND Conductores.IdEmpleador = Empresarios.Codigo
+GROUP BY Guias.IdConductor
+ORDER BY Conductores.Apellidos]]>
+	</queryString>
+	<field name="Codigo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Conductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Rut" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreEmpresario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RutEmpresario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DT" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Trabajados" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalDias" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descansos" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Vacaciones" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Licencias" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Permisos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Imponible" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sueldo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SeptimoDia" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="T.Cargas" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="N°Cargas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Retroactivos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Colacion" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Movilizacion" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AsignacionCaja" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Subsidio" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AnticipoSueldo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Liquido" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Afp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="% Afp" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ValorAfp" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Salud" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="% Salud" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ValorSalud" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cesantia" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ValorExtraA" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ValorExtraB" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PorAd" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Adicional1" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descuentos" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreMes" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Anio" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="alcanceLiquido" class="java.lang.Double">
+		<variableExpression><![CDATA[new java.lang.Double(($F{Liquido}.intValue()+$F{T.Cargas}.intValue())-$F{Descuentos}.intValue())]]></variableExpression>
+	</variable>
+	<variable name="anticipo" class="java.lang.Double">
+		<variableExpression><![CDATA[new java.lang.Double($V{alcanceLiquido}.intValue()*0.8802)]]></variableExpression>
+	</variable>
+	<variable name="saldo" class="java.lang.Double">
+		<variableExpression><![CDATA[new java.lang.Double($V{alcanceLiquido}.intValue()-$V{anticipo}.intValue())]]></variableExpression>
+	</variable>
+	<variable name="hola" class="java.lang.Double">
+		<variableExpression><![CDATA[new java.lang.Double($V{alcanceLiquido}.intValue()-$F{AnticipoSueldo}.intValue())]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="752">
+			<staticText>
+				<reportElement key="staticText" x="31" y="46" width="59" height="15"/>
+				<textElement textAlignment="Left">
+					<font size="11" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nombre :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="61" width="59" height="15"/>
+				<textElement textAlignment="Left">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rut :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="426" y="46" width="49" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="426" y="61" width="49" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="88" width="254" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[≡≡≡≡≡≡≡ Descuentos ≡≡≡≡≡≡≡≡≡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="27" y="88" width="271" height="20"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[≡≡≡≡≡≡≡≡≡≡ Haberes ≡≡≡≡≡≡≡≡≡≡≡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="118" width="265" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Imponibles]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="133" width="119" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sueldo ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="133" width="152" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo Anterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="155" width="152" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dif. Boletos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="175" width="34" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A.F.P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="195" width="34" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="235" width="152" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Seguro Cesantía (0,60 %)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="255" width="152" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sindicato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="275" width="152" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Varios ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="173" width="119" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sub-Total Imponible]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="198" width="252" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Imponibles]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="213" width="117" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asignación Familiar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="233" width="117" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargas Retroactivas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="253" width="117" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bono Colación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="273" width="117" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bono Movilización]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="293" width="117" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asignación Caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="363" width="131" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sub-Total No Imponible]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="320" y="363" width="152" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sub-Total Descuentos]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" x="307" y="118" width="1" height="265"/>
+				<graphicElement>
+					<pen lineWidth="2.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement key="staticText" x="27" y="387" width="261" height="20"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[≡≡≡≡≡≡≡≡ Detalle Dias ≡ ≡≡≡≡≡≡≡≡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="407" width="59" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trabajados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="422" width="59" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descansos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="437" width="59" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Licencias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="452" width="59" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Permisos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="467" width="72" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vacaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="27" y="501" width="256" height="20"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[≡≡≡≡≡≡≡ ≡ ≡Totales ≡ ≡≡≡≡≡≡≡≡]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="31" y="482" width="59" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Días :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="27" y="521" width="89" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Haberes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="27" y="566" width="89" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Anticipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="27" y="551" width="89" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alcance Líquido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="27" y="581" width="89" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo Líquido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="27" y="536" width="99" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Descuentos]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" x="382" y="712" width="145" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement key="staticText" x="382" y="713" width="145" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Firma ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="90" y="46" width="334" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Conductor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="90" y="61" width="73" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Rut}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="475" y="46" width="66" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{Codigo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="183" y="133" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Sueldo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="183" y="173" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Imponible}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="183" y="213" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{T.Cargas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="183" y="233" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{Retroactivos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="183" y="253" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Colacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="183" y="273" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Movilizacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="183" y="293" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{AsignacionCaja}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="472" y="133" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[$ 0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="472" y="155" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[$ 0]]></text>
+			</staticText>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="169" y="536" width="114" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{Descuentos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="169" y="551" width="114" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{alcanceLiquido}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="116" y="407" width="53" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{DT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="472" y="175" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{ValorAfp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="472" y="235" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Cesantia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="472" y="255" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{ValorExtraA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="472" y="275" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{ValorExtraB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="354" y="175" width="90" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Afp}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="444" y="175" width="28" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{% Afp}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="354" y="195" width="90" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Salud}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="444" y="195" width="28" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{% Salud}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="472" y="195" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{ValorSalud}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="472" y="363" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{Descuentos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="116" y="422" width="53" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{Descansos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="116" y="467" width="53" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{Vacaciones}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="116" y="452" width="53" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{Permisos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="116" y="437" width="53" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{Licencias}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" x="475" y="61" width="66" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="183" y="363" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[new java.lang.Integer($F{Retroactivos}.intValue()+$F{T.Cargas}.intValue()+$F{Colacion}.intValue()+$F{Movilizacion}.intValue()+$F{AsignacionCaja}.intValue()+$F{Subsidio}.intValue())]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="169" y="581" width="114" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[new java.lang.Double($V{alcanceLiquido}.intValue()-$V{alcanceLiquido}.intValue())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="31" y="23" width="215" height="15"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Las Acacias Parcela 24 C - Villa Alemana]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="116" y="482" width="53" height="15"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{TotalDias}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="625" width="547" height="72"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["CERTIFICO QUE HE RECIBIDO DE "+$F{NombreEmpresario}+
+" RUT "+$F{RutEmpresario}+" LA SUMA DE CERO PESOS A MI ENTERA SATISFACCION Y NO TENGO CARGO, NI COBRO ALGUNO POSTERIOR QUE HACER, POR NINGUNO DE LOS CONCEPTOS COMPRENDIDOS EN ESTA LIQUIDACION."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="215" width="28" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{PorAd}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="320" y="215" width="124" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Adicional Salud]]></text>
+			</staticText>
+			<textField pattern="$ #,##0">
+				<reportElement x="472" y="215" width="89" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{Adicional1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="31" y="0" width="152" height="20"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liquidación de Sueldo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="274" y="0" width="89" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{Anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="183" y="0" width="89" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NombreMes}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0" isBlankWhenNull="false">
+				<reportElement key="textField" x="169" y="566" width="114" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{alcanceLiquido}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="169" y="521" width="114" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[new java.lang.Double($F{Liquido}.intValue()+$F{T.Cargas}.intValue())]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="184" y="313" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Subsidio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="31" y="313" width="117" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subsidio]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

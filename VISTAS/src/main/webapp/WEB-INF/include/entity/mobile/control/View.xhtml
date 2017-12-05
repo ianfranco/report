@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ControlViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewControlTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ControlListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ControlViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{controlController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlLabel_idControl}"/>
+                            <h:outputText value="#{controlController.selected.idControl}" title="#{myBundle.ViewControlTitle_idControl}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlLabel_nombreControl}"/>
+                            <h:outputText value="#{controlController.selected.nombreControl}" title="#{myBundle.ViewControlTitle_nombreControl}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlLabel_latitud}"/>
+                            <h:outputText value="#{controlController.selected.latitud}" title="#{myBundle.ViewControlTitle_latitud}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlLabel_longitud}"/>
+                            <h:outputText value="#{controlController.selected.longitud}" title="#{myBundle.ViewControlTitle_longitud}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlLabel_radio}"/>
+                            <h:outputText value="#{controlController.selected.radio}" title="#{myBundle.ViewControlTitle_radio}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewControlLabel_idTipoControl}"/>
+                            <h:outputText value="#{controlController.selected.idTipoControl.idTipoControl}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

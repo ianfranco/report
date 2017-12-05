@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="InstitucionSaludEditDlg" widgetVar="InstitucionSaludEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditInstitucionSaludTitle}" closeOnEscape="true">
+
+            <h:form id="InstitucionSaludEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{institucionSaludController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditInstitucionSaludLabel_idInstitucionSalud}" for="idInstitucionSalud" />
+                        <h:panelGroup>
+                            <h:outputText id="idInstitucionSalud" value="#{institucionSaludController.selected.idInstitucionSalud}" />
+                            <p:tooltip for="idInstitucionSalud" value="#{institucionSaludController.getComponentMessages('idInstitucionSalud', myBundle.EditInstitucionSaludHelpText_idInstitucionSalud)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionSaludLabel_nombreInstitucionSalud}" for="nombreInstitucionSalud" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreInstitucionSalud" value="#{institucionSaludController.selected.nombreInstitucionSalud}" title="#{myBundle.EditInstitucionSaludTitle_nombreInstitucionSalud}" required="true" requiredMessage="#{myBundle.EditInstitucionSaludRequiredMessage_nombreInstitucionSalud}" size="255" maxlength="255"/>
+                            <p:tooltip for="nombreInstitucionSalud" value="#{institucionSaludController.getComponentMessages('nombreInstitucionSalud', myBundle.EditInstitucionSaludHelpText_nombreInstitucionSalud)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionSaludLabel_comision}" for="comision" />
+                        <h:panelGroup>
+                            <p:inputText id="comision" value="#{institucionSaludController.selected.comision}" title="#{myBundle.EditInstitucionSaludTitle_comision}"/>
+                            <p:tooltip for="comision" value="#{institucionSaludController.getComponentMessages('comision', myBundle.EditInstitucionSaludHelpText_comision)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditInstitucionSaludLabel_porcentajeDescuento}" for="porcentajeDescuento" />
+                        <h:panelGroup>
+                            <p:inputText id="porcentajeDescuento" value="#{institucionSaludController.selected.porcentajeDescuento}" title="#{myBundle.EditInstitucionSaludTitle_porcentajeDescuento}" required="true" requiredMessage="#{myBundle.EditInstitucionSaludRequiredMessage_porcentajeDescuento}"/>
+                            <p:tooltip for="porcentajeDescuento" value="#{institucionSaludController.getComponentMessages('porcentajeDescuento', myBundle.EditInstitucionSaludHelpText_porcentajeDescuento)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{institucionSaludController.save}" value="#{myBundle.Save}" update="display,:InstitucionSaludListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('InstitucionSaludEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('InstitucionSaludEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

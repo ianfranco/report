@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EmpresaViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewEmpresaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EmpresaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EmpresaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{empresaController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_idEmpresa}"/>
+                            <h:outputText value="#{empresaController.selected.idEmpresa}" title="#{myBundle.ViewEmpresaTitle_idEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_rutEmpresa}"/>
+                            <h:outputText value="#{empresaController.selected.rutEmpresa}" title="#{myBundle.ViewEmpresaTitle_rutEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_nombreEmpresa}"/>
+                            <h:outputText value="#{empresaController.selected.nombreEmpresa}" title="#{myBundle.ViewEmpresaTitle_nombreEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_giro}"/>
+                            <h:outputText value="#{empresaController.selected.giro}" title="#{myBundle.ViewEmpresaTitle_giro}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_direccionEmpresa}"/>
+                            <h:outputText value="#{empresaController.selected.direccionEmpresa}" title="#{myBundle.ViewEmpresaTitle_direccionEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_telefonoEmpresa}"/>
+                            <h:outputText value="#{empresaController.selected.telefonoEmpresa}" title="#{myBundle.ViewEmpresaTitle_telefonoEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_fax}"/>
+                            <h:outputText value="#{empresaController.selected.fax}" title="#{myBundle.ViewEmpresaTitle_fax}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_emailEmpresa}"/>
+                            <h:outputText value="#{empresaController.selected.emailEmpresa}" title="#{myBundle.ViewEmpresaTitle_emailEmpresa}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_idCajaCompensacion}"/>
+                            <h:outputText value="#{empresaController.selected.idCajaCompensacion.idCajaCompensacion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewEmpresaLabel_idMutual}"/>
+                            <h:outputText value="#{empresaController.selected.idMutual.idMutual}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GastosAdministracionMensualCreateDlg" widgetVar="GastosAdministracionMensualCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateGastosAdministracionMensualTitle}" closeOnEscape="true">
+
+            <h:form id="GastosAdministracionMensualCreateForm">
+
+                <h:panelGroup id="display" rendered="#{gastosAdministracionMensualController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_mes}" for="mes" />
+                        <h:panelGroup>
+                            <p:inputText id="mes" value="#{gastosAdministracionMensualController.selected.mes}" title="#{myBundle.CreateGastosAdministracionMensualTitle_mes}" required="true" requiredMessage="#{myBundle.CreateGastosAdministracionMensualRequiredMessage_mes}"/>
+                            <p:tooltip for="mes" value="#{gastosAdministracionMensualController.getComponentMessages('mes', myBundle.CreateGastosAdministracionMensualHelpText_mes)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_año}" for="año" />
+                        <h:panelGroup>
+                            <p:inputText id="año" value="#{gastosAdministracionMensualController.selected.año}" title="#{myBundle.CreateGastosAdministracionMensualTitle_año}" required="true" requiredMessage="#{myBundle.CreateGastosAdministracionMensualRequiredMessage_año}"/>
+                            <p:tooltip for="año" value="#{gastosAdministracionMensualController.getComponentMessages('año', myBundle.CreateGastosAdministracionMensualHelpText_año)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_numeroFolio}" for="numeroFolio" />
+                        <h:panelGroup>
+                            <p:inputText id="numeroFolio" value="#{gastosAdministracionMensualController.selected.numeroFolio}" title="#{myBundle.CreateGastosAdministracionMensualTitle_numeroFolio}" required="true" requiredMessage="#{myBundle.CreateGastosAdministracionMensualRequiredMessage_numeroFolio}"/>
+                            <p:tooltip for="numeroFolio" value="#{gastosAdministracionMensualController.getComponentMessages('numeroFolio', myBundle.CreateGastosAdministracionMensualHelpText_numeroFolio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_nombreGastoAdministracion}" for="nombreGastoAdministracion" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreGastoAdministracion" value="#{gastosAdministracionMensualController.selected.nombreGastoAdministracion}" title="#{myBundle.CreateGastosAdministracionMensualTitle_nombreGastoAdministracion}" required="true" requiredMessage="#{myBundle.CreateGastosAdministracionMensualRequiredMessage_nombreGastoAdministracion}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombreGastoAdministracion" value="#{gastosAdministracionMensualController.getComponentMessages('nombreGastoAdministracion', myBundle.CreateGastosAdministracionMensualHelpText_nombreGastoAdministracion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_fechaGastoAdministracion}" for="fechaGastoAdministracion" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaGastoAdministracion" pattern="MM/dd/yyyy" value="#{gastosAdministracionMensualController.selected.fechaGastoAdministracion}" title="#{myBundle.CreateGastosAdministracionMensualTitle_fechaGastoAdministracion}" required="true" requiredMessage="#{myBundle.CreateGastosAdministracionMensualRequiredMessage_fechaGastoAdministracion}" showOn="button"/>
+                            <p:tooltip for="fechaGastoAdministracion" value="#{gastosAdministracionMensualController.getComponentMessages('fechaGastoAdministracion', myBundle.CreateGastosAdministracionMensualHelpText_fechaGastoAdministracion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{gastosAdministracionMensualController.selected.fechaIngreso}" title="#{myBundle.CreateGastosAdministracionMensualTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.CreateGastosAdministracionMensualRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{gastosAdministracionMensualController.getComponentMessages('fechaIngreso', myBundle.CreateGastosAdministracionMensualHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_valor}" for="valor" />
+                        <h:panelGroup>
+                            <p:calendar id="valor" pattern="MM/dd/yyyy" value="#{gastosAdministracionMensualController.selected.valor}" title="#{myBundle.CreateGastosAdministracionMensualTitle_valor}" required="true" requiredMessage="#{myBundle.CreateGastosAdministracionMensualRequiredMessage_valor}" showOn="button"/>
+                            <p:tooltip for="valor" value="#{gastosAdministracionMensualController.getComponentMessages('valor', myBundle.CreateGastosAdministracionMensualHelpText_valor)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_observacion}" for="observacion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="observacion" value="#{gastosAdministracionMensualController.selected.observacion}" title="#{myBundle.CreateGastosAdministracionMensualTitle_observacion}" />
+                            <p:tooltip for="observacion" value="#{gastosAdministracionMensualController.getComponentMessages('observacion', myBundle.CreateGastosAdministracionMensualHelpText_observacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateGastosAdministracionMensualLabel_idDepartamento}" for="idDepartamento" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idDepartamento" value="#{gastosAdministracionMensualController.selected.idDepartamento}" required="true" requiredMessage="#{myBundle.CreateGastosAdministracionMensualRequiredMessage_idDepartamento}" converter="departamentoConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{departamentoController.items}"
+                                               var="idDepartamentoItem"
+                                               itemValue="#{idDepartamentoItem}"
+                                               itemLabel="#{idDepartamentoItem.idDepartamento.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idDepartamento" value="#{gastosAdministracionMensualController.getComponentMessages('idDepartamento', myBundle.CreateGastosAdministracionMensualHelpText_idDepartamento)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{gastosAdministracionMensualController.saveNew}" value="#{myBundle.Save}" update="display,:GastosAdministracionMensualListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GastosAdministracionMensualCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('GastosAdministracionMensualCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

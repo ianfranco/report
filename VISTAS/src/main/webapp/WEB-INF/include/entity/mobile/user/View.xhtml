@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="UserViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewUserTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:UserListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="UserViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{userController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_id}"/>
+                            <h:outputText value="#{userController.selected.id}" title="#{myBundle.ViewUserTitle_id}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_name}"/>
+                            <h:outputText value="#{userController.selected.name}" title="#{myBundle.ViewUserTitle_name}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_email}"/>
+                            <h:outputText value="#{userController.selected.email}" title="#{myBundle.ViewUserTitle_email}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_hashedPassword}"/>
+                            <h:outputText value="#{userController.selected.hashedPassword}" title="#{myBundle.ViewUserTitle_hashedPassword}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_salt}"/>
+                            <h:outputText value="#{userController.selected.salt}" title="#{myBundle.ViewUserTitle_salt}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_readonly}"/>
+                            <h:selectBooleanCheckbox id="readonly" value="#{userController.selected.readonly}" title="#{myBundle.EditUserTitle_readonly}" required="true" requiredMessage="#{myBundle.EditUserRequiredMessage_readonly}" disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_admin}"/>
+                            <h:selectBooleanCheckbox id="admin" value="#{userController.selected.admin}" title="#{myBundle.EditUserTitle_admin}" required="true" requiredMessage="#{myBundle.EditUserRequiredMessage_admin}" disabled="true"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_map}"/>
+                            <h:outputText value="#{userController.selected.map}" title="#{myBundle.ViewUserTitle_map}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_language}"/>
+                            <h:outputText value="#{userController.selected.language}" title="#{myBundle.ViewUserTitle_language}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_distanceUnit}"/>
+                            <h:outputText value="#{userController.selected.distanceUnit}" title="#{myBundle.ViewUserTitle_distanceUnit}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_speedUnit}"/>
+                            <h:outputText value="#{userController.selected.speedUnit}" title="#{myBundle.ViewUserTitle_speedUnit}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_latitude}"/>
+                            <h:outputText value="#{userController.selected.latitude}" title="#{myBundle.ViewUserTitle_latitude}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_longitude}"/>
+                            <h:outputText value="#{userController.selected.longitude}" title="#{myBundle.ViewUserTitle_longitude}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewUserLabel_zoom}"/>
+                            <h:outputText value="#{userController.selected.zoom}" title="#{myBundle.ViewUserTitle_zoom}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

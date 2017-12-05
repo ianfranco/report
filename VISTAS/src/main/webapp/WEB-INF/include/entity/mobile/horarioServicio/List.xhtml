@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="HorarioServicioListPage">
+        <pm:header title="#{myBundle.ListHorarioServicioTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":HorarioServicioCreatePage:HorarioServicioCreateForm" actionListener="#{horarioServicioController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:HorarioServicioCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="HorarioServicioListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{horarioServicioController.items}"
+                             var="item"
+                             rowKey="#{item.idHorarioServicio}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{horarioServicioController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{horarioServicioController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{horarioServicioController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('HorarioServicioListPage:HorarioServicioListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('HorarioServicioListPage:HorarioServicioListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('HorarioServicioListPage:HorarioServicioListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idHorarioServicio}" filterBy="#{item.idHorarioServicio}" headerText="#{myBundle.ListHorarioServicioTitle_idHorarioServicio}">
+                        <h:outputText value="#{item.idHorarioServicio}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}" headerText="#{myBundle.ListHorarioServicioTitle_nombre}">
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.desde}" filterBy="#{item.desde}" headerText="#{myBundle.ListHorarioServicioTitle_desde}">
+                        <h:outputText value="#{item.desde}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.hasta}" filterBy="#{item.hasta}" headerText="#{myBundle.ListHorarioServicioTitle_hasta}">
+                        <h:outputText value="#{item.hasta}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.lunes}" filterBy="#{item.lunes}" headerText="#{myBundle.ListHorarioServicioTitle_lunes}">
+                        <h:selectBooleanCheckbox id="lunes" value="#{item.lunes}" title="#{myBundle.EditHorarioServicioTitle_lunes}"  disabled="true"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.martes}" filterBy="#{item.martes}" headerText="#{myBundle.ListHorarioServicioTitle_martes}">
+                        <h:selectBooleanCheckbox id="martes" value="#{item.martes}" title="#{myBundle.EditHorarioServicioTitle_martes}"  disabled="true"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.miercoles}" filterBy="#{item.miercoles}" headerText="#{myBundle.ListHorarioServicioTitle_miercoles}">
+                                            <h:selectBooleanCheckbox id="miercoles" value="#{item.miercoles}" title="#{myBundle.EditHorarioServicioTitle_miercoles}"  disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.jueves}" filterBy="#{item.jueves}" headerText="#{myBundle.ListHorarioServicioTitle_jueves}">
+                                            <h:selectBooleanCheckbox id="jueves" value="#{item.jueves}" title="#{myBundle.EditHorarioServicioTitle_jueves}"  disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.viernes}" filterBy="#{item.viernes}" headerText="#{myBundle.ListHorarioServicioTitle_viernes}">
+                                            <h:selectBooleanCheckbox id="viernes" value="#{item.viernes}" title="#{myBundle.EditHorarioServicioTitle_viernes}"  disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.sabado}" filterBy="#{item.sabado}" headerText="#{myBundle.ListHorarioServicioTitle_sabado}">
+                                            <h:selectBooleanCheckbox id="sabado" value="#{item.sabado}" title="#{myBundle.EditHorarioServicioTitle_sabado}"  disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.domingo}" filterBy="#{item.domingo}" headerText="#{myBundle.ListHorarioServicioTitle_domingo}">
+                                            <h:selectBooleanCheckbox id="domingo" value="#{item.domingo}" title="#{myBundle.EditHorarioServicioTitle_domingo}"  disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idServicio.idServicio}" filterBy="#{item.idServicio.idServicio}" headerText="#{myBundle.ListHorarioServicioTitle_idServicio}">
+                                            <h:outputText value="#{item.idServicio.idServicio}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTipoEstacionalidad.idTipoEstacionalidad}" filterBy="#{item.idTipoEstacionalidad.idTipoEstacionalidad}" headerText="#{myBundle.ListHorarioServicioTitle_idTipoEstacionalidad}">
+                                            <h:outputText value="#{item.idTipoEstacionalidad.idTipoEstacionalidad}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":HorarioServicioEditPage:HorarioServicioEditForm" disabled="#{empty horarioServicioController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:HorarioServicioEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{horarioServicioController.delete}" update=":growl,datalist" disabled="#{empty horarioServicioController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty horarioServicioController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.HorarioServicioHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.HorarioServicioMenuItem_controlHorarioServicioList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty horarioServicioController.selected.controlHorarioServicioList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{horarioServicioController.navigateControlHorarioServicioList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.HorarioServicioMenuItem_idServicio}" icon="ui-icon-search" update=":ServicioEditPage:ServicioEditForm" disabled="#{empty horarioServicioController.selected.idServicio}" actionListener="#{horarioServicioController.prepareIdServicio}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:ServicioEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.HorarioServicioMenuItem_idTipoEstacionalidad}" icon="ui-icon-search" update=":TipoEstacionalidadEditPage:TipoEstacionalidadEditForm" disabled="#{empty horarioServicioController.selected.idTipoEstacionalidad}" actionListener="#{horarioServicioController.prepareIdTipoEstacionalidad}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoEstacionalidadEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DespachoListPage">
+        <pm:header title="#{myBundle.ListDespachoTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":DespachoCreatePage:DespachoCreateForm" actionListener="#{despachoController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DespachoCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DespachoListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{despachoController.items}"
+                             var="item"
+                             rowKey="#{item.idDespacho}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{despachoController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{despachoController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{despachoController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DespachoListPage:DespachoListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DespachoListPage:DespachoListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('DespachoListPage:DespachoListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idDespacho}" filterBy="#{item.idDespacho}" headerText="#{myBundle.ListDespachoTitle_idDespacho}">
+                        <h:outputText value="#{item.idDespacho}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}" headerText="#{myBundle.ListDespachoTitle_fecha}">
+                        <h:outputText value="#{item.fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.horario}" filterBy="#{item.horario}" headerText="#{myBundle.ListDespachoTitle_horario}">
+                        <h:outputText value="#{item.horario}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idBus.idBus}" filterBy="#{item.idBus.idBus}" headerText="#{myBundle.ListDespachoTitle_idBus}">
+                        <h:outputText value="#{item.idBus.idBus}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListDespachoTitle_idTrabajador}">
+                        <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.idInspector.idUsario}" filterBy="#{item.idInspector.idUsario}" headerText="#{myBundle.ListDespachoTitle_idInspector}">
+                        <h:outputText value="#{item.idInspector.idUsario}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.idServicio.idServicio}" filterBy="#{item.idServicio.idServicio}" headerText="#{myBundle.ListDespachoTitle_idServicio}">
+                                            <h:outputText value="#{item.idServicio.idServicio}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DespachoEditPage:DespachoEditForm" disabled="#{empty despachoController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DespachoEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{despachoController.delete}" update=":growl,datalist" disabled="#{empty despachoController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty despachoController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.DespachoHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.DespachoMenuItem_idBus}" icon="ui-icon-search" update=":BusEditPage:BusEditForm" disabled="#{empty despachoController.selected.idBus}" actionListener="#{despachoController.prepareIdBus}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:BusEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.DespachoMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty despachoController.selected.idTrabajador}" actionListener="#{despachoController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.DespachoMenuItem_idInspector}" icon="ui-icon-search" update=":UsuarioEditPage:UsuarioEditForm" disabled="#{empty despachoController.selected.idInspector}" actionListener="#{despachoController.prepareIdInspector}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:UsuarioEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.DespachoMenuItem_idServicio}" icon="ui-icon-search" update=":ServicioEditPage:ServicioEditForm" disabled="#{empty despachoController.selected.idServicio}" actionListener="#{despachoController.prepareIdServicio}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:ServicioEditPage"/>
+                        </p:menuitem>
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="RelacionLaboralListPage">
+        <pm:header title="#{myBundle.ListRelacionLaboralTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":RelacionLaboralCreatePage:RelacionLaboralCreateForm" actionListener="#{relacionLaboralController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:RelacionLaboralCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="RelacionLaboralListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{relacionLaboralController.items}"
+                             var="item"
+                             rowKey="#{item.idRelacionLaboral}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{relacionLaboralController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{relacionLaboralController.resetParents}"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel" listener="#{relacionLaboralController.resetParents}"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('RelacionLaboralListPage:RelacionLaboralListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('RelacionLaboralListPage:RelacionLaboralListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('RelacionLaboralListPage:RelacionLaboralListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.idRelacionLaboral}" filterBy="#{item.idRelacionLaboral}" headerText="#{myBundle.ListRelacionLaboralTitle_idRelacionLaboral}">
+                        <h:outputText value="#{item.idRelacionLaboral}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}" headerText="#{myBundle.ListRelacionLaboralTitle_fechaInicio}">
+                        <h:outputText value="#{item.fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaFin}" filterBy="#{item.fechaFin}" headerText="#{myBundle.ListRelacionLaboralTitle_fechaFin}">
+                        <h:outputText value="#{item.fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.tipoContrato}" filterBy="#{item.tipoContrato}" headerText="#{myBundle.ListRelacionLaboralTitle_tipoContrato}">
+                        <h:outputText value="#{item.tipoContrato}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.sueldoBase}" filterBy="#{item.sueldoBase}" headerText="#{myBundle.ListRelacionLaboralTitle_sueldoBase}">
+                        <h:outputText value="#{item.sueldoBase}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.rutaArchivoRespaldo}" filterBy="#{item.rutaArchivoRespaldo}" headerText="#{myBundle.ListRelacionLaboralTitle_rutaArchivoRespaldo}">
+                        <h:outputText value="#{item.rutaArchivoRespaldo}"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.estado}" filterBy="#{item.estado}" headerText="#{myBundle.ListRelacionLaboralTitle_estado}">
+                                            <h:selectBooleanCheckbox id="estado" value="#{item.estado}" title="#{myBundle.EditRelacionLaboralTitle_estado}"  disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTipoContrato.idTipoContrato}" filterBy="#{item.idTipoContrato.idTipoContrato}" headerText="#{myBundle.ListRelacionLaboralTitle_idTipoContrato}">
+                                            <h:outputText value="#{item.idTipoContrato.idTipoContrato}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTipoTrabajador.idTipoTrabajador}" filterBy="#{item.idTipoTrabajador.idTipoTrabajador}" headerText="#{myBundle.ListRelacionLaboralTitle_idTipoTrabajador}">
+                                            <h:outputText value="#{item.idTipoTrabajador.idTipoTrabajador}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idEmpresa.idEmpresa}" filterBy="#{item.idEmpresa.idEmpresa}" headerText="#{myBundle.ListRelacionLaboralTitle_idEmpresa}">
+                                            <h:outputText value="#{item.idEmpresa.idEmpresa}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.idTrabajador.idTrabajador}" filterBy="#{item.idTrabajador.idTrabajador}" headerText="#{myBundle.ListRelacionLaboralTitle_idTrabajador}">
+                                            <h:outputText value="#{item.idTrabajador.idTrabajador}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RelacionLaboralEditPage:RelacionLaboralEditForm" disabled="#{empty relacionLaboralController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:RelacionLaboralEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{relacionLaboralController.delete}" update=":growl,datalist" disabled="#{empty relacionLaboralController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty relacionLaboralController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.RelacionLaboralHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.RelacionLaboralMenuItem_liquidacionSueldoList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty relacionLaboralController.selected.liquidacionSueldoList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{relacionLaboralController.navigateLiquidacionSueldoList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.RelacionLaboralMenuItem_idTipoContrato}" icon="ui-icon-search" update=":TipoContratoEditPage:TipoContratoEditForm" disabled="#{empty relacionLaboralController.selected.idTipoContrato}" actionListener="#{relacionLaboralController.prepareIdTipoContrato}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoContratoEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.RelacionLaboralMenuItem_idTipoTrabajador}" icon="ui-icon-search" update=":TipoTrabajadorEditPage:TipoTrabajadorEditForm" disabled="#{empty relacionLaboralController.selected.idTipoTrabajador}" actionListener="#{relacionLaboralController.prepareIdTipoTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TipoTrabajadorEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.RelacionLaboralMenuItem_idEmpresa}" icon="ui-icon-search" update=":EmpresaEditPage:EmpresaEditForm" disabled="#{empty relacionLaboralController.selected.idEmpresa}" actionListener="#{relacionLaboralController.prepareIdEmpresa}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:EmpresaEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.RelacionLaboralMenuItem_idTrabajador}" icon="ui-icon-search" update=":TrabajadorEditPage:TrabajadorEditForm" disabled="#{empty relacionLaboralController.selected.idTrabajador}" actionListener="#{relacionLaboralController.prepareIdTrabajador}" action="#{mobilePageController.navigateWithHistory}">  
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="pm:TrabajadorEditPage"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{myBundle.RelacionLaboralMenuItem_finiquitoRelacionLaboralList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty relacionLaboralController.selected.finiquitoRelacionLaboralList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{relacionLaboralController.navigateFiniquitoRelacionLaboralList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

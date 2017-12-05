@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="SerieBoletoGuiaCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateSerieBoletoGuiaTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:SerieBoletoGuiaListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="SerieBoletoGuiaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{serieBoletoGuiaController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateSerieBoletoGuiaLabel_valor}" for="valor" />
+                            <h:panelGroup>
+                                <p:inputText id="valor" value="#{serieBoletoGuiaController.selected.valor}" title="#{myBundle.CreateSerieBoletoGuiaTitle_valor}" required="true" requiredMessage="#{myBundle.CreateSerieBoletoGuiaRequiredMessage_valor}"/>
+                                <p:tooltip for="valor" value="#{serieBoletoGuiaController.getComponentMessages('valor', myBundle.CreateSerieBoletoGuiaHelpText_valor)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateSerieBoletoGuiaLabel_serie}" for="serie" />
+                            <h:panelGroup>
+                                <p:inputText id="serie" value="#{serieBoletoGuiaController.selected.serie}" title="#{myBundle.CreateSerieBoletoGuiaTitle_serie}" required="true" requiredMessage="#{myBundle.CreateSerieBoletoGuiaRequiredMessage_serie}"/>
+                                <p:tooltip for="serie" value="#{serieBoletoGuiaController.getComponentMessages('serie', myBundle.CreateSerieBoletoGuiaHelpText_serie)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateSerieBoletoGuiaLabel_termino}" for="termino" />
+                            <h:panelGroup>
+                                <p:inputText id="termino" value="#{serieBoletoGuiaController.selected.termino}" title="#{myBundle.CreateSerieBoletoGuiaTitle_termino}" required="true" requiredMessage="#{myBundle.CreateSerieBoletoGuiaRequiredMessage_termino}"/>
+                                <p:tooltip for="termino" value="#{serieBoletoGuiaController.getComponentMessages('termino', myBundle.CreateSerieBoletoGuiaHelpText_termino)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateSerieBoletoGuiaLabel_cantidad}" for="cantidad" />
+                            <h:panelGroup>
+                                <p:inputText id="cantidad" value="#{serieBoletoGuiaController.selected.cantidad}" title="#{myBundle.CreateSerieBoletoGuiaTitle_cantidad}" required="true" requiredMessage="#{myBundle.CreateSerieBoletoGuiaRequiredMessage_cantidad}"/>
+                                <p:tooltip for="cantidad" value="#{serieBoletoGuiaController.getComponentMessages('cantidad', myBundle.CreateSerieBoletoGuiaHelpText_cantidad)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateSerieBoletoGuiaLabel_total}" for="total" />
+                            <h:panelGroup>
+                                <p:inputText id="total" value="#{serieBoletoGuiaController.selected.total}" title="#{myBundle.CreateSerieBoletoGuiaTitle_total}" required="true" requiredMessage="#{myBundle.CreateSerieBoletoGuiaRequiredMessage_total}"/>
+                                <p:tooltip for="total" value="#{serieBoletoGuiaController.getComponentMessages('total', myBundle.CreateSerieBoletoGuiaHelpText_total)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateSerieBoletoGuiaLabel_nuevo}" for="nuevo" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="nuevo" value="#{serieBoletoGuiaController.selected.nuevo}" required="true" requiredMessage="#{myBundle.CreateSerieBoletoGuiaRequiredMessage_nuevo}"/>
+                                <p:tooltip for="nuevo" value="#{serieBoletoGuiaController.getComponentMessages('nuevo', myBundle.CreateSerieBoletoGuiaHelpText_nuevo)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateSerieBoletoGuiaLabel_idBoleto}" for="idBoleto" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idBoleto" value="#{serieBoletoGuiaController.selected.idBoleto}" required="true" requiredMessage="#{myBundle.CreateSerieBoletoGuiaRequiredMessage_idBoleto}" converter="boletoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{boletoController.items}"
+                                                   var="idBoletoItem"
+                                                   itemValue="#{idBoletoItem}"
+                                                   itemLabel="#{idBoletoItem.idBoleto.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idBoleto" value="#{serieBoletoGuiaController.getComponentMessages('idBoleto', myBundle.CreateSerieBoletoGuiaHelpText_idBoleto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateSerieBoletoGuiaLabel_idGuia}" for="idGuia" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idGuia" value="#{serieBoletoGuiaController.selected.idGuia}" required="true" requiredMessage="#{myBundle.CreateSerieBoletoGuiaRequiredMessage_idGuia}" converter="guiaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{guiaController.items}"
+                                                   var="idGuiaItem"
+                                                   itemValue="#{idGuiaItem}"
+                                                   itemLabel="#{idGuiaItem.idGuia.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idGuia" value="#{serieBoletoGuiaController.getComponentMessages('idGuia', myBundle.CreateSerieBoletoGuiaHelpText_idGuia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{serieBoletoGuiaController.saveNew}" value="#{myBundle.Save}" update="display,:SerieBoletoGuiaListPage:SerieBoletoGuiaListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:SerieBoletoGuiaListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="TipoMovimientoPersonalListPage">
+        <pm:header title="#{myBundle.ListTipoMovimientoPersonalTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":TipoMovimientoPersonalCreatePage:TipoMovimientoPersonalCreateForm" actionListener="#{tipoMovimientoPersonalController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:TipoMovimientoPersonalCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="TipoMovimientoPersonalListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{tipoMovimientoPersonalController.items}"
+                             var="item"
+                             rowKey="#{item.idTipoMovimientoPersonal}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{tipoMovimientoPersonalController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('TipoMovimientoPersonalListPage:TipoMovimientoPersonalListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('TipoMovimientoPersonalListPage:TipoMovimientoPersonalListForm:editButton').click();"/>
+
+                    <p:column sortBy="#{item.idTipoMovimientoPersonal}" filterBy="#{item.idTipoMovimientoPersonal}" headerText="#{myBundle.ListTipoMovimientoPersonalTitle_idTipoMovimientoPersonal}">
+                        <h:outputText value="#{item.idTipoMovimientoPersonal}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.nombreTipoMovtoPersonal}" filterBy="#{item.nombreTipoMovtoPersonal}" headerText="#{myBundle.ListTipoMovimientoPersonalTitle_nombreTipoMovtoPersonal}">
+                        <h:outputText value="#{item.nombreTipoMovtoPersonal}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoMovimientoPersonalEditPage:TipoMovimientoPersonalEditForm" disabled="#{empty tipoMovimientoPersonalController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:TipoMovimientoPersonalEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoMovimientoPersonalController.delete}" update=":growl,datalist" disabled="#{empty tipoMovimientoPersonalController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

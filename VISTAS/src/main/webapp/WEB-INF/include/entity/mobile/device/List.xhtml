@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DeviceListPage">
+        <pm:header title="#{myBundle.ListDeviceTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":DeviceCreatePage:DeviceCreateForm" actionListener="#{deviceController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:DeviceCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DeviceListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{deviceController.items}"
+                             var="item"
+                             rowKey="#{item.id}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{deviceController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('DeviceListPage:DeviceListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('DeviceListPage:DeviceListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('DeviceListPage:DeviceListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.id}" filterBy="#{item.id}" headerText="#{myBundle.ListDeviceTitle_id}">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.name}" filterBy="#{item.name}" headerText="#{myBundle.ListDeviceTitle_name}">
+                        <h:outputText value="#{item.name}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.uniqueId}" filterBy="#{item.uniqueId}" headerText="#{myBundle.ListDeviceTitle_uniqueId}">
+                        <h:outputText value="#{item.uniqueId}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.status}" filterBy="#{item.status}" headerText="#{myBundle.ListDeviceTitle_status}">
+                        <h:outputText value="#{item.status}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.lastUpdate}" filterBy="#{item.lastUpdate}" headerText="#{myBundle.ListDeviceTitle_lastUpdate}">
+                        <h:outputText value="#{item.lastUpdate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.positionId}" filterBy="#{item.positionId}" headerText="#{myBundle.ListDeviceTitle_positionId}">
+                        <h:outputText value="#{item.positionId}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DeviceEditPage:DeviceEditForm" disabled="#{empty deviceController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:DeviceEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{deviceController.delete}" update=":growl,datalist" disabled="#{empty deviceController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty deviceController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.DeviceHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.DeviceMenuItem_busDeviceList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty deviceController.selected.busDeviceList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{deviceController.navigateBusDeviceList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.DeviceMenuItem_positionList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty deviceController.selected.positionList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{deviceController.navigatePositionList()}"/>
+                        </p:menuitem>  
+                        <p:menuitem value="#{myBundle.DeviceMenuItem_userDeviceList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty deviceController.selected.userDeviceList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{deviceController.navigateUserDeviceList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

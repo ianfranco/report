@@ -7,8 +7,9 @@
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL conductores_sin_contrato_VB_mayo();]]>
+		<![CDATA[CALL conductores_sin_contrato_vb_noviembre();]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="codigo" class="java.lang.Integer"/>
@@ -56,7 +57,7 @@
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<text><![CDATA[VIÑA BUS S.A.]]></text>
+				<text><![CDATA[VIÑA BUS S.A. ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="15" width="180" height="15" uuid="a93deddc-e950-4f95-b929-f4ab18985706">
@@ -67,19 +68,17 @@
 				</textElement>
 				<text><![CDATA[Administración (Conductores)]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="59" width="180" height="15" uuid="d6a6e04a-2614-461a-80c0-9d75d93444fd">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement>
+			<textField>
+				<reportElement x="0" y="59" width="180" height="15" uuid="999cf3e5-aeb4-472d-96b0-78e10068be17"/>
+				<textElement markup="none">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[MAYO 2017]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{fechaCompleta}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<textField>
 				<reportElement x="510" y="0" width="60" height="15" uuid="5552dd09-8d80-4310-9397-ed9e36926c2d"/>
 				<textElement textAlignment="Left">
@@ -239,14 +238,11 @@
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="34" splitType="Stretch"/>
+		<band height="32" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="45" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField pattern="$ #,###.###">
 				<reportElement x="208" y="0" width="50" height="15" uuid="b6d48866-fe37-4ea6-bdce-03f21b89635e"/>
 				<textElement textAlignment="Right">

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CalleEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditCalleTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CalleListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CalleEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{calleController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditCalleLabel_idCalle}" for="idCalle" />
+                            <h:panelGroup>
+                                <h:outputText id="idCalle" value="#{calleController.selected.idCalle}" />
+                                <p:tooltip for="idCalle" value="#{calleController.getComponentMessages('idCalle', myBundle.EditCalleHelpText_idCalle)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalleLabel_nombreCalle}" for="nombreCalle" />
+                            <h:panelGroup>
+                                <p:inputText id="nombreCalle" value="#{calleController.selected.nombreCalle}" title="#{myBundle.EditCalleTitle_nombreCalle}" required="true" requiredMessage="#{myBundle.EditCalleRequiredMessage_nombreCalle}" size="45" maxlength="45"/>
+                                <p:tooltip for="nombreCalle" value="#{calleController.getComponentMessages('nombreCalle', myBundle.EditCalleHelpText_nombreCalle)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalleLabel_idComuna}" for="idComuna" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idComuna" value="#{calleController.selected.idComuna}" required="true" requiredMessage="#{myBundle.EditCalleRequiredMessage_idComuna}" converter="comunaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{comunaController.items}"
+                                                   var="idComunaItem"
+                                                   itemValue="#{idComunaItem}"
+                                                   itemLabel="#{idComunaItem.idComuna.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idComuna" value="#{calleController.getComponentMessages('idComuna', myBundle.EditCalleHelpText_idComuna)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{calleController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:CalleListPage:CalleListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:CalleListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

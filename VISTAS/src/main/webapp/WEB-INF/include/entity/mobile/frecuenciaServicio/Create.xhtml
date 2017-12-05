@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="FrecuenciaServicioCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateFrecuenciaServicioTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:FrecuenciaServicioListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="FrecuenciaServicioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{frecuenciaServicioController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateFrecuenciaServicioLabel_numeroBuses}" for="numeroBuses" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroBuses" value="#{frecuenciaServicioController.selected.numeroBuses}" title="#{myBundle.CreateFrecuenciaServicioTitle_numeroBuses}" required="true" requiredMessage="#{myBundle.CreateFrecuenciaServicioRequiredMessage_numeroBuses}"/>
+                                <p:tooltip for="numeroBuses" value="#{frecuenciaServicioController.getComponentMessages('numeroBuses', myBundle.CreateFrecuenciaServicioHelpText_numeroBuses)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateFrecuenciaServicioLabel_idPeriodoFrecuencia}" for="idPeriodoFrecuencia" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idPeriodoFrecuencia" value="#{frecuenciaServicioController.selected.idPeriodoFrecuencia}" required="true" requiredMessage="#{myBundle.CreateFrecuenciaServicioRequiredMessage_idPeriodoFrecuencia}" converter="periodoFrecuenciaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{periodoFrecuenciaController.items}"
+                                                   var="idPeriodoFrecuenciaItem"
+                                                   itemValue="#{idPeriodoFrecuenciaItem}"
+                                                   itemLabel="#{idPeriodoFrecuenciaItem.idPeriodoFrecuencia.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idPeriodoFrecuencia" value="#{frecuenciaServicioController.getComponentMessages('idPeriodoFrecuencia', myBundle.CreateFrecuenciaServicioHelpText_idPeriodoFrecuencia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateFrecuenciaServicioLabel_idServicio}" for="idServicio" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idServicio" value="#{frecuenciaServicioController.selected.idServicio}" required="true" requiredMessage="#{myBundle.CreateFrecuenciaServicioRequiredMessage_idServicio}" converter="servicioConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{servicioController.items}"
+                                                   var="idServicioItem"
+                                                   itemValue="#{idServicioItem}"
+                                                   itemLabel="#{idServicioItem.idServicio.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idServicio" value="#{frecuenciaServicioController.getComponentMessages('idServicio', myBundle.CreateFrecuenciaServicioHelpText_idServicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateFrecuenciaServicioLabel_idTipoDemanda}" for="idTipoDemanda" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTipoDemanda" value="#{frecuenciaServicioController.selected.idTipoDemanda}" required="true" requiredMessage="#{myBundle.CreateFrecuenciaServicioRequiredMessage_idTipoDemanda}" converter="tipoDemandaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoDemandaController.items}"
+                                                   var="idTipoDemandaItem"
+                                                   itemValue="#{idTipoDemandaItem}"
+                                                   itemLabel="#{idTipoDemandaItem.idTipoDemanda.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTipoDemanda" value="#{frecuenciaServicioController.getComponentMessages('idTipoDemanda', myBundle.CreateFrecuenciaServicioHelpText_idTipoDemanda)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateFrecuenciaServicioLabel_idTipoDiaFrecuencia}" for="idTipoDiaFrecuencia" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTipoDiaFrecuencia" value="#{frecuenciaServicioController.selected.idTipoDiaFrecuencia}" required="true" requiredMessage="#{myBundle.CreateFrecuenciaServicioRequiredMessage_idTipoDiaFrecuencia}" converter="tipoDiaFrecuenciaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoDiaFrecuenciaController.items}"
+                                                   var="idTipoDiaFrecuenciaItem"
+                                                   itemValue="#{idTipoDiaFrecuenciaItem}"
+                                                   itemLabel="#{idTipoDiaFrecuenciaItem.idTipoDiaFrecuencia.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTipoDiaFrecuencia" value="#{frecuenciaServicioController.getComponentMessages('idTipoDiaFrecuencia', myBundle.CreateFrecuenciaServicioHelpText_idTipoDiaFrecuencia)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{frecuenciaServicioController.saveNew}" value="#{myBundle.Save}" update="display,:FrecuenciaServicioListPage:FrecuenciaServicioListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:FrecuenciaServicioListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

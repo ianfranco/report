@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14639e08-aacc-4cc7-8d7c-1510fe8239a7">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="711"/>
-	<property name="ireport.y" value="242"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="nombreOperador" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_aguinaldo(0, '2016-11-01');]]>
+		<![CDATA[CALL final_planillon_aguinaldo(0, '2017-08-01');]]>
 	</queryString>
 	<field name="codigoTerminal" class="java.lang.Integer"/>
 	<field name="nombreTerminal" class="java.lang.String"/>
@@ -64,7 +64,7 @@
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[AGUINALDO DICIEMBRE 2016]]></text>
+				<text><![CDATA[AGUINALDO SEPTIEMBRE 2017]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="371" y="40" width="159" height="30" uuid="e29ff9c9-9c23-4ffd-9dac-89573ad86800"/>

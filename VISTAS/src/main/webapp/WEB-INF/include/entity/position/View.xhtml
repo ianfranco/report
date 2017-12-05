@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PositionViewDlg" widgetVar="PositionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPositionTitle}" closeOnEscape="true">
+
+            <h:form id="PositionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{positionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_id}"/>
+                        <h:outputText value="#{positionController.selected.id}" title="#{myBundle.ViewPositionTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_protocol}"/>
+                        <h:outputText value="#{positionController.selected.protocol}" title="#{myBundle.ViewPositionTitle_protocol}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_serverTime}"/>
+                        <h:outputText value="#{positionController.selected.serverTime}" title="#{myBundle.ViewPositionTitle_serverTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_deviceTime}"/>
+                        <h:outputText value="#{positionController.selected.deviceTime}" title="#{myBundle.ViewPositionTitle_deviceTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_fixTime}"/>
+                        <h:outputText value="#{positionController.selected.fixTime}" title="#{myBundle.ViewPositionTitle_fixTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_valid}"/>
+                        <h:selectBooleanCheckbox id="valid" value="#{positionController.selected.valid}" title="#{myBundle.EditPositionTitle_valid}" required="true" requiredMessage="#{myBundle.EditPositionRequiredMessage_valid}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_latitude}"/>
+                        <h:outputText value="#{positionController.selected.latitude}" title="#{myBundle.ViewPositionTitle_latitude}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_longitude}"/>
+                        <h:outputText value="#{positionController.selected.longitude}" title="#{myBundle.ViewPositionTitle_longitude}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_altitude}"/>
+                        <h:outputText value="#{positionController.selected.altitude}" title="#{myBundle.ViewPositionTitle_altitude}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_speed}"/>
+                        <h:outputText value="#{positionController.selected.speed}" title="#{myBundle.ViewPositionTitle_speed}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_course}"/>
+                        <h:outputText value="#{positionController.selected.course}" title="#{myBundle.ViewPositionTitle_course}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_address}"/>
+                        <h:outputText value="#{positionController.selected.address}" title="#{myBundle.ViewPositionTitle_address}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_attributes}"/>
+                        <h:outputText value="#{positionController.selected.attributes}" title="#{myBundle.ViewPositionTitle_attributes}"/>
+
+                        <h:outputText value="#{myBundle.ViewPositionLabel_deviceId}"/>
+                        <h:outputText value="#{positionController.selected.deviceId.name}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('PositionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

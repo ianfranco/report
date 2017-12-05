@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TipoCargoEditDlg" widgetVar="TipoCargoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditTipoCargoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoCargoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{tipoCargoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditTipoCargoLabel_idTipoCargo}" for="idTipoCargo" />
+                        <h:panelGroup>
+                            <h:outputText id="idTipoCargo" value="#{tipoCargoController.selected.idTipoCargo}" />
+                            <p:tooltip for="idTipoCargo" value="#{tipoCargoController.getComponentMessages('idTipoCargo', myBundle.EditTipoCargoHelpText_idTipoCargo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTipoCargoLabel_nombreTipoCargo}" for="nombreTipoCargo" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreTipoCargo" value="#{tipoCargoController.selected.nombreTipoCargo}" title="#{myBundle.EditTipoCargoTitle_nombreTipoCargo}" required="true" requiredMessage="#{myBundle.EditTipoCargoRequiredMessage_nombreTipoCargo}" size="45" maxlength="45"/>
+                            <p:tooltip for="nombreTipoCargo" value="#{tipoCargoController.getComponentMessages('nombreTipoCargo', myBundle.EditTipoCargoHelpText_nombreTipoCargo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTipoCargoLabel_fechaIngreso}" for="fechaIngreso" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{tipoCargoController.selected.fechaIngreso}" title="#{myBundle.EditTipoCargoTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.EditTipoCargoRequiredMessage_fechaIngreso}" showOn="button"/>
+                            <p:tooltip for="fechaIngreso" value="#{tipoCargoController.getComponentMessages('fechaIngreso', myBundle.EditTipoCargoHelpText_fechaIngreso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.EditTipoCargoLabel_montoDefecto}" for="montoDefecto" />
+                        <h:panelGroup>
+                            <p:inputText id="montoDefecto" value="#{tipoCargoController.selected.montoDefecto}" title="#{myBundle.EditTipoCargoTitle_montoDefecto}"/>
+                            <p:tooltip for="montoDefecto" value="#{tipoCargoController.getComponentMessages('montoDefecto', myBundle.EditTipoCargoHelpText_montoDefecto)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoCargoController.save}" value="#{myBundle.Save}" update="display,:TipoCargoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoCargoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('TipoCargoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

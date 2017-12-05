@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="UserListPage">
+        <pm:header title="#{myBundle.ListUserTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":UserCreatePage:UserCreateForm" actionListener="#{userController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:UserCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="UserListForm">
+
+                <p:dataTable id="datalist"
+                             value="#{userController.items}"
+                             var="item"
+                             rowKey="#{item.id}"
+                             paginator="true"
+                             rows="100"
+                             rowsPerPageTemplate="50,100,200"
+                             selectionMode="single"
+                             selection="#{userController.selected}"
+                             reflow="true">
+
+                    <p:ajax event="rowSelect"   update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="rowUnselect" update="@form:editButton,@form:deleteButton,@form:navigationMenuButton,@form:navigationMenuPanel"/>
+                    <p:ajax event="swipeleft"   oncomplete="document.getElementById('UserListPage:UserListForm:deleteButton').click();"/>
+                    <p:ajax event="tap"         oncomplete="document.getElementById('UserListPage:UserListForm:editButton').click();"/>
+                    <p:ajax event="taphold"     oncomplete="document.getElementById('UserListPage:UserListForm:navigationMenuButton').click();"/>
+
+                    <p:column sortBy="#{item.id}" filterBy="#{item.id}" headerText="#{myBundle.ListUserTitle_id}">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.name}" filterBy="#{item.name}" headerText="#{myBundle.ListUserTitle_name}">
+                        <h:outputText value="#{item.name}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.email}" filterBy="#{item.email}" headerText="#{myBundle.ListUserTitle_email}">
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.hashedPassword}" filterBy="#{item.hashedPassword}" headerText="#{myBundle.ListUserTitle_hashedPassword}">
+                        <h:outputText value="#{item.hashedPassword}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.salt}" filterBy="#{item.salt}" headerText="#{myBundle.ListUserTitle_salt}">
+                        <h:outputText value="#{item.salt}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.readonly}" filterBy="#{item.readonly}" headerText="#{myBundle.ListUserTitle_readonly}">
+                        <h:selectBooleanCheckbox id="readonly" value="#{item.readonly}" title="#{myBundle.EditUserTitle_readonly}" required="true" requiredMessage="#{myBundle.EditUserRequiredMessage_readonly}" disabled="true"/>
+                    </p:column>
+
+                    <!--
+                                        <p:column sortBy="#{item.admin}" filterBy="#{item.admin}" headerText="#{myBundle.ListUserTitle_admin}">
+                                            <h:selectBooleanCheckbox id="admin" value="#{item.admin}" title="#{myBundle.EditUserTitle_admin}" required="true" requiredMessage="#{myBundle.EditUserRequiredMessage_admin}" disabled="true"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.map}" filterBy="#{item.map}" headerText="#{myBundle.ListUserTitle_map}">
+                                            <h:outputText value="#{item.map}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.language}" filterBy="#{item.language}" headerText="#{myBundle.ListUserTitle_language}">
+                                            <h:outputText value="#{item.language}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.distanceUnit}" filterBy="#{item.distanceUnit}" headerText="#{myBundle.ListUserTitle_distanceUnit}">
+                                            <h:outputText value="#{item.distanceUnit}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.speedUnit}" filterBy="#{item.speedUnit}" headerText="#{myBundle.ListUserTitle_speedUnit}">
+                                            <h:outputText value="#{item.speedUnit}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.latitude}" filterBy="#{item.latitude}" headerText="#{myBundle.ListUserTitle_latitude}">
+                                            <h:outputText value="#{item.latitude}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.longitude}" filterBy="#{item.longitude}" headerText="#{myBundle.ListUserTitle_longitude}">
+                                            <h:outputText value="#{item.longitude}"/>
+                                        </p:column>
+                    -->
+                    <!--
+                                        <p:column sortBy="#{item.zoom}" filterBy="#{item.zoom}" headerText="#{myBundle.ListUserTitle_zoom}">
+                                            <h:outputText value="#{item.zoom}"/>
+                                        </p:column>
+                    -->
+                </p:dataTable>
+                <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":UserEditPage:UserEditForm" disabled="#{empty userController.selected}" actionListener="#{mobilePageController.currentPageListener}" action="#{mobilePageController.navigateWithHistory('pm:UserEditPage')}"/>
+                <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{userController.delete}" update=":growl,datalist" disabled="#{empty userController.selected}">
+                    <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:commandButton id="navigationMenuButton" style="visibility: hidden;" value="#{myBundle.Menu}" disabled="#{empty userController.selected}"/>
+
+                <p:overlayPanel id="navigationMenuPanel" for="navigationMenuButton" at="right" showEffect="overlay">
+                    <h2>#{myBundle.UserHeading} #{myBundle.Menu}</h2>
+                    <p:menu>
+                        <p:menuitem value="#{myBundle.UserMenuItem_userDeviceList}" icon="ui-icon-search"  action="#{mobilePageController.navigateWithHistory}" disabled="#{empty userController.selected.userDeviceList}" ajax="false">
+                            <f:actionListener binding="#{currentPageActionListener}"/>
+                            <f:setPropertyActionListener target="#{mobilePageController.nextPage}" value="#{userController.navigateUserDeviceList()}"/>
+                        </p:menuitem>  
+                    </p:menu>
+                </p:overlayPanel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

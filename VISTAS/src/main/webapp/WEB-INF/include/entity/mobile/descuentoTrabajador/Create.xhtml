@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="DescuentoTrabajadorCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateDescuentoTrabajadorTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:DescuentoTrabajadorListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="DescuentoTrabajadorCreateForm">
+
+                <h:panelGroup id="display" rendered="#{descuentoTrabajadorController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDescuentoTrabajadorLabel_fechaIngreso}" for="fechaIngreso" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy" value="#{descuentoTrabajadorController.selected.fechaIngreso}" title="#{myBundle.CreateDescuentoTrabajadorTitle_fechaIngreso}" required="true" requiredMessage="#{myBundle.CreateDescuentoTrabajadorRequiredMessage_fechaIngreso}" showOn="button"/>
+                                <p:tooltip for="fechaIngreso" value="#{descuentoTrabajadorController.getComponentMessages('fechaIngreso', myBundle.CreateDescuentoTrabajadorHelpText_fechaIngreso)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDescuentoTrabajadorLabel_fechaInicio}" for="fechaInicio" />
+                            <h:panelGroup>
+                                <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{descuentoTrabajadorController.selected.fechaInicio}" title="#{myBundle.CreateDescuentoTrabajadorTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.CreateDescuentoTrabajadorRequiredMessage_fechaInicio}" showOn="button"/>
+                                <p:tooltip for="fechaInicio" value="#{descuentoTrabajadorController.getComponentMessages('fechaInicio', myBundle.CreateDescuentoTrabajadorHelpText_fechaInicio)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDescuentoTrabajadorLabel_numeroCuotas}" for="numeroCuotas" />
+                            <h:panelGroup>
+                                <p:inputText id="numeroCuotas" value="#{descuentoTrabajadorController.selected.numeroCuotas}" title="#{myBundle.CreateDescuentoTrabajadorTitle_numeroCuotas}"/>
+                                <p:tooltip for="numeroCuotas" value="#{descuentoTrabajadorController.getComponentMessages('numeroCuotas', myBundle.CreateDescuentoTrabajadorHelpText_numeroCuotas)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDescuentoTrabajadorLabel_monto}" for="monto" />
+                            <h:panelGroup>
+                                <p:inputText id="monto" value="#{descuentoTrabajadorController.selected.monto}" title="#{myBundle.CreateDescuentoTrabajadorTitle_monto}" required="true" requiredMessage="#{myBundle.CreateDescuentoTrabajadorRequiredMessage_monto}"/>
+                                <p:tooltip for="monto" value="#{descuentoTrabajadorController.getComponentMessages('monto', myBundle.CreateDescuentoTrabajadorHelpText_monto)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDescuentoTrabajadorLabel_activoDescuentoTrabajador}" for="activoDescuentoTrabajador" />
+                            <h:panelGroup>
+                                <p:selectBooleanCheckbox id="activoDescuentoTrabajador" value="#{descuentoTrabajadorController.selected.activoDescuentoTrabajador}" required="true" requiredMessage="#{myBundle.CreateDescuentoTrabajadorRequiredMessage_activoDescuentoTrabajador}"/>
+                                <p:tooltip for="activoDescuentoTrabajador" value="#{descuentoTrabajadorController.getComponentMessages('activoDescuentoTrabajador', myBundle.CreateDescuentoTrabajadorHelpText_activoDescuentoTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDescuentoTrabajadorLabel_idTipoDescuento}" for="idTipoDescuento" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTipoDescuento" value="#{descuentoTrabajadorController.selected.idTipoDescuento}" required="true" requiredMessage="#{myBundle.CreateDescuentoTrabajadorRequiredMessage_idTipoDescuento}" converter="tipoDescuentoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoDescuentoController.items}"
+                                                   var="idTipoDescuentoItem"
+                                                   itemValue="#{idTipoDescuentoItem}"
+                                                   itemLabel="#{idTipoDescuentoItem.idTipoDescuento.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTipoDescuento" value="#{descuentoTrabajadorController.getComponentMessages('idTipoDescuento', myBundle.CreateDescuentoTrabajadorHelpText_idTipoDescuento)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateDescuentoTrabajadorLabel_idTrabajador}" for="idTrabajador" />
+                            <h:panelGroup>
+                                <p:selectOneMenu id="idTrabajador" value="#{descuentoTrabajadorController.selected.idTrabajador}" required="true" requiredMessage="#{myBundle.CreateDescuentoTrabajadorRequiredMessage_idTrabajador}" converter="trabajadorConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{trabajadorController.items}"
+                                                   var="idTrabajadorItem"
+                                                   itemValue="#{idTrabajadorItem}"
+                                                   itemLabel="#{idTrabajadorItem.idTrabajador.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                <p:tooltip for="idTrabajador" value="#{descuentoTrabajadorController.getComponentMessages('idTrabajador', myBundle.CreateDescuentoTrabajadorHelpText_idTrabajador)}"/>
+                            </h:panelGroup>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{descuentoTrabajadorController.saveNew}" value="#{myBundle.Save}" update="display,:DescuentoTrabajadorListPage:DescuentoTrabajadorListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:DescuentoTrabajadorListPage')}">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

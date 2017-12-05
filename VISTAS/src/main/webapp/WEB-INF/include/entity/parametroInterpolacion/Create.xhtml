@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ParametroInterpolacionCreateDlg" widgetVar="ParametroInterpolacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateParametroInterpolacionTitle}" closeOnEscape="true">
+
+            <h:form id="ParametroInterpolacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{parametroInterpolacionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateParametroInterpolacionLabel_nombreParametro}" for="nombreParametro" />
+                        <h:panelGroup>
+                            <p:inputText id="nombreParametro" value="#{parametroInterpolacionController.selected.nombreParametro}" title="#{myBundle.CreateParametroInterpolacionTitle_nombreParametro}" required="true" requiredMessage="#{myBundle.CreateParametroInterpolacionRequiredMessage_nombreParametro}" size="100" maxlength="100"/>
+                            <p:tooltip for="nombreParametro" value="#{parametroInterpolacionController.getComponentMessages('nombreParametro', myBundle.CreateParametroInterpolacionHelpText_nombreParametro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateParametroInterpolacionLabel_valorParametro}" for="valorParametro" />
+                        <h:panelGroup>
+                            <p:inputText id="valorParametro" value="#{parametroInterpolacionController.selected.valorParametro}" title="#{myBundle.CreateParametroInterpolacionTitle_valorParametro}" required="true" requiredMessage="#{myBundle.CreateParametroInterpolacionRequiredMessage_valorParametro}"/>
+                            <p:tooltip for="valorParametro" value="#{parametroInterpolacionController.getComponentMessages('valorParametro', myBundle.CreateParametroInterpolacionHelpText_valorParametro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{myBundle.CreateParametroInterpolacionLabel_unidadParametro}" for="unidadParametro" />
+                        <h:panelGroup>
+                            <p:inputText id="unidadParametro" value="#{parametroInterpolacionController.selected.unidadParametro}" title="#{myBundle.CreateParametroInterpolacionTitle_unidadParametro}" required="true" requiredMessage="#{myBundle.CreateParametroInterpolacionRequiredMessage_unidadParametro}" size="45" maxlength="45"/>
+                            <p:tooltip for="unidadParametro" value="#{parametroInterpolacionController.getComponentMessages('unidadParametro', myBundle.CreateParametroInterpolacionHelpText_unidadParametro)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{parametroInterpolacionController.saveNew}" value="#{myBundle.Save}" update="display,:ParametroInterpolacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ParametroInterpolacionCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ParametroInterpolacionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
