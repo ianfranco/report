@@ -23,7 +23,7 @@
 	SUM(guias.TotalEgresos) AS 'T.Egresos',
 	SUM(guias.Saldo) AS 'Líquido',
 	SUM(guias.NumVueltas) AS 'Vueltas',
-	CASE MONTH ('2017-10-01')
+	CASE MONTH ('2017-11-01')
 WHEN "01" THEN
 	"ENERO"
 WHEN "02" THEN
@@ -49,13 +49,13 @@ WHEN "11" THEN
 WHEN "12" THEN
 	"DICIEMBRE"
 END AS NombreMes,
- YEAR ('2017-10-01') AS Anio
+ YEAR ('2017-11-01') AS Anio
 FROM
 	guias LEFT JOIN egresosxguias ON guias.Id = egresosxguias.IdGuia 
 				LEFT JOIN buses ON guias.IdBus = buses.Id 
 WHERE
-	guias.Fecha BETWEEN '2017-10-01'
-AND lasT_day('2017-10-01')
+	guias.Fecha BETWEEN '2017-11-01'
+AND lasT_day('2017-11-01')
 AND guias.idgarita = 7
 GROUP BY
 	IdBus

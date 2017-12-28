@@ -94,7 +94,11 @@ public class LiquidacionTerminalController {
             
             Conexion con = new Conexion();
 
-            jasperReport = JasperCompileManager.compileReport("jrxml/INF-LiquidacionSueldoDinamicaMayo.jrxml");
+            
+            jasperReport = JasperCompileManager.compileReport("jrxml/junio17/INF-LiquidacionSueldoTerminalNoviembre17.jrxml");
+            
+            
+                       
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, con.getConnection());
                         

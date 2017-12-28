@@ -10,6 +10,7 @@
 	<parameter name="idFlota" class="java.lang.String"/>
 	<parameter name="fecha" class="java.util.Date">
 		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["2017-11-01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="mes" class="java.lang.String"/>
 	<parameter name="anio" class="java.lang.String"/>
@@ -21,14 +22,14 @@
     terminal.nombre_terminal,
     unidad_negocio.numero_unidad_negocio,
     flota.nombre_flota,
-    @administracion:=SUM_EGRESO(bus.id_bus, '2017-10-01', 1) AS administracion,
-    @licitacion:=SUM_EGRESO(bus.id_bus, '2017-10-01', 7) AS licitacion,
-    @total:=SUM_SALDOS(bus.id_bus, '2017-10-01') AS ingresos,
-    @cargos:=CARGOS_BUS(bus.id_bus, '2017-10-01') AS cargos,
-    @abonos:=ABONOS_BUS(bus.id_bus, '2017-10-01') AS abonos,
-    @taller:=SUM_EGRESO(bus.id_bus, '2017-10-01', 4) AS taller,
+    @administracion:=SUM_EGRESO(bus.id_bus, $P{fecha}, 1) AS administracion,
+    @licitacion:=SUM_EGRESO(bus.id_bus, $P{fecha}, 7) AS licitacion,
+    @total:=SUM_SALDOS(bus.id_bus, $P{fecha}) AS ingresos,
+    @cargos:=CARGOS_BUS(bus.id_bus, $P{fecha}) AS cargos,
+    @abonos:=ABONOS_BUS(bus.id_bus, $P{fecha}) AS abonos,
+    @taller:=SUM_EGRESO(bus.id_bus, $P{fecha}, 4) AS taller,
     @saldo:=(@administracion + @licitacion + @taller) AS saldo,
-    @aseo:=SUM_EGRESO(bus.id_bus, '2017-10-01', 8) AS aseo, 
+    @aseo:=SUM_EGRESO(bus.id_bus, $P{fecha}, 8) AS aseo, 
     (SELECT 
     CONCAT(trabajador.apellido_paterno_trabajador,
             ' ',
@@ -41,7 +42,7 @@ FROM
     trabajador ON guia.id_trabajador = trabajador.id_trabajador
 WHERE
     guia.id_bus = bus.id_bus
-        AND guia.fecha_recaudacion BETWEEN  '2017-10-01' AND  LAST_DAY('2017-10-01') GROUP BY guia.id_trabajador ORDER BY COUNT(guia.folio) DESC LIMIT 0,1) AS nombreConductor, 
+        AND guia.fecha_recaudacion BETWEEN $P{fecha} AND  LAST_DAY($P{fecha}) GROUP BY guia.id_trabajador ORDER BY COUNT(guia.folio) DESC LIMIT 0,1) AS nombreConductor, 
         IF(@saldo>2000000, 200000,IF(@saldo>1900000, 180000, IF(@saldo>1800000, 150000, IF(@saldo>1700000, 120000, IF(@saldo>1600000, 100000, 0 ))))) as premio
 FROM
     bus

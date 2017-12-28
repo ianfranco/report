@@ -31,6 +31,7 @@ import views.Marzo2017;
 import views.Mayo2017;
 import views.MesSelectorlLiquidacionView;
 import views.Noviembre2016;
+import views.Noviembre2017;
 import views.Octubre2016;
 import views.Octubre2017;
 import views.ProcesoRecaudacionComboBoxModel;
@@ -65,7 +66,7 @@ public class LiquidacionDinamicaController {
     private Junio2017 junio2017;
     private Julio2017 julio2017;
     private Agosto2017 agosto2017;
-        
+    private Noviembre2017 noviembre2017;
 
     public LiquidacionDinamicaController(MesSelectorlLiquidacionView view, ReporterVBView frame) {
         this.view = view;
@@ -102,84 +103,84 @@ public class LiquidacionDinamicaController {
         switch (mes) {
             case 0:
                 System.err.println("INDICE:" + mes + " ENERO 2017");
-                
+
                 enero2017 = new Enero2017(frame, view);
                 if (operador == 0) {
                     enero2017.loadLiquidacion(true, operador);
                 } else {
                     enero2017.loadLiquidacion(true, operador);
                 }
-                
+
                 break;
             case 1:
                 System.err.println("INDICE:" + mes + " FEBRERO 2017");
-                
+
                 febrero2017 = new Febrero2017(frame, view);
                 if (operador == 0) {
                     febrero2017.loadLiquidacion(true, operador);
                 } else {
                     febrero2017.loadLiquidacion(true, operador);
                 }
-                
+
                 break;
             case 2:
                 System.err.println("INDICE:" + mes + " MARZO 2017");
-                
+
                 marzo2017 = new Marzo2017(frame, view);
                 if (operador == 0) {
                     marzo2017.loadLiquidacion(true, operador);
                 } else {
                     marzo2017.loadLiquidacion(true, operador);
                 }
-                
+
                 break;
             case 3:
                 System.err.println("INDICE:" + mes + " ABRIL 2017");
-                
+
                 abril2017 = new Abril2017(frame, view);
                 if (operador == 0) {
                     abril2017.loadLiquidacion(true, operador);
                 } else {
                     abril2017.loadLiquidacion(true, operador);
                 }
-                
+
                 break;
             case 4:
                 System.err.println("INDICE:" + mes + "MAYO 2017");
-                
+
                 mayo2017 = new Mayo2017(frame, view);
                 if (operador == 0) {
                     mayo2017.loadLiquidacion(true, operador);
                 } else {
                     mayo2017.loadLiquidacion(true, operador);
                 }
-                
+
                 break;
             case 5:
                 System.err.println("INDICE:" + mes + " JUNIO 2017");
-                
+
                 junio2017 = new Junio2017(frame, view);
                 if (operador == 0) {
                     junio2017.loadLiquidacion(true, operador);
                 } else {
                     junio2017.loadLiquidacion(true, operador);
                 }
-                
+
                 break;
             case 6:
                 System.err.println("INDICE:" + mes + " JULIO 2017");
-                
+
                 julio2017 = new Julio2017(frame, view);
                 if (operador == 0) {
                     julio2017.loadLiquidacion(true, operador);
                 } else {
                     julio2017.loadLiquidacion(true, operador);
                 }
-                
+
                 break;
             case 7:
                 System.err.println("INDICE:" + mes + " AGOSTO 2017");
-                
+
                 agosto2017 = new Agosto2017(frame, view);
                 if (operador == 0) {
                     agosto2017.loadLiquidacion(true, operador);
@@ -232,8 +233,19 @@ public class LiquidacionDinamicaController {
 
                 break;
             case 10:
-                System.err.println("INDICE:" + mes + " NOVIEMBRE" + " OPERADOR:" + operador);
-                noviembre(true, operador);
+                if (this.view.getAnio().equals("2016")) {
+                    System.err.println("INDICE:" + mes + " NOVIEMBRE" + " OPERADOR:" + operador);
+                    noviembre(true, operador);
+                } else {
+                    System.err.println("INDICE:" + mes + " NOVIEMBRE 2017");
+                    noviembre2017 = new Noviembre2017(frame, view);
+                    if (operador == 0) {
+                        noviembre2017.loadLiquidacion(true, operador);
+                    } else {
+                        noviembre2017.loadLiquidacion(true, operador);
+                    }
+                }
+
                 break;
             case 11:
                 System.err.println("INDICE:" + mes + " DICIEMBRE");

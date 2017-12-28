@@ -36,6 +36,7 @@
 FROM
 	(SELECT @rownumber:=0) a,
     trabajador
+where trabajador.id_terminal = 14
 ORDER BY trabajador.apellido_paterno_trabajador ASC]]>
 	</queryString>
 	<field name="contador" class="java.lang.Long"/>
@@ -71,7 +72,7 @@ ORDER BY trabajador.apellido_paterno_trabajador ASC]]>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[LISTADO GENERAL DE CONDUCTORES]]></text>
+				<text><![CDATA[CONDUCTORES TERMINAL 410]]></text>
 			</staticText>
 		</band>
 	</title>

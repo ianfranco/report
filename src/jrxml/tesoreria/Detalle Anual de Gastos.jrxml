@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5534c40f-63fb-4677-b957-5c1ad305e196">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="50"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\Documents\\NetBeansProjects\\report\\src\\jrxml\\tesoreria\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	empresa.id_empresa, 
+	empresa.nombre_empresa AS Empresa,
+
+IF (
+	LENGTH(empresa.rut_empresa) = 8,
+	CONCAT(
+		LEFT (empresa.rut_empresa, 1),
+		'.',
+		SUBSTRING(empresa.rut_empresa, 2, 3),
+		'.',
+		SUBSTRING(empresa.rut_empresa, 5, 3),
+		'-',
+		RIGHT (empresa.rut_empresa, 1)
+	),
+	CONCAT(
+		LEFT (empresa.rut_empresa, 2),
+		'.',
+		SUBSTRING(empresa.rut_empresa, 3, 3),
+		'.',
+		SUBSTRING(empresa.rut_empresa, 6, 3),
+		'-',
+		RIGHT (empresa.rut_empresa, 1)
+	)
+) AS Rut, 
+tipo_cargo.id_tipo_cargo AS ID, 
+tipo_cargo.nombre_tipo_cargo AS Cargo,
+ SUM(cargo_bus.monto_cargo_bus) AS Monto
+FROM
+	cargo_bus
+LEFT JOIN tipo_cargo ON cargo_bus.id_tipo_cargo = tipo_cargo.id_tipo_cargo
+LEFT JOIN bus ON cargo_bus.id_bus = bus.id_bus
+LEFT JOIN empresa ON bus.id_empresa = empresa.id_empresa
+WHERE
+	cargo_bus.id_tipo_cargo IN (
+		2,
+		10,
+		113,
+		114,
+		115,
+		116,
+		117,
+		118,
+		112,
+		119,
+		120,
+		121,
+		122,
+		15,
+		14,
+		3,
+		149,
+		110
+	)
+AND cargo_bus.fecha_inicio_cargo_bus BETWEEN '2017-01-01'
+AND '2017-12-31'
+GROUP BY empresa.id_empresa, cargo_bus.id_tipo_cargo 
+ORDER BY
+	empresa.nombre_empresa ASC, tipo_cargo.nombre_tipo_cargo ASC ]]>
+	</queryString>
+	<field name="id_empresa" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Empresa" class="java.lang.String"/>
+	<field name="Rut" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID" class="java.lang.Long"/>
+	<field name="Cargo" class="java.lang.String"/>
+	<field name="Monto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="Monto_1" class="java.math.BigDecimal" resetType="Group" resetGroup="id_empresa" calculation="Sum">
+		<variableExpression><![CDATA[$F{Monto}]]></variableExpression>
+	</variable>
+	<variable name="Monto_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Monto}]]></variableExpression>
+	</variable>
+	<group name="id_empresa" isStartNewPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{id_empresa}]]></groupExpression>
+		<groupHeader>
+			<band height="91">
+				<staticText>
+					<reportElement x="0" y="0" width="158" height="20" uuid="d29cc3d8-c3e6-40dd-9c48-12e40bd1c9d2"/>
+					<textElement>
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Detalle Gastos Tesorería]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="20" width="100" height="20" uuid="84c9c7d0-87fc-4085-ac3e-0599ac546a10"/>
+					<textElement>
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Año 2017]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="402" y="1" width="170" height="39" uuid="4e26ccb3-571b-4112-9706-c1ea6a9d257e"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="18" isBold="true"/>
+					</textElement>
+					<text><![CDATA[VIÑA BUS S.A.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="45" width="69" height="20" uuid="475acd5d-2c3c-47ba-a236-ef4098edb0b9"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Empresa: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="69" y="45" width="283" height="20" uuid="4c1b4f40-3925-42ea-a0bd-b25a5ac1a69e"/>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Empresa}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="352" y="45" width="48" height="20" uuid="3d2ac202-0b62-4af7-aa26-44a6d6a0c1b3"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Rut: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="400" y="45" width="102" height="20" uuid="d65896d7-9486-4804-b627-8e4122263d6e"/>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Rut}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="71" width="244" height="20" uuid="b1f4657c-b17d-4601-8c23-d95dbc3ff57c"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Gasto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="244" y="71" width="104" height="20" uuid="32d7cf87-efe3-4873-91cf-2d7e5edd7d45"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Monto]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="197">
+				<textField pattern="$ #,##0">
+					<reportElement x="244" y="0" width="104" height="20" uuid="7be6f003-be89-42fb-a9a2-d1f24bad2dde"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Monto_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="140" y="0" width="104" height="20" uuid="adc06a3a-425c-40e6-bf0f-fc1b730f40fa"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<text><![CDATA[Total Empresa: ]]></text>
+				</staticText>
+				<subreport>
+					<reportElement x="0" y="20" width="416" height="177" uuid="a362e34a-8377-4d0e-b970-a34c3ac0f0b1"/>
+					<subreportParameter name="idEmpresa">
+						<subreportParameterExpression><![CDATA[$F{id_empresa}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Detalle Anual de Gastos_subreport1.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="244" height="20" uuid="c01120ae-ec6d-4a2f-80db-b0d2e1253e3b"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cargo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="244" y="0" width="104" height="20" uuid="b47df0f1-d55b-451d-9a33-f108774cbdda"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Monto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField pattern="$ #,##0">
+				<reportElement x="248" y="0" width="100" height="20" uuid="3af782ce-b0fe-4e00-9264-671aecd2c78e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Monto_2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="140" y="0" width="108" height="20" uuid="fd072f38-c44c-4e69-b0b3-059fde35d169"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Total Informe: ]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

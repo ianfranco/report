@@ -11,7 +11,13 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[call final_planillon_distribucion_terminal(1, '2017-10-01')]]>
+		<![CDATA[SELECT codigoTrabajador as codigo, nombreTrabajador as conductor, 
+SUM(saldoFinal) AS REALFINAL, nombreTerminal As nombre_terminal 
+FROM liquidaciones_octubre_2017
+WHERE nombreTerminal = '201 MIRADOR DE REÑACA'
+GROUP BY codigoTrabajador 
+HAVING SUM(saldoFinal)<0
+ORDER BY nombreTerminal ASC, nombreTrabajador ASC;]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="conductor" class="java.lang.String"/>

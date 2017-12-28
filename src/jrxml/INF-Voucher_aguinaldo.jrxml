@@ -24,8 +24,8 @@
     fecha,
     montoAguinaldo
 FROM
-    aguinaldo_septiembre_2017
-WHERE codigoTrabajador IN (2936, 1029, 139, 2407, 41)
+    aguinaldo_diciembre_2017
+WHERE codigoTrabajador IN (1095, 3400, 1730)
 GROUP BY codigoTrabajador 
 ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 	</queryString>
@@ -194,7 +194,7 @@ ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FIESTAS PATRIAS 2017]]></text>
+				<text><![CDATA[NAVIDAD 2017]]></text>
 			</staticText>
 		</band>
 	</detail>

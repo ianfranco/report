@@ -24,9 +24,7 @@ import controllers.ISTController;
 import controllers.ImposicionesConductorController;
 import controllers.LiquidacionBusController;
 import controllers.LiquidacionDinamicaController;
-import controllers.LiquidacionSolyMarController;
 import controllers.LiquidacionTerminalController;
-import controllers.LiquidacionVinaBusController;
 import controllers.MemoCargasFamiliaresController;
 import controllers.MesSelectorController;
 import controllers.PlanillonDescuentosController;
@@ -35,6 +33,7 @@ import controllers.ProcesoRecaudacionController;
 import controllers.ProduccionBusController;
 import controllers.ProduccionConductorController;
 import controllers.ProduccionFlotaController;
+import controllers.ProduccionFlotaTerminalController;
 import controllers.ProduccionFlotaUnidadController;
 import controllers.ReconocimientoDeudasController;
 import controllers.RetencionJudicialController;
@@ -119,6 +118,7 @@ public class ReporterVBView extends javax.swing.JFrame {
         bonosFlotasMenuItem = new javax.swing.JMenuItem();
         produccionFlotaUnidadMenuItem = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         remuneracionesMenu = new javax.swing.JMenu();
         planillonImposicionMenuItem = new javax.swing.JMenuItem();
         planillonDescuentosMenuItem = new javax.swing.JMenuItem();
@@ -339,6 +339,14 @@ public class ReporterVBView extends javax.swing.JFrame {
             }
         });
         flotasMenu.add(jMenuItem8);
+
+        jMenuItem6.setText("Detalle Bus x Flota x Terminal");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        flotasMenu.add(jMenuItem6);
 
         menuBar.add(flotasMenu);
 
@@ -934,6 +942,12 @@ public class ReporterVBView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        this.flotaTerminalView = new FlotaTerminalView();
+        ProduccionFlotaTerminalController controller = new ProduccionFlotaTerminalController(this.flotaTerminalView, this);
+        setNewTab(this.flotaTerminalView, "Detalle Bus x Flota x Terminal");
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1050,6 +1064,7 @@ public class ReporterVBView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -1082,4 +1097,5 @@ public class ReporterVBView extends javax.swing.JFrame {
     private DetalleAbonosView detalleAbonosView;
     private TerminalView terminalView;
     private MesSelectorlLiquidacionView mesSelectorLiquidacionView;
+    private FlotaTerminalView flotaTerminalView; 
 }

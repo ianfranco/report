@@ -20,7 +20,7 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_octubre_2017($P{idOperador},$P{fecha})]]>
+		<![CDATA[CALL final_planillon_liquidacion_noviembre_2017($P{idOperador},$P{fecha})]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -334,7 +334,7 @@
 				<textElement>
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD  - OCTUBRE 2017]]></text>
+				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD  - NOVIEMBRE 2017]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="705" y="53" width="92" height="16" uuid="90f00557-6599-4842-9645-157c0500717b"/>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2d099ac9-95d9-4991-8552-22a7753c2f14">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+	SUM(cargo_bus.monto_cargo_bus) AS Monto,
+	tipo_cargo.nombre_tipo_cargo
+FROM
+	cargo_bus
+LEFT JOIN tipo_cargo ON cargo_bus.id_tipo_cargo = tipo_cargo.id_tipo_cargo
+WHERE
+	cargo_bus.id_tipo_cargo IN (
+		2,
+		10,
+		113,
+		114,
+		115,
+		116,
+		117,
+		118,
+		112,
+		119,
+		120,
+		121,
+		122,
+		15,
+		14,
+		3,
+		149,
+		110
+	)
+AND cargo_bus.fecha_inicio_cargo_bus BETWEEN '2017-01-01'
+AND '2017-12-31'
+GROUP BY cargo_bus.id_tipo_cargo
+ORDER BY tipo_cargo.nombre_tipo_cargo ASC]]>
+	</queryString>
+	<field name="Monto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_tipo_cargo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="Monto_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Monto}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20" uuid="0e8a175d-ea85-41ea-8006-78ae5ca1c820"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año 2017]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="1" width="170" height="39" uuid="4cab90ce-52a8-403b-93b5-d83e8034e8a0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="230" height="20" uuid="20e1ce04-995e-4b2e-95e9-ea1c3e20e4d7"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen Gastos Tesorería]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="215" height="20" uuid="94f38038-65fc-4139-938e-767290996dfc"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="0" width="100" height="20" uuid="0c6882cd-d3c4-40b9-981d-1020d185997c"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="215" height="20" uuid="d6e385d7-6579-4ef0-9b2b-6844a55965ca"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_tipo_cargo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="215" y="0" width="100" height="20" uuid="3a110824-e1bc-45df-8f51-8cc23ad03704"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Monto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="37" splitType="Stretch">
+			<textField pattern="$ #,##0">
+				<reportElement x="215" y="0" width="100" height="20" uuid="bc10ab5a-75b2-401a-bab5-14ff855d1efe"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Monto_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="115" y="0" width="100" height="20" uuid="e302fbf2-d22b-4941-8b83-957829851744"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total: ]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

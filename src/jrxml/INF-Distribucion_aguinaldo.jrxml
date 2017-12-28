@@ -16,7 +16,7 @@
     fecha,
     montoAguinaldo
 FROM
-    aguinaldo_septiembre_2017
+    aguinaldo_diciembre_2017
 GROUP BY codigoTrabajador 
 ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 	</queryString>
@@ -139,7 +139,7 @@ ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[AGUINALDO SEPTIEMBRE 2017]]></text>
+				<text><![CDATA[AGUINALDO DICIEMBRE 2017]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="371" y="18" width="159" height="30" uuid="e29ff9c9-9c23-4ffd-9dac-89573ad86800"/>
@@ -218,7 +218,7 @@ ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[LOS CONDUCTORES PODRÁN HACER EFECTIVO SU AGUINALDO LOS DIAS 15, 16 Y 17 SEPTIEMBRE 2017]]></text>
+				<text><![CDATA[LOS CONDUCTORES PODRÁN HACER EFECTIVO SU AGUINALDO LOS DIAS 21, 22 Y 23 DE DICIEMBRE 2017]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
