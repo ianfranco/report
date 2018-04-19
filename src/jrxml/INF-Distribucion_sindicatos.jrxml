@@ -12,7 +12,7 @@
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<parameter name="nombreOperador" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_descuentos_sindicatos($P{idOperador}, $P{fecha})]]>
+		<![CDATA[CALL final_planillon_descuentos_sindicatos($P{idOperador}, $P{fecha});]]>
 	</queryString>
 	<field name="codigoTrabajador" class="java.lang.Integer"/>
 	<field name="nombreTrabajador" class="java.lang.String"/>

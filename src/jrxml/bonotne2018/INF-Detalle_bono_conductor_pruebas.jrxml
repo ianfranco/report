@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-Detalle_bono_conductor" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="da560350-5c5e-4b83-b1c4-1c3a67e35627">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS - VIÑA BUS S.A."/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\Documents\\NetBeansProjects\\Report\\src\\jrxml\\bonotne\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM sigf_v1.BONOTNEENERO18VINABUS ORDER BY terminal, nombreConductor ASC, id_bus ASC,  fecha ASC]]>
+	</queryString>
+	<field name="id_tabla_monto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_bus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroBus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroUnidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="flota" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empresa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_conductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoConductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreConductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rutConductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="terminal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasConductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoDia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreAfp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeAfp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoAfp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cesantiaTrabajador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreIsapre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoIsapre" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeCaja" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoCaja" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeInp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoInp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalPagar" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="montoDia1" class="java.lang.Integer" resetType="Group" resetGroup="id_bus" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoDia}]]></variableExpression>
+	</variable>
+	<variable name="montoDia2" class="java.lang.Integer" resetType="Group" resetGroup="codigoConductor" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoDia}]]></variableExpression>
+	</variable>
+	<variable name="numero1" class="java.lang.Integer" resetType="Group" resetGroup="id_bus" calculation="Count">
+		<variableExpression><![CDATA[$F{numero}]]></variableExpression>
+	</variable>
+	<group name="codigoConductor" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{codigoConductor}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="id_bus">
+		<groupExpression><![CDATA[$F{id_bus}]]></groupExpression>
+		<groupHeader>
+			<band>
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="353">
+				<textField>
+					<reportElement x="0" y="159" width="40" height="20" uuid="200539ab-d05e-48e1-9bc2-998e060b597c"/>
+					<textFieldExpression><![CDATA[$F{numeroBus}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="40" y="159" width="40" height="20" uuid="9e54937d-c36d-47c7-8ff9-69295e7368a0"/>
+					<textFieldExpression><![CDATA[$F{numeroUnidad}]]></textFieldExpression>
+				</textField>
+				<textField pattern="$ #,###">
+					<reportElement x="150" y="159" width="80" height="20" uuid="5eb1d1b6-1d71-4909-a2c4-55fd9c4d8ddd"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{montoDia}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="80" y="159" width="70" height="20" uuid="786da793-44b5-4930-83e9-fcbc8a29276b"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{diasConductor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="420" y="311" width="100" height="22" uuid="b17779b1-cc27-46e2-90aa-e6edbe9efde7"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Firma]]></text>
+				</staticText>
+				<line>
+					<reportElement x="386" y="306" width="170" height="1" uuid="8af7811a-233b-46d2-bb73-98dc3aa70f32"/>
+				</line>
+				<staticText>
+					<reportElement x="0" y="139" width="40" height="20" uuid="8efee589-7e4f-4722-abbd-ab0c67d298c5"/>
+					<text><![CDATA[N° Bus]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="40" y="139" width="40" height="20" uuid="1e9c25dc-2030-4536-99ca-837e1a61161c"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Unidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="150" y="139" width="80" height="20" uuid="1aa1e793-d31f-4992-a3e3-c9fa783ce460"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Monto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="80" y="139" width="70" height="20" uuid="effa5b24-d416-421a-bb8f-b1c9d6ddda9c"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[DT]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="33" y="102" width="30" height="20" uuid="7532c4bb-bdac-4d0a-936f-62bc51fb15b2"/>
+					<textFieldExpression><![CDATA[$F{codigoConductor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="102" width="30" height="20" uuid="eb19c0e9-6ab6-4911-859e-4b55c414f047"/>
+					<text><![CDATA[Cod.:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="103" y="102" width="310" height="20" uuid="f0eb48fc-005d-410d-b18c-d6fa2ac23e58"/>
+					<textFieldExpression><![CDATA[$F{nombreConductor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="63" y="102" width="40" height="20" uuid="a739154a-9d4c-416e-a8aa-8bf5177ed8d8"/>
+					<text><![CDATA[Nombre:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="420" y="102" width="40" height="20" uuid="3e714107-aa0c-41f7-9ba7-396cd276b9f0"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Rut:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="460" y="102" width="80" height="20" uuid="83130409-af0f-4829-b29e-e7a4614cdea6"/>
+					<textFieldExpression><![CDATA[$F{rutConductor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="175" y="20" width="180" height="26" uuid="3fb70469-fc75-41cc-96c6-01e56dd361a8"/>
+					<textElement textAlignment="Center">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PAGO BONO TNE 
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="30" uuid="ad2f2e72-ec4b-480a-bac5-fa8c5089f45f"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[VIÑA BUS S.A.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="175" y="47" width="180" height="20" uuid="dda890f8-daab-4e6d-92d3-b17154db35bf"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1ERA CUOTA 2018]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="360" y="0" width="210" height="30" uuid="e77c2a57-ac5c-4a7e-96c2-aa7a91b3f8b2"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{terminal}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</summary>
+</jasperReport>

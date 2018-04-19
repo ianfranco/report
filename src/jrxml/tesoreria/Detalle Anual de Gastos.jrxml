@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5534c40f-63fb-4677-b957-5c1ad305e196">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="50"/>
+	<property name="ireport.y" value="10"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\Documents\\NetBeansProjects\\report\\src\\jrxml\\tesoreria\\"]]></defaultValueExpression>
 	</parameter>
@@ -55,30 +55,23 @@ WHERE
 		120,
 		121,
 		122,
-		15,
-		14,
-		3,
 		149,
 		110
 	)
 AND cargo_bus.fecha_inicio_cargo_bus BETWEEN '2017-01-01'
-AND '2017-12-31'
+AND '2017-12-31' AND empresa.id_empresa = 60
 GROUP BY empresa.id_empresa, cargo_bus.id_tipo_cargo 
 ORDER BY
-	empresa.nombre_empresa ASC, tipo_cargo.nombre_tipo_cargo ASC ]]>
+	empresa.nombre_empresa ASC, tipo_cargo.nombre_tipo_cargo ASC]]>
 	</queryString>
-	<field name="id_empresa" class="java.lang.Long">
+	<field name="id_empresa" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Empresa" class="java.lang.String"/>
-	<field name="Rut" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="ID" class="java.lang.Long"/>
+	<field name="Rut" class="java.lang.String"/>
+	<field name="ID" class="java.lang.Integer"/>
 	<field name="Cargo" class="java.lang.String"/>
-	<field name="Monto" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="Monto" class="java.math.BigDecimal"/>
 	<variable name="Monto_1" class="java.math.BigDecimal" resetType="Group" resetGroup="id_empresa" calculation="Sum">
 		<variableExpression><![CDATA[$F{Monto}]]></variableExpression>
 	</variable>

@@ -23,8 +23,11 @@ import net.sf.jasperreports.swing.JRViewer;
 import views.Abril2017;
 import views.Agosto2017;
 import views.Diciembre2016;
+import views.Diciembre2017;
 import views.Enero2017;
+import views.Enero2018;
 import views.Febrero2017;
+import views.Febrero2018;
 import views.Julio2017;
 import views.Junio2017;
 import views.Marzo2017;
@@ -59,7 +62,9 @@ public class LiquidacionDinamicaController {
     private Noviembre2016 noviembre2016;
     private Diciembre2016 diciembre2016;
     private Enero2017 enero2017;
+    private Enero2018 enero2018;
     private Febrero2017 febrero2017;
+    private Febrero2018 febrero2018;
     private Marzo2017 marzo2017;
     private Abril2017 abril2017;
     private Mayo2017 mayo2017;
@@ -67,12 +72,13 @@ public class LiquidacionDinamicaController {
     private Julio2017 julio2017;
     private Agosto2017 agosto2017;
     private Noviembre2017 noviembre2017;
+    private Diciembre2017 diciembre2017;
 
     public LiquidacionDinamicaController(MesSelectorlLiquidacionView view, ReporterVBView frame) {
         this.view = view;
         this.frame = frame;
 
-        this.view.getYearField().setText("2017");
+        this.view.getYearField().setText("2018");
 
         this.view.getViewButton().addActionListener(new ActionListener() {
             @Override
@@ -102,24 +108,52 @@ public class LiquidacionDinamicaController {
 
         switch (mes) {
             case 0:
-                System.err.println("INDICE:" + mes + " ENERO 2017");
 
-                enero2017 = new Enero2017(frame, view);
-                if (operador == 0) {
-                    enero2017.loadLiquidacion(true, operador);
+                if (this.view.getAnio().equals("2017")) {
+                    System.err.println("INDICE:" + mes + " ENERO 2017");
+
+                    enero2017 = new Enero2017(frame, view);
+                    if (operador == 0) {
+                        enero2017.loadLiquidacion(true, operador);
+                    } else {
+                        enero2017.loadLiquidacion(true, operador);
+                    }
+                } else if (this.view.getAnio().equals("2018")) {
+
+                    System.err.println("INDICE:" + mes + " ENERO 2018");
+
+                    enero2018 = new Enero2018(frame, view);
+                    if (operador == 0) {
+                        enero2018.loadLiquidacion(true, operador);
+                    } else {
+                        enero2018.loadLiquidacion(true, operador);
+                    }
+
                 } else {
-                    enero2017.loadLiquidacion(true, operador);
+
                 }
 
                 break;
             case 1:
-                System.err.println("INDICE:" + mes + " FEBRERO 2017");
+                if (this.view.getAnio().equals("2017")) {                    
+                    System.err.println("INDICE:" + mes + " FEBRERO 2017");
 
-                febrero2017 = new Febrero2017(frame, view);
-                if (operador == 0) {
-                    febrero2017.loadLiquidacion(true, operador);
+                    febrero2017 = new Febrero2017(frame, view);
+                    if (operador == 0) {
+                        febrero2017.loadLiquidacion(true, operador);
+                    } else {
+                        febrero2017.loadLiquidacion(true, operador);
+                    }
+
                 } else {
-                    febrero2017.loadLiquidacion(true, operador);
+                    System.err.println("INDICE:" + mes + " FEBRERO 2018");
+
+                    febrero2018 = new Febrero2018(frame, view);
+                    if (operador == 0) {
+                        febrero2018.loadLiquidacion(true, operador);
+                    } else {
+                        febrero2018.loadLiquidacion(true, operador);
+                    }
                 }
 
                 break;
@@ -249,7 +283,18 @@ public class LiquidacionDinamicaController {
                 break;
             case 11:
                 System.err.println("INDICE:" + mes + " DICIEMBRE");
-                diciembre(true, operador);
+                if (this.view.getAnio().equals("2016")) {
+                    diciembre(true, operador);
+                } else {
+                    System.err.println("INDICE:" + mes + " DICIEMBRE 2017");
+                    diciembre2017 = new Diciembre2017(frame, view);
+                    if (operador == 0) {
+                        diciembre2017.loadLiquidacion(true, operador);
+                    } else {
+                        diciembre2017.loadLiquidacion(true, operador);
+                    }
+                }
+
                 break;
             default:
                 System.err.println("INDICE:" + mes);

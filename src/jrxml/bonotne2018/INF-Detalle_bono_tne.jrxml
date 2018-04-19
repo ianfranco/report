@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-02-17T10:46:19 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-Detalle_bono_tne" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c9b0ad2-e9c4-4b4b-bdce-8684da1741fd">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS - VIÑA BUS S.A."/>
+	<queryString language="SQL">
+		<![CDATA[CALL procedimiento_bono_tne_detalle_conductor();]]>
+	</queryString>
+	<field name="id_tabla_fecha" class="java.lang.Integer"/>
+	<field name="id_bus" class="java.lang.Integer"/>
+	<field name="numeroBus" class="java.lang.Integer"/>
+	<field name="numeroUnidad" class="java.lang.Integer"/>
+	<field name="id_conductor" class="java.lang.Integer"/>
+	<field name="codigoConductor" class="java.lang.Integer"/>
+	<field name="nombreConductor" class="java.lang.String"/>
+	<field name="rutConductor" class="java.lang.String"/>
+	<field name="terminal" class="java.lang.String"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="montoDia" class="java.lang.Integer"/>
+	<variable name="montoDia1" class="java.lang.Integer" resetType="Group" resetGroup="codigoConductor" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoDia}]]></variableExpression>
+	</variable>
+	<group name="terminal" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{terminal}]]></groupExpression>
+		<groupHeader>
+			<band height="90">
+				<textField>
+					<reportElement x="70" y="70" width="270" height="20" uuid="1b0d788e-af62-48ab-87a3-97755a030feb"/>
+					<textFieldExpression><![CDATA[$F{terminal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="70" width="70" height="20" uuid="e4bbbbaf-ea83-4657-b076-6909302088a9"/>
+					<text><![CDATA[Terminal:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="40" width="180" height="20" uuid="d334e17f-1798-4b54-8935-c99a56c4ff79"/>
+					<textElement textAlignment="Left">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Días Trabajados por Conductor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="30" uuid="0d52642b-ef80-4528-97b8-57cd52a73468"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[VIÑA BUS S.A.]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="codigoConductor" isStartNewPage="true" isReprintHeaderOnEachPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{codigoConductor}]]></groupExpression>
+		<groupHeader>
+			<band height="61">
+				<textField>
+					<reportElement x="30" y="10" width="30" height="20" uuid="470ebd6f-cb27-477b-af92-1de8862b15f7"/>
+					<textFieldExpression><![CDATA[$F{codigoConductor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="10" width="30" height="20" uuid="c3e97bde-0883-4297-a211-3d003f6dfd98"/>
+					<text><![CDATA[Cod.:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="110" y="10" width="310" height="20" uuid="38bbba9e-39e5-45d1-a6ef-e7f999f1b491"/>
+					<textFieldExpression><![CDATA[$F{nombreConductor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="70" y="10" width="40" height="20" uuid="49077dba-67c0-4be3-9494-fbeabe4247f3"/>
+					<text><![CDATA[Nombre:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="420" y="10" width="40" height="20" uuid="0c179a03-c5c6-4956-b3b1-5d8fd0370b77"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Rut:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="460" y="10" width="80" height="20" uuid="b75bffc1-ea2b-4c14-b32d-7fdcb90303e1"/>
+					<textFieldExpression><![CDATA[$F{rutConductor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="27" y="40" width="40" height="20" uuid="f7df3e47-e7a5-4ee3-88a1-81a8d25a55da"/>
+					<text><![CDATA[N° Bus]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="67" y="40" width="40" height="20" uuid="bd6dc96f-46a5-46b9-9f1f-365aeb952721"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Unidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="107" y="40" width="70" height="20" uuid="7fc39c7c-7227-484c-9ee7-f09f1b0c5f27"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="177" y="40" width="80" height="20" uuid="edf22ccc-c127-477e-9f17-e99630f2300c"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Monto]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="$ #,###">
+					<reportElement x="177" y="0" width="80" height="20" uuid="ad9d8bd2-b8f0-44ad-94ec-10a5b34c0b5b"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{montoDia1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="137" y="0" width="40" height="20" uuid="dab3467a-4f0d-4903-9968-c11a89f4bcbc"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Total:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="27" y="0" width="40" height="20" uuid="312402fc-6075-4e5c-a55d-492b8f1b4802"/>
+				<textFieldExpression><![CDATA[$F{numeroBus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="0" width="40" height="20" uuid="7b55fc04-fa52-44a8-a826-e1e06b37eeeb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numeroUnidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="107" y="0" width="70" height="20" uuid="764b5d53-0a9d-49c8-8c0d-7cd66e54efe8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,###">
+				<reportElement x="177" y="0" width="80" height="20" uuid="651de105-5351-4cd9-9f13-528ba586c57a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{montoDia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</summary>
+</jasperReport>

@@ -12,7 +12,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_tercerahoja($P{idOperador}, $P{parametroCodigoConductor},'2017-01-01');]]>
+		<![CDATA[CALL tercera_hoja_grupal_febrero_2018($P{idOperador}, '2018-02-01');]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="conductor" class="java.lang.String"/>

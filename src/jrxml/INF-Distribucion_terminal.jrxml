@@ -4,20 +4,14 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="221"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="767"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT codigoTrabajador as codigo, nombreTrabajador as conductor, 
-SUM(saldoFinal) AS REALFINAL, nombreTerminal As nombre_terminal 
-FROM liquidaciones_octubre_2017
-WHERE nombreTerminal = '201 MIRADOR DE REÑACA'
-GROUP BY codigoTrabajador 
-HAVING SUM(saldoFinal)<0
-ORDER BY nombreTerminal ASC, nombreTrabajador ASC;]]>
+		<![CDATA[CALL final_planillon_distribucion_terminal($P{idOperador}, '2018-02-01')]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="conductor" class="java.lang.String"/>

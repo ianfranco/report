@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-Produccion_bruta_flota" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9250929b-454b-43e9-bb56-67b32d66fd46">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="239"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="749"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ViñaBus"/>
 	<parameter name="idFlota" class="java.lang.Integer">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
@@ -34,6 +35,7 @@ marca_bus.nombre_marca_bus,
 	guia.turno, 
     proceso_recaudacion.nombre_proceso, 
 	guia.total_ingresos,
+	guia.saldo, 
 	CONCAT(trabajador.apellido_paterno_trabajador, " ", trabajador.apellido_materno_trabajador, " ", LEFT(trabajador.nombre_trabajador, 1)) AS nombreTrabajador, 
 		IFNULL((SELECT egreso_guia.monto 
 		FROM egreso_guia LEFT JOIN egreso_recaudacion 
@@ -119,6 +121,7 @@ ORDER BY  bus.id_unidad_negocio  ASC, bus.numero_bus ASC , guia.fecha_recaudacio
 	<field name="turno" class="java.lang.Integer"/>
 	<field name="nombre_proceso" class="java.lang.String"/>
 	<field name="total_ingresos" class="java.lang.Integer"/>
+	<field name="saldo" class="java.lang.Integer"/>
 	<field name="nombreTrabajador" class="java.lang.String"/>
 	<field name="Administracion" class="java.math.BigDecimal"/>
 	<field name="Combustible" class="java.math.BigDecimal"/>
@@ -162,6 +165,9 @@ ORDER BY  bus.id_unidad_negocio  ASC, bus.numero_bus ASC , guia.fecha_recaudacio
 	</variable>
 	<variable name="conductor1" class="java.lang.Double" resetType="Group" resetGroup="patente" calculation="Sum">
 		<variableExpression><![CDATA[$F{conductor}]]></variableExpression>
+	</variable>
+	<variable name="saldo" class="java.lang.Double" resetType="Group" resetGroup="patente" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
 	</variable>
 	<group name="patente" isStartNewPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{patente}]]></groupExpression>
@@ -370,14 +376,14 @@ ORDER BY  bus.id_unidad_negocio  ASC, bus.numero_bus ASC , guia.fecha_recaudacio
 					<text><![CDATA[NOCH.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="431" y="140" width="40" height="16" uuid="a832f6d9-689e-4299-a1dd-75adcdc1a79a"/>
+					<reportElement x="431" y="140" width="39" height="16" uuid="a832f6d9-689e-4299-a1dd-75adcdc1a79a"/>
 					<textElement textAlignment="Right">
 						<font fontName="Arial" size="8"/>
 					</textElement>
 					<text><![CDATA[% COND.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="477" y="140" width="103" height="16" uuid="c8fb35fc-176b-4769-8c8d-d07e80c2b80e"/>
+					<reportElement x="510" y="140" width="70" height="16" uuid="c8fb35fc-176b-4769-8c8d-d07e80c2b80e"/>
 					<box leftPadding="5"/>
 					<textElement textAlignment="Left">
 						<font fontName="Arial" size="8"/>
@@ -417,10 +423,17 @@ ORDER BY  bus.id_unidad_negocio  ASC, bus.numero_bus ASC , guia.fecha_recaudacio
 					</textElement>
 					<textFieldExpression><![CDATA[$P{nombreMes}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="470" y="140" width="39" height="16" uuid="99306b62-2a4b-47d6-973b-1a871a47d74d"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[SALDO]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="32">
+			<band height="33">
 				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				<textField pattern="#,###.###">
 					<reportElement x="110" y="13" width="48" height="15" uuid="9487ba98-515a-447a-9664-70f4a8ce0e84">
@@ -489,7 +502,7 @@ ORDER BY  bus.id_unidad_negocio  ASC, bus.numero_bus ASC , guia.fecha_recaudacio
 					<textFieldExpression><![CDATA[$V{Nochero1}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###.###">
-					<reportElement x="431" y="13" width="40" height="15" uuid="657d4b66-8a87-4671-bc1c-ac7970bdf944"/>
+					<reportElement x="431" y="13" width="39" height="15" uuid="657d4b66-8a87-4671-bc1c-ac7970bdf944"/>
 					<textElement textAlignment="Right">
 						<font fontName="Arial" size="8"/>
 					</textElement>
@@ -515,6 +528,13 @@ ORDER BY  bus.id_unidad_negocio  ASC, bus.numero_bus ASC , guia.fecha_recaudacio
 					</textElement>
 					<text><![CDATA[___________________________________________________________________________________________________________________]]></text>
 				</staticText>
+				<textField pattern="#,###.###">
+					<reportElement x="470" y="13" width="39" height="15" uuid="319fb789-202a-459e-93e7-2d1352ef85fb"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{conductor1}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -537,7 +557,7 @@ ORDER BY  bus.id_unidad_negocio  ASC, bus.numero_bus ASC , guia.fecha_recaudacio
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="16" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
 				<reportElement x="0" y="0" width="40" height="15" uuid="f4ffd143-bc84-4949-b76f-924879da6411">
@@ -627,19 +647,26 @@ ORDER BY  bus.id_unidad_negocio  ASC, bus.numero_bus ASC , guia.fecha_recaudacio
 				<textFieldExpression><![CDATA[$F{Nochero}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.###">
-				<reportElement x="431" y="0" width="40" height="15" uuid="355f5427-b854-4c83-997c-6bfcaec58079"/>
+				<reportElement x="431" y="0" width="39" height="15" uuid="355f5427-b854-4c83-997c-6bfcaec58079"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{conductor}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.###">
-				<reportElement x="477" y="0" width="103" height="15" uuid="7bba1587-dfb5-4dbc-8025-77bf3d71a618"/>
-				<box leftPadding="4"/>
+				<reportElement x="510" y="0" width="70" height="15" uuid="7bba1587-dfb5-4dbc-8025-77bf3d71a618"/>
+				<box leftPadding="6"/>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NOMBRECONDUCTOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###.###">
+				<reportElement x="470" y="0" width="39" height="15" uuid="9ef0972a-909d-40c6-802b-fdde19c94ed5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

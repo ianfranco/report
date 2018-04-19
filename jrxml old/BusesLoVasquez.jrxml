@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3fd3f4e2-c4e7-4b95-8bad-d1ca9ccb6e9f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+	bus.numero_bus AS 'N°Bus',
+	unidad_negocio.numero_unidad_negocio AS 'UN',
+	bus.patente AS 'Patente',
+	bus.anio AS 'Año',
+	flota.nombre_flota AS 'Flota',
+	empresa.nombre_empresa AS 'Empresa', 
+	terminal.nombre_terminal AS 'Terminal'
+	
+FROM
+	bus
+LEFT JOIN unidad_negocio ON bus.id_unidad_negocio = unidad_negocio.id_unidad_negocio
+LEFT JOIN flota ON bus.id_flota = flota.id_flota 
+LEFT JOIN terminal ON bus.id_terminal = terminal.id_terminal 
+LEFT JOIN empresa ON bus.id_empresa = empresa.id_empresa 
+WHERE bus.anio>2011 AND bus.id_unidad_negocio <>3
+ORDER BY flota.nombre_flota ASC, bus.numero_bus ASC, unidad_negocio.numero_unidad_negocio ASC]]>
+	</queryString>
+	<field name="N°Bus" class="java.lang.Long"/>
+	<field name="UN" class="java.lang.Long"/>
+	<field name="Patente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Año" class="java.lang.Integer"/>
+	<field name="Flota" class="java.lang.String"/>
+	<field name="Empresa" class="java.lang.String"/>
+	<field name="Terminal" class="java.lang.String"/>
+	<group name="Flota">
+		<groupExpression><![CDATA[$F{Flota}]]></groupExpression>
+		<groupHeader>
+			<band height="55">
+				<textField>
+					<reportElement x="61" y="15" width="100" height="20" uuid="31277a14-7b2f-456a-9b83-7ef642d2b401"/>
+					<textFieldExpression><![CDATA[$F{Flota}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="15" width="61" height="20" uuid="8f769c17-2376-4b87-acea-ade2be3f126a"/>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Flota:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="35" width="35" height="20" uuid="68523231-0533-4bca-aa75-5e5f2c7455d5"/>
+					<text><![CDATA[N°Bus]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="35" y="35" width="37" height="20" uuid="ca2dac5b-7d6b-490d-8688-39ab26bc67e4"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[UN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="72" y="35" width="54" height="20" uuid="2569312c-4073-4141-8622-d7b6e02c6cf2"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Patente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="126" y="35" width="46" height="20" uuid="233ac182-0037-49d3-8732-e68d5c70b035"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Año]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="172" y="35" width="224" height="20" uuid="97b8b6fb-867a-4560-aaa8-fda8b89d0834"/>
+					<text><![CDATA[Empresa]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="35" width="174" height="20" uuid="4f1af1b0-c48b-4912-9295-e683d9a3d698"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Terminal]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="40" width="40" height="30" uuid="16abca53-5389-4a32-a7f3-2cad72ab4594"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="19" uuid="5965d62d-4008-431e-a862-25ab9324b39c"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="371" y="40" width="159" height="30" uuid="3e9993c2-2097-4585-ae8e-228435850278"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="371" y="0" width="200" height="20" uuid="215fb842-4ad3-4218-9543-3fd5acad6d4f"/>
+				<textElement textAlignment="Right" markup="none">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DICIEMBRE 2017]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="232" height="20" uuid="815d7d68-6bc6-4caf-a2de-9f67d38e0264"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Buses Año 2012-2018]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="35" height="20" uuid="fa53324a-4616-4ca8-a589-5933e7c048bf"/>
+				<textFieldExpression><![CDATA[$F{N°Bus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="35" y="0" width="37" height="20" uuid="c0cb2e76-880b-49e5-8f28-af10ebb9f8e5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{UN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="0" width="54" height="20" uuid="df97905e-38cb-4518-a16d-c0c873109981"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Patente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="0" width="46" height="20" uuid="139f2998-2400-4a7f-aa30-6d53890ec951"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Año}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="0" width="224" height="20" uuid="a4751934-bde2-4c9b-92f5-4c313ed48f74"/>
+				<textFieldExpression><![CDATA[$F{Empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="0" width="174" height="20" uuid="0d330584-d99e-4d9b-8595-f4d3622be45f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Terminal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Resumen_liquidacion_empresa" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bfc5c403-97fa-470c-b1b0-78af2a778f31">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="222"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="772"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ViñaBus"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -21,14 +22,14 @@
     terminal.nombre_terminal,
     unidad_negocio.numero_unidad_negocio,
     flota.nombre_flota,
-    @administracion:=SUM_EGRESO(bus.id_bus, '2017-09-01', 1) AS administracion,
-    @licitacion:=SUM_EGRESO(bus.id_bus, '2017-09-01', 7) AS licitacion,
-    @total:=SUM_SALDOS(bus.id_bus, '2017-09-01') AS ingresos,
-    @cargos:=CARGOS_BUS(bus.id_bus, '2017-09-01') AS cargos,
-    @abonos:=ABONOS_BUS(bus.id_bus, '2017-09-01') AS abonos,
-    @taller:=SUM_EGRESO(bus.id_bus, '2017-09-01', 4) AS taller,
+    @administracion:=SUM_EGRESO(bus.id_bus, '2018-03-01', 1) AS administracion,
+    @licitacion:=SUM_EGRESO(bus.id_bus, '2018-03-01', 7) AS licitacion,
+    @total:=SUM_SALDOS(bus.id_bus, '2018-03-01') AS ingresos,
+    @cargos:=CARGOS_BUS(bus.id_bus, '2018-03-01') AS cargos,
+    @abonos:=ABONOS_BUS(bus.id_bus, '2018-03-01') AS abonos,
+    @taller:=SUM_EGRESO(bus.id_bus, '2018-03-01', 4) AS taller,
     @saldo:=(@administracion + @licitacion + @taller) AS saldo,
-    @aseo:=SUM_EGRESO(bus.id_bus, '2017-09-01', 8) AS aseo, 
+    @aseo:=SUM_EGRESO(bus.id_bus, '2018-03-01', 8) AS aseo, 
     (SELECT 
     CONCAT(trabajador.apellido_paterno_trabajador,
             ' ',
@@ -41,7 +42,7 @@ FROM
     trabajador ON guia.id_trabajador = trabajador.id_trabajador
 WHERE
     guia.id_bus = bus.id_bus
-        AND guia.fecha_recaudacion BETWEEN  '2017-09-01' AND  LAST_DAY('2017-09-01') GROUP BY guia.id_trabajador ORDER BY COUNT(guia.folio) DESC LIMIT 0,1) AS nombreConductor, 
+        AND guia.fecha_recaudacion BETWEEN  '2018-03-01' AND  LAST_DAY('2018-03-01') GROUP BY guia.id_trabajador ORDER BY COUNT(guia.folio) DESC LIMIT 0,1) AS nombreConductor, 
         IF(@saldo>2000000, 200000,IF(@saldo>1800000, 180000, IF(@saldo>1600000, 150000, IF(@saldo>1500000, 120000, IF(@saldo>1400000, 100000, 0 ))))) as premio
 FROM
     bus

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed9c31d9-8bee-4139-a907-46fa2ddc9ec8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\ianfr\\Documents\\NetBeansProjects\\Report\\src\\jrxml\\bonotne\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM sigf_v1.BONOTNEENERO17SOLYMAR  ORDER BY terminal, nombreConductor ASC, id_bus ASC]]>
+	</queryString>
+	<field name="id_tabla_monto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_bus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroBus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroUnidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="flota" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empresa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_conductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoConductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreConductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rutConductor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="terminal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diasConductor" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoDia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreAfp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeAfp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoAfp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cesantiaTrabajador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreIsapre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoIsapre" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeCaja" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoCaja" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="porcentajeInp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoInp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalPagar" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="375" splitType="Prevent">
+			<staticText>
+				<reportElement x="175" y="33" width="180" height="26" uuid="c717d1b4-e1b1-403a-936f-9147c0390489"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAGO BONO TNE 
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="159" width="40" height="20" uuid="3ec816cd-b698-4b00-8636-21b6f012faba"/>
+				<textFieldExpression><![CDATA[$F{numeroBus}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,###">
+				<reportElement x="150" y="159" width="80" height="20" uuid="02ff8b44-0087-4fff-b658-3e65a830a7bd"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{montoDia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="420" y="311" width="100" height="22" uuid="8defff0e-563e-4fed-8a2a-46edc8e5466f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="102" width="40" height="20" uuid="3b6aaa01-e415-4906-8397-6d8921ec59e7"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Rut:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="103" y="102" width="310" height="20" uuid="a81e065a-f315-4dc1-bdf9-c5f907eb5732"/>
+				<textFieldExpression><![CDATA[$F{nombreConductor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="159" width="40" height="20" uuid="fe8f1f02-0046-4015-9a6d-f2d4eb458de3"/>
+				<textFieldExpression><![CDATA[$F{numeroUnidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="33" y="102" width="30" height="20" uuid="3dea070b-d923-40b0-bd3d-7e87950f7622"/>
+				<textFieldExpression><![CDATA[$F{codigoConductor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="63" y="102" width="40" height="20" uuid="abddb00a-4f01-4b8e-8ebb-6f1623d8cb98"/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="139" width="40" height="20" uuid="267c4a14-3245-4226-86bb-f4c8dcb0c33f"/>
+				<text><![CDATA[N° Bus]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="159" width="70" height="20" uuid="8a8486e9-2c84-409e-991b-109f0bd23e01"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{diasConductor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="150" y="139" width="80" height="20" uuid="d4e03b49-f262-4bef-96be-6b66ac8710e9"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="48fb3bf4-971e-46d7-a17e-a0ce57c538fe"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="60" width="180" height="20" uuid="b82999ec-1862-4a8c-bd49-d036c878214f"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1 ERA CUOTA 2017]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="281" y="0" width="275" height="30" uuid="8c5bba43-15bd-4bca-9cef-0b75023604f5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{terminal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="102" width="80" height="20" uuid="47964564-2c9f-4308-a9e2-f4778ebd4bda"/>
+				<textFieldExpression><![CDATA[$F{rutConductor}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="3" y="181" width="323" height="145" uuid="f6990cac-1655-4e96-873b-1f7f2b3418de"/>
+				<subreportParameter name="montoImponible">
+					<subreportParameterExpression><![CDATA[$F{montoDia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idTrabajador">
+					<subreportParameterExpression><![CDATA[$F{id_conductor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SUBINF-Liquidacion_bono_tne.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="3" y="102" width="30" height="20" uuid="8a3b7868-2621-4576-9b60-81c8bb1dc691"/>
+				<text><![CDATA[Cod.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="139" width="70" height="20" uuid="a01f2277-28be-4159-a37f-60f4ab300e77"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="139" width="40" height="20" uuid="6efc906b-332a-4082-8fc2-fc8dc3110345"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Unidad]]></text>
+			</staticText>
+			<line>
+				<reportElement x="386" y="306" width="170" height="1" uuid="2d0babe7-62d3-462e-9361-951b09642670"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

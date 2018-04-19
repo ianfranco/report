@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT
 	SUM(cargo_bus.monto_cargo_bus) AS Monto,
 	tipo_cargo.nombre_tipo_cargo
@@ -25,9 +25,6 @@ WHERE
 		120,
 		121,
 		122,
-		15,
-		14,
-		3,
 		149,
 		110
 	)
