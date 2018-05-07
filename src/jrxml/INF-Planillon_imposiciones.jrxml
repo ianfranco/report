@@ -15,12 +15,12 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="805"/>
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="45"/>
-	<property name="ireport.y" value="59"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_marzo_2018($P{idOperador},$P{fecha})]]>
+		<![CDATA[CALL final_planillon_liquidacion_ABRIL_2018($P{idOperador},$P{fecha})]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -335,7 +335,7 @@
 				<textElement>
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD - MARZO 2018]]></text>
+				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD - ABRIL 2018]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="705" y="53" width="92" height="16" uuid="90f00557-6599-4842-9645-157c0500717b"/>

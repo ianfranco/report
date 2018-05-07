@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8be9a533-2339-47c5-930a-bea36c4b5dd3">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Localhost"/>
-	<parameter name="desde" class="java.lang.String">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Localhost WebGuide"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="224"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="771"/>
+	<parameter name="desde" class="java.sql.Date">
 		<defaultValueExpression><![CDATA["2010-01-01"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -25,7 +28,7 @@
 	SUM(guias.TotalEgresos) AS 'T.Egresos',
 	SUM(guias.Saldo) AS 'Líquido',
 	SUM(guias.NumVueltas) AS 'Vueltas',
-	CASE MONTH ('2018-02-01')
+	CASE MONTH ( $P{desde} )
 WHEN "01" THEN
 	"ENERO"
 WHEN "02" THEN
@@ -51,48 +54,69 @@ WHEN "11" THEN
 WHEN "12" THEN
 	"DICIEMBRE"
 END AS NombreMes,
- YEAR ('2018-02-01') AS Anio
+ YEAR ( $P{desde} ) AS Anio
 FROM
 	guias LEFT JOIN egresosxguias ON guias.Id = egresosxguias.IdGuia 
 				LEFT JOIN buses ON guias.IdBus = buses.Id 
 WHERE
-	guias.Fecha BETWEEN '2018-02-01'
-AND lasT_day('2018-02-01')
-AND guias.idgarita = 7
-GROUP BY
-	IdBus
+	guias.Fecha BETWEEN  $P{desde} 
+AND lasT_day( $P{desde} )
+AND guias.idgarita = 3
+GROUP BY	idBus
 ORDER BY
-	guias.IdBus]]>
+	guias.idBus]]>
 	</queryString>
-	<field name="N° Bus" class="java.lang.Long"/>
-	<field name="T.Ingresos" class="java.math.BigDecimal"/>
-	<field name="Admin." class="java.math.BigDecimal"/>
+	<field name="N° Bus" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="N° Bus"/>
+	</field>
+	<field name="T.Ingresos" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="T.Ingresos"/>
+	</field>
+	<field name="Admin." class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Admin."/>
+	</field>
 	<field name="Combustible" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Combustible"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Boletos" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Boletos"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Repuestos" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Repuestos"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Taller" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Taller"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Aseo" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Aseo"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Conductor" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Conductor"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Licitacion" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Licitacion"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="T.Egresos" class="java.math.BigDecimal"/>
-	<field name="Líquido" class="java.math.BigDecimal"/>
-	<field name="Vueltas" class="java.math.BigDecimal"/>
-	<field name="NombreMes" class="java.lang.String"/>
+	<field name="T.Egresos" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="T.Egresos"/>
+	</field>
+	<field name="Líquido" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Líquido"/>
+	</field>
+	<field name="Vueltas" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="Vueltas"/>
+	</field>
+	<field name="NombreMes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NombreMes"/>
+	</field>
 	<field name="Anio" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="Anio"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="sumIngresos" class="java.math.BigDecimal" calculation="Sum">
@@ -168,7 +192,7 @@ ORDER BY
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ñandu Tur S.A.]]></text>
+				<text><![CDATA[R y R ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="204" y="0" width="106" height="20" uuid="b4cd7011-e495-4af8-857e-fd4b145b1745"/>
@@ -318,7 +342,7 @@ ORDER BY
 				<text><![CDATA[Conductor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="705" y="0" width="67" height="15" uuid="08028176-aa18-49c2-9d36-20bbe39ab08e"/>
+				<reportElement x="730" y="0" width="80" height="15" uuid="08028176-aa18-49c2-9d36-20bbe39ab08e"/>
 				<box leftPadding="4">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -332,7 +356,7 @@ ORDER BY
 				<text><![CDATA[Líquido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="638" y="0" width="67" height="15" uuid="2825e25c-fe3b-44d3-a2d7-6906af929fca"/>
+				<reportElement x="638" y="0" width="92" height="15" uuid="2825e25c-fe3b-44d3-a2d7-6906af929fca"/>
 				<box leftPadding="4">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -457,7 +481,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{Conductor}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="638" y="0" width="67" height="16" uuid="d8807865-06a1-4ccb-9853-2df93a7aa8c2"/>
+				<reportElement x="638" y="0" width="92" height="16" uuid="d8807865-06a1-4ccb-9853-2df93a7aa8c2"/>
 				<box leftPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -469,7 +493,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{T.Egresos}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="705" y="0" width="67" height="16" uuid="7e5013ad-24c9-4bbc-b46d-bf152b0cad66"/>
+				<reportElement x="730" y="0" width="80" height="16" uuid="7e5013ad-24c9-4bbc-b46d-bf152b0cad66"/>
 				<box leftPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -616,7 +640,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$V{sumConductor}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="638" y="0" width="67" height="15" uuid="0cbde434-62f0-4b52-ae58-da1be44b0380"/>
+				<reportElement x="638" y="0" width="92" height="15" uuid="0cbde434-62f0-4b52-ae58-da1be44b0380"/>
 				<box leftPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -630,7 +654,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$V{sumEgresos}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="705" y="0" width="67" height="15" uuid="9b249ecc-b8e4-4451-9285-cd16c33e96c0"/>
+				<reportElement x="730" y="0" width="80" height="15" uuid="9b249ecc-b8e4-4451-9285-cd16c33e96c0"/>
 				<box leftPadding="2" rightPadding="2">
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

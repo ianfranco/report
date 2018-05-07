@@ -81,37 +81,37 @@ public class SaldosMasLiquidacionFlotaController {
         }
     }
 
-    private void jasper(boolean flag) {
-
-        JasperReport jasperReport;
-
-        try {
-            Map params = new HashMap();
-
-            params.put("fecha", this.view.getFecha());
-            
-            params.put("mes", this.view.getMes());
-            params.put("anio", this.view.getAnio());                  
-            
-            InputStream in = getClass().getResourceAsStream("/jrxml/INF-LiquidacionSaldosxFlota.jrxml");
-
-            jasperReport = JasperCompileManager.compileReport(in);
-            Conexion con = new Conexion();
-
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, con.getConnection());
-
-            if (flag) {
-                this.frame.setNewReport(new JRViewer(jasperPrint), "Saldos x Flota");
-                System.err.println("VIEW");
-            } else {
-                JasperPrintManager.printReport(jasperPrint, true);
-                System.err.println("PRINT");
-            }
-
-        } catch (JRException jre) {
-            System.err.println(jre.getMessage());
-        }
-    }
+//    private void jasper(boolean flag) {
+//
+//        JasperReport jasperReport;
+//
+//        try {
+//            Map params = new HashMap();
+//
+//            params.put("fecha", this.view.getFecha());
+//            
+//            params.put("mes", this.view.getMes());
+//            params.put("anio", this.view.getAnio());                  
+//            
+//            InputStream in = getClass().getResourceAsStream("/jrxml/INF-LiquidacionSaldosxFlota.jrxml");
+//
+//            jasperReport = JasperCompileManager.compileReport(in);
+//            Conexion con = new Conexion();
+//
+//            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, con.getConnection());
+//
+//            if (flag) {
+//                this.frame.setNewReport(new JRViewer(jasperPrint), "Saldos x Flota");
+//                System.err.println("VIEW");
+//            } else {
+//                JasperPrintManager.printReport(jasperPrint, true);
+//                System.err.println("PRINT");
+//            }
+//
+//        } catch (JRException jre) {
+//            System.err.println(jre.getMessage());
+//        }
+//    }
     
     private void jasperIndividual(boolean flag) {
 

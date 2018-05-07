@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2016-09-26T08:23:16 -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Dineros Recaudados" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b3ac821-9de9-49aa-baf5-c9cb0df94f57">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="259"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Localhost"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Viña Bus"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="285"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="715"/>
 	<parameter name="fecha" class="java.util.Date">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
@@ -23,27 +24,73 @@
 	<parameter name="año" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT 
-proceso_recaudacion.nombre_general, 
-fecha.fecha, 
-(dineros_recaudados(proceso_recaudacion.id_general, fecha.fecha, 1)) AS 'Administración',
-(dineros_recaudados(proceso_recaudacion.id_general, fecha.fecha, 7)) AS 'Licitación', 
-(dineros_recaudados(proceso_recaudacion.id_general, fecha.fecha, 4)) AS  'Taller',
-(dineros_recaudados(proceso_recaudacion.id_general, fecha.fecha, 12)) AS '5%', 
-(dineros_recaudados(proceso_recaudacion.id_general, fecha.fecha, 8)) AS Aseo,
-(dineros_recaudados(proceso_recaudacion.id_general, fecha.fecha, 14)) AS Ahorro
-FROM proceso_recaudacion, fecha 
-WHERE proceso_recaudacion.id_general =  $P{idProcesoGeneral}  AND fecha.fecha BETWEEN  $P{fecha} AND LAST_DAY( $P{fecha} )
-GROUP BY fecha.fecha 
+    proceso_recaudacion.nombre_general,
+    fecha.fecha,
+    (DINEROS_RECAUDADOS(proceso_recaudacion.id_general,
+            fecha.fecha,
+            1)) AS 'Administración',
+    (DINEROS_RECAUDADOS(proceso_recaudacion.id_general,
+            fecha.fecha,
+            7)) AS 'Licitación',
+    (DINEROS_RECAUDADOS(proceso_recaudacion.id_general,
+            fecha.fecha,
+            4)) AS 'Taller',
+    (DINEROS_RECAUDADOS(proceso_recaudacion.id_general,
+            fecha.fecha,
+            12)) AS '5%',
+    (DINEROS_RECAUDADOS(proceso_recaudacion.id_general,
+            fecha.fecha,
+            8)) AS Aseo,
+    (DINEROS_RECAUDADOS(proceso_recaudacion.id_general,
+            fecha.fecha,
+            14)) AS Ahorro,
+    IFNULL((SELECT 
+            SUM(guia.saldo)
+        FROM
+            guia
+        WHERE
+            guia.fecha_recaudacion = fecha.fecha
+                AND guia.id_proceso_recuadacion IN (SELECT proceso_recaudacion.id_proceso_recaudacion FROM proceso_recaudacion WHERE proceso_recaudacion.id_general =  $P{idProcesoGeneral} ) 
+                AND guia.saldo > 0
+        GROUP BY guia.fecha_recaudacion), 0) AS Saldo
+FROM
+    proceso_recaudacion,
+    fecha
+WHERE
+    proceso_recaudacion.id_general =  $P{idProcesoGeneral} 
+        AND fecha.fecha BETWEEN  $P{fecha}  AND LAST_DAY( $P{fecha} )
+GROUP BY fecha.fecha
 ORDER BY fecha.fecha ASC]]>
 	</queryString>
-	<field name="nombre_general" class="java.lang.String"/>
-	<field name="fecha" class="java.sql.Date"/>
-	<field name="Administración" class="java.lang.Integer"/>
-	<field name="Licitación" class="java.lang.Integer"/>
-	<field name="Taller" class="java.lang.Integer"/>
-	<field name="5%" class="java.lang.Integer"/>
-	<field name="Aseo" class="java.lang.Integer"/>
-	<field name="Ahorro" class="java.lang.Integer"/>
+	<field name="nombre_general" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre_general"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proceso_recaudacion"/>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fecha"/>
+	</field>
+	<field name="Administración" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Administración"/>
+	</field>
+	<field name="Licitación" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Licitación"/>
+	</field>
+	<field name="Taller" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Taller"/>
+	</field>
+	<field name="5%" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="5%"/>
+	</field>
+	<field name="Aseo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Aseo"/>
+	</field>
+	<field name="Ahorro" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Ahorro"/>
+	</field>
+	<field name="Saldo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Saldo"/>
+	</field>
 	<variable name="Aseo_1" class="java.lang.Long" calculation="Sum">
 		<variableExpression><![CDATA[$F{Aseo}]]></variableExpression>
 	</variable>
@@ -75,10 +122,13 @@ ORDER BY fecha.fecha ASC]]>
 		<variableExpression><![CDATA[$F{Aseo}]]></variableExpression>
 	</variable>
 	<variable name="totalRow" class="java.lang.Integer">
-		<variableExpression><![CDATA[$F{Administración}+$F{Licitación}+$F{Taller}+$F{5%}+$F{Aseo}+$F{Ahorro}]]></variableExpression>
+		<variableExpression><![CDATA[$F{Administración}+$F{Licitación}+$F{Taller}+$F{5%}+$F{Aseo}+$F{Ahorro}+$F{Saldo}]]></variableExpression>
 	</variable>
 	<variable name="totalTotal" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$V{totalRow}]]></variableExpression>
+	</variable>
+	<variable name="Saldo1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{Saldo}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -88,14 +138,14 @@ ORDER BY fecha.fecha ASC]]>
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="15" uuid="d9139b23-a156-428a-bdaa-82badb9bcc22"/>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[VIÑA BUS S.A.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="15" width="100" height="15" uuid="5227dc9a-91ae-4f57-961a-ff179ad7ed7b"/>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[DINEROS RECAUDADOS]]></text>
 			</staticText>
@@ -110,7 +160,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[TERMINAL:]]></text>
 			</staticText>
@@ -119,7 +169,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nombreProcesoRecaudacion}]]></textFieldExpression>
 			</textField>
@@ -128,7 +178,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{mes}]]></textFieldExpression>
 			</textField>
@@ -137,7 +187,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[MES:]]></text>
 			</staticText>
@@ -146,7 +196,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{año}]]></textFieldExpression>
 			</textField>
@@ -155,7 +205,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[AÑO:]]></text>
 			</staticText>
@@ -165,53 +215,53 @@ ORDER BY fecha.fecha ASC]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="19" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="121" height="15" uuid="224d9121-08c1-41c6-be93-3eb09ec65f36"/>
+				<reportElement x="0" y="0" width="82" height="15" uuid="224d9121-08c1-41c6-be93-3eb09ec65f36"/>
 				<textElement>
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="138" y="0" width="50" height="15" uuid="075c261d-9b87-4750-8519-e70862e57853"/>
+				<reportElement x="93" y="0" width="50" height="15" uuid="075c261d-9b87-4750-8519-e70862e57853"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[Admin.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="195" y="0" width="50" height="15" uuid="510cb783-48cf-4fa9-8f4d-b63bdf21f903"/>
+				<reportElement x="150" y="0" width="50" height="15" uuid="510cb783-48cf-4fa9-8f4d-b63bdf21f903"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[Licit.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="254" y="0" width="50" height="15" uuid="160982ce-4f3f-4da7-9d83-34614ede480c"/>
+				<reportElement x="209" y="0" width="50" height="15" uuid="160982ce-4f3f-4da7-9d83-34614ede480c"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[Taller]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="314" y="0" width="50" height="15" uuid="7f6c7302-6c2d-43d8-9389-ea133184f0cb"/>
+				<reportElement x="269" y="0" width="50" height="15" uuid="7f6c7302-6c2d-43d8-9389-ea133184f0cb"/>
 				<textElement textAlignment="Center">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[5%]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="372" y="0" width="50" height="15" uuid="eddea6ad-4edf-4fac-ab3c-0c3094134d68"/>
+				<reportElement x="327" y="0" width="50" height="15" uuid="eddea6ad-4edf-4fac-ab3c-0c3094134d68"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[Ahorro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="432" y="0" width="50" height="15" uuid="8127113b-cd7f-4849-972f-552cd282d754"/>
+				<reportElement x="388" y="0" width="50" height="15" uuid="8127113b-cd7f-4849-972f-552cd282d754"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[Aseo]]></text>
 			</staticText>
@@ -222,104 +272,118 @@ ORDER BY fecha.fecha ASC]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="496" y="0" width="50" height="15" uuid="4a6360f9-09e5-44e0-9b34-5843a36ff165"/>
+				<reportElement x="504" y="0" width="50" height="15" uuid="4a6360f9-09e5-44e0-9b34-5843a36ff165"/>
 				<textElement textAlignment="Center">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="0" width="49" height="15" uuid="b1bf6607-ef60-4b28-adb1-76f864d2e792"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<text><![CDATA[Saldo]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="15" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="0" width="121" height="15" uuid="c33395c5-c7ad-4554-bbf4-dea4848426a5"/>
+				<reportElement x="0" y="0" width="81" height="15" uuid="c33395c5-c7ad-4554-bbf4-dea4848426a5"/>
 				<textElement>
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="138" y="0" width="50" height="15" uuid="37927ef5-69b7-4966-b865-5caa295e06de"/>
+				<reportElement x="93" y="0" width="50" height="15" uuid="37927ef5-69b7-4966-b865-5caa295e06de"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Administración}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="195" y="0" width="50" height="15" uuid="bc9d2ffe-d40d-4fbb-8409-8dcc07e95048"/>
+				<reportElement x="150" y="0" width="50" height="15" uuid="bc9d2ffe-d40d-4fbb-8409-8dcc07e95048"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Licitación}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="254" y="0" width="50" height="15" uuid="7718640f-1a27-4a72-bf62-3c658924f289"/>
+				<reportElement x="209" y="0" width="50" height="15" uuid="7718640f-1a27-4a72-bf62-3c658924f289"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Taller}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="314" y="0" width="50" height="15" uuid="4afb6ece-7204-4c74-bd72-eb47d1ff233a"/>
+				<reportElement x="269" y="0" width="50" height="15" uuid="4afb6ece-7204-4c74-bd72-eb47d1ff233a"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{5%}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="372" y="0" width="50" height="15" uuid="323bc6a1-705f-45a2-96e6-08ad4aef11aa"/>
+				<reportElement x="327" y="0" width="50" height="15" uuid="323bc6a1-705f-45a2-96e6-08ad4aef11aa"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Ahorro}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="432" y="0" width="50" height="15" uuid="d84c3059-6401-4a4e-89af-bdfc536e0415"/>
+				<reportElement x="388" y="0" width="50" height="15" uuid="d84c3059-6401-4a4e-89af-bdfc536e0415"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Aseo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="496" y="0" width="50" height="15" uuid="64746240-5fe8-458c-bb55-668efccb199c"/>
+				<reportElement x="504" y="0" width="50" height="15" uuid="64746240-5fe8-458c-bb55-668efccb199c"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalRow}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="445" y="0" width="49" height="15" uuid="7f6d2e1f-2335-4c83-af4f-e2ada03cc9c3"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Saldo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="1" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField evaluationTime="Report">
 				<reportElement x="535" y="0" width="12" height="15" uuid="5bbd15b8-49a6-4761-8ac0-e8d26903719f"/>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="455" y="0" width="80" height="15" uuid="e9a1a523-3c69-4e50-9b92-1521a8ae97fc"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="0" y="0" width="100" height="13" uuid="67b11366-87b4-4644-aae6-1b13abd2f1e1"/>
 				<textElement>
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="18" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<line>
 				<reportElement x="0" y="-1" width="556" height="1" uuid="d22ab126-bbfe-43f8-8980-38749eb6ba80"/>
 				<graphicElement>
@@ -327,60 +391,67 @@ ORDER BY fecha.fecha ASC]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="36" y="2" width="77" height="15" uuid="273d49ef-d4bf-4288-bc9c-2ee4a17d9a3c"/>
+				<reportElement x="5" y="2" width="55" height="15" uuid="273d49ef-d4bf-4288-bc9c-2ee4a17d9a3c"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT" size="10"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<text><![CDATA[Totales]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
-				<reportElement x="113" y="2" width="75" height="15" uuid="2b63fe49-f855-48fc-80ae-8dac514478ed"/>
+				<reportElement x="82" y="2" width="61" height="15" uuid="2b63fe49-f855-48fc-80ae-8dac514478ed"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Administración_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="188" y="2" width="57" height="15" uuid="ebb45ff7-8702-431c-a2b5-cca34642c1c6"/>
+				<reportElement x="143" y="2" width="57" height="15" uuid="ebb45ff7-8702-431c-a2b5-cca34642c1c6"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Licitación_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="245" y="2" width="59" height="15" uuid="c47365f9-581d-4006-8517-694c0b7bdeef"/>
+				<reportElement x="200" y="2" width="59" height="15" uuid="c47365f9-581d-4006-8517-694c0b7bdeef"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Taller_2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="304" y="2" width="60" height="15" uuid="7ac83e06-0fe6-4caf-a706-41587874beb8"/>
+				<reportElement x="259" y="2" width="60" height="15" uuid="7ac83e06-0fe6-4caf-a706-41587874beb8"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{5%_2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="364" y="2" width="58" height="15" uuid="9235dd78-03fe-4059-82f1-96630e0ba15c"/>
+				<reportElement x="319" y="2" width="58" height="15" uuid="9235dd78-03fe-4059-82f1-96630e0ba15c"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Ahorro_2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
-				<reportElement x="422" y="2" width="60" height="15" uuid="ccb9d6d6-ff1f-4f18-8e9b-ae70fc086d47"/>
+				<reportElement x="378" y="2" width="60" height="15" uuid="ccb9d6d6-ff1f-4f18-8e9b-ae70fc086d47"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Aseo_2}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="$ #,##0">
-				<reportElement x="482" y="2" width="64" height="15" uuid="c8bc4343-7f23-4560-975c-273c21c00fec"/>
+				<reportElement x="500" y="2" width="64" height="15" uuid="c8bc4343-7f23-4560-975c-273c21c00fec"/>
 				<textElement textAlignment="Right">
-					<font fontName="Square721 Cn BT"/>
+					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="442" y="2" width="58" height="15" uuid="c2db9206-f5d4-4944-bc58-fe9f42cfd62e"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Saldo1}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

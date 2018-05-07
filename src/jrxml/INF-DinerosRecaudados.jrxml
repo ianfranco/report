@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2016-09-26T07:20:49 -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Dineros Recaudados" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b3ac821-9de9-49aa-baf5-c9cb0df94f57">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="259"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Localhost"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Viña Bus"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="fecha" class="java.util.Date">
 		<parameterDescription><![CDATA[]]></parameterDescription>
@@ -25,7 +24,16 @@ dineros_recaudados(proceso_recaudacion.id_general,  $P{fecha}, 7) AS 'Licitació
 dineros_recaudados(proceso_recaudacion.id_general,  $P{fecha}, 4) AS Taller,
 dineros_recaudados(proceso_recaudacion.id_general,  $P{fecha}, 12) AS '5%', 
 dineros_recaudados(proceso_recaudacion.id_general,  $P{fecha}, 8) AS Aseo,
-dineros_recaudados(proceso_recaudacion.id_general,  $P{fecha}, 14) AS Ahorro
+dineros_recaudados(proceso_recaudacion.id_general,  $P{fecha}, 14) AS Ahorro, 
+IFNULL((SELECT 
+            SUM(guia.saldo)
+        FROM
+            guia
+        WHERE
+            guia.fecha_recaudacion = fecha.fecha
+                AND guia.id_proceso_recuadacion IN (SELECT proceso_recaudacion.id_proceso_recaudacion FROM proceso_recaudacion ) 
+                AND guia.saldo > 0
+        GROUP BY guia.fecha_recaudacion), 0) AS Saldo
 FROM proceso_recaudacion 
 GROUP BY proceso_recaudacion.id_general
 ORDER BY proceso_recaudacion.nombre_general ASC]]>
