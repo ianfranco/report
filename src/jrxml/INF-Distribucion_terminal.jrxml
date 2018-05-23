@@ -11,7 +11,7 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_distribucion_terminal($P{idOperador}, '2018-02-01')]]>
+		<![CDATA[CALL final_planillon_distribucion_terminal($P{idOperador}, $P{fecha})]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="conductor" class="java.lang.String"/>

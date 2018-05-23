@@ -176,6 +176,8 @@ public class ImposicionesConductorController {
                 System.err.println("PRINT");
                 this.trabajador = null;
             }
+            
+            
 
         } catch (JRException jre) {
             System.err.println(jre.getMessage());

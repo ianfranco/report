@@ -21,6 +21,7 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.swing.JRViewer;
 import views.Abril2017;
+import views.Abril2018;
 import views.Agosto2017;
 import views.Diciembre2016;
 import views.Diciembre2017;
@@ -31,6 +32,7 @@ import views.Febrero2018;
 import views.Julio2017;
 import views.Junio2017;
 import views.Marzo2017;
+import views.Marzo2018;
 import views.Mayo2017;
 import views.MesSelectorlLiquidacionView;
 import views.Noviembre2016;
@@ -66,7 +68,9 @@ public class LiquidacionDinamicaController {
     private Febrero2017 febrero2017;
     private Febrero2018 febrero2018;
     private Marzo2017 marzo2017;
+    private Marzo2018 marzo2018;
     private Abril2017 abril2017;
+    private Abril2018 abril2018;
     private Mayo2017 mayo2017;
     private Junio2017 junio2017;
     private Julio2017 julio2017;
@@ -158,7 +162,8 @@ public class LiquidacionDinamicaController {
 
                 break;
             case 2:
-                System.err.println("INDICE:" + mes + " MARZO 2017");
+                if (this.view.getAnio().equals("2017")) {         
+                    System.err.println("INDICE:" + mes + " MARZO 2017");
 
                 marzo2017 = new Marzo2017(frame, view);
                 if (operador == 0) {
@@ -166,6 +171,17 @@ public class LiquidacionDinamicaController {
                 } else {
                     marzo2017.loadLiquidacion(true, operador);
                 }
+                }else{
+                    System.err.println("INDICE:" + mes + " Marzo 2018");
+
+                    marzo2018 = new Marzo2018(frame, view);
+                    if (operador == 0) {
+                        marzo2018.loadLiquidacion(true, operador);
+                    } else {
+                        marzo2018.loadLiquidacion(true, operador);
+                    }
+                }
+                
 
                 break;
             case 3:

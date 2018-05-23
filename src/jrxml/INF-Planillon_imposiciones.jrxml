@@ -14,7 +14,7 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="189"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="805"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="45"/>
+	<property name="ireport.x" value="219"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<parameter name="fecha" class="java.util.Date"/>

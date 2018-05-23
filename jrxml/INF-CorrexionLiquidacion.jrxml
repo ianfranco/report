@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fa5dddc7-f14e-4b6e-a83f-85920c510be9">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="104"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[CALL liquidaciones_contrato_base_mas_quince(0, '2018-04-01'); ]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="codigo_trabajador" class="java.lang.Integer"/>
+	<field name="rut_trabajador" class="java.lang.String"/>
+	<field name="nombre_trabajador" class="java.lang.String"/>
+	<field name="rut_empleador" class="java.lang.String"/>
+	<field name="nombre_empleador" class="java.lang.String"/>
+	<field name="nombre_terminal" class="java.lang.String"/>
+	<field name="nombre_sindicato" class="java.lang.String"/>
+	<field name="nombre_afp" class="java.lang.String"/>
+	<field name="nombre_isapre" class="java.lang.String"/>
+	<field name="observacion_licencias" class="java.lang.String"/>
+	<field name="tipo_contrato" class="java.lang.String"/>
+	<field name="error_saldo" class="java.lang.String"/>
+	<field name="fecha_liquidacion" class="java.sql.Date"/>
+	<field name="fecha_inicio_contrato" class="java.sql.Date"/>
+	<field name="fecha_termino_contrato" class="java.sql.Date"/>
+	<field name="fecha_inicio_licencias" class="java.sql.Date"/>
+	<field name="fecha_termino_licencias" class="java.sql.Date"/>
+	<field name="fecha_inicio_feriado" class="java.sql.Date"/>
+	<field name="fecha_termino_feriado" class="java.sql.Date"/>
+	<field name="fecha_inicio" class="java.sql.Date"/>
+	<field name="fecha_termino" class="java.sql.Date"/>
+	<field name="dias_contrato" class="java.lang.Integer"/>
+	<field name="dias_trabajados" class="java.lang.Integer"/>
+	<field name="dias_no_trabajados" class="java.lang.Integer"/>
+	<field name="dias_limpios" class="java.lang.Integer"/>
+	<field name="dias_licencias" class="java.lang.Integer"/>
+	<field name="dias_vacaciones" class="java.lang.Integer"/>
+	<field name="dias_descanso" class="java.lang.Integer"/>
+	<field name="dias_isapre" class="java.lang.Integer"/>
+	<field name="total_dias" class="java.lang.Integer"/>
+	<field name="estado" class="java.lang.Integer"/>
+	<field name="bruto" class="java.lang.Integer"/>
+	<field name="sueldo_base" class="java.lang.Integer"/>
+	<field name="ahorro_sueldo_base" class="java.lang.Integer"/>
+	<field name="diferencia_sueldo_base" class="java.lang.Integer"/>
+	<field name="horas_extras" class="java.lang.Integer"/>
+	<field name="septimo_dia" class="java.lang.Integer"/>
+	<field name="monto_feriado" class="java.lang.Integer"/>
+	<field name="bonotne" class="java.lang.Integer"/>
+	<field name="pagotne" class="java.lang.Integer"/>
+	<field name="imposicionestne" class="java.lang.Integer"/>
+	<field name="comision" class="java.lang.Integer"/>
+	<field name="cinco_porciento" class="java.lang.Integer"/>
+	<field name="cinco_porciento_extra" class="java.lang.Integer"/>
+	<field name="ahorro_conductor" class="java.lang.Integer"/>
+	<field name="abono" class="java.lang.Integer"/>
+	<field name="ahorro_empresario" class="java.lang.Integer"/>
+	<field name="total_haberes" class="java.lang.Integer"/>
+	<field name="numero_cargas" class="java.lang.Integer"/>
+	<field name="monto_cargas" class="java.lang.Integer"/>
+	<field name="monto_retroactivos" class="java.lang.Integer"/>
+	<field name="monto_afp" class="java.lang.Integer"/>
+	<field name="monto_cesantia_trabajador" class="java.lang.Integer"/>
+	<field name="monto_cesantia_empleador" class="java.lang.Integer"/>
+	<field name="monto_inp" class="java.lang.Integer"/>
+	<field name="monto_cesantia_total" class="java.lang.Integer"/>
+	<field name="ahorro_voluntario_previsional" class="java.lang.Integer"/>
+	<field name="monto_sis" class="java.lang.Integer"/>
+	<field name="monto_salud" class="java.lang.Integer"/>
+	<field name="monto_caja" class="java.lang.Integer"/>
+	<field name="monto_isapre" class="java.lang.Integer"/>
+	<field name="monto_inp_aux" class="java.lang.Integer"/>
+	<field name="porcentaje_caja" class="java.lang.String"/>
+	<field name="porcentaje_inp" class="java.lang.String"/>
+	<field name="monto_saldo_anterior" class="java.lang.Integer"/>
+	<field name="monto_retencion_judicial" class="java.lang.Integer"/>
+	<field name="monto_credito_caja" class="java.lang.Integer"/>
+	<field name="monto_reconocimiento_deuda" class="java.lang.Integer"/>
+	<field name="monto_credito_salud" class="java.lang.Integer"/>
+	<field name="monto_seguro" class="java.lang.Integer"/>
+	<field name="monto_dentista" class="java.lang.Integer"/>
+	<field name="monto_otros_descuentos" class="java.lang.Integer"/>
+	<field name="monto_sindicato" class="java.lang.Integer"/>
+	<field name="total_descuentos_legales" class="java.lang.Integer"/>
+	<field name="total_descuentos" class="java.lang.Integer"/>
+	<field name="total_final_descuentos" class="java.lang.Integer"/>
+	<field name="saldo" class="java.lang.Integer"/>
+	<field name="saldo_real" class="java.lang.Integer"/>
+	<field name="total_fila" class="java.lang.Integer"/>
+	<field name="id_relacion_laboral" class="java.lang.Integer"/>
+	<field name="id_grupo_asignacion_familiar" class="java.lang.Integer"/>
+	<field name="id_afp" class="java.lang.Integer"/>
+	<field name="id_salud" class="java.lang.Integer"/>
+	<field name="id_moneda_salud" class="java.lang.Integer"/>
+	<field name="id_mutual" class="java.lang.Integer"/>
+	<field name="id_caja_compensacion" class="java.lang.Integer"/>
+	<field name="id_trabajador" class="java.lang.Integer"/>
+	<field name="id_empresa" class="java.lang.Integer"/>
+	<field name="id_tipo_trabajador" class="java.lang.Integer"/>
+	<field name="id_tipo_contrato" class="java.lang.Integer"/>
+	<field name="id_terminal" class="java.lang.Integer"/>
+	<field name="id_operador" class="java.lang.Integer"/>
+	<field name="id_tipo_cotizacion" class="java.lang.Integer"/>
+	<field name="porcentaje_afp" class="java.math.BigDecimal"/>
+	<field name="porcentaje_salud" class="java.math.BigDecimal"/>
+	<field name="auxiliar_isapre" class="java.math.BigDecimal"/>
+	<group name="id_empresa">
+		<groupExpression><![CDATA[$F{rut_empleador}]]></groupExpression>
+		<groupHeader>
+			<band height="35">
+				<textField>
+					<reportElement x="0" y="15" width="260" height="20" uuid="81368181-8c06-4169-b79c-a5d700504ab8"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_empleador}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="260" y="15" width="125" height="20" uuid="b3b7cd09-1188-4e99-a1e4-58a63aaf450d"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{rut_empleador}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="20" width="60" height="20" uuid="1cdda3c7-71fb-430f-864d-6794c41cd866"/>
+				<textElement markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2018]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20" uuid="2860fe00-4349-4f1a-9458-761faad8cf89"/>
+				<textElement markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ABRIL]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="908" y="0" width="60" height="30" uuid="c8f95805-b5ce-43b5-9818-82ee038a21c4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="f239b468-f02d-41cf-9965-631a8fb96019"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="798" y="0" width="110" height="20" uuid="7ca80273-1b81-4fce-9c1e-56514146ac8e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fecha impresión:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="59" width="420" height="20" uuid="5561aa7b-77eb-481c-bcd6-bce56d898def"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORME CORREXIÓN NUEVO PLANILLÓN]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="230" height="20" uuid="0e3a8121-f1fd-4d41-9906-d94a333e6bb2"/>
+				<text><![CDATA[Conductor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="15" width="63" height="20" uuid="bf768f1f-61f0-4839-9fbc-35951a985bd5"/>
+				<text><![CDATA[Afp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="15" width="83" height="20" uuid="c92bd667-fea7-443d-adce-eccd158af0ca"/>
+				<text><![CDATA[Salud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="15" width="70" height="20" uuid="11472d7c-4e18-4ad2-8fe5-fbaea7d71f0d"/>
+				<text><![CDATA[Contrato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="15" width="20" height="20" uuid="35fd635f-c221-480c-94b3-9d3f4c91f09c"/>
+				<text><![CDATA[DC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="15" width="20" height="20" uuid="1add798c-435e-4756-b479-6f4d6721eebd"/>
+				<text><![CDATA[DT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="15" width="25" height="20" uuid="fcfbd531-ae1b-4ebd-84db-00e20742ec08"/>
+				<text><![CDATA[DNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="511" y="15" width="20" height="20" uuid="ac2e8c8c-7eaf-4d2a-9b26-157937fec3f1"/>
+				<text><![CDATA[DL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="531" y="15" width="20" height="20" uuid="0740981e-06e0-4393-94d3-e69bc03cb43c"/>
+				<text><![CDATA[DV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="551" y="15" width="20" height="20" uuid="41e0762a-d2a3-4084-8754-feee6b4af359"/>
+				<text><![CDATA[DD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="571" y="15" width="100" height="20" uuid="1cdf8979-a5d8-444d-b78c-ad7a6d92b17d"/>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="671" y="15" width="72" height="20" uuid="14114c37-8af5-4b69-9e94-94db64bae8b8"/>
+				<text><![CDATA[Ahorro.S.B.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="743" y="15" width="69" height="20" uuid="590e2e9b-bc9e-4ae5-a543-3c94a40745d1"/>
+				<text><![CDATA[Ahorro. Emp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="812" y="15" width="65" height="20" uuid="ddfceef8-8f58-4d43-8934-a219d9e3cb2c"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[3%]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="230" height="20" uuid="cdae36ed-923a-4426-843f-9fdf5f306450"/>
+				<textFieldExpression><![CDATA[$F{nombre_trabajador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="63" height="20" uuid="15b35b9b-7bac-4e30-ab04-b10f39fa1668"/>
+				<textFieldExpression><![CDATA[$F{nombre_afp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="293" y="0" width="83" height="20" uuid="24dbffdb-270e-4a2e-8853-d4c36f2520d7"/>
+				<textFieldExpression><![CDATA[$F{nombre_isapre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="376" y="0" width="70" height="20" uuid="0cca84e9-e4c8-44b9-8c36-f70fa7e3dfc6"/>
+				<textFieldExpression><![CDATA[$F{fecha_inicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="0" width="20" height="20" uuid="ac163786-2b32-41ea-a8bc-9edff04f8c68"/>
+				<textFieldExpression><![CDATA[$F{dias_contrato}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="466" y="0" width="20" height="20" uuid="9dcc500f-2bcc-4acc-8097-c84a932c96c2"/>
+				<textFieldExpression><![CDATA[$F{dias_trabajados}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="0" width="25" height="20" uuid="bd0e6d7f-437c-4ec9-bc63-39df6e9ddf83"/>
+				<textFieldExpression><![CDATA[$F{dias_no_trabajados}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="511" y="0" width="20" height="20" uuid="53a24911-d57a-4f9b-89ac-362ac1edc369"/>
+				<textFieldExpression><![CDATA[$F{dias_licencias}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="531" y="0" width="20" height="20" uuid="c380e476-f682-4517-91a5-03ac33a202e6"/>
+				<textFieldExpression><![CDATA[$F{dias_vacaciones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="551" y="0" width="20" height="20" uuid="35264ba0-5e4c-41ef-be77-a4d83848cfb2"/>
+				<textFieldExpression><![CDATA[$F{dias_descanso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="571" y="0" width="100" height="20" uuid="828c7263-6671-42b4-8ebe-514a0412b09f"/>
+				<textFieldExpression><![CDATA[$F{observacion_licencias}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="671" y="0" width="72" height="20" uuid="814bf1fb-0d5f-4e1d-96f9-af2e5889c3a7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{ahorro_sueldo_base}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0">
+				<reportElement x="743" y="0" width="69" height="20" uuid="d180ca45-a5f5-4201-b247-a45439418742"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{ahorro_empresario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="812" y="0" width="65" height="20" uuid="47bc673f-97e0-4b02-97fe-61ac8d182a49"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cinco_porciento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

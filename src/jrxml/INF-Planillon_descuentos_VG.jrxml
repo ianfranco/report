@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="INF-Planillon_imposiciones" pageWidth="1077" pageHeight="792" columnWidth="1037" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="e90a759c-15d2-4847-8640-5a2677063648">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="193"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="801"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="533"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="453"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.util.Date"/>
+	<parameter name="fechaCompleta" class="java.lang.String"/>
+	<parameter name="idOperador" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[CALL liquidaciones_contrato_base_mas_quince(0, '2018-04-01')]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="codigo_trabajador" class="java.lang.Integer"/>
+	<field name="rut_trabajador" class="java.lang.String"/>
+	<field name="nombre_trabajador" class="java.lang.String"/>
+	<field name="codigo_emp" class="java.lang.Integer"/>
+	<field name="rut_empleador" class="java.lang.String"/>
+	<field name="nombre_empleador" class="java.lang.String"/>
+	<field name="nombre_terminal" class="java.lang.String"/>
+	<field name="nombre_sindicato" class="java.lang.String"/>
+	<field name="nombre_afp" class="java.lang.String"/>
+	<field name="nombre_isapre" class="java.lang.String"/>
+	<field name="observacion_licencias" class="java.lang.String"/>
+	<field name="tipo_contrato" class="java.lang.String"/>
+	<field name="error_saldo" class="java.lang.String"/>
+	<field name="fecha_liquidacion" class="java.sql.Date"/>
+	<field name="fecha_inicio_contrato" class="java.sql.Date"/>
+	<field name="fecha_termino_contrato" class="java.sql.Date"/>
+	<field name="fecha_inicio_licencias" class="java.sql.Date"/>
+	<field name="fecha_termino_licencias" class="java.sql.Date"/>
+	<field name="fecha_inicio_feriado" class="java.sql.Date"/>
+	<field name="fecha_termino_feriado" class="java.sql.Date"/>
+	<field name="fecha_inicio" class="java.sql.Date"/>
+	<field name="fecha_termino" class="java.sql.Date"/>
+	<field name="dias_contrato" class="java.lang.Integer"/>
+	<field name="dias_trabajados" class="java.lang.Integer"/>
+	<field name="dias_no_trabajados" class="java.lang.Integer"/>
+	<field name="dias_limpios" class="java.lang.Integer"/>
+	<field name="dias_licencias" class="java.lang.Integer"/>
+	<field name="dias_vacaciones" class="java.lang.Integer"/>
+	<field name="dias_descanso" class="java.lang.Integer"/>
+	<field name="dias_isapre" class="java.lang.Integer"/>
+	<field name="total_dias" class="java.lang.Integer"/>
+	<field name="estado" class="java.lang.Integer"/>
+	<field name="bruto" class="java.lang.Integer"/>
+	<field name="sueldo_base" class="java.lang.Integer"/>
+	<field name="ahorro_sueldo_base" class="java.lang.Integer"/>
+	<field name="diferencia_sueldo_base" class="java.lang.Integer"/>
+	<field name="horas_extras" class="java.lang.Integer"/>
+	<field name="septimo_dia" class="java.lang.Integer"/>
+	<field name="monto_feriado" class="java.lang.Integer"/>
+	<field name="bonotne" class="java.lang.Integer"/>
+	<field name="pagotne" class="java.lang.Integer"/>
+	<field name="imposicionestne" class="java.lang.Integer"/>
+	<field name="comision" class="java.lang.Integer"/>
+	<field name="imponible" class="java.lang.Integer"/>
+	<field name="cinco_porciento" class="java.lang.Integer"/>
+	<field name="cinco_porciento_extra" class="java.lang.Integer"/>
+	<field name="ahorro_conductor" class="java.lang.Integer"/>
+	<field name="abono" class="java.lang.Integer"/>
+	<field name="ahorro_empresario" class="java.lang.Integer"/>
+	<field name="total_haberes" class="java.lang.Integer"/>
+	<field name="numero_cargas" class="java.lang.Integer"/>
+	<field name="monto_cargas" class="java.lang.Integer"/>
+	<field name="monto_retroactivos" class="java.lang.Integer"/>
+	<field name="monto_afp" class="java.lang.Integer"/>
+	<field name="monto_cesantia_trabajador" class="java.lang.Integer"/>
+	<field name="monto_cesantia_empleador" class="java.lang.Integer"/>
+	<field name="monto_inp" class="java.lang.Integer"/>
+	<field name="monto_cesantia_total" class="java.lang.Integer"/>
+	<field name="ahorro_voluntario_previsional" class="java.lang.Integer"/>
+	<field name="monto_sis" class="java.lang.Integer"/>
+	<field name="monto_salud" class="java.lang.Integer"/>
+	<field name="monto_caja" class="java.lang.Integer"/>
+	<field name="monto_isapre" class="java.lang.Integer"/>
+	<field name="monto_inp_aux" class="java.lang.Integer"/>
+	<field name="porcentaje_caja" class="java.lang.String"/>
+	<field name="porcentaje_inp" class="java.lang.String"/>
+	<field name="monto_saldo_anterior" class="java.lang.Integer"/>
+	<field name="monto_retencion_judicial" class="java.lang.Integer"/>
+	<field name="monto_credito_caja" class="java.lang.Integer"/>
+	<field name="monto_reconocimiento_deuda" class="java.lang.Integer"/>
+	<field name="monto_credito_salud" class="java.lang.Integer"/>
+	<field name="monto_seguro" class="java.lang.Integer"/>
+	<field name="monto_dentista" class="java.lang.Integer"/>
+	<field name="monto_otros_descuentos" class="java.lang.Integer"/>
+	<field name="monto_sindicato" class="java.lang.Integer"/>
+	<field name="total_descuentos_legales" class="java.lang.Integer"/>
+	<field name="total_descuentos" class="java.lang.Integer"/>
+	<field name="total_final_descuentos" class="java.lang.Integer"/>
+	<field name="saldo" class="java.lang.Integer"/>
+	<field name="saldo_real" class="java.lang.Integer"/>
+	<field name="total_fila" class="java.lang.Integer"/>
+	<field name="id_relacion_laboral" class="java.lang.Integer"/>
+	<field name="id_grupo_asignacion_familiar" class="java.lang.Integer"/>
+	<field name="id_afp" class="java.lang.Integer"/>
+	<field name="id_salud" class="java.lang.Integer"/>
+	<field name="id_moneda_salud" class="java.lang.Integer"/>
+	<field name="id_mutual" class="java.lang.Integer"/>
+	<field name="id_caja_compensacion" class="java.lang.Integer"/>
+	<field name="id_trabajador" class="java.lang.Integer"/>
+	<field name="id_empresa" class="java.lang.Integer"/>
+	<field name="id_tipo_trabajador" class="java.lang.Integer"/>
+	<field name="id_tipo_contrato" class="java.lang.Integer"/>
+	<field name="id_terminal" class="java.lang.Integer"/>
+	<field name="id_operador" class="java.lang.Integer"/>
+	<field name="id_tipo_cotizacion" class="java.lang.Integer"/>
+	<field name="porcentaje_afp" class="java.math.BigDecimal"/>
+	<field name="porcentaje_salud" class="java.math.BigDecimal"/>
+	<field name="auxiliar_isapre" class="java.math.BigDecimal"/>
+	<variable name="montoCargas_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_cargas}]]></variableExpression>
+	</variable>
+	<variable name="abonos_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{abono}]]></variableExpression>
+	</variable>
+	<variable name="ahorroGuia_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{ahorro_conductor}]]></variableExpression>
+	</variable>
+	<variable name="montoSindicato_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_sindicato}]]></variableExpression>
+	</variable>
+	<variable name="montoSaldoAnterior_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_saldo_anterior}]]></variableExpression>
+	</variable>
+	<variable name="montoRetencionJudicial_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_retencion_judicial}]]></variableExpression>
+	</variable>
+	<variable name="montoReconocimientoDeuda_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_reconocimiento_deuda}]]></variableExpression>
+	</variable>
+	<variable name="ahorroVoluntario_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{ahorro_voluntario_previsional}]]></variableExpression>
+	</variable>
+	<variable name="montoCreditoCaja_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_credito_caja}]]></variableExpression>
+	</variable>
+	<variable name="montoCreditoSalud_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_credito_salud}]]></variableExpression>
+	</variable>
+	<variable name="montoSeguro_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_seguro}]]></variableExpression>
+	</variable>
+	<variable name="montoDentista_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_dentista}]]></variableExpression>
+	</variable>
+	<variable name="montoOtrosDcto_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_otros_descuentos}]]></variableExpression>
+	</variable>
+	<variable name="montoCargas_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_cargas}]]></variableExpression>
+	</variable>
+	<variable name="abonos_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{abono}]]></variableExpression>
+	</variable>
+	<variable name="ahorroGuia_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{ahorro_conductor}]]></variableExpression>
+	</variable>
+	<variable name="montoSaldoAnterior_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_saldo_anterior}]]></variableExpression>
+	</variable>
+	<variable name="montoSindicato_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_sindicato}]]></variableExpression>
+	</variable>
+	<variable name="montoRetencionJudicial_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_retencion_judicial}]]></variableExpression>
+	</variable>
+	<variable name="montoReconocimientoDeuda_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_reconocimiento_deuda}]]></variableExpression>
+	</variable>
+	<variable name="ahorroVoluntario_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{ahorro_voluntario_previsional}]]></variableExpression>
+	</variable>
+	<variable name="montoCreditoSalud_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_credito_salud}]]></variableExpression>
+	</variable>
+	<variable name="montoCreditoSalud_3" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_credito_salud}]]></variableExpression>
+	</variable>
+	<variable name="montoSeguro_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_seguro}]]></variableExpression>
+	</variable>
+	<variable name="montoDentista_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_dentista}]]></variableExpression>
+	</variable>
+	<variable name="montoOtrosDcto_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_otros_descuentos}]]></variableExpression>
+	</variable>
+	<variable name="montoCreditoCaja_2" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_credito_caja}]]></variableExpression>
+	</variable>
+	<variable name="saldoFinal_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<variable name="saldoReal_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo_real}]]></variableExpression>
+	</variable>
+	<variable name="vAjusteBase_1" class="java.lang.Integer" resetType="Group" resetGroup="Empresario" calculation="Sum">
+		<variableExpression><![CDATA[$F{diferencia_sueldo_base}]]></variableExpression>
+	</variable>
+	<variable name="vAjusteBase_2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{diferencia_sueldo_base}]]></variableExpression>
+	</variable>
+	<group name="Empresario" keepTogether="true">
+		<groupExpression><![CDATA[$F{nombre_empleador}]]></groupExpression>
+		<groupHeader>
+			<band height="18">
+				<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				<textField>
+					<reportElement x="50" y="0" width="236" height="18" uuid="976953ac-61b6-40d0-b24a-d11766e6ed99">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_empleador}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="40" height="18" uuid="b2aa882e-d85c-43aa-aac1-a1e5040d265f"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["("+$F{codigo_trabajador}+")"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="36">
+				<staticText>
+					<reportElement x="200" y="0" width="770" height="10" uuid="ad2d09d0-cb76-448e-b4ec-0926056fa114">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<box leftPadding="0" rightPadding="7"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="286" y="14" width="34" height="20" uuid="badd978b-9780-44ee-ab54-080947ac4b08"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{abonos_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="320" y="14" width="40" height="20" uuid="67a1d8da-fcec-49bd-b3c4-2a8b276b765a"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ahorroGuia_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="412" y="14" width="50" height="20" uuid="5f3034dd-7496-4561-872d-87bbe570aa5d"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoSaldoAnterior_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="465" y="14" width="32" height="20" uuid="aebb4de0-80dc-4914-9471-ab83bd971e32"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoSindicato_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="497" y="14" width="37" height="20" uuid="e00c5fc3-acde-403f-8704-b7f919a21d11"/>
+					<box rightPadding="2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoRetencionJudicial_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="534" y="14" width="41" height="20" uuid="ea97c03f-f64c-42c2-a71e-52926e65cd5b"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoReconocimientoDeuda_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="579" y="14" width="37" height="20" uuid="81bfb443-1239-430b-b01c-d87773ea30c1"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ahorroVoluntario_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="620" y="14" width="40" height="20" uuid="3e4a1f49-c388-40eb-b1c3-b68d2b09ba43"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoCreditoCaja_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="664" y="14" width="39" height="20" uuid="19971a56-668c-4ae8-ab20-cc9e8e2dd3b3"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoCreditoSalud_3}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="703" y="14" width="36" height="20" uuid="e2be147f-4183-471d-a9a4-7f7b69388bba"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoSeguro_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="739" y="14" width="36" height="20" uuid="68fd76a9-3d71-468f-b9b2-1db1cc7362d0"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoDentista_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement x="775" y="14" width="36" height="20" uuid="d4262559-ca58-4f29-89e6-7963cbad864c"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montoOtrosDcto_2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="59" y="14" width="76" height="20" uuid="7f82b910-b6b5-4bc7-a03c-bbc4b913b81c"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[TOTAL EMPRESA :]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="236" y="14" width="50" height="20" uuid="dea5085a-216c-49fa-aa6d-c774b30427b2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{vAjusteBase_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="109" height="20" uuid="acd3f655-fa32-4b8a-ac09-77b90d459009"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="28" width="120" height="14" uuid="5da19b2d-945b-4aad-a823-117766194ec0"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLANILLA DE PAGO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="28" width="109" height="14" uuid="1495f783-b11a-42ad-999e-2cdc2b64af5d"/>
+				<textElement markup="none">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaCompleta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="910" y="20" width="50" height="16" uuid="11f967b3-310f-4904-8baa-460a2da7a1c9"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="870" y="20" width="40" height="14" uuid="724a3cab-58ef-434b-9bf5-b3bc5ac1d53b">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="910" y="0" width="50" height="14" uuid="80ad4fbb-dcd7-4af2-bf3a-d531e62eb9ec"/>
+				<textElement textAlignment="Right" markup="none">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="793" y="0" width="117" height="14" uuid="c308eea7-0258-4dc9-bc5a-7a68d5b86d7e">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box rightPadding="6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[FECHA IMPRESIÓN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="960" height="11" uuid="85ba46c7-8643-4ae3-bf35-bd09cf5c1da5"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+			<staticText>
+				<reportElement x="0" y="3" width="30" height="14" uuid="c3d03b76-0369-49a0-8a2f-ff177aaa727f"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[COD.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="3" width="130" height="14" uuid="fb323381-cd34-41c3-9ecf-ad10efacbe40">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[NOMBRE CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="3" width="48" height="14" uuid="69070495-0ebb-49d6-81d4-d3ae7a0089b0">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[5%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="3" width="41" height="14" uuid="4c5184be-ed3b-410f-bd19-661ad31ba09a">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Dif. SB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="3" width="30" height="14" uuid="5eab845c-7974-4872-8c52-af25406d4ee0">
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Abono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="3" width="37" height="14" uuid="7effd416-677c-40d7-ab7b-7e25f77929ad">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Tot.Hab.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="3" width="33" height="14" uuid="a5481ac0-5fd4-4250-a34b-cc85b608e4e2">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Des.Leg.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="3" width="30" height="14" uuid="f1cabc09-b44d-4224-9fd7-d3019ee85d3f">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[S.Ant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="3" width="30" height="14" uuid="e9cdb944-ba67-414c-9695-4f9382fd058c">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Sindicato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="497" y="3" width="37" height="14" uuid="4dfb9cda-0282-4daa-b764-7140feee4f53">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Ret.Jud.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="3" width="41" height="14" uuid="455b6deb-cb70-4d6b-bb44-e43bc315cae0">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Rec.Deuda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="576" y="3" width="40" height="14" uuid="08adc2d5-c5de-4ded-85f6-f027eb656fe5">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Aho.Vol]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="620" y="3" width="40" height="14" uuid="ca89fb60-922c-4c94-b0e6-73a91fc81b6f">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Créd. Caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="875" y="3" width="40" height="14" uuid="e5320aad-62e8-49fb-a14f-d07f1a3159ac">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Saldo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="915" y="3" width="40" height="14" uuid="eba9cbb4-0ee0-490a-832f-6a479f85da50">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Real]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="13" width="963" height="10" uuid="b496a200-6e7f-47b0-b15d-033bbadceec6">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="3" width="40" height="14" uuid="619eed6a-3f25-4464-ad8a-9d96dd830e92">
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Ahorro G.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="703" y="3" width="36" height="14" uuid="48d1fa7a-36ca-4f59-90af-5fd3661b3c27">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Seguros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="739" y="3" width="36" height="14" uuid="92b7e626-47f9-4968-981e-67c80b52b6ca">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Optica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="775" y="3" width="36" height="14" uuid="c0c80f35-6215-4142-bb52-5a6aaba6e392">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Otros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="664" y="3" width="39" height="14" uuid="82046bfa-e43a-40a7-8f3b-157fcef1a041">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Salud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="830" y="3" width="40" height="14" uuid="d81b6c4a-6a26-46c4-9db2-8487ff1318a7">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Anexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="811" y="3" width="19" height="14" uuid="343db457-9c33-4f7a-9b19-5c10b80b88c9">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="208" y="3" width="41" height="14" uuid="13997a32-e22b-4c01-be46-ec0063c9d9ef">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[H. Extras]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+			<textField>
+				<reportElement x="30" y="0" width="130" height="14" uuid="57ea5f34-25a9-477f-87ce-0cf01528c143">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_trabajador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="30" height="14" uuid="a70dc431-686d-4ba1-99f4-bee966663ca1">
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_trabajador}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="160" y="0" width="48" height="14" uuid="1fa11f1a-6f9f-4a52-8859-92b6b42c569e">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cinco_porciento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="360" y="0" width="37" height="14" uuid="a7a46e8d-3c5d-42b4-9ab9-3a377cefa90d">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_haberes}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="397" y="0" width="33" height="14" uuid="7aa07438-d49c-4501-a0cb-9bf0175eb0ab">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_descuentos_legales}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="432" y="0" width="30" height="14" uuid="ac31168a-4566-4f19-ad1f-bc34b4a3a0a1">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_saldo_anterior}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="465" y="0" width="30" height="14" uuid="fb2cb998-6171-4119-be37-3081c7dae59c">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_sindicato}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="497" y="0" width="37" height="14" uuid="74e41d11-103c-4f70-ab86-aeb1dc3cbffd">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_retencion_judicial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="534" y="0" width="41" height="14" uuid="0e2f4131-3661-4747-b5df-1b4284900bdd">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_reconocimiento_deuda}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="576" y="0" width="40" height="14" uuid="8add5e78-1646-4b9e-8994-fd9fbb4f36ae">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ahorro_voluntario_previsional}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="620" y="0" width="40" height="14" uuid="a656d965-6b28-47f9-a739-4c47e8bc2669">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_credito_caja}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="875" y="0" width="40" height="14" uuid="9e980617-0d3e-4525-aa51-da17f96ae213">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###.###">
+				<reportElement x="915" y="0" width="40" height="14" uuid="2a49b7d9-debf-421a-8b53-09f30d32aff6">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_real}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="320" y="0" width="40" height="14" uuid="32907277-11a8-4401-ae52-469554e9f33d">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ahorro_conductor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="0" width="30" height="14" uuid="437043b0-9271-44a6-a288-623693613dcc"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{abono}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###.###">
+				<reportElement x="249" y="0" width="41" height="14" uuid="8ef36191-c426-41a8-a0b2-85e6a9b9de36">
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<box rightPadding="0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diferencia_sueldo_base}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="703" y="0" width="36" height="14" uuid="5de3e632-e50e-48dd-b2dd-6a399a931c02">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_seguro}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="739" y="0" width="36" height="14" uuid="b3c052ec-9e0d-4990-9752-2e68a628a842">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_dentista}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="775" y="0" width="36" height="14" uuid="2ff593bf-e2d7-4720-874c-73f2675c70b9">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_otros_descuentos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="664" y="0" width="39" height="14" uuid="7c92c59a-539b-48b5-a6ad-d82af6c45e0c">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_credito_salud}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="814" y="0" width="16" height="14" uuid="f6a1a368-d31a-41c3-9f67-4a7bf1b9f188">
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" ("+$F{numero_cargas}+")"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="830" y="0" width="40" height="14" uuid="2c68fbb4-1106-4579-b4cf-94be0b133061">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{cinco_porciento_extra}-$F{cinco_porciento})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="208" y="0" width="41" height="14" uuid="ae5b819a-65df-4334-b74b-492d83f218f4">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horas_extras}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="287" y="0" width="33" height="20" uuid="3aafacd3-e023-4d20-8c47-08b063118fad"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{abonos_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="320" y="0" width="40" height="20" uuid="700e3a3a-7a70-48bf-b6dd-02f9a13ad31f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ahorroGuia_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="458" y="0" width="39" height="20" uuid="842aa959-9906-4323-aa25-da3dafff240b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoSindicato_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="412" y="0" width="46" height="20" uuid="48cf62c1-01ff-4450-9ea7-2ee7d75b7010"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoSaldoAnterior_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="497" y="0" width="37" height="20" uuid="cda3826f-71f4-4b35-a7da-e5f6c5a57c2f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoRetencionJudicial_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="534" y="0" width="45" height="20" uuid="8ea67b58-4ae9-43ec-8e1b-c89357ce09b4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoReconocimientoDeuda_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="579" y="0" width="40" height="20" uuid="1a7cc948-2ed3-4119-8ca7-7d830150289c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ahorroVoluntario_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="620" y="0" width="44" height="20" uuid="91e8c7da-35e7-4cd2-af3d-0d8b6d2c4613"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoCreditoCaja_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="664" y="0" width="39" height="20" uuid="9d16c1f6-8cf1-4d78-bbc1-0781ea82379f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoCreditoSalud_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="703" y="0" width="36" height="20" uuid="e15f6554-7238-4a4a-97f8-d62052277a0e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoSeguro_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="739" y="0" width="36" height="20" uuid="35c85586-8409-4f97-8844-e198d53244ce"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoDentista_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="775" y="0" width="36" height="20" uuid="fe1f24f2-ed9c-4bcc-aa33-a8c4b59bdb7c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{montoOtrosDcto_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="57" y="0" width="78" height="20" uuid="631f7b23-bcbf-4608-b8d9-3c2abb1a39e8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[TOTAL PLANILLÓN :]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="875" y="1" width="40" height="20" uuid="1b29d55b-6264-4c2a-88f9-c539870b5f44"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldoFinal_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="924" y="1" width="40" height="20" uuid="04427b4c-5d7e-4aec-aec8-ae249411a6ed"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldoReal_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="236" y="0" width="50" height="20" uuid="6f3d21b5-b546-44f7-b7a2-0716840d72c8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{vAjusteBase_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

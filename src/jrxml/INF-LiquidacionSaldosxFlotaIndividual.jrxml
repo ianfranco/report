@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Resumen_liquidacion_empresa" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bfc5c403-97fa-470c-b1b0-78af2a778f31">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="222"/>
@@ -357,11 +356,11 @@ FROM
 	<pageHeader>
 		<band height="62" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="f84f5497-482b-4e67-9f36-7c4b6d62b27f"/>
+				<reportElement x="0" y="0" width="181" height="20" uuid="f84f5497-482b-4e67-9f36-7c4b6d62b27f"/>
 				<textElement>
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[VIÑA BUS S.A.]]></text>
+				<text><![CDATA[VIÑA BUS S.A.-]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="20" width="86" height="20" uuid="da936218-ee28-4330-a6c4-208da5017947"/>

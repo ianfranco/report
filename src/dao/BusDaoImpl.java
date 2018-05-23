@@ -28,7 +28,7 @@ public class BusDaoImpl {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
-        String sql = "FROM Bus b";
+        String sql = "FROM Bus b ORDER BY b.numeroBus";
         try {
 
             list = session.createQuery(sql).list();
