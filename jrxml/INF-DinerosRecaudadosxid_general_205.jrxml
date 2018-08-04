@@ -23,9 +23,14 @@
 		<![CDATA[SELECT 
 proceso_recaudacion.nombre_general, 
 fecha.fecha, 
-(dineros_recaudados_rp(proceso_recaudacion.id_proceso_recaudacion, fecha.fecha, 20)) AS 'Administración'
+(SELECT 
+			IFNULL(SUM(egreso_guia.monto), 0) 
+		FROM egreso_guia 
+			LEFT JOIN guia ON egreso_guia.id_guia = guia.id_guia 
+			LEFT JOIN egreso_recaudacion ON egreso_guia.id_egreso_servicio = egreso_recaudacion.id_egreso_recaudacion			
+            WHERE guia.fecha_recaudacion = fecha.fecha AND egreso_recaudacion.id_egreso = 21) AS 'Administración'
 FROM proceso_recaudacion, fecha 
-WHERE proceso_recaudacion.id_proceso_recaudacion = $P{idProcesoGeneral}  AND fecha.fecha BETWEEN  $P{fecha} AND LAST_DAY( $P{fecha} )
+WHERE proceso_recaudacion.id_proceso_recaudacion =  $P{idProcesoGeneral} AND fecha.fecha BETWEEN  $P{fecha} AND LAST_DAY( $P{fecha} )
 GROUP BY fecha.fecha 
 ORDER BY fecha.fecha ASC]]>
 	</queryString>
@@ -35,7 +40,7 @@ ORDER BY fecha.fecha ASC]]>
 	<field name="fecha" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Administración" class="java.lang.Integer">
+	<field name="Administración" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="Administración_1" class="java.math.BigDecimal" calculation="Sum">
@@ -49,16 +54,16 @@ ORDER BY fecha.fecha ASC]]>
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="15" uuid="d9139b23-a156-428a-bdaa-82badb9bcc22"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<text><![CDATA[VIÑA BUS S.A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="15" width="100" height="15" uuid="5227dc9a-91ae-4f57-961a-ff179ad7ed7b"/>
+				<reportElement x="0" y="15" width="253" height="15" uuid="5227dc9a-91ae-4f57-961a-ff179ad7ed7b"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
-				<text><![CDATA[DINEROS RECAUDADOS]]></text>
+				<text><![CDATA[DINEROS RECAUDADOS - AHORRO EMPRESARIO]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="59" width="556" height="1" uuid="86db0dd0-6329-4413-ad03-e6d66f035eb3"/>
@@ -71,7 +76,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<text><![CDATA[TERMINAL:]]></text>
 			</staticText>
@@ -80,7 +85,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nombreProcesoRecaudacion}]]></textFieldExpression>
 			</textField>
@@ -89,7 +94,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{mes}]]></textFieldExpression>
 			</textField>
@@ -98,7 +103,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<text><![CDATA[MES:]]></text>
 			</staticText>
@@ -107,7 +112,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{año}]]></textFieldExpression>
 			</textField>
@@ -116,7 +121,7 @@ ORDER BY fecha.fecha ASC]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<text><![CDATA[AÑO:]]></text>
 			</staticText>
@@ -130,16 +135,16 @@ ORDER BY fecha.fecha ASC]]>
 			<staticText>
 				<reportElement x="0" y="0" width="121" height="15" uuid="224d9121-08c1-41c6-be93-3eb09ec65f36"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="121" y="0" width="79" height="15" uuid="075c261d-9b87-4750-8519-e70862e57853"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
-				<text><![CDATA[RECAUDACION ]]></text>
+				<text><![CDATA[RECAUDACION 409]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="16" width="556" height="1" uuid="287d3f3b-dc0d-4b46-8c36-ab6c28e588a4"/>
@@ -154,14 +159,14 @@ ORDER BY fecha.fecha ASC]]>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="0" y="0" width="121" height="15" uuid="c33395c5-c7ad-4554-bbf4-dea4848426a5"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0">
 				<reportElement x="148" y="0" width="50" height="15" uuid="37927ef5-69b7-4966-b865-5caa295e06de"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Administración}]]></textFieldExpression>
 			</textField>
@@ -175,21 +180,21 @@ ORDER BY fecha.fecha ASC]]>
 			<textField evaluationTime="Report">
 				<reportElement x="535" y="0" width="12" height="15" uuid="5bbd15b8-49a6-4761-8ac0-e8d26903719f"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="455" y="0" width="80" height="15" uuid="e9a1a523-3c69-4e50-9b92-1521a8ae97fc"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="0" y="0" width="100" height="13" uuid="67b11366-87b4-4644-aae6-1b13abd2f1e1"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -206,14 +211,14 @@ ORDER BY fecha.fecha ASC]]>
 			<staticText>
 				<reportElement x="46" y="2" width="77" height="15" uuid="273d49ef-d4bf-4288-bc9c-2ee4a17d9a3c"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<text><![CDATA[Totales]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
 				<reportElement x="123" y="2" width="75" height="15" uuid="2b63fe49-f855-48fc-80ae-8dac514478ed"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Administración_1}]]></textFieldExpression>
 			</textField>
