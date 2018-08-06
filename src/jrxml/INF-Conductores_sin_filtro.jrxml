@@ -33,11 +33,11 @@
                     3),
                 '-',
                 RIGHT(trabajador.rut_trabajador, 1))) AS rut, 
-                liquidaciones_febrero_2018.NombreEmpresario 
+                liquidaciones_abril_2018.NombreEmpresario 
 FROM
 	(SELECT @rownumber:=0) a,
-    trabajador RIGHT JOIN liquidaciones_febrero_2018 ON trabajador.codigo_trabajador = liquidaciones_febrero_2018.codigoTrabajador 
-WHERE liquidaciones_febrero_2018.codigoTerminal IN ( 7 )
+    trabajador RIGHT JOIN liquidaciones_abril_2018 ON trabajador.codigo_trabajador = liquidaciones_abril_2018.codigoTrabajador 
+WHERE codigoTerminal = 10
 ORDER BY trabajador.apellido_paterno_trabajador ASC]]>
 	</queryString>
 	<field name="contador" class="java.lang.Long"/>
@@ -72,11 +72,11 @@ ORDER BY trabajador.apellido_paterno_trabajador ASC]]>
 				<text><![CDATA[VIÑA BUS S.A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="20" width="375" height="20" uuid="acaa81f2-602b-4af9-8e9e-9168d03140da"/>
+				<reportElement x="0" y="20" width="453" height="20" uuid="acaa81f2-602b-4af9-8e9e-9168d03140da"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[LISTADO GENERAL DE CONDUCTORES - 209 CONGRESO]]></text>
+				<text><![CDATA[LISTADO GENERAL DE CONDUCTORES - 406 PLACILLA ]]></text>
 			</staticText>
 		</band>
 	</title>

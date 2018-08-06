@@ -21,7 +21,7 @@
 		<defaultValueExpression><![CDATA[-1]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM sigf_v1.segundacuotatne2018 WHERE codigoConductor IN (1007) ORDER BY terminal, nombreConductor ASC, id_bus ASC,  fecha ASC]]>
+		<![CDATA[SELECT * FROM sigf_v1.segundacuotatne2018 WHERE codigoConductor IN (3958) ORDER BY terminal, nombreConductor ASC, id_bus ASC,  fecha ASC]]>
 	</queryString>
 	<field name="id_tabla_monto" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>

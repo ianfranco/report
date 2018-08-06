@@ -78,14 +78,26 @@ public class MesSelectorController {
 
             int index = this.view.getEmpresa().getSelectedIndex();
 
-            if (index == 0) {
-                this.idOperador = 0;                
+            String nombreOperador = "";
+            InputStream in = null;
+
+            if (index == 2) {
+                in = getClass().getResourceAsStream("/jrxml/INF-Planillon_imposiciones_vg_julio.jrxml");
+                idOperador = 0;
             } else {
-                this.idOperador = 1;
+                if (index == 0) {
+                    nombreOperador = "VIÑA BUS S.A.";
+                    idOperador = 0;
+                } else {
+                    nombreOperador = "SOL Y MAR S.A.";
+                    idOperador = 1;
+                }
+                in = getClass().getResourceAsStream("/jrxml/INF-Planillon_imposiciones.jrxml");
             }
-            
+
+            params.put("nombreOperador", nombreOperador);
+
             params.put("idOperador", idOperador);
-            InputStream in = getClass().getResourceAsStream("/jrxml/INF-Planillon_imposiciones.jrxml");
 
             jasperReport = JasperCompileManager.compileReport(in);
 

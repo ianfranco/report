@@ -21,8 +21,9 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
+	<parameter name="nombreOperador" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_abril_2018($P{idOperador},$P{fecha})]]>
+		<![CDATA[CALL final_planillon_liquidacion_julio_2018($P{idOperador},$P{fecha})]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -364,13 +365,13 @@
 	</title>
 	<pageHeader>
 		<band height="53" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="109" height="20" uuid="acd3f655-fa32-4b8a-ac09-77b90d459009"/>
-				<textElement>
+			<textField>
+				<reportElement x="0" y="0" width="210" height="20" uuid="349a8528-bc76-424c-bd31-a26aeeddef86"/>
+				<textElement markup="none">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
-				<text><![CDATA[VIÑA BUS S.A.]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{nombreOperador}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="0" y="28" width="120" height="14" uuid="5da19b2d-945b-4aad-a823-117766194ec0"/>
 				<textElement>
@@ -386,7 +387,7 @@
 				<textFieldExpression><![CDATA[$P{fechaCompleta}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="910" y="20" width="50" height="16" uuid="11f967b3-310f-4904-8baa-460a2da7a1c9"/>
+				<reportElement x="869" y="20" width="50" height="16" uuid="11f967b3-310f-4904-8baa-460a2da7a1c9"/>
 				<box leftPadding="4"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
@@ -394,7 +395,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="870" y="20" width="40" height="14" uuid="724a3cab-58ef-434b-9bf5-b3bc5ac1d53b">
+				<reportElement x="829" y="20" width="40" height="14" uuid="724a3cab-58ef-434b-9bf5-b3bc5ac1d53b">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -402,15 +403,15 @@
 				</textElement>
 				<text><![CDATA[PAG:]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="910" y="0" width="50" height="14" uuid="80ad4fbb-dcd7-4af2-bf3a-d531e62eb9ec"/>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="869" y="0" width="94" height="14" uuid="80ad4fbb-dcd7-4af2-bf3a-d531e62eb9ec"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="793" y="0" width="117" height="14" uuid="c308eea7-0258-4dc9-bc5a-7a68d5b86d7e">
+				<reportElement x="752" y="0" width="117" height="14" uuid="c308eea7-0258-4dc9-bc5a-7a68d5b86d7e">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<box rightPadding="6"/>

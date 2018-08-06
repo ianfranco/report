@@ -56,7 +56,7 @@ public class MesSelectorlLiquidacionView extends javax.swing.JPanel {
 
         viewButton.setText("Ver");
 
-        empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Viña Bus", "Millenium" }));
+        empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Viña Bus", "Millenium", "V.Gallardo" }));
 
         jLabel1.setText("Empresa:");
 
@@ -84,7 +84,7 @@ public class MesSelectorlLiquidacionView extends javax.swing.JPanel {
                 .addComponent(codigoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(viewButton)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

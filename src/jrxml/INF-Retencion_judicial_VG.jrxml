@@ -48,7 +48,7 @@
 				<textFieldExpression><![CDATA[$P{fechaCompleta}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="159" height="19" uuid="2b0edc74-a4ec-44f1-84b7-77cee9986265"/>
+				<reportElement x="0" y="0" width="306" height="19" uuid="2b0edc74-a4ec-44f1-84b7-77cee9986265"/>
 				<textElement markup="none">
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>

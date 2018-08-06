@@ -57,7 +57,7 @@ public class MesSelectorView extends javax.swing.JPanel {
 
         printButton.setText("Imprimir");
 
-        empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Viña Bus", "Millenium" }));
+        empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Viña Bus", "Millenium", "V. Gallardo" }));
 
         jLabel1.setText("Empresa:");
 
@@ -81,7 +81,7 @@ public class MesSelectorView extends javax.swing.JPanel {
                 .addComponent(viewButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(printButton)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

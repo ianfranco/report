@@ -36,7 +36,7 @@
 FROM
 	(SELECT @rownumber:=0) a,
     trabajador
-where trabajador.id_terminal = 14
+where trabajador.id_terminal = 16
 ORDER BY trabajador.apellido_paterno_trabajador ASC]]>
 	</queryString>
 	<field name="contador" class="java.lang.Long"/>
@@ -61,18 +61,18 @@ ORDER BY trabajador.apellido_paterno_trabajador ASC]]>
 	<title>
 		<band height="56" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="81" height="20" uuid="bbb4ac2f-5f1e-4731-bb68-ce25300cdedd"/>
+				<reportElement x="0" y="0" width="218" height="20" uuid="bbb4ac2f-5f1e-4731-bb68-ce25300cdedd"/>
 				<textElement>
 					<font fontName="Arial" size="9" isBold="false"/>
 				</textElement>
-				<text><![CDATA[VIÑA BUS S.A.]]></text>
+				<text><![CDATA[SOL Y MAR S.A. - MILLENIUM]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="20" width="259" height="20" uuid="acaa81f2-602b-4af9-8e9e-9168d03140da"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CONDUCTORES TERMINAL 410]]></text>
+				<text><![CDATA[LISTADO DE CONDUCTORES ]]></text>
 			</staticText>
 		</band>
 	</title>

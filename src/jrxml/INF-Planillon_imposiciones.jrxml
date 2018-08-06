@@ -14,13 +14,14 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="189"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="805"/>
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="219"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
+	<parameter name="nombreOperador" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_ABRIL_2018($P{idOperador},$P{fecha})]]>
+		<![CDATA[CALL final_planillon_liquidacion_JULIO_2018($P{idOperador},$P{fecha})]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -323,19 +324,19 @@
 	</title>
 	<pageHeader>
 		<band height="73" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="310" height="20" uuid="acd3f655-fa32-4b8a-ac09-77b90d459009"/>
-				<textElement>
+			<textField>
+				<reportElement x="0" y="0" width="310" height="20" uuid="00bfcb63-cfbc-4330-b210-8be1ed6f6101"/>
+				<textElement markup="none">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[VIÑA BUS S.A.]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{nombreOperador}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="0" y="28" width="386" height="14" uuid="5da19b2d-945b-4aad-a823-117766194ec0"/>
 				<textElement>
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD - ABRIL 2018]]></text>
+				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD - JULIO 2018]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="705" y="53" width="92" height="16" uuid="90f00557-6599-4842-9645-157c0500717b"/>
@@ -345,7 +346,7 @@
 				<text><![CDATA[┌--------- INP ---------┐]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="862" y="20" width="50" height="16" uuid="11f967b3-310f-4904-8baa-460a2da7a1c9"/>
+				<reportElement x="810" y="20" width="50" height="16" uuid="11f967b3-310f-4904-8baa-460a2da7a1c9"/>
 				<box leftPadding="4"/>
 				<textElement>
 					<font fontName="SansSerif" size="8"/>
@@ -353,7 +354,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="822" y="20" width="40" height="14" uuid="724a3cab-58ef-434b-9bf5-b3bc5ac1d53b">
+				<reportElement x="770" y="20" width="40" height="14" uuid="724a3cab-58ef-434b-9bf5-b3bc5ac1d53b">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -362,7 +363,7 @@
 				<text><![CDATA[PAG:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="750" y="0" width="112" height="14" uuid="c308eea7-0258-4dc9-bc5a-7a68d5b86d7e">
+				<reportElement x="698" y="0" width="112" height="14" uuid="c308eea7-0258-4dc9-bc5a-7a68d5b86d7e">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<box rightPadding="6"/>
@@ -401,7 +402,7 @@
 ---------------------]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy h.mm a">
-				<reportElement x="862" y="0" width="148" height="14" uuid="dd4d00c1-32c9-4dcb-bd59-6a7ece592814"/>
+				<reportElement x="810" y="0" width="148" height="14" uuid="dd4d00c1-32c9-4dcb-bd59-6a7ece592814"/>
 				<textElement>
 					<font fontName="SansSerif" size="8"/>
 				</textElement>

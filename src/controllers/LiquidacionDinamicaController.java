@@ -31,9 +31,11 @@ import views.Febrero2017;
 import views.Febrero2018;
 import views.Julio2017;
 import views.Junio2017;
+import views.Junio2018;
 import views.Marzo2017;
 import views.Marzo2018;
 import views.Mayo2017;
+import views.Mayo2018;
 import views.MesSelectorlLiquidacionView;
 import views.Noviembre2016;
 import views.Noviembre2017;
@@ -77,6 +79,8 @@ public class LiquidacionDinamicaController {
     private Agosto2017 agosto2017;
     private Noviembre2017 noviembre2017;
     private Diciembre2017 diciembre2017;
+    private Mayo2018 mayo2018;
+    private Junio2018 junio2018;
 
     public LiquidacionDinamicaController(MesSelectorlLiquidacionView view, ReporterVBView frame) {
         this.view = view;
@@ -139,7 +143,7 @@ public class LiquidacionDinamicaController {
 
                 break;
             case 1:
-                if (this.view.getAnio().equals("2017")) {                    
+                if (this.view.getAnio().equals("2017")) {
                     System.err.println("INDICE:" + mes + " FEBRERO 2017");
 
                     febrero2017 = new Febrero2017(frame, view);
@@ -162,16 +166,16 @@ public class LiquidacionDinamicaController {
 
                 break;
             case 2:
-                if (this.view.getAnio().equals("2017")) {         
+                if (this.view.getAnio().equals("2017")) {
                     System.err.println("INDICE:" + mes + " MARZO 2017");
 
-                marzo2017 = new Marzo2017(frame, view);
-                if (operador == 0) {
-                    marzo2017.loadLiquidacion(true, operador);
+                    marzo2017 = new Marzo2017(frame, view);
+                    if (operador == 0) {
+                        marzo2017.loadLiquidacion(true, operador);
+                    } else {
+                        marzo2017.loadLiquidacion(true, operador);
+                    }
                 } else {
-                    marzo2017.loadLiquidacion(true, operador);
-                }
-                }else{
                     System.err.println("INDICE:" + mes + " Marzo 2018");
 
                     marzo2018 = new Marzo2018(frame, view);
@@ -181,39 +185,70 @@ public class LiquidacionDinamicaController {
                         marzo2018.loadLiquidacion(true, operador);
                     }
                 }
-                
 
                 break;
             case 3:
-                System.err.println("INDICE:" + mes + " ABRIL 2017");
+                if (view.getAnio().equals("2017")) {
+                    System.err.println("INDICE:" + mes + " ABRIL 2017");
 
-                abril2017 = new Abril2017(frame, view);
-                if (operador == 0) {
-                    abril2017.loadLiquidacion(true, operador);
+                    abril2017 = new Abril2017(frame, view);
+                    if (operador == 0) {
+                        abril2017.loadLiquidacion(true, operador);
+                    } else {
+                        abril2017.loadLiquidacion(true, operador);
+                    }
                 } else {
-                    abril2017.loadLiquidacion(true, operador);
+                    System.err.println("INDICE:" + mes + " ABRIL 2018");
+
+                    abril2018 = new Abril2018(frame, view);
+                    if (operador == 0) {
+                        abril2018.loadLiquidacion(true, operador);
+                    } else {
+                        abril2018.loadLiquidacion(true, operador);
+                    }
                 }
 
                 break;
             case 4:
-                System.err.println("INDICE:" + mes + "MAYO 2017");
+                if (view.getAnio().equals("2017")) {
+                    System.err.println("INDICE:" + mes + "MAYO 2017");
 
-                mayo2017 = new Mayo2017(frame, view);
-                if (operador == 0) {
-                    mayo2017.loadLiquidacion(true, operador);
+                    mayo2017 = new Mayo2017(frame, view);
+                    if (operador == 0) {
+                        mayo2017.loadLiquidacion(true, operador);
+                    } else {
+                        mayo2017.loadLiquidacion(true, operador);
+                    }
                 } else {
-                    mayo2017.loadLiquidacion(true, operador);
+                    System.err.println("INDICE:" + mes + " MAYO 2018");
+                    mayo2018 = new Mayo2018(frame, view);
+                    if (operador == 0) {
+                        mayo2018.loadLiquidacion(true, operador);
+                    } else {
+                        mayo2018.loadLiquidacion(true, operador);
+                    }
                 }
-
                 break;
-            case 5:
-                System.err.println("INDICE:" + mes + " JUNIO 2017");
 
-                junio2017 = new Junio2017(frame, view);
-                if (operador == 0) {
-                    junio2017.loadLiquidacion(true, operador);
+            case 5:
+                if (view.getAnio().equals("2017")) {
+                    System.err.println("INDICE:" + mes + " JUNIO 2017");
+
+                    junio2017 = new Junio2017(frame, view);
+                    if (operador == 0) {
+                        junio2017.loadLiquidacion(true, operador);
+                    } else {
+                        junio2017.loadLiquidacion(true, operador);
+                    }
                 } else {
-                    junio2017.loadLiquidacion(true, operador);
+                    System.err.println("INDICE:" + mes + " JUNIO 2018");
+
+                    junio2018 = new Junio2018(frame, view);
+                    if (operador == 0) {
+                        junio2018.loadLiquidacion(true, operador);
+                    } else {
+                        junio2018.loadLiquidacion(true, operador);
+                    }
                 }
 
                 break;
