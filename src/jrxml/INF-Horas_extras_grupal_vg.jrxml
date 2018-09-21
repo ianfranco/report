@@ -12,7 +12,7 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_distribucion_horas_extras_grupal_vg_abril($P{idOperador},$P{fecha});]]>
+		<![CDATA[CALL final_planillon_distribucion_horas_extras_grupal_vg_ABRIL($P{idOperador},$P{fecha});]]>
 	</queryString>
 	<field name="id_empresa" class="java.lang.Integer"/>
 	<field name="RutEmpresario" class="java.lang.String"/>
@@ -55,7 +55,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="70" splitType="Stretch">
+		<band height="62" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="213" height="19" uuid="5a886cee-dd2a-41f3-bb6a-8925dfa0ee3e"/>
 				<textElement markup="none">
@@ -64,21 +64,21 @@
 				<textFieldExpression><![CDATA[$P{nombreOperador}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="46" width="260" height="20" uuid="686cd3e0-ddde-4fd8-8e24-31c54072018a"/>
+				<reportElement x="0" y="38" width="260" height="20" uuid="686cd3e0-ddde-4fd8-8e24-31c54072018a"/>
 				<textElement>
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Resumen Dineros x Empresa]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="371" y="40" width="159" height="30" uuid="e763ef15-74a0-4173-b4b8-6ae04dc975c7"/>
+				<reportElement x="371" y="32" width="159" height="30" uuid="e763ef15-74a0-4173-b4b8-6ae04dc975c7"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="530" y="40" width="40" height="30" uuid="2143858b-ecdd-4142-9703-29f3e4c4b3a3"/>
+				<reportElement x="530" y="32" width="40" height="30" uuid="2143858b-ecdd-4142-9703-29f3e4c4b3a3"/>
 				<textElement textAlignment="Left">
 					<font fontName="Arial"/>
 				</textElement>

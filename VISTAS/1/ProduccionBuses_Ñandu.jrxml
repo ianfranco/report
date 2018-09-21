@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8be9a533-2339-47c5-930a-bea36c4b5dd3">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -8,8 +7,8 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="224"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="771"/>
-	<parameter name="desde" class="java.sql.Date">
-		<defaultValueExpression><![CDATA["2010-01-01"]]></defaultValueExpression>
+	<parameter name="desde" class="java.util.Date">
+		<defaultValueExpression><![CDATA["2018-07-01"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -28,7 +27,7 @@
 	SUM(guias.TotalEgresos) AS 'T.Egresos',
 	SUM(guias.Saldo) AS 'Líquido',
 	SUM(guias.NumVueltas) AS 'Vueltas',
-	CASE MONTH ( $P{desde} )
+	CASE MONTH ( '2018-07-01' )
 WHEN "01" THEN
 	"ENERO"
 WHEN "02" THEN
@@ -54,14 +53,14 @@ WHEN "11" THEN
 WHEN "12" THEN
 	"DICIEMBRE"
 END AS NombreMes,
- YEAR ( $P{desde} ) AS Anio
+ YEAR ( '2018-07-01' ) AS Anio
 FROM
 	guias LEFT JOIN egresosxguias ON guias.Id = egresosxguias.IdGuia 
 				LEFT JOIN buses ON guias.IdBus = buses.Id 
 WHERE
-	guias.Fecha BETWEEN  $P{desde} 
-AND lasT_day( $P{desde} )
-AND guias.idgarita = 3
+	guias.Fecha BETWEEN  '2018-07-01'
+AND lasT_day( '2018-07-01' )
+AND guias.idgarita = 7
 GROUP BY	idBus
 ORDER BY
 	guias.idBus]]>
@@ -77,31 +76,24 @@ ORDER BY
 	</field>
 	<field name="Combustible" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="Combustible"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Boletos" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="Boletos"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Repuestos" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="Repuestos"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Taller" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="Taller"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Aseo" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="Aseo"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Conductor" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="Conductor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Licitacion" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="Licitacion"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="T.Egresos" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="T.Egresos"/>
@@ -117,7 +109,6 @@ ORDER BY
 	</field>
 	<field name="Anio" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="Anio"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="sumIngresos" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{T.Ingresos}]]></variableExpression>
@@ -192,7 +183,7 @@ ORDER BY
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[R y R ]]></text>
+				<text><![CDATA[Ñandu Tur S.A.]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="204" y="0" width="106" height="20" uuid="b4cd7011-e495-4af8-857e-fd4b145b1745"/>

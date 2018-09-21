@@ -13,10 +13,9 @@
     rutTrabajador,
     codigoEmpleador,
     NombreEmpresario,
-    fecha,
     montoAguinaldo
 FROM
-    aguinaldo_diciembre_2017
+    aguinaldo_septiembre_2018_solymar
 GROUP BY codigoTrabajador 
 ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 	</queryString>
@@ -39,9 +38,6 @@ ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="NombreEmpresario" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="fecha" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="montoAguinaldo" class="java.lang.Integer">
@@ -139,7 +135,7 @@ ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[AGUINALDO DICIEMBRE 2017]]></text>
+				<text><![CDATA[AGUINALDO SEPTIEMBRE 2018]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="371" y="18" width="159" height="30" uuid="e29ff9c9-9c23-4ffd-9dac-89573ad86800"/>
@@ -218,7 +214,7 @@ ORDER BY nombreTerminal , nombreTrabajador ASC;]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[LOS CONDUCTORES PODRÁN HACER EFECTIVO SU AGUINALDO LOS DIAS 21, 22 Y 23 DE DICIEMBRE 2017]]></text>
+				<text><![CDATA[LOS CONDUCTORES PODRÁN HACER EFECTIVO SU AGUINALDO LOS DIAS 15, 16 y 17 DE SEPTIEMBRE 2018]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

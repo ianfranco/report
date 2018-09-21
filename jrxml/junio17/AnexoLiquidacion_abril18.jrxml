@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d498eb42-7775-4b01-9488-74e558300fe5">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
@@ -31,59 +31,47 @@
 	<parameter name="dv" class="java.lang.Integer"/>
 	<parameter name="imposicionestne" class="java.lang.Integer"/>
 	<parameter name="ajusteSueldoBase" class="java.lang.Integer"/>
-	<parameter name="diferenciaAhorro" class="java.lang.Integer"/>
-	<parameter name="diferenciaSueldoBase" class="java.lang.Integer"/>
-	<parameter name="horasExtras" class="java.lang.Integer"/>
-	<parameter name="saldoFinal" class="java.lang.Integer"/>
-	<parameter name="saldoFavor" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[CALL detalle_cinco_por_ciento_vg($P{dv}, $P{idConductor} , $P{desdeFeriado}  , $P{hastaFeriado}  ,  $P{desdeMes} ,  $P{hastaMes} )]]>
+		<![CDATA[CALL detalle_cinco_por_ciento($P{dv}, $P{idConductor} , $P{desdeFeriado}  , $P{hastaFeriado}  ,  $P{desdeMes} ,  $P{hastaMes} )]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fecha" class="java.sql.Date"/>
 	<field name="bus" class="java.lang.String"/>
 	<field name="monto" class="java.lang.Integer"/>
-	<field name="monto10" class="java.lang.Integer"/>
 	<variable name="Retencion_1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
 	</variable>
 	<variable name="saldo" class="java.lang.Integer">
-		<variableExpression><![CDATA[$P{horasExtras}+$P{diferenciaAhorro}+$P{saldoFavor}]]></variableExpression>
-	</variable>
-	<variable name="monto10_1" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{monto10}]]></variableExpression>
-	</variable>
-	<variable name="favor" class="java.lang.Integer">
-		<variableExpression><![CDATA[]]></variableExpression>
+		<variableExpression><![CDATA[($V{Retencion_1}+$P{ahorro}+$P{abono}+$P{imposicionestne}+$P{ajusteSueldoBase})-$P{descuentos_1}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="78" splitType="Stretch">
+		<band height="117" splitType="Stretch">
 			<textField>
-				<reportElement x="88" y="30" width="290" height="24" uuid="d34ed5d0-a628-4487-8fd1-27f3a6834987"/>
+				<reportElement x="88" y="69" width="307" height="24" uuid="d34ed5d0-a628-4487-8fd1-27f3a6834987"/>
 				<textElement>
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NombreConductor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="88" y="54" width="290" height="24" uuid="a96a1655-e747-4773-a2bd-ac691412c9d9"/>
+				<reportElement x="88" y="93" width="307" height="24" uuid="a96a1655-e747-4773-a2bd-ac691412c9d9"/>
 				<textElement>
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NombreEmpresario}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="455" y="0" width="117" height="24" uuid="32914010-b3b2-447c-a200-69b57394410f"/>
+				<reportElement x="0" y="24" width="117" height="24" uuid="32914010-b3b2-447c-a200-69b57394410f"/>
 				<textElement>
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<text><![CDATA[ABRIL 2018]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="54" width="88" height="24" uuid="ec3f7721-9447-4d0b-8943-526827ca54ef"/>
+				<reportElement x="0" y="93" width="88" height="24" uuid="ec3f7721-9447-4d0b-8943-526827ca54ef"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
@@ -94,38 +82,38 @@
 				<textElement>
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
-				<text><![CDATA[Resumen Guías]]></text>
+				<text><![CDATA[Detalle 5%  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="30" width="88" height="24" uuid="d06bb2cb-f5a5-47c3-87c2-1fe52f60760b"/>
+				<reportElement x="0" y="69" width="88" height="24" uuid="d06bb2cb-f5a5-47c3-87c2-1fe52f60760b"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<text><![CDATA[Conductor: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="433" y="30" width="67" height="24" uuid="f1ac58e2-70d5-49aa-82c7-19bee4a0e9c5"/>
+				<reportElement x="450" y="69" width="67" height="24" uuid="f1ac58e2-70d5-49aa-82c7-19bee4a0e9c5"/>
 				<textElement>
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{codigoConductor}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="378" y="30" width="55" height="24" uuid="41b2aba6-4497-4043-afec-c675d1b11cc7"/>
+				<reportElement x="395" y="69" width="55" height="24" uuid="41b2aba6-4497-4043-afec-c675d1b11cc7"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<text><![CDATA[Código: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="433" y="54" width="139" height="24" uuid="ae79aa41-93c1-4120-8ddf-fdee5c2cfa36"/>
+				<reportElement x="450" y="93" width="122" height="24" uuid="ae79aa41-93c1-4120-8ddf-fdee5c2cfa36"/>
 				<textElement>
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NombreGarita}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="378" y="54" width="55" height="24" uuid="60043abb-beef-4149-a1b7-ba09b8dd4bd3"/>
+				<reportElement x="395" y="93" width="55" height="24" uuid="60043abb-beef-4149-a1b7-ba09b8dd4bd3"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
@@ -141,7 +129,7 @@
 			<staticText>
 				<reportElement x="0" y="4" width="100" height="17" uuid="0ec32d77-a21e-41cc-b5e9-8d82a2d1cf48"/>
 				<box leftPadding="4"/>
-				<textElement textAlignment="Center">
+				<textElement>
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
@@ -158,7 +146,8 @@
 				<textElement textAlignment="Center">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
-				<text><![CDATA[Imposiciones]]></text>
+				<text><![CDATA[5 %
+]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -196,7 +185,7 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="215" splitType="Stretch">
+		<band height="123" splitType="Stretch">
 			<textField pattern="$ #,##0" isBlankWhenNull="true">
 				<reportElement x="157" y="0" width="100" height="17" uuid="6e978901-35b2-4981-87a3-e09f4af6db36"/>
 				<textElement textAlignment="Right">
@@ -233,16 +222,16 @@
 				<text><![CDATA[Descuentos:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="57" y="194" width="100" height="20" uuid="700679d6-f42c-41b6-aac1-c715a6bfc5da"/>
+				<reportElement x="57" y="101" width="100" height="20" uuid="700679d6-f42c-41b6-aac1-c715a6bfc5da"/>
 				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11" isBold="true"/>
+					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<text><![CDATA[Total a Pagar:]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
-				<reportElement x="157" y="194" width="100" height="20" uuid="8f875bcc-c5a0-476b-aa12-9d165a93bb35"/>
+				<reportElement x="157" y="101" width="100" height="20" uuid="8f875bcc-c5a0-476b-aa12-9d165a93bb35"/>
 				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11" isBold="true"/>
+					<font fontName="Monospaced" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{saldo}]]></textFieldExpression>
 			</textField>
@@ -251,14 +240,14 @@
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
-				<text><![CDATA[Total Imposiciones:]]></text>
+				<text><![CDATA[Retención:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="16" y="34" width="141" height="17" uuid="e234eda5-88c2-4b52-8fca-57604477f062"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
-				<text><![CDATA[Abonos:]]></text>
+				<text><![CDATA[Abono:]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
 				<reportElement x="157" y="34" width="100" height="17" uuid="fb264585-fda6-4246-8aa1-5a1b202cdd91"/>
@@ -282,77 +271,18 @@
 				<textFieldExpression><![CDATA[$P{imposicionestne}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="16" y="157" width="141" height="17" uuid="7d705b88-23bc-4c77-8bfd-fe38ca806d92"/>
+				<reportElement x="16" y="68" width="141" height="17" uuid="7d705b88-23bc-4c77-8bfd-fe38ca806d92"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
-				<text><![CDATA[Dif. Ahorro Emp.:]]></text>
+				<text><![CDATA[Ajuste Sueldo Base:]]></text>
 			</staticText>
 			<textField pattern="$ #,##0">
-				<reportElement x="157" y="157" width="100" height="17" uuid="2a4f3f16-4934-49d7-b38b-8165c350f977"/>
+				<reportElement x="157" y="68" width="100" height="17" uuid="2a4f3f16-4934-49d7-b38b-8165c350f977"/>
 				<textElement textAlignment="Right">
 					<font fontName="Monospaced" size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{diferenciaAhorro}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="16" y="68" width="141" height="17" uuid="b427fd45-340d-4223-9e4a-30bb2be99fa0"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11"/>
-				</textElement>
-				<text><![CDATA[Dif. Sueldo Base :]]></text>
-			</staticText>
-			<textField pattern="$ #,##0">
-				<reportElement x="157" y="68" width="100" height="17" uuid="651e83b2-c54b-4d36-b1d5-2097b492c6b2"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{diferenciaSueldoBase}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="16" y="101" width="141" height="17" uuid="2a8c39f5-a198-4f40-9a89-7e61b9dae7db"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11"/>
-				</textElement>
-				<text><![CDATA[Saldo Liquidación:]]></text>
-			</staticText>
-			<textField pattern="$ #,##0">
-				<reportElement x="157" y="101" width="100" height="17" uuid="a2f8840b-a751-4459-b7ab-16f487c98bb8"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{saldoFinal}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="16" y="140" width="141" height="17" uuid="5bacc287-b7b4-4cb0-ace1-9e3bec288a8f"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11"/>
-				</textElement>
-				<text><![CDATA[H.Extras:]]></text>
-			</staticText>
-			<textField pattern="$ #,##0">
-				<reportElement x="157" y="140" width="100" height="17" uuid="672a67c5-eef0-43f7-8987-4161cbade70a"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{horasExtras}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="16" y="135" width="241" height="1" uuid="58d157c7-a044-4e03-8e84-3db1ef06b9b4"/>
-			</line>
-			<staticText>
-				<reportElement x="16" y="174" width="141" height="17" uuid="df1bb50b-1af5-4104-bf79-094f8c0a068e"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11"/>
-				</textElement>
-				<text><![CDATA[Saldo a Favor:]]></text>
-			</staticText>
-			<textField pattern="$ #,##0">
-				<reportElement x="157" y="174" width="100" height="17" uuid="d54e3c69-e282-4f67-b269-a237eb5060c7"/>
-				<textElement textAlignment="Right">
-					<font fontName="Monospaced" size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{saldoFavor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ajusteSueldoBase}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

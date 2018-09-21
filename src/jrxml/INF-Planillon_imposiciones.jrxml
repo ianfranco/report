@@ -21,7 +21,7 @@
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<parameter name="nombreOperador" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_JULIO_2018($P{idOperador},$P{fecha})]]>
+		<![CDATA[CALL final_planillon_liquidacion_AGOSTO_2018($P{idOperador}, '2018-08-01')]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>
@@ -336,7 +336,7 @@
 				<textElement>
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD - JULIO 2018]]></text>
+				<text><![CDATA[DESCUENTOS PREVISIONALES / SALUD - AGOSTO 2018]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="705" y="53" width="92" height="16" uuid="90f00557-6599-4842-9645-157c0500717b"/>

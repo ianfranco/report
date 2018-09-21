@@ -78,17 +78,29 @@ public class PlanillonDescuentosController {
             params.put("año", this.view.getAnio());
             params.put("mes", this.view.getMes());
             params.put("fechaCompleta", this.view.getMes() + " " + this.view.getAnio());
-            
+
             int index = this.view.getEmpresa().getSelectedIndex();
 
-            if (index == 0) {
-                this.idOperador = 0;
+            String nombreOperador = "";
+            InputStream in = null;
+
+            if (index == 2) {
+                in = getClass().getResourceAsStream("/jrxml/INF-Planillon_descuentos_VG_2.jrxml");
+                nombreOperador = "VIÑA BUS S.A. - V.GALLARDO";
+                idOperador = 0;
             } else {
-                this.idOperador = 1;
+                if (index == 0) {
+                    nombreOperador = "VIÑA BUS S.A.";
+                    idOperador = 0;
+                } else {
+                    nombreOperador = "SOL Y MAR S.A.";
+                    idOperador = 1;
+                }
+                in = getClass().getResourceAsStream("/jrxml/INF-Planillon_descuentos.jrxml");
             }
 
+            params.put("nombreOperador", nombreOperador);
             params.put("idOperador", idOperador);
-            InputStream in = getClass().getResourceAsStream("/jrxml/INF-Planillon_descuentos.jrxml");
 
             Conexion con = new Conexion();
             jasperReport = JasperCompileManager.compileReport(in);

@@ -4,24 +4,14 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="221"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="767"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT 
-    liquidaciones_abril_2018_vg.codigo_trabajador AS codigo,
-    liquidaciones_abril_2018_vg.nombre_trabajador AS conductor,
-    SUM(liquidaciones_abril_2018_vg.saldo_real) AS REALFINAL,
-    liquidaciones_abril_2018_vg.nombre_terminal AS nombre_terminal
-FROM
-    liquidaciones_abril_2018_vg
-WHERE nombre_terminal = '209 CONGRESO'
-GROUP BY liquidaciones_abril_2018_vg.codigo_trabajador
-HAVING SUM(liquidaciones_abril_2018_vg.saldo_real) >= 0
-ORDER BY liquidaciones_abril_2018_vg.nombre_terminal ASC , liquidaciones_abril_2018_vg.nombre_trabajador ASC;]]>
+		<![CDATA[CALL final_planillon_distribucion_terminal__negativos_vg($P{idOperador}, $P{fecha})]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="conductor" class="java.lang.String"/>

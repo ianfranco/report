@@ -23,7 +23,7 @@
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<parameter name="nombreOperador" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_liquidacion_julio_2018($P{idOperador},$P{fecha})]]>
+		<![CDATA[CALL final_planillon_liquidacion_agosto_2018($P{idOperador},$P{fecha})]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="id_relacion_laboral" class="java.lang.Integer"/>

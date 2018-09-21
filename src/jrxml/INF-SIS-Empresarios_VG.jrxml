@@ -50,7 +50,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="82" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="209" height="19" uuid="9db2a24b-5eed-4334-ab32-92c434315571"/>
 				<textElement markup="none">
@@ -184,16 +184,16 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="32" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField pattern="#,##0.###">
-				<reportElement x="385" y="0" width="85" height="30" uuid="6441c5c7-2f21-4640-b76b-5e6c2ed20242"/>
+				<reportElement x="385" y="0" width="85" height="17" uuid="6441c5c7-2f21-4640-b76b-5e6c2ed20242"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sis2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###">
-				<reportElement x="300" y="0" width="81" height="30" uuid="668be680-5c47-43a8-b65a-2d83017a8342"/>
+				<reportElement x="300" y="0" width="81" height="17" uuid="668be680-5c47-43a8-b65a-2d83017a8342"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>

@@ -9,7 +9,7 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[call tercera_hoja_grupal_junio_2018(1, '2018-06-01')]]>
+		<![CDATA[call tercera_hoja_grupal_agosto_2018(1, '2018-08-01')]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="conductor" class="java.lang.String"/>

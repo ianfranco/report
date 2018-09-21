@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f25b2f89-c079-4885-9fc7-ccf69d4c879d">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="196"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idTerminal" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[-1]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[call listado_general_conductores_terminal($P{idTerminal});]]>
+		<![CDATA[call listado_general_conductores_terminal_solymar();]]>
 	</queryString>
 	<field name="numero" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -94,12 +94,8 @@
 				</textElement>
 				<text><![CDATA[RUT]]></text>
 			</staticText>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="22" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="28" height="22" uuid="0d0d304e-d3ba-4908-bccf-7f4495084751"/>
+			<staticText>
+				<reportElement x="358" y="0" width="110" height="20" uuid="7e89feb8-2d18-41b0-a103-a9fa294daf1e"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -108,12 +104,30 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPLEADOR]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="28" height="15" uuid="0d0d304e-d3ba-4908-bccf-7f4495084751"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="28" y="0" width="36" height="22" uuid="8d3627b4-2290-4b6d-be68-de638b89d76d"/>
+				<reportElement x="28" y="0" width="36" height="15" uuid="8d3627b4-2290-4b6d-be68-de638b89d76d"/>
 				<box rightPadding="5">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -122,12 +136,12 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigoTrabajador}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="146" y="0" width="364" height="22" uuid="e05f95b2-0875-4beb-b330-d60d75cce5f2"/>
+				<reportElement x="146" y="0" width="212" height="15" uuid="e05f95b2-0875-4beb-b330-d60d75cce5f2"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -136,12 +150,12 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombreConductor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="64" y="0" width="79" height="22" uuid="1dc05e47-9f9f-4a0a-b25b-5d7abd545276"/>
+				<reportElement x="64" y="0" width="79" height="15" uuid="1dc05e47-9f9f-4a0a-b25b-5d7abd545276"/>
 				<box rightPadding="10">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -150,9 +164,23 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font fontName="Arial" size="10"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rut}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="0" width="212" height="15" uuid="85f0f2c0-1ba8-467d-877a-88a743533695"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleador}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

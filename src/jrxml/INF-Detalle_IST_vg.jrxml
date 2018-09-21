@@ -4,9 +4,9 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="111"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="883"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VPS"/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="18"/>
+	<property name="ireport.y" value="336"/>
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<parameter name="idOperador" class="java.lang.Integer"/>
@@ -138,14 +138,14 @@
 					<text><![CDATA[COD.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="81" y="135" width="266" height="15" uuid="217abc4e-5439-47e7-bfdd-adaa1e8bb29d"/>
+					<reportElement x="92" y="135" width="269" height="15" uuid="217abc4e-5439-47e7-bfdd-adaa1e8bb29d"/>
 					<textElement>
 						<font fontName="Arial" size="8"/>
 					</textElement>
 					<text><![CDATA[CONDUCTOR]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="348" y="135" width="100" height="15" uuid="fc2d4aab-7848-4bcb-8524-062816a7850f">
+					<reportElement x="385" y="135" width="87" height="15" uuid="fc2d4aab-7848-4bcb-8524-062816a7850f">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Right">
@@ -154,7 +154,7 @@
 					<text><![CDATA[IMPONIBLE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="31" y="135" width="50" height="15" uuid="b2dd23a7-7888-4796-a493-ed92d45ae3d2"/>
+					<reportElement x="31" y="135" width="61" height="15" uuid="b2dd23a7-7888-4796-a493-ed92d45ae3d2"/>
 					<textElement>
 						<font fontName="Arial" size="8"/>
 					</textElement>
@@ -186,7 +186,7 @@
 		<groupFooter>
 			<band height="115">
 				<textField pattern="#,###.###">
-					<reportElement x="348" y="10" width="100" height="14" uuid="2c43b2cb-70ff-4326-9ecf-b2390d1692db"/>
+					<reportElement x="372" y="10" width="100" height="14" uuid="2c43b2cb-70ff-4326-9ecf-b2390d1692db"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Arial" size="8"/>
 					</textElement>
@@ -257,7 +257,7 @@
 ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="230" y="10" width="116" height="15" uuid="88e42846-bc42-4107-9cbe-0148c43b3b31"/>
+					<reportElement x="254" y="10" width="116" height="15" uuid="88e42846-bc42-4107-9cbe-0148c43b3b31"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Arial" size="8"/>
 					</textElement>
@@ -311,21 +311,21 @@
 				<textFieldExpression><![CDATA[$F{Codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="81" y="0" width="266" height="15" uuid="aef31913-eb18-4b68-af44-9348ea648e9f"/>
+				<reportElement x="92" y="0" width="269" height="15" uuid="aef31913-eb18-4b68-af44-9348ea648e9f"/>
 				<textElement>
 					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Conductor}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.###">
-				<reportElement x="348" y="0" width="100" height="15" uuid="186a7d56-561f-4622-9470-86615bfe0e02"/>
+				<reportElement x="385" y="0" width="87" height="15" uuid="186a7d56-561f-4622-9470-86615bfe0e02"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Imponible}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="31" y="0" width="50" height="15" uuid="57c78cd2-4b38-4df7-9189-518af757215e">
+				<reportElement x="31" y="0" width="61" height="15" uuid="57c78cd2-4b38-4df7-9189-518af757215e">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>

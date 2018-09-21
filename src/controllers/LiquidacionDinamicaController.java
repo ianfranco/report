@@ -30,6 +30,7 @@ import views.Enero2018;
 import views.Febrero2017;
 import views.Febrero2018;
 import views.Julio2017;
+import views.Julio2018;
 import views.Junio2017;
 import views.Junio2018;
 import views.Marzo2017;
@@ -81,6 +82,7 @@ public class LiquidacionDinamicaController {
     private Diciembre2017 diciembre2017;
     private Mayo2018 mayo2018;
     private Junio2018 junio2018;
+    private Julio2018 julio2018;
 
     public LiquidacionDinamicaController(MesSelectorlLiquidacionView view, ReporterVBView frame) {
         this.view = view;
@@ -253,15 +255,25 @@ public class LiquidacionDinamicaController {
 
                 break;
             case 6:
-                System.err.println("INDICE:" + mes + " JULIO 2017");
+                if (view.getAnio().equals("2017")) {
+                    System.err.println("INDICE:" + mes + " JUNIO 2017");
 
-                julio2017 = new Julio2017(frame, view);
-                if (operador == 0) {
-                    julio2017.loadLiquidacion(true, operador);
+                    julio2017 = new Julio2017(frame, view);
+                    if (operador == 0) {
+                        julio2017.loadLiquidacion(true, operador);
+                    } else {
+                        julio2017.loadLiquidacion(true, operador);
+                    }
                 } else {
-                    julio2017.loadLiquidacion(true, operador);
-                }
+                    System.err.println("INDICE:" + mes + " JUNIO 2018");
 
+                    julio2018 = new Julio2018(frame, view);
+                    if (operador == 0) {
+                        julio2018.loadLiquidacion(true, operador);
+                    } else {
+                        julio2018.loadLiquidacion(true, operador);
+                    }
+                }
                 break;
             case 7:
                 System.err.println("INDICE:" + mes + " AGOSTO 2017");

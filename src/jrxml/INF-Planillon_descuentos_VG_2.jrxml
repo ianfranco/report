@@ -366,13 +366,6 @@
 					<textFieldExpression><![CDATA[$V{vAjusteBase_1}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement x="195" y="14" width="34" height="20" uuid="7b9aaf8b-9d24-43a2-aa1b-119f4b3c81e2"/>
-					<textElement textAlignment="Right">
-						<font fontName="Arial" size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{horas_extras_1}]]></textFieldExpression>
-				</textField>
-				<textField pattern="#,##0">
 					<reportElement x="336" y="14" width="37" height="20" uuid="a37b8de9-69e1-44db-b594-fcb97867df1c"/>
 					<textElement textAlignment="Center">
 						<font fontName="Arial" size="8"/>
@@ -385,13 +378,6 @@
 						<font fontName="Arial" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{saldo_real_1}]]></textFieldExpression>
-				</textField>
-				<textField pattern="#,##0">
-					<reportElement x="827" y="14" width="43" height="20" uuid="5d1416a2-fc63-452d-9ce4-385fe8471970"/>
-					<textElement textAlignment="Right">
-						<font fontName="Arial" size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{total_ahorro_empresario_1}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -497,7 +483,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[5%]]></text>
+				<text><![CDATA[3%]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="229" y="3" width="36" height="14" uuid="4c5184be-ed3b-410f-bd19-661ad31ba09a">
@@ -664,15 +650,6 @@
 				<text><![CDATA[C]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="195" y="3" width="34" height="14" uuid="13997a32-e22b-4c01-be46-ec0063c9d9ef">
-					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
-				</reportElement>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<text><![CDATA[H. Extras]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="336" y="3" width="37" height="14" uuid="523114b8-eea2-4560-b9f9-67c972544322">
 					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
 				</reportElement>
@@ -680,17 +657,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[Dif. 50% A. Emp]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="830" y="3" width="40" height="14" uuid="f3870ed2-730e-47b4-9f60-f9f980d3668b">
-					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
-				</reportElement>
-				<box rightPadding="0"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<text><![CDATA[A.Emp.]]></text>
+				<text><![CDATA[$ 3.000]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -882,16 +849,6 @@
 				<textFieldExpression><![CDATA[($F{cinco_porciento_extra}-$F{cinco_porciento})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.###;(#,##0.###-)">
-				<reportElement x="195" y="0" width="34" height="14" uuid="ae5b819a-65df-4334-b74b-492d83f218f4">
-					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
-				</reportElement>
-				<box rightPadding="0"/>
-				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{horas_extras}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.###;(#,##0.###-)">
 				<reportElement x="336" y="0" width="37" height="14" uuid="8e8d96df-c0f4-472d-b78c-953401629b71">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
@@ -899,15 +856,6 @@
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ahorro_empresario}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.###">
-				<reportElement x="831" y="0" width="40" height="14" uuid="844801ca-f2a9-4244-a60d-df14839e82f7">
-					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{total_ahorro_empresario}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -1027,20 +975,6 @@
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{imposicionestne_2}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="183" y="0" width="43" height="20" uuid="fb104c15-4498-4dd6-978d-5cc8660dcb4a"/>
-				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{horas_extras_2}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="827" y="1" width="42" height="20" uuid="b12f7266-d279-4904-984c-ad0b2f96966e"/>
-				<textElement textAlignment="Right">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{total_ahorro_empresario_2}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

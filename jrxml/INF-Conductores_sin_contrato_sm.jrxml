@@ -9,7 +9,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL conductores_sin_contrato_SM_ABRIL_2018();]]>
+		<![CDATA[CALL conductores_sin_contrato_sm_agosto_2018();]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="codigo" class="java.lang.Integer"/>
@@ -19,6 +19,7 @@
 	<field name="montoCinco" class="java.lang.Integer"/>
 	<field name="montoAhorro" class="java.lang.Integer"/>
 	<field name="montoAbono" class="java.lang.Integer"/>
+	<field name="montoAhorroGuia" class="java.lang.Integer"/>
 	<field name="montoHaberes" class="java.lang.Integer"/>
 	<field name="montoSaldoAnterior" class="java.lang.Integer"/>
 	<field name="montoReconocimiento" class="java.lang.Integer"/>
@@ -37,6 +38,9 @@
 	</variable>
 	<variable name="SaldoFINAL1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{montoSaldo}]]></variableExpression>
+	</variable>
+	<variable name="montoAhorroGuia_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoAhorroGuia}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -57,7 +61,7 @@
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<text><![CDATA[MILLENIUM]]></text>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="15" width="180" height="15" uuid="a93deddc-e950-4f95-b929-f4ab18985706">
@@ -126,18 +130,18 @@
 				<text><![CDATA[Ahorro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="299" y="0" width="50" height="20" uuid="30f07f04-d120-41e7-8684-8fffb213b0e2"/>
+				<reportElement x="346" y="0" width="50" height="20" uuid="30f07f04-d120-41e7-8684-8fffb213b0e2"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Saldo. Ant.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="349" y="0" width="40" height="20" uuid="021a6137-54b1-4c44-9f83-5d332f08c901"/>
+				<reportElement x="304" y="0" width="40" height="20" uuid="021a6137-54b1-4c44-9f83-5d332f08c901"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[Sindicato]]></text>
+				<text><![CDATA[A.Guía]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="396" y="0" width="50" height="20" uuid="f86a227f-b9da-4706-aa1d-548fcd69846e"/>
@@ -209,19 +213,19 @@
 ]]></text>
 			</staticText>
 			<textField pattern="$ #,###.###">
-				<reportElement x="299" y="0" width="50" height="15" uuid="09f2a082-5bf8-46cd-abdd-e088889f9207"/>
+				<reportElement x="346" y="0" width="50" height="15" uuid="09f2a082-5bf8-46cd-abdd-e088889f9207"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{montoSaldoAnterior}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="349" y="0" width="40" height="15" uuid="8b7f4d41-a85f-4601-b062-e1be2c4305b3"/>
+			<textField pattern="$ #,##0">
+				<reportElement x="304" y="0" width="40" height="15" uuid="3367b427-84b6-4aeb-a408-38ba9a79269f"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[0]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{montoAhorroGuia}]]></textFieldExpression>
+			</textField>
 			<textField pattern="$ #,###.###">
 				<reportElement x="396" y="0" width="50" height="15" uuid="118c66b2-c5f6-458f-a58d-7fd9c735d4d4"/>
 				<textElement textAlignment="Right">
@@ -258,19 +262,19 @@
 				<textFieldExpression><![CDATA[$V{Abono1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,###.###">
-				<reportElement x="298" y="0" width="50" height="14" uuid="f95a113e-aeee-45c3-b232-3c3cd4af22ce"/>
+				<reportElement x="345" y="0" width="50" height="14" uuid="f95a113e-aeee-45c3-b232-3c3cd4af22ce"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{SaldoAnterior1}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="349" y="0" width="40" height="14" uuid="eb6e1bdd-7ea5-4ed2-af33-a2e07936194e"/>
+			<textField pattern="$ #,##0">
+				<reportElement x="304" y="0" width="40" height="14" uuid="652c01bf-3181-4070-8ef3-d9c2fcde806a"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<text><![CDATA[0]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$V{montoAhorroGuia_1}]]></textFieldExpression>
+			</textField>
 			<textField pattern="$ #,###.###">
 				<reportElement x="398" y="0" width="50" height="14" uuid="0b7baba1-d3e2-483d-a3c6-16c35b2e66bb"/>
 				<textElement textAlignment="Right">

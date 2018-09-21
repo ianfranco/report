@@ -11,7 +11,7 @@
 	<parameter name="fecha" class="java.util.Date"/>
 	<parameter name="fechaCompleta" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_distribucion_ronald_parada($P{idOperador}, $P{fecha})]]>
+		<![CDATA[CALL final_planillon_distribucion_terminal($P{idOperador}, $P{fecha})]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="conductor" class="java.lang.String"/>
@@ -19,23 +19,15 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nombre_terminal" class="java.lang.String"/>
-	<field name="ahorro" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="total" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="aux" class="java.lang.Integer"/>
 	<variable name="REALFINAL1" class="java.math.BigDecimal" resetType="Group" resetGroup="nombre_terminal" calculation="Sum">
 		<variableExpression><![CDATA[$F{REALFINAL}]]></variableExpression>
 	</variable>
 	<variable name="variable1" class="java.lang.Integer">
-		<variableExpression><![CDATA[new Integer($F{REALFINAL}.intValue()+$F{ahorro}.intValue())]]></variableExpression>
+		<variableExpression><![CDATA[new Integer($F{REALFINAL}.intValue()+$F{aux})]]></variableExpression>
 	</variable>
-	<variable name="ahorro_1" class="java.lang.Integer" resetType="Group" resetGroup="nombre_terminal" calculation="Sum">
-		<variableExpression><![CDATA[$F{ahorro}]]></variableExpression>
-	</variable>
-	<variable name="total_1" class="java.math.BigDecimal" resetType="Group" resetGroup="nombre_terminal" calculation="Sum">
-		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	<variable name="aux_1" class="java.lang.Integer" resetType="Group" resetGroup="nombre_terminal" calculation="Sum">
+		<variableExpression><![CDATA[$F{aux}]]></variableExpression>
 	</variable>
 	<group name="nombre_terminal" isStartNewPage="true" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{nombre_terminal}]]></groupExpression>
@@ -81,7 +73,7 @@
 					<textElement>
 						<font fontName="Arial" size="12"/>
 					</textElement>
-					<text><![CDATA[DISTRIBUCIÓN LIQUIDACIONES - FLOTA R.PARADA]]></text>
+					<text><![CDATA[DISTRIBUCIÓN LIQUIDACIONES ]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="68" y="17" width="240" height="17" uuid="905d3df9-1a52-4a8a-8e6f-8225c4f7c5fa"/>
@@ -102,7 +94,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial"/>
 					</textElement>
-					<text><![CDATA[Ahorro]]></text>
+					<text><![CDATA[Donación]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="406" y="34" width="60" height="32" uuid="5c1a8dad-3058-45e3-856e-2e1737f7b49f"/>
@@ -121,13 +113,13 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="70">
+			<band height="30">
 				<textField pattern="$ #,##0.###">
 					<reportElement x="268" y="0" width="73" height="30" uuid="862903f5-a5c2-41bc-a6c3-e33162d035fe"/>
 					<textElement textAlignment="Right">
 						<font fontName="Arial"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{REALFINAL1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{REALFINAL1}.intValue()+$V{aux_1}.intValue()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="177" y="0" width="77" height="20" uuid="a7d7e84c-1dee-4265-8e48-299183a73b6a"/>
@@ -139,12 +131,12 @@
 				<textField pattern="$ #,##0">
 					<reportElement x="341" y="0" width="55" height="20" uuid="5ae75915-a9d5-4396-8de7-5db375be2091"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[$V{ahorro_1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{aux_1}]]></textFieldExpression>
 				</textField>
 				<textField pattern="$ #,##0">
 					<reportElement x="396" y="0" width="70" height="20" uuid="2e490637-beaa-420f-8099-462cfaeb20cb"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[$V{total_1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{REALFINAL1}.intValue()]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -190,14 +182,14 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{REALFINAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{REALFINAL}.intValue()+$F{aux}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0.###">
 				<reportElement x="396" y="0" width="70" height="24" uuid="ddf11108-a9af-40ca-95bd-e93aa17d595c"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{REALFINAL}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="480" y="0" width="92" height="24" uuid="f914d9a5-96f5-4028-b52b-883c173c68e2"/>
@@ -211,7 +203,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ahorro}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{aux}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -219,7 +211,7 @@
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="400" y="0" width="80" height="20" uuid="f1bcba74-3698-4d44-b347-13ca2fe1b59f"/>
 				<textElement textAlignment="Right"/>
@@ -232,6 +224,6 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

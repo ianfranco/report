@@ -16,23 +16,23 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.swing.JRViewer;
 
-/** 
+/**
  *
  * @author ianfr
  */
 public class Abril2018 {
 //test commit
-    private 
-            ReporterVBView frame;
+
+    private ReporterVBView frame;
     private MesSelectorlLiquidacionView view;
 
     public Abril2018(ReporterVBView frame, MesSelectorlLiquidacionView view) {
         this.frame = frame;
         this.view = view;
     }
-    
+
     public void loadLiquidacion(boolean flag, int operador) {
-        JasperReport jasperReport;
+        JasperReport jasperReport = null;
 
         try {
 
@@ -46,20 +46,31 @@ public class Abril2018 {
             params.put("conductor", codigo);
 
             Conexion con = new Conexion();
-            
-            if(operador == 0){
-                jasperReport = JasperCompileManager.compileReport("jrxml/junio17/INF-LiquidacionSueldoAbril18.jrxml");
-            }else{
-                jasperReport = JasperCompileManager.compileReport("jrxml/junio17/INF-LiquidacionSueldoAbril18SM.jrxml");
+
+            switch (operador) {
+                case 0:
+                    jasperReport = JasperCompileManager.compileReport("jrxml/junio17/INF-LiquidacionSueldoAbril18.jrxml");
+                    break;
+                case 1:
+                    jasperReport = JasperCompileManager.compileReport("jrxml/junio17/INF-LiquidacionSueldoAbril18SM.jrxml");
+                    break;
+                case 2:
+                    jasperReport = JasperCompileManager.compileReport("jrxml/junio17/INF-LiquidacionSueldoAbril18_flota_gallardo.jrxml");
             }
-            
+//
+//            if (operador == 0) {
+//                jasperReport = JasperCompileManager.compileReport("jrxml/junio17/INF-LiquidacionSueldoAbril18.jrxml");
+//            } else {
+//                jasperReport = JasperCompileManager.compileReport("jrxml/junio17/INF-LiquidacionSueldoAbril18SM.jrxml");
+//            }
+
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, con.getConnection());
 
             if (flag) {
                 this.frame.setNewReport(new JRViewer(jasperPrint), "Liquidación de Sueldo");
                 System.err.println("conductor:" + codigo);
                 System.err.println("VIEW");
-            } else { 
+            } else {
                 JasperPrintManager.printReport(jasperPrint, false);
                 System.err.println("PRINT");
             }

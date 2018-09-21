@@ -143,14 +143,14 @@
 				<text><![CDATA[Conductor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="216" y="71" width="155" height="19" uuid="f40bf244-2824-4fb0-8af5-f5c88897cef8"/>
+				<reportElement x="212" y="71" width="155" height="19" uuid="f40bf244-2824-4fb0-8af5-f5c88897cef8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Empleador]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="495" y="71" width="65" height="19" uuid="32c38630-35f7-47c6-8efd-f81b34f88332"/>
+				<reportElement x="459" y="71" width="65" height="19" uuid="32c38630-35f7-47c6-8efd-f81b34f88332"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -161,38 +161,38 @@
 				<textElement>
 					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[MILLENIUM]]></text>
+				<text><![CDATA[VIÑA BUS S.A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="51" width="371" height="20" uuid="28933232-1525-4c08-bf44-75f8e2235503"/>
+				<reportElement x="0" y="51" width="321" height="20" uuid="28933232-1525-4c08-bf44-75f8e2235503"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONDUCTORES C/AJUSTE SUELDO BASE]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="371" y="0" width="200" height="20" uuid="75ff4bfb-4416-484d-b755-47334e04fc54"/>
+				<reportElement x="319" y="0" width="200" height="20" uuid="75ff4bfb-4416-484d-b755-47334e04fc54"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fechaCompleta}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="371" y="40" width="159" height="30" uuid="486d75f1-ae49-4669-b534-33d3fc40cb80"/>
+				<reportElement x="324" y="40" width="159" height="30" uuid="486d75f1-ae49-4669-b534-33d3fc40cb80"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="530" y="40" width="40" height="30" uuid="7136ed70-47ab-4fdb-8817-6c369c9703b1"/>
+				<reportElement x="483" y="40" width="40" height="30" uuid="7136ed70-47ab-4fdb-8817-6c369c9703b1"/>
 				<textElement textAlignment="Left">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="371" y="71" width="124" height="19" uuid="80b06d93-f6aa-4fc0-abb7-0793adab59c3"/>
+				<reportElement x="367" y="71" width="88" height="19" uuid="80b06d93-f6aa-4fc0-abb7-0793adab59c3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -201,7 +201,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="35" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="19" height="19" uuid="d83fb420-3a5f-4215-b03f-6a13d5c56653"/>
 				<textElement>
@@ -217,21 +217,21 @@
 				<textFieldExpression><![CDATA[$F{nombreTrabajador}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="216" y="0" width="155" height="19" uuid="4f4111b2-c690-49c0-9488-f85f1f3a8871"/>
+				<reportElement x="212" y="0" width="155" height="35" uuid="4f4111b2-c690-49c0-9488-f85f1f3a8871"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NombreEmpresario}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.###">
-				<reportElement x="495" y="-1" width="65" height="19" uuid="efc28c29-1a12-4cb9-b2c1-fa9868bc839b"/>
+				<reportElement x="459" y="-1" width="65" height="19" uuid="efc28c29-1a12-4cb9-b2c1-fa9868bc839b"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vAjusteBase}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="371" y="0" width="124" height="19" uuid="727c2d5e-baa6-4a6a-a7f3-cda1ee31d914"/>
+				<reportElement x="367" y="0" width="88" height="19" uuid="727c2d5e-baa6-4a6a-a7f3-cda1ee31d914"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -251,7 +251,7 @@
 		<band height="30" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField pattern="#,###.###">
-				<reportElement x="495" y="0" width="65" height="30" uuid="1a2f164c-3cf5-483a-8fac-a7302ebc4f21"/>
+				<reportElement x="459" y="0" width="65" height="30" uuid="1a2f164c-3cf5-483a-8fac-a7302ebc4f21"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>

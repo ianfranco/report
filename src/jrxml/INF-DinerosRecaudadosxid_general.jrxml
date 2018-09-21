@@ -149,7 +149,7 @@ ORDER BY fecha.fecha ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="61" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="15" uuid="d9139b23-a156-428a-bdaa-82badb9bcc22"/>
 				<textElement>
@@ -158,7 +158,7 @@ ORDER BY fecha.fecha ASC]]>
 				<text><![CDATA[VIÑA BUS S.A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="15" width="100" height="15" uuid="5227dc9a-91ae-4f57-961a-ff179ad7ed7b"/>
+				<reportElement x="0" y="15" width="151" height="15" uuid="5227dc9a-91ae-4f57-961a-ff179ad7ed7b"/>
 				<textElement>
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
@@ -305,7 +305,7 @@ ORDER BY fecha.fecha ASC]]>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<text><![CDATA[A. Emp.]]></text>
+				<text><![CDATA[A. Guía]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

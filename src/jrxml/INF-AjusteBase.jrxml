@@ -127,30 +127,30 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="94" splitType="Stretch">
+		<band height="72" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="72" width="19" height="19" uuid="fe448f48-ff2d-41bf-a01b-5f8869f6ccf1"/>
+				<reportElement x="0" y="53" width="19" height="19" uuid="fe448f48-ff2d-41bf-a01b-5f8869f6ccf1"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Cod.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="19" y="72" width="186" height="19" uuid="a77ae38d-5d4d-4087-ad27-0a2432d7d258"/>
+				<reportElement x="19" y="53" width="176" height="19" uuid="a77ae38d-5d4d-4087-ad27-0a2432d7d258"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Conductor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="217" y="71" width="183" height="19" uuid="f40bf244-2824-4fb0-8af5-f5c88897cef8"/>
+				<reportElement x="217" y="52" width="167" height="19" uuid="f40bf244-2824-4fb0-8af5-f5c88897cef8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Empleador]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="495" y="71" width="65" height="19" uuid="32c38630-35f7-47c6-8efd-f81b34f88332"/>
+				<reportElement x="495" y="52" width="65" height="19" uuid="32c38630-35f7-47c6-8efd-f81b34f88332"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -164,7 +164,7 @@
 				<text><![CDATA[VIÑA BUS S.A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="51" width="371" height="20" uuid="28933232-1525-4c08-bf44-75f8e2235503"/>
+				<reportElement x="0" y="31" width="371" height="20" uuid="28933232-1525-4c08-bf44-75f8e2235503"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
@@ -178,21 +178,21 @@
 				<textFieldExpression><![CDATA[$P{fechaCompleta}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="371" y="40" width="159" height="30" uuid="486d75f1-ae49-4669-b534-33d3fc40cb80"/>
+				<reportElement x="371" y="30" width="159" height="21" uuid="486d75f1-ae49-4669-b534-33d3fc40cb80"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="530" y="40" width="40" height="30" uuid="7136ed70-47ab-4fdb-8817-6c369c9703b1"/>
+				<reportElement x="530" y="30" width="40" height="21" uuid="7136ed70-47ab-4fdb-8817-6c369c9703b1"/>
 				<textElement textAlignment="Left">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="400" y="71" width="95" height="19" uuid="80b06d93-f6aa-4fc0-abb7-0793adab59c3"/>
+				<reportElement x="400" y="52" width="95" height="19" uuid="80b06d93-f6aa-4fc0-abb7-0793adab59c3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -201,7 +201,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="35" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="19" height="19" uuid="d83fb420-3a5f-4215-b03f-6a13d5c56653"/>
 				<textElement>
@@ -210,7 +210,7 @@
 				<textFieldExpression><![CDATA[$F{codigoTrabajador}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="19" y="0" width="186" height="19" uuid="c6fb12df-4439-417c-8452-89adc2a9c8f2"/>
+				<reportElement x="19" y="0" width="176" height="19" uuid="c6fb12df-4439-417c-8452-89adc2a9c8f2"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -224,7 +224,7 @@
 				<textFieldExpression><![CDATA[$F{nombreTerminal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="217" y="0" width="183" height="35" uuid="4f4111b2-c690-49c0-9488-f85f1f3a8871"/>
+				<reportElement x="217" y="0" width="167" height="19" uuid="4f4111b2-c690-49c0-9488-f85f1f3a8871"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -245,13 +245,13 @@
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="9" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="30" splitType="Stretch">
+		<band height="16" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField pattern="#,###.###">
-				<reportElement x="495" y="0" width="65" height="30" uuid="1a2f164c-3cf5-483a-8fac-a7302ebc4f21"/>
+				<reportElement x="495" y="0" width="65" height="16" uuid="1a2f164c-3cf5-483a-8fac-a7302ebc4f21"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>

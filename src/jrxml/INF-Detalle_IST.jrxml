@@ -12,7 +12,7 @@
 	<parameter name="idOperador" class="java.lang.Integer"/>
 	<parameter name="nombreOperador" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL final_planillon_distribucion_detalle_ist_vg($P{idOperador},$P{fecha});]]>
+		<![CDATA[CALL final_planillon_distribucion_detalle_ist($P{idOperador},$P{fecha});]]>
 	</queryString>
 	<field name="Rut" class="java.lang.String"/>
 	<field name="Codigo" class="java.lang.Integer"/>
