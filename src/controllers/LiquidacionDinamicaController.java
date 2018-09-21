@@ -23,6 +23,7 @@ import net.sf.jasperreports.swing.JRViewer;
 import views.Abril2017;
 import views.Abril2018;
 import views.Agosto2017;
+import views.Agosto2018;
 import views.Diciembre2016;
 import views.Diciembre2017;
 import views.Enero2017;
@@ -78,6 +79,7 @@ public class LiquidacionDinamicaController {
     private Junio2017 junio2017;
     private Julio2017 julio2017;
     private Agosto2017 agosto2017;
+    private Agosto2018 agosto2018;
     private Noviembre2017 noviembre2017;
     private Diciembre2017 diciembre2017;
     private Mayo2018 mayo2018;
@@ -256,7 +258,7 @@ public class LiquidacionDinamicaController {
                 break;
             case 6:
                 if (view.getAnio().equals("2017")) {
-                    System.err.println("INDICE:" + mes + " JUNIO 2017");
+                    System.err.println("INDICE:" + mes + " JULIO 2017");
 
                     julio2017 = new Julio2017(frame, view);
                     if (operador == 0) {
@@ -265,7 +267,7 @@ public class LiquidacionDinamicaController {
                         julio2017.loadLiquidacion(true, operador);
                     }
                 } else {
-                    System.err.println("INDICE:" + mes + " JUNIO 2018");
+                    System.err.println("INDICE:" + mes + " JULIO 2018");
 
                     julio2018 = new Julio2018(frame, view);
                     if (operador == 0) {
@@ -277,12 +279,25 @@ public class LiquidacionDinamicaController {
                 break;
             case 7:
                 System.err.println("INDICE:" + mes + " AGOSTO 2017");
+                if (view.getAnio().equals("2017")) {
+                    System.err.println("INDICE:" + mes + " JULIO 2017");
 
-                agosto2017 = new Agosto2017(frame, view);
-                if (operador == 0) {
-                    agosto2017.loadLiquidacion(true, operador);
+                    agosto2017 = new Agosto2017(frame, view);
+                    if (operador == 0) {
+                        agosto2017.loadLiquidacion(true, operador);
+                    } else {
+                        agosto2017.loadLiquidacion(true, operador);
+                    }
+
                 } else {
-                    agosto2017.loadLiquidacion(true, operador);
+                    System.err.println("INDICE:" + mes + " JULIO 2018");
+
+                    agosto2018 = new Agosto2018(frame, view);
+                    if (operador == 0) {
+                        agosto2018.loadLiquidacion(true, operador);
+                    } else {
+                        agosto2018.loadLiquidacion(true, operador);
+                    }
                 }
                 break;
             case 8:
